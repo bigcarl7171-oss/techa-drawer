@@ -39,7 +39,19 @@
   }
   .gf-chip.on { background: var(--blue); color: #fff; border-color: var(--blue); }
   .gf-chip:active { transform: scale(0.94); }
+  .gf-more { margin-top: 8px; animation: gf-more-in .2s var(--ease-out); }
+  @keyframes gf-more-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .gf-more-btn {
+    margin-top: 10px; background: none; border: 0; cursor: pointer; padding: 4px 0;
+    font-size: 13px; font-weight: 600; color: var(--blue-ink); font-family: inherit;
+  }
+  .gf-more-btn:active { transform: scale(0.96); }
   .gf-occasion-hint { font-size: 12.5px; color: var(--muted-soft); margin-top: 6px; }
+
+  .gf-confetti { font-size: 22px; letter-spacing: 8px; text-align: center; margin-bottom: 10px;
+    animation: gf-pop .5s var(--ease-out) backwards; }
+  @keyframes gf-pop { 0% { opacity: 0; transform: scale(.5); } 70% { transform: scale(1.12); } 100% { opacity: 1; transform: scale(1); } }
+  .gf-hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   .gf-count { font-size: 14px; color: var(--muted); margin: 18px 0 10px; }
   .gf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
   .gf-card {
@@ -149,7 +161,7 @@
   .gf-card-rate { font-size: 12px; color: var(--muted-soft); margin-top: 8px; }
 
   @media (prefers-reduced-motion: reduce) {
-    .gf-hero, .gf-card { animation: none; }
+    .gf-hero, .gf-card, .gf-confetti, .gf-more { animation: none; }
     .gf-dots span { animation: none; opacity: .6; }
   }
 </style>
@@ -166,8 +178,10 @@
       <label class="field">누구에게</label>
       <div class="gf-chips" id="recipientChips"></div>
 
-      <label class="field" for="occasionSelect">어떤 상황</label>
-      <select id="occasionSelect"></select>
+      <label class="field">어떤 상황</label>
+      <div class="gf-chips" id="occasionChips" data-key="occasion"></div>
+      <div class="gf-chips gf-more" id="occasionMore" data-key="occasion" hidden></div>
+      <button type="button" class="gf-more-btn" id="occasionMoreBtn"></button>
       <div class="gf-occasion-hint" id="occasionHint" hidden></div>
 
       <label class="field">얼마짜리</label>
@@ -254,6 +268,22 @@ TECHA.initPage({
   };
   var PRICE_ORDER = ["1만원대", "2만원대", "3만원대", "4만원대", "5만원 이상"];
 
+  var RECIPIENT_EMOJI = {
+    "연인": "💕", "배우자": "💑", "친구": "👫", "부모님": "🌷", "직장동료": "🧑‍💼",
+    "조부모님": "👵", "선생님": "👩‍🏫", "아이": "👶", "본인": "🙋"
+  };
+  var OCCASION_EMOJI = {
+    "기념일": "💐", "프러포즈": "💍", "생일": "🎂", "화이트데이": "🍬", "발렌타인데이": "🍫",
+    "크리스마스": "🎄", "병문안": "🏥", "승진·퇴임": "🎊", "졸업·입학": "🎓",
+    "집들이·개업": "🏠", "생신·환갑": "🎈", "어버이날": "🌸", "설날·명절": "🌙",
+    "칠순": "🎖️", "팔순": "🏅", "스승의날": "🍎", "소소한 감사": "🙏",
+    "단체·답례품": "🎁", "빼빼로데이": "🍡", "발표회·재롱잔치": "🎭", "학예회": "🎨",
+    "유치원·초등학교 졸업·입학": "🎒", "실내 인테리어": "🪟", "취미·자기계발": "🧶", "데이트": "🌃"
+  };
+  // 처음에 펼쳐서 보여줄 상황. 나머지는 "더 보기"로 접어둔다.
+  var FREQUENT = ["생일", "기념일", "어버이날", "크리스마스", "집들이·개업",
+                  "병문안", "발렌타인데이", "화이트데이"];
+
   var params = new URLSearchParams(location.search);
   var state = {
     recipient: params.get("recipient") || "전체",
@@ -265,14 +295,17 @@ TECHA.initPage({
   var hasPhotos = false;
 
   function chip(container, value, label, onPick) {
+    var key = container.dataset.key;
     var b = document.createElement("button");
     b.type = "button";
-    b.className = "gf-chip" + (state[container.dataset.key] === value ? " on" : "");
+    b.className = "gf-chip" + (state[key] === value ? " on" : "");
+    b.dataset.value = value;
     b.textContent = label;
     b.addEventListener("click", function () {
-      state[container.dataset.key] = value;
-      container.querySelectorAll(".gf-chip").forEach(function (x) {
-        x.classList.toggle("on", x.textContent === label);
+      state[key] = value;
+      // 상황 칩은 접힌 쪽에도 있어서 컨테이너 하나만 훑으면 놓친다
+      document.querySelectorAll('[data-key="' + key + '"] .gf-chip').forEach(function (x) {
+        x.classList.toggle("on", x.dataset.value === value);
       });
       onPick();
     });
@@ -299,25 +332,36 @@ TECHA.initPage({
     return !!list && list.indexOf(occasion) > -1;
   }
 
-  // 대상이 바뀔 때마다 상황 목록을 다시 그린다
+  var moreOpen = false;
+
+  // 대상이 바뀔 때마다 상황 칩을 다시 그린다
   function renderOccasions() {
-    var sel = document.getElementById("occasionSelect");
+    var top = document.getElementById("occasionChips");
+    var more = document.getElementById("occasionMore");
+    var btn = document.getElementById("occasionMoreBtn");
     var hint = document.getElementById("occasionHint");
     var usable = DATA.axes.occasion.filter(function (v) { return !blocked(state.recipient, v); });
 
     if (blocked(state.recipient, state.occasion)) state.occasion = "전체";
 
-    sel.innerHTML = "";
-    ["전체"].concat(usable).forEach(function (v) {
-      var o = document.createElement("option");
-      o.value = v; o.textContent = v;
-      sel.appendChild(o);
-    });
-    sel.value = state.occasion;
+    var head = FREQUENT.filter(function (v) { return usable.indexOf(v) > -1; });
+    var rest = usable.filter(function (v) { return head.indexOf(v) === -1; });
+    // 고른 상황이 접힌 쪽에 있으면 펼쳐둔다 — 뭘 골랐는지 안 보이면 안 된다
+    if (rest.indexOf(state.occasion) > -1) moreOpen = true;
 
-    var hidden = DATA.axes.occasion.length - usable.length;
-    if (hidden) {
-      hint.textContent = state.recipient + "에게 해당하지 않는 상황 " + hidden + "개는 목록에서 뺐어요.";
+    top.innerHTML = "";
+    chip(top, "전체", "전체", render);
+    head.forEach(function (v) { chip(top, v, OCCASION_EMOJI[v] + " " + v, render); });
+
+    more.innerHTML = "";
+    rest.forEach(function (v) { chip(more, v, OCCASION_EMOJI[v] + " " + v, render); });
+    more.hidden = !moreOpen;
+    btn.textContent = moreOpen ? "접기 ▴" : "상황 " + rest.length + "개 더 보기 ▾";
+    btn.hidden = !rest.length;
+
+    var removed = DATA.axes.occasion.length - usable.length;
+    if (removed) {
+      hint.textContent = state.recipient + "에게 해당하지 않는 상황 " + removed + "개는 목록에서 뺐어요.";
       hint.hidden = false;
     } else {
       hint.hidden = true;
@@ -328,7 +372,9 @@ TECHA.initPage({
     var recipientEl = document.getElementById("recipientChips");
     recipientEl.dataset.key = "recipient";
     chip(recipientEl, "전체", "전체", onRecipientPick);
-    d.axes.recipient.forEach(function (v) { chip(recipientEl, v, v, onRecipientPick); });
+    d.axes.recipient.forEach(function (v) {
+      chip(recipientEl, v, RECIPIENT_EMOJI[v] + " " + v, onRecipientPick);
+    });
 
     var priceEl = document.getElementById("priceChips");
     priceEl.dataset.key = "price";
@@ -336,9 +382,9 @@ TECHA.initPage({
     PRICE_ORDER.forEach(function (v) { chip(priceEl, v, v, render); });
 
     renderOccasions();
-    document.getElementById("occasionSelect").addEventListener("change", function (e) {
-      state.occasion = e.target.value;
-      render();
+    document.getElementById("occasionMoreBtn").addEventListener("click", function () {
+      moreOpen = !moreOpen;
+      renderOccasions();
     });
   }
 
@@ -525,7 +571,9 @@ TECHA.initPage({
       '<div class="gf-hero-cond">' + esc(condText()) + '</div>';
     var rate = s.rate === null ? "" :
       '<div class="gf-hero-rate"><b id="gfRate">0%</b> 조건 일치</div>';
-    return '<div class="gf-hero">' +
+    // 딱 맞았을 때만 축하한다. 남발하면 100%의 의미가 없어진다.
+    var confetti = s.rate === 100 ? '<div class="gf-confetti">🎉✨🎊✨🎉</div>' : '';
+    return '<div class="gf-hero">' + confetti +
       '<div class="gf-hero-badge">테차가 고른 하나</div>' + cond +
       '<div class="gf-hero-verdict">' + verdictText(s.rate) + '</div>' +
       '<div class="gf-hero-media">' +
@@ -545,7 +593,34 @@ TECHA.initPage({
       (l.url
         ? '<a class="btn btn-primary btn-sm gf-card-link" href="' + esc(l.url) + '" target="_blank" rel="noopener" data-line="' + esc(l.id) + '">구매하기 →</a>'
         : '<span class="gf-card-nolink">링크 준비중</span>') +
+      '<div class="gf-hero-actions">' +
+      '<button type="button" class="btn btn-ghost btn-sm" id="gfReroll">🎲 다시 뽑기</button>' +
+      '<button type="button" class="btn btn-ghost btn-sm" id="gfShare">🔗 결과 공유</button>' +
+      '</div>' +
       '</div>';
+  }
+
+  // 같은 조건에서 다음 후보를 히어로로 올린다.
+  // 마음에 안 들 때 이탈하는 대신 한 번 더 돌려보게 한다.
+  var rerollAt = 0;
+
+  function shareResult(s) {
+    var q = ["recipient", "occasion", "price"].filter(function (k) { return state[k] !== "전체"; })
+      .map(function (k) { return k + "=" + encodeURIComponent(state[k]); }).join("&");
+    var url = location.origin + location.pathname + (q ? "?" + q : "");
+    var text = "테차가 고른 선물: " + s.line.name +
+      (s.rate === null ? "" : " (조건 일치 " + s.rate + "%)") +
+      "\n" + condText() + " · 테차 서랍";
+    var btn = document.getElementById("gfShare");
+    if (navigator.share) {
+      navigator.share({ title: "테차 상황별 선물 큐레이션", text: text, url: url }).catch(function () {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(text + "\n" + url).then(function () {
+        var t = btn.textContent;
+        btn.textContent = "링크가 복사됐어요!";
+        setTimeout(function () { btn.textContent = t; }, 1600);
+      });
+    }
   }
 
   function countUp(el, to) {
@@ -586,11 +661,21 @@ TECHA.initPage({
   var busy = false;
 
   function paintVerdict(ranked) {
-    var top = ranked[0];
-    var alts = ranked.slice(1, 4);
+    var top = ranked[rerollAt % ranked.length];
+    var alts = ranked.filter(function (s) { return s !== top; }).slice(0, 3);
     stage.innerHTML = hero(top);
     countUp(document.getElementById("gfRate"), top.rate === null ? 0 : top.rate);
     bindBuyTracking(stage);
+
+    document.getElementById("gfReroll").addEventListener("click", function () {
+      rerollAt++;
+      TECHA.track("gift_finder_reroll", { at: rerollAt });
+      paintVerdict(ranked);
+    });
+    document.getElementById("gfShare").addEventListener("click", function () {
+      TECHA.track("gift_finder_share", { line: top.line.id });
+      shareResult(top);
+    });
 
     countEl.textContent = "";
     grid.innerHTML = "";
@@ -613,6 +698,7 @@ TECHA.initPage({
     if (!DATA || busy) return;
     busy = true;
     staleEl.hidden = true;
+    rerollAt = 0;  // 조건이 바뀌었으니 1위부터 다시
     var ranked = rankAll();
     stage.innerHTML =
       '<section class="card gf-searching">' +
