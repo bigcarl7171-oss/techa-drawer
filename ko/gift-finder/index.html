@@ -47,6 +47,24 @@
     padding: 18px; box-shadow: var(--shadow);
     animation: card-in .22s var(--ease-out) backwards;
   }
+  /* 상품 사진 틀 — assets/products/{라인 id}.jpg 를 넣으면 자동으로 채워진다.
+     사진이 한 장도 없는 동안에는 아예 렌더하지 않아 기존 레이아웃 그대로 보인다. */
+  .gf-card-photo {
+    margin: -18px -18px 14px;              /* 카드 패딩을 상쇄해 위쪽을 꽉 채움 */
+    aspect-ratio: 1; overflow: hidden;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: var(--blue-soft);
+  }
+  .gf-card-photo img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    box-shadow: var(--img-outline);
+  }
+  /* 사진이 아직 없는 상품 — 격자가 들쭉날쭉해지지 않게 같은 크기 자리표시자로 채움 */
+  .gf-card-photo-empty {
+    width: 100%; height: 100%; font-size: 44px;
+    display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 30% 25%, var(--blue-soft), var(--white));
+  }
   .gf-card-top { display: flex; align-items: center; gap: 10px; }
   .gf-card-emoji {
     font-size: 20px; width: 38px; height: 38px; flex: none;
@@ -160,6 +178,7 @@ TECHA.initPage({
   };
 
   var DATA = null;
+  var hasPhotos = false;
 
   function chip(container, value, label, onPick) {
     var b = document.createElement("button");
@@ -216,6 +235,21 @@ TECHA.initPage({
       : l.priceMin.toLocaleString() + "~" + l.priceMax.toLocaleString() + "원";
   }
 
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  }
+
+  // 사진이 한 장이라도 있을 때만 사진 틀을 켠다.
+  // 전부 없는 동안 빈 상자 25개가 깔리는 걸 막고, 한 장씩 채워 넣어도 격자는 고르게 유지된다.
+  function photoBlock(l, emoji) {
+    if (!hasPhotos) return "";
+    var inner = l.image
+      ? '<img src="' + esc(l.image) + '" alt="' + esc(l.name) + ' 상품 사진"' +
+        ' width="800" height="800" loading="lazy" decoding="async">'
+      : '<div class="gf-card-photo-empty">' + emoji + '</div>';
+    return '<div class="gf-card-photo">' + inner + '</div>';
+  }
+
   function card(l) {
     var emoji = CATEGORY_EMOJI[l.category] || "🌿";
     var tags = l.giftType.map(function (t) { return '<span class="gf-tag">' + t + '</span>'; }).join("");
@@ -223,6 +257,7 @@ TECHA.initPage({
       ? '<a class="btn btn-primary btn-sm gf-card-link" href="' + l.url + '" target="_blank" rel="noopener" data-line="' + l.id + '">구매하기 →</a>'
       : '<span class="gf-card-nolink">링크 준비중</span>';
     return '<div class="gf-card">' +
+      photoBlock(l, emoji) +
       '<div class="gf-card-top">' +
       '<div class="gf-card-emoji">' + emoji + '</div>' +
       '<div><div class="gf-card-name">' + l.name + '</div>' +
@@ -255,6 +290,7 @@ TECHA.initPage({
     .then(function (r) { return r.json(); })
     .then(function (d) {
       DATA = d;
+      hasPhotos = d.lines.some(function (l) { return !!l.image; });
       buildFilters(d);
       render();
     })

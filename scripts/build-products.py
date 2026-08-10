@@ -14,6 +14,12 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(REPO_ROOT, 'docs', '테차상품가격리스트.xlsx')
 TAGS_SRC = os.path.join(REPO_ROOT, 'docs', 'gift-finder-tags.xlsx')
 OUT = os.path.join(REPO_ROOT, 'assets', 'data', 'techa-products.json')
+IMG_DIR = os.path.join(REPO_ROOT, 'assets', 'products')
+
+# 상품 사진은 assets/products/{라인 id}.{webp|jpg|png} 규칙으로 파일명만 맞춰 넣으면
+# 아래 scan_images()가 빌드 때 자동으로 찾아 image 필드에 넣는다.
+# xlsx에 경로를 적는 칸을 따로 두지 않는 이유: 파일과 목록이 어긋날 여지를 아예 없애기 위함.
+IMG_EXTS = ('.webp', '.jpg', '.jpeg', '.png')  # 앞쪽 우선
 
 # ---------------------------------------------------------------------------
 # 제품 라인 정의 — 매칭 구조만 코드에 둔다.
@@ -135,6 +141,26 @@ def split_tags(s):
     return [t.strip() for t in str(s or '').split(',') if t.strip()]
 
 
+def scan_images():
+    """assets/products/ 를 훑어 {라인 id: 웹 경로} 맵을 만든다.
+
+    파일이 없으면 빈 맵 — 사진이 하나도 없어도 빌드는 그대로 성공한다.
+    """
+    found = {}
+    if not os.path.isdir(IMG_DIR):
+        return found
+    for fname in os.listdir(IMG_DIR):
+        stem, ext = os.path.splitext(fname)
+        if ext.lower() not in IMG_EXTS:
+            continue
+        # 같은 id로 여러 확장자가 있으면 IMG_EXTS 앞쪽(webp)을 우선
+        prev = found.get(stem)
+        if prev and IMG_EXTS.index(os.path.splitext(prev)[1].lower()) <= IMG_EXTS.index(ext.lower()):
+            continue
+        found[stem] = '/assets/products/' + fname
+    return found
+
+
 def load_tags():
     """docs/gift-finder-tags.xlsx -> {라인ID: {recipient, occasion, giftType, situation, reason, note}}"""
     wb = openpyxl.load_workbook(TAGS_SRC, data_only=True)
@@ -154,6 +180,7 @@ def load_tags():
 
 def main():
     tags = load_tags()
+    images = scan_images()
     missing = [ln['id'] for ln in (LINES + EXTRA_LINES) if ln['id'] not in tags]
     if missing:
         print(f"!! gift-finder-tags.xlsx에 태그가 없는 라인 {len(missing)}개 (건너뜀): {', '.join(missing)}")
@@ -215,6 +242,7 @@ def main():
             ("giftType", t['giftType']),
             ("situation", t['situation']), ("reason", t['reason']),
             ("url", line_url),
+            ("image", images.get(ln['id'])),
             ("skuCount", len(group)), ("variants", variants),
         ]))
 
@@ -233,6 +261,7 @@ def main():
             ("giftType", t['giftType']),
             ("situation", t['situation']), ("reason", t['reason']),
             ("url", URL_MAP.get(ln['id'])),
+            ("image", images.get(ln['id'])),
             ("note", t['note']),
             ("skuCount", len(ln['variants'])), ("variants", ln['variants']),
         ]))
@@ -277,6 +306,17 @@ def main():
     no_url = [l['name'] for l in lines_out if not l.get('url')]
     if no_url:
         print(f"\n-- 아직 링크 없는 라인 {len(no_url)}개: {', '.join(no_url)}")
+
+    no_img = [l['id'] for l in lines_out if not l.get('image')]
+    have = len(lines_out) - len(no_img)
+    print(f"\n-- 상품 사진 {have}/{len(lines_out)}개 연결됨 (assets/products/)")
+    if no_img:
+        print(f"   아직 없는 파일: {', '.join(n + '.jpg' for n in no_img)}")
+    orphan = sorted(set(images) - {l['id'] for l in lines_out})
+    if orphan:
+        print(f"\n!! assets/products/ 안에 라인 id와 안 맞는 파일 {len(orphan)}개 (오타 확인):")
+        for o in orphan:
+            print(f"   - {images[o]}")
     if unmatched:
         print(f"\n!! 미분류 {len(unmatched)}개:")
         for u in unmatched:
