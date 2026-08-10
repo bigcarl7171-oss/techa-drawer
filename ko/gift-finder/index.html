@@ -81,6 +81,75 @@
   .gf-card-nolink { display: block; margin-top: 12px; font-size: 12px; color: var(--muted-soft); }
   .gf-empty { text-align: center; padding: 30px 0; color: var(--muted); }
   @keyframes card-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ---------- 추천 받기 / 결과 판정 ---------- */
+  .gf-go { margin-top: 18px; }
+  .gf-stale { font-size: 13px; color: var(--amber-muted-ink); margin-top: 10px; }
+
+  /* 찾는 중 */
+  .gf-searching { text-align: center; padding: 34px 18px; }
+  .gf-searching-cond { font-weight: 700; color: var(--brown); }
+  .gf-searching-note { font-size: 13.5px; color: var(--muted); margin-top: 6px; }
+  .gf-dots span {
+    display: inline-block; width: 7px; height: 7px; margin: 14px 3px 0; border-radius: 50%;
+    background: var(--blue); animation: gf-dot 1s ease-in-out infinite;
+  }
+  .gf-dots span:nth-child(2) { animation-delay: .15s; }
+  .gf-dots span:nth-child(3) { animation-delay: .3s; }
+  @keyframes gf-dot { 0%, 100% { opacity: .25; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-4px); } }
+
+  /* 히어로 카드 — 정면으로 돌아서듯 등장 */
+  .gf-stage { perspective: 1000px; }
+  .gf-hero {
+    background: linear-gradient(180deg, #fffefc 0%, var(--white) 100%);
+    border: 1px solid var(--amber-border); border-radius: var(--radius);
+    box-shadow: var(--shadow-lg); padding: 20px;
+    animation: gf-turn .62s var(--ease-in-out) backwards;
+  }
+  @keyframes gf-turn { from { opacity: 0; transform: rotateY(-38deg) scale(.94); } to { opacity: 1; transform: none; } }
+  .gf-hero-badge {
+    display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: .02em;
+    background: var(--amber-soft); color: var(--amber-strong-ink);
+    border-radius: var(--radius-pill); padding: 4px 11px;
+  }
+  .gf-hero-verdict { font-family: "Gowun Batang", serif; font-size: 24px; font-weight: 700; color: var(--brown); margin: 12px 0 16px; line-height: 1.35; }
+  .gf-hero-media { display: flex; gap: 16px; align-items: flex-start; }
+  .gf-hero-thumb {
+    width: 116px; flex: none; aspect-ratio: 1; overflow: hidden;
+    border-radius: var(--radius-md); background: var(--blue-soft);
+  }
+  .gf-hero-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; box-shadow: var(--img-outline); }
+  .gf-hero-thumb-empty {
+    width: 100%; height: 100%; font-size: 46px; display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(circle at 30% 25%, var(--blue-soft), var(--white));
+  }
+  .gf-hero-name { font-weight: 700; font-size: 18px; line-height: 1.35; }
+  .gf-hero-price { font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+  .gf-hero-rate { margin-top: 10px; font-size: 13px; color: var(--muted); }
+  .gf-hero-rate b { font-size: 30px; color: var(--blue-ink); font-variant-numeric: tabular-nums; }
+  .gf-hero-why { margin-top: 16px; font-size: 14px; line-height: 1.65; color: var(--body-text); }
+  .gf-hero-why b { color: var(--brown); }
+  .gf-hero-pricenote {
+    margin-top: 10px; font-size: 13px; line-height: 1.6;
+    background: var(--amber-soft); color: var(--amber-strong-ink);
+    border-radius: var(--radius-sm); padding: 10px 12px;
+  }
+  @media (max-width: 480px) {
+    .gf-hero-media { flex-direction: column; }
+    .gf-hero-thumb { width: 100%; }
+    .gf-hero-verdict { font-size: 21px; }
+  }
+
+  .gf-subhead { font-size: 14px; font-weight: 700; color: var(--brown); margin: 26px 0 10px; }
+  .gf-rest { margin-top: 22px; }
+  .gf-rest > summary { cursor: pointer; font-size: 14px; color: var(--blue-ink); font-weight: 600; padding: 6px 0; }
+  .gf-rest[open] > summary { margin-bottom: 12px; }
+  .gf-card-rate { font-size: 12px; color: var(--muted-soft); margin-top: 8px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gf-hero, .gf-card { animation: none; }
+    .gf-dots span { animation: none; opacity: .6; }
+  }
 </style>
 </head>
 <body>
@@ -101,7 +170,14 @@
       <label class="field">얼마짜리</label>
       <div class="gf-chips" id="priceChips"></div>
     </div>
+
+    <div class="gf-go">
+      <button class="btn btn-primary btn-block" type="button" id="gfGo">테차의 추천 받기 🎁</button>
+      <div class="gf-stale" id="gfStale" hidden>조건이 바뀌었어요. 다시 눌러서 추천받아 보세요.</div>
+    </div>
   </section>
+
+  <div class="gf-stage" id="gfStage"></div>
 
   <div class="gf-count" id="gfCount"></div>
   <div class="gf-grid" id="gfGrid"></div>
@@ -113,8 +189,11 @@
   <article class="article">
     <h2>이 도구, 어떻게 골라주나요?</h2>
     <p>테차가 실제로 판매 중인 상품 25개 종류를 <b>누구에게 · 어떤 상황 · 얼마짜리</b> 세 가지 기준으로
-       미리 분류해뒀습니다. 조건을 고르면 그 자리에서 조건에 맞는 상품만 걸러서 보여드립니다.
-       세 가지를 다 고르지 않아도 되고, 하나만 골라도 그 조건에 맞는 것부터 넓게 보여드려요.</p>
+       미리 분류해뒀습니다. 조건을 고르고 <b>추천 받기</b>를 누르면 상품마다 조건이 얼마나 맞는지
+       점수를 매겨, 가장 잘 맞는 하나를 먼저 보여드립니다.</p>
+    <p>조건에 안 맞는다고 버리지 않고 순서를 매기는 방식이라 <b>결과가 비는 일이 없습니다.</b>
+       세 가지를 다 고르지 않아도 되고, 하나만 골라도 그 조건 기준으로 줄을 세워드려요.
+       예산이 한 단계 어긋났을 때는 숨기지 않고 "한 단계 위에서 골랐다"고 먼저 알려드립니다.</p>
 
     <h2>"어떤 상황" 21가지, 이렇게 정했습니다</h2>
     <p>어버이날·스승의날처럼 뻔한 것부터, 병문안·화이트데이·크리스마스처럼 놓치기 쉬운 것까지
@@ -138,8 +217,10 @@
     <h3>Q. 가격이 실제 판매가와 다를 수 있나요?</h3>
     <p>네, 가격 정책 변경 시 이 페이지 갱신이 며칠 늦을 수 있습니다. 정확한 최종 가격은
        스마트스토어 상품 페이지에서 확인해 주세요.</p>
-    <h3>Q. 원하는 조건에 결과가 안 나와요.</h3>
-    <p>조건을 하나씩 "전체"로 풀어보세요. 세 조건을 동시에 만족하는 상품이 아직 없을 수 있습니다.
+    <h3>Q. 조건 일치 100%가 아니면 안 맞는 상품인가요?</h3>
+    <p>아닙니다. 고르신 세 조건에 얼마나 들어맞는지를 숫자로 보여드리는 것뿐입니다.
+       90%는 대체로 예산만 한 단계 어긋난 경우이고, 그 이유는 결과 화면에 그대로 적어드립니다.
+       숫자가 낮게 나왔다면 아직 그 조합에 딱 맞는 상품이 없다는 뜻입니다.
        테차는 오프라인 공방 디자인 자산이 200여 종이라 온라인에 계속 새 상품이 추가됩니다.</p>
     <h3>Q. 여러 명에게 같이 선물할 때도 쓸 수 있나요?</h3>
     <p>네, "단체·답례품" 상황을 골라보세요. 여러 개를 한 번에 돌리기 좋은 낱개 구성 위주로 보여드립니다.</p>
@@ -222,17 +303,106 @@ TECHA.initPage({
     });
   }
 
-  function matches(line) {
-    var okR = state.recipient === "전체" || line.recipient.indexOf(state.recipient) > -1;
-    var okO = state.occasion === "전체" || line.occasion.indexOf(state.occasion) > -1;
-    var okP = state.price === "전체" || line.priceBands.indexOf(state.price) > -1;
-    return okR && okO && okP;
+  // ---------- 적합도 점수 ----------
+  // AND 필터를 쓰면 세 조건을 다 고른 1,125가지 조합 중 855가지(76%)가 결과 0개가 된다.
+  // 그래서 떨어뜨리는 대신 점수를 매겨 정렬한다. 결과가 비는 경우가 구조적으로 없어지고,
+  // 1등이 생겨서 "골라줬다"는 판정을 내릴 수 있다.
+  var W = { occasion: 50, recipient: 30, price: 20, priceNear: 10 };
+
+  // 고른 가격대와 몇 단계 떨어져 있나 (0 = 정확히 일치)
+  function bandGap(l) {
+    var i = PRICE_ORDER.indexOf(state.price);
+    var gaps = l.priceBands.map(function (b) { return Math.abs(PRICE_ORDER.indexOf(b) - i); });
+    return Math.min.apply(null, gaps);
+  }
+
+  function scoreLine(l) {
+    var got = 0, max = 0, hit = { occasion: false, recipient: false, priceGap: 0 };
+    if (state.occasion !== "전체") {
+      max += W.occasion;
+      if (l.occasion.indexOf(state.occasion) > -1) { got += W.occasion; hit.occasion = true; }
+    }
+    if (state.recipient !== "전체") {
+      max += W.recipient;
+      if (l.recipient.indexOf(state.recipient) > -1) { got += W.recipient; hit.recipient = true; }
+    }
+    if (state.price !== "전체") {
+      max += W.price;
+      hit.priceGap = bandGap(l);
+      if (hit.priceGap === 0) got += W.price;
+      else if (hit.priceGap === 1) got += W.priceNear;
+    }
+    // "전체"로 둔 축은 분모에서 뺀다 — 조건을 적게 골랐다고 점수가 깎이면 안 된다
+    return { line: l, got: got, max: max, rate: max ? Math.round(got / max * 100) : null, hit: hit };
+  }
+
+  // 동점 깨기(화면에 드러내지 않음): 그 상황에 특화된 상품일수록 먼저.
+  // 스승의날(1개 라인)에 붙은 상품이 기념일(11개 라인)짜리보다 그 상황 전용에 가깝다.
+  var occCount = {};
+  function tiebreak(l) {
+    var t = 1 / (l.occasion.length + l.recipient.length) / 10;
+    if (state.occasion !== "전체" && l.occasion.indexOf(state.occasion) > -1) {
+      t += (DATA.lines.length - occCount[state.occasion]) / 100;
+    }
+    return t;
+  }
+
+  function rankAll() {
+    return DATA.lines.map(function (l) {
+      var s = scoreLine(l);
+      s.tb = tiebreak(l);
+      return s;
+    }).sort(function (a, b) { return (b.got - a.got) || (b.tb - a.tb); });
   }
 
   function priceText(l) {
     return l.priceMin === l.priceMax
       ? l.priceMin.toLocaleString() + "원"
       : l.priceMin.toLocaleString() + "~" + l.priceMax.toLocaleString() + "원";
+  }
+
+  // ---------- 결과 문구 조립 ----------
+  var HONORIFIC = ["부모님", "조부모님", "선생님"];
+
+  // 받침이 있으면 을, 없으면 를 (name-match와 같은 방식)
+  function objParticle(w) {
+    var c = w.charCodeAt(w.length - 1);
+    if (c < 0xAC00 || c > 0xD7A3) return "를";
+    return ((c - 0xAC00) % 28) ? "을" : "를";
+  }
+
+  function verdictText(rate) {
+    if (rate === null) return "조건을 하나만 골라도 그에 맞게 추려드려요";
+    if (rate === 100) return "조건에 딱 맞는 걸 찾았어요";
+    if (rate >= 80) return "거의 다 맞아요";
+    if (rate >= 60) return "이게 가장 가깝습니다";
+    return "딱 맞는 건 없었어요. 대신 가장 가까운 걸 골랐습니다";
+  }
+
+  // "부모님께 어버이날 선물이라면" 같은 머리 문장을 고른 값으로 만든다
+  function whyHead() {
+    var who = state.recipient, when = state.occasion;
+    var hasWho = who !== "전체", hasWhen = when !== "전체";
+    if (!hasWho && !hasWhen) return "";
+    if (who === "본인") {
+      return hasWhen ? when + " 용도로 본인이 쓰실 거라면" : "본인이 쓰실 거라면";
+    }
+    if (hasWho && hasWhen) return who + (HONORIFIC.indexOf(who) > -1 ? "께 " : "에게 ") + when + " 선물이라면";
+    if (hasWho) return who + (HONORIFIC.indexOf(who) > -1 ? "께 드릴" : "에게 줄") + " 선물이라면";
+    return when + " 선물이라면";
+  }
+
+  // 가격이 어긋났으면 숨기지 않고 먼저 밝힌다.
+  // 안 밝히면 가격 보고 "필터가 고장났나" 하게 된다.
+  function priceNote(s) {
+    if (state.price === "전체" || s.hit.priceGap === 0) return "";
+    var i = PRICE_ORDER.indexOf(state.price);
+    var near = s.line.priceBands.map(function (b) { return PRICE_ORDER.indexOf(b); })
+      .sort(function (a, b) { return Math.abs(a - i) - Math.abs(b - i); })[0];
+    var head = state.price + objParticle(state.price) + " 찾으셨는데 그 가격엔 마땅한 게 없어서, ";
+    return s.hit.priceGap === 1
+      ? head + "한 단계 " + (near > i ? "위" : "아래") + "에서 골랐어요."
+      : head + "가장 가까운 가격대에서 골랐어요.";
   }
 
   function esc(s) {
@@ -250,18 +420,21 @@ TECHA.initPage({
     return '<div class="gf-card-photo">' + inner + '</div>';
   }
 
-  function card(l) {
+  // s(점수)와 i(순번)는 추천 결과 목록에서만 넘어온다. 둘러보기 목록에선 생략.
+  function card(l, s, i) {
     var emoji = CATEGORY_EMOJI[l.category] || "🌿";
     var tags = l.giftType.map(function (t) { return '<span class="gf-tag">' + t + '</span>'; }).join("");
+    var rate = s && s.rate !== null ? '<div class="gf-card-rate">조건 일치 ' + s.rate + '%</div>' : "";
+    var delay = typeof i === "number" ? ' style="animation-delay:' + (i * 70) + 'ms"' : "";
     var link = l.url
       ? '<a class="btn btn-primary btn-sm gf-card-link" href="' + l.url + '" target="_blank" rel="noopener" data-line="' + l.id + '">구매하기 →</a>'
       : '<span class="gf-card-nolink">링크 준비중</span>';
-    return '<div class="gf-card">' +
+    return '<div class="gf-card"' + delay + '>' +
       photoBlock(l, emoji) +
       '<div class="gf-card-top">' +
       '<div class="gf-card-emoji">' + emoji + '</div>' +
       '<div><div class="gf-card-name">' + l.name + '</div>' +
-      '<div class="gf-card-price">' + priceText(l) + '</div></div>' +
+      '<div class="gf-card-price">' + priceText(l) + '</div>' + rate + '</div>' +
       '</div>' +
       '<div class="gf-card-situation">🙋 ' + l.situation + '</div>' +
       '<div class="gf-card-reason">💡 ' + l.reason + '</div>' +
@@ -270,20 +443,130 @@ TECHA.initPage({
       '</div>';
   }
 
-  function render() {
-    if (!DATA) return;
-    var list = DATA.lines.filter(matches);
-    document.getElementById("gfCount").textContent = list.length + "개 상품을 찾았어요";
-    var grid = document.getElementById("gfGrid");
-    grid.innerHTML = list.length
-      ? list.map(card).join("")
-      : '<div class="gf-empty">조건에 맞는 상품이 없어요. 필터를 조금 넓혀보세요.</div>';
-    grid.querySelectorAll("[data-line]").forEach(function (a) {
+  function hero(s) {
+    var l = s.line;
+    var emoji = CATEGORY_EMOJI[l.category] || "🌿";
+    var thumb = l.image
+      ? '<img src="' + esc(l.image) + '" alt="' + esc(l.name) + ' 상품 사진" width="800" height="800" decoding="async">'
+      : '<div class="gf-hero-thumb-empty">' + emoji + '</div>';
+    var head = whyHead();
+    var note = priceNote(s);
+    var rate = s.rate === null ? "" :
+      '<div class="gf-hero-rate"><b id="gfRate">0%</b> 조건 일치</div>';
+    return '<div class="gf-hero">' +
+      '<div class="gf-hero-badge">테차가 고른 하나</div>' +
+      '<div class="gf-hero-verdict">' + verdictText(s.rate) + '</div>' +
+      '<div class="gf-hero-media">' +
+      '<div class="gf-hero-thumb">' + thumb + '</div>' +
+      '<div>' +
+      '<div class="gf-hero-name">' + l.name + '</div>' +
+      '<div class="gf-hero-price">' + priceText(l) + '</div>' +
+      rate +
+      '</div></div>' +
+      (note ? '<div class="gf-hero-pricenote">' + note + '</div>' : '') +
+      '<div class="gf-hero-why">' +
+      (head ? '<b>' + head + '</b><br>' : '') + l.reason +
+      '</div>' +
+      '<div class="gf-card-tags">' + l.giftType.map(function (t) {
+        return '<span class="gf-tag">' + t + '</span>';
+      }).join("") + '</div>' +
+      (l.url
+        ? '<a class="btn btn-primary btn-sm gf-card-link" href="' + esc(l.url) + '" target="_blank" rel="noopener" data-line="' + esc(l.id) + '">구매하기 →</a>'
+        : '<span class="gf-card-nolink">링크 준비중</span>') +
+      '</div>';
+  }
+
+  function countUp(el, to) {
+    if (!el) return;
+    if (reduceMotion()) { el.textContent = to + "%"; return; }
+    var t0 = null, dur = 700;
+    requestAnimationFrame(function step(now) {
+      if (t0 === null) t0 = now;
+      var p = Math.min(1, (now - t0) / dur);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))) + "%";
+      if (p < 1) requestAnimationFrame(step);
+    });
+  }
+
+  function reduceMotion() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function bindBuyTracking(root) {
+    root.querySelectorAll("[data-line]").forEach(function (a) {
       a.addEventListener("click", function () {
         TECHA.track("gift_finder_product_click", { line: a.dataset.line });
       });
     });
+  }
+
+  // 조건을 되읽어주는 한 줄 — 뜸을 들이는 동안 무엇을 하고 있는지 보여준다
+  function condText() {
+    var parts = [state.recipient, state.occasion, state.price].filter(function (v) { return v !== "전체"; });
+    return parts.length ? parts.join(" · ") : "조건 없이";
+  }
+
+  var stage = document.getElementById("gfStage");
+  var countEl = document.getElementById("gfCount");
+  var grid = document.getElementById("gfGrid");
+  var staleEl = document.getElementById("gfStale");
+  var revealedOnce = false;
+  var busy = false;
+
+  function paintVerdict(ranked) {
+    var top = ranked[0];
+    var alts = ranked.slice(1, 4);
+    stage.innerHTML = hero(top);
+    countUp(document.getElementById("gfRate"), top.rate === null ? 0 : top.rate);
+    bindBuyTracking(stage);
+
+    countEl.textContent = "";
+    grid.innerHTML = "";
+
+    var rest = document.createElement("div");
+    rest.innerHTML =
+      '<div class="gf-subhead">이런 것도 잘 어울려요</div>' +
+      '<div class="gf-grid">' + alts.map(function (s, i) {
+        return card(s.line, s, i);
+      }).join("") + '</div>' +
+      '<details class="gf-rest"><summary>나머지 ' + (ranked.length - 1 - alts.length) + '개도 보기</summary>' +
+      '<div class="gf-grid">' + ranked.slice(4).map(function (s, i) {
+        return card(s.line, s, i);
+      }).join("") + '</div></details>';
+    grid.appendChild(rest);
+    bindBuyTracking(grid);
+  }
+
+  function reveal() {
+    if (!DATA || busy) return;
+    busy = true;
+    staleEl.hidden = true;
+    var ranked = rankAll();
+    stage.innerHTML =
+      '<section class="card gf-searching">' +
+      '<div class="gf-searching-cond">' + esc(condText()) + '</div>' +
+      '<div class="gf-searching-note">조건으로 ' + DATA.lines.length + '개를 살펴보는 중</div>' +
+      '<div class="gf-dots"><span></span><span></span><span></span></div>' +
+      '</section>';
+    stage.scrollIntoView({ behavior: reduceMotion() ? "auto" : "smooth", block: "nearest" });
+    // 자주 하지 않는 선택일수록 뜸을 들이는 편이 결과의 무게를 살린다.
+    // 다만 두 번째부터는 짧게 — 반복되면 뜸이 짜증으로 바뀐다.
+    var wait = reduceMotion() ? 0 : (revealedOnce ? 500 : 1200);
+    revealedOnce = true;
+    setTimeout(function () {
+      paintVerdict(ranked);
+      busy = false;
+    }, wait);
     TECHA.track("gift_finder_filter", { recipient: state.recipient, occasion: state.occasion, price: state.price });
+  }
+
+  // 아직 추천을 안 받았을 때 보여주는 둘러보기 목록
+  function render() {
+    if (!DATA) return;
+    if (revealedOnce) { staleEl.hidden = false; return; }
+    countEl.textContent = "전체 " + DATA.lines.length + "개 상품이에요. 조건을 고르고 추천을 받아보세요.";
+    grid.innerHTML = DATA.lines.map(function (l) { return card(l); }).join("");
+    bindBuyTracking(grid);
   }
 
   fetch("/assets/data/techa-products.json")
@@ -291,8 +574,14 @@ TECHA.initPage({
     .then(function (d) {
       DATA = d;
       hasPhotos = d.lines.some(function (l) { return !!l.image; });
+      d.lines.forEach(function (l) {
+        l.occasion.forEach(function (o) { occCount[o] = (occCount[o] || 0) + 1; });
+      });
       buildFilters(d);
-      render();
+      document.getElementById("gfGo").addEventListener("click", reveal);
+      // 링크로 조건이 지정돼 들어온 경우엔 바로 결과를 보여준다
+      if (params.get("recipient") || params.get("occasion") || params.get("price")) reveal();
+      else render();
     })
     .catch(function () {
       document.getElementById("gfGrid").innerHTML = '<div class="gf-empty">상품 데이터를 불러오지 못했어요.</div>';
