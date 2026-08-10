@@ -39,6 +39,7 @@
   }
   .gf-chip.on { background: var(--blue); color: #fff; border-color: var(--blue); }
   .gf-chip:active { transform: scale(0.94); }
+  .gf-occasion-hint { font-size: 12.5px; color: var(--muted-soft); margin-top: 6px; }
   .gf-count { font-size: 14px; color: var(--muted); margin: 18px 0 10px; }
   .gf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
   .gf-card {
@@ -167,6 +168,7 @@
 
       <label class="field" for="occasionSelect">어떤 상황</label>
       <select id="occasionSelect"></select>
+      <div class="gf-occasion-hint" id="occasionHint" hidden></div>
 
       <label class="field">얼마짜리</label>
       <div class="gf-chips" id="priceChips"></div>
@@ -277,31 +279,72 @@ TECHA.initPage({
     container.appendChild(b);
   }
 
+  // 대상을 고르면 성립할 수 없는 상황은 목록에서 뺀다.
+  // 확실한 것만 넣는다 — 연인이 60대일 수도, 친구가 선생님일 수도 있으니
+  // 애매한 조합(연인+생신·환갑, 친구+스승의날 등)은 건드리지 않는다.
+  var IMPOSSIBLE = {
+    // 아이는 어른 대상 행사의 주인공이 될 수 없다
+    "아이": ["어버이날", "스승의날", "생신·환갑", "칠순", "팔순", "승진·퇴임", "프러포즈"],
+    // 아이 행사의 주인공이 아닌 대상들
+    "연인": ["칠순", "팔순", "발표회·재롱잔치", "학예회", "유치원·초등학교 졸업·입학"],
+    "배우자": ["발표회·재롱잔치", "학예회", "유치원·초등학교 졸업·입학"],
+    "부모님": ["프러포즈", "발표회·재롱잔치", "학예회", "유치원·초등학교 졸업·입학"],
+    "조부모님": ["프러포즈", "발표회·재롱잔치", "학예회", "유치원·초등학교 졸업·입학"],
+    "직장동료": ["프러포즈", "발표회·재롱잔치", "학예회", "유치원·초등학교 졸업·입학"],
+    "선생님": ["프러포즈"]
+  };
+
+  function blocked(recipient, occasion) {
+    var list = IMPOSSIBLE[recipient];
+    return !!list && list.indexOf(occasion) > -1;
+  }
+
+  // 대상이 바뀔 때마다 상황 목록을 다시 그린다
+  function renderOccasions() {
+    var sel = document.getElementById("occasionSelect");
+    var hint = document.getElementById("occasionHint");
+    var usable = DATA.axes.occasion.filter(function (v) { return !blocked(state.recipient, v); });
+
+    if (blocked(state.recipient, state.occasion)) state.occasion = "전체";
+
+    sel.innerHTML = "";
+    ["전체"].concat(usable).forEach(function (v) {
+      var o = document.createElement("option");
+      o.value = v; o.textContent = v;
+      sel.appendChild(o);
+    });
+    sel.value = state.occasion;
+
+    var hidden = DATA.axes.occasion.length - usable.length;
+    if (hidden) {
+      hint.textContent = state.recipient + "에게 해당하지 않는 상황 " + hidden + "개는 목록에서 뺐어요.";
+      hint.hidden = false;
+    } else {
+      hint.hidden = true;
+    }
+  }
+
   function buildFilters(d) {
     var recipientEl = document.getElementById("recipientChips");
     recipientEl.dataset.key = "recipient";
-    chip(recipientEl, "전체", "전체", render);
-    d.axes.recipient.forEach(function (v) { chip(recipientEl, v, v, render); });
+    chip(recipientEl, "전체", "전체", onRecipientPick);
+    d.axes.recipient.forEach(function (v) { chip(recipientEl, v, v, onRecipientPick); });
 
     var priceEl = document.getElementById("priceChips");
     priceEl.dataset.key = "price";
     chip(priceEl, "전체", "전체", render);
     PRICE_ORDER.forEach(function (v) { chip(priceEl, v, v, render); });
 
-    var sel = document.getElementById("occasionSelect");
-    var opt = document.createElement("option");
-    opt.value = "전체"; opt.textContent = "전체";
-    sel.appendChild(opt);
-    d.axes.occasion.forEach(function (v) {
-      var o = document.createElement("option");
-      o.value = v; o.textContent = v;
-      sel.appendChild(o);
-    });
-    sel.value = state.occasion;
-    sel.addEventListener("change", function () {
-      state.occasion = sel.value;
+    renderOccasions();
+    document.getElementById("occasionSelect").addEventListener("change", function (e) {
+      state.occasion = e.target.value;
       render();
     });
+  }
+
+  function onRecipientPick() {
+    renderOccasions();
+    render();
   }
 
   // ---------- 적합도 점수 ----------
