@@ -72,7 +72,7 @@
       "priceMax": 49000,
       "priceBands": [
         "3만원대",
-        "5만원 이상"
+        "4만원대"
       ],
       "recipient": [
         "연인",
@@ -155,7 +155,7 @@
       "priceMin": 28500,
       "priceMax": 43500,
       "priceBands": [
-        "3만원대",
+        "2만원대",
         "4만원대"
       ],
       "recipient": [
@@ -275,6 +275,7 @@
       "priceMin": 27000,
       "priceMax": 34500,
       "priceBands": [
+        "2만원대",
         "3만원대"
       ],
       "recipient": [
@@ -403,8 +404,7 @@
       "priceMin": 32500,
       "priceMax": 37000,
       "priceBands": [
-        "3만원대",
-        "4만원대"
+        "3만원대"
       ],
       "recipient": [
         "부모님",
@@ -525,8 +525,7 @@
       "priceMax": 45000,
       "priceBands": [
         "3만원대",
-        "4만원대",
-        "5만원 이상"
+        "4만원대"
       ],
       "recipient": [
         "부모님",
@@ -607,8 +606,7 @@
       "priceMax": 45000,
       "priceBands": [
         "3만원대",
-        "4만원대",
-        "5만원 이상"
+        "4만원대"
       ],
       "recipient": [
         "부모님",
@@ -906,7 +904,7 @@
       "priceMin": 36400,
       "priceMax": 36400,
       "priceBands": [
-        "4만원대"
+        "3만원대"
       ],
       "recipient": [
         "아이"
@@ -945,7 +943,7 @@
       "priceMin": 49000,
       "priceMax": 49000,
       "priceBands": [
-        "5만원 이상"
+        "4만원대"
       ],
       "recipient": [
         "연인",
@@ -1231,8 +1229,8 @@
       "priceMin": 36000,
       "priceMax": 48000,
       "priceBands": [
-        "4만원대",
-        "5만원 이상"
+        "3만원대",
+        "4만원대"
       ],
       "recipient": [
         "직장동료",
@@ -1286,8 +1284,7 @@
       "priceMin": 23500,
       "priceMax": 25000,
       "priceBands": [
-        "2만원대",
-        "3만원대"
+        "2만원대"
       ],
       "recipient": [
         "연인",
@@ -1400,8 +1397,8 @@
       "priceMin": 36000,
       "priceMax": 47000,
       "priceBands": [
-        "4만원대",
-        "5만원 이상"
+        "3만원대",
+        "4만원대"
       ],
       "recipient": [
         "부모님",
@@ -1500,8 +1497,8 @@
       "priceMin": 29800,
       "priceMax": 49800,
       "priceBands": [
-        "3만원대",
-        "5만원 이상"
+        "2만원대",
+        "4만원대"
       ],
       "recipient": [
         "부모님",
@@ -1574,6 +1571,7 @@
       "priceMin": 49900,
       "priceMax": 63900,
       "priceBands": [
+        "4만원대",
         "5만원 이상"
       ],
       "recipient": [
@@ -1734,6 +1732,7 @@
       "priceMin": 45000,
       "priceMax": 50000,
       "priceBands": [
+        "4만원대",
         "5만원 이상"
       ],
       "recipient": [

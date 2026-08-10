@@ -127,10 +127,12 @@ def matches(name, m):
 
 
 def price_band(p):
-    if p < 15000: return "1만원대"
-    if p < 25000: return "2만원대"
-    if p < 35000: return "3만원대"
-    if p < 45000: return "4만원대"
+    # 구간 그대로 자른다(반올림 금지). "2만원대"는 20,000~29,999원을 뜻하므로
+    # 19,000원을 2만원대로, 49,000원을 5만원 이상으로 올려보내면 라벨이 사실과 달라진다.
+    if p < 20000: return "1만원대"
+    if p < 30000: return "2만원대"
+    if p < 40000: return "3만원대"
+    if p < 50000: return "4만원대"
     return "5만원 이상"
 
 
