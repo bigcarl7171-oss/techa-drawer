@@ -38,6 +38,19 @@
   .cat-btn:active { transform:scale(0.94); }
   #spinResult { font-family:"Gowun Batang",serif; font-size:40px; font-weight:700; color:var(--blue); min-height:52px; }
   .spinning #spinResult { color:var(--muted); }
+
+  .wheel-wrap { position:relative; width:min(280px,78vw); aspect-ratio:1/1; margin:24px auto 4px; }
+  .wheel-pointer { position:absolute; top:-4px; left:50%; transform:translateX(-50%); z-index:2;
+    width:0; height:0; border-left:12px solid transparent; border-right:12px solid transparent;
+    border-top:20px solid var(--brown); filter:drop-shadow(0 1px 1px rgba(0,0,0,.2)); }
+  #wheel { width:100%; height:100%; display:block; filter:drop-shadow(var(--shadow-lg)); }
+  #wheelGroup { transform-origin:150px 150px; transition:transform 4s cubic-bezier(.15,.65,.18,1); }
+  .seg-label { font-family:Pretendard,sans-serif; font-weight:700; fill:#fff; font-size:11px; }
+  .seg-path { stroke:var(--paper); stroke-width:2; transition:filter 200ms ease; }
+  .seg-path.seg-winner { filter:brightness(1.18) saturate(1.15); }
+  .wheel-hub { fill:var(--white); stroke:var(--brown); stroke-width:3; }
+  .wheel-hub-emoji { font-size:26px; text-anchor:middle; dominant-baseline:central; }
+  .spin-btn-wrap { margin-top:18px; }
 </style>
 </head>
 <body>
@@ -54,7 +67,16 @@
     <label class="field" for="custom" style="margin-top:16px">메뉴 직접 추가 <span class="hint">(쉼표로 구분, 선택)</span></label>
     <input type="text" id="custom" placeholder="예: 샐러드, 도시락">
 
-    <div style="margin-top:16px">
+    <div class="wheel-wrap">
+      <div class="wheel-pointer"></div>
+      <svg id="wheel" viewBox="0 0 300 300" aria-hidden="true">
+        <g id="wheelGroup"></g>
+        <circle class="wheel-hub" cx="150" cy="150" r="20"></circle>
+        <text class="wheel-hub-emoji" x="150" y="152">🍽️</text>
+      </svg>
+    </div>
+
+    <div class="spin-btn-wrap">
       <button class="btn btn-primary btn-block" id="spin">돌리기 🍽️</button>
     </div>
 
@@ -144,33 +166,136 @@ TECHA.initPage({
   var res = document.getElementById("spinResult");
   var sub = document.getElementById("spinSub");
   var tag = document.getElementById("spinTag");
-  var timer = null;
+  var spinBtn = document.getElementById("spin");
+  var wheelGroup = document.getElementById("wheelGroup");
+  var animating = false;
+  var COLORS = ["#EFB054", "#6E82A6", "#7C8B6F"];
+  var MAX_SEG = 12;
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function polarToXY(cx, cy, r, aDeg) {
+    var rad = aDeg * Math.PI / 180;
+    return { x: cx + r * Math.sin(rad), y: cy - r * Math.cos(rad) };
+  }
+
+  function wedgePath(cx, cy, r, startA, endA) {
+    var p1 = polarToXY(cx, cy, r, startA), p2 = polarToXY(cx, cy, r, endA);
+    var large = (endA - startA) > 180 ? 1 : 0;
+    return "M" + cx + "," + cy + " L" + p1.x + "," + p1.y +
+      " A" + r + "," + r + " 0 " + large + " 1 " + p2.x + "," + p2.y + " Z";
+  }
+
+  function shortLabel(name) {
+    return name.length > 8 ? name.slice(0, 8) + "…" : name;
+  }
+
+  function svgEl(tag, attrs) {
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    return el;
+  }
+
+  function buildWheel(segments) {
+    wheelGroup.innerHTML = "";
+    var n = segments.length;
+    var segAngle = 360 / n;
+    segments.forEach(function (m, i) {
+      var start = i * segAngle, end = start + segAngle;
+      var path = svgEl("path", {
+        d: wedgePath(150, 150, 140, start, end),
+        fill: COLORS[i % COLORS.length],
+        class: "seg-path",
+        "data-index": i
+      });
+      wheelGroup.appendChild(path);
+
+      var center = start + segAngle / 2;
+      var pos = polarToXY(150, 150, 96, center);
+      var rot = center > 90 && center < 270 ? center + 180 : center;
+      var text = svgEl("text", {
+        class: "seg-label",
+        x: pos.x, y: pos.y,
+        "text-anchor": "middle",
+        transform: "rotate(" + rot + " " + pos.x + " " + pos.y + ")"
+      });
+      text.textContent = shortLabel(m.name);
+      wheelGroup.appendChild(text);
+    });
+  }
 
   function spin() {
+    if (animating) return;
     var list = pool();
     if (!list.length) { res.textContent = "메뉴 없음"; return; }
+
+    var winner = list[Math.floor(Math.random() * list.length)];
+
+    var segItems;
+    if (list.length <= 1) {
+      segItems = [winner, winner];
+    } else {
+      var rest = list.filter(function (m) { return m !== winner; });
+      shuffle(rest);
+      segItems = shuffle([winner].concat(rest.slice(0, MAX_SEG - 1)));
+    }
+    var winnerIndex = segItems.indexOf(winner);
+
+    buildWheel(segItems);
+
+    var segAngle = 360 / segItems.length;
+    var winnerCenter = winnerIndex * segAngle + segAngle / 2;
+    var jitter = (Math.random() - 0.5) * segAngle * 0.6;
+    var targetOffset = (360 - winnerCenter + jitter + 360) % 360;
+    var spins = 5;
+    var rotateTo = spins * 360 + targetOffset;
+
+    animating = true;
     box.classList.add("spinning");
-    var ticks = 16, i = 0;
-    clearInterval(timer);
-    timer = setInterval(function(){
-      res.textContent = list[Math.floor(Math.random()*list.length)].name;
-      i++;
-      if (i >= ticks) {
-        clearInterval(timer);
-        var pick = list[Math.floor(Math.random()*list.length)];
-        res.textContent = pick.name;
-        sub.textContent = pick.reason ? "💡 " + pick.reason : "오늘은 이거 어때요? 🎉";
-        tag.textContent = pick.situation ? "🙋 이럴 때 좋아요: " + pick.situation : "";
-        box.classList.remove("spinning");
-      }
-    }, 60 + i*4);
+    spinBtn.disabled = true;
+    res.textContent = "🎰";
+    sub.textContent = "돌아가는 중…";
+    tag.textContent = "";
+
+    wheelGroup.style.transition = "none";
+    wheelGroup.style.transform = "rotate(0deg)";
+    void wheelGroup.getBoundingClientRect();
+    wheelGroup.style.transition = "";
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        wheelGroup.style.transform = "rotate(" + rotateTo + "deg)";
+      });
+    });
+
+    wheelGroup.addEventListener("transitionend", function onEnd() {
+      wheelGroup.removeEventListener("transitionend", onEnd);
+      var winnerPath = wheelGroup.querySelector('[data-index="' + winnerIndex + '"]');
+      if (winnerPath) winnerPath.classList.add("seg-winner");
+      res.textContent = winner.name;
+      sub.textContent = winner.reason ? "💡 " + winner.reason : "오늘은 이거 어때요? 🎉";
+      tag.textContent = winner.situation ? "🙋 이럴 때 좋아요: " + winner.situation : "";
+      box.classList.remove("spinning");
+      spinBtn.disabled = false;
+      animating = false;
+    }, { once: true });
   }
 
   document.getElementById("spin").addEventListener("click", spin);
 
   fetch("/assets/data/menu-items.json")
     .then(function (r) { return r.json(); })
-    .then(function (d) { DATA = d; })
+    .then(function (d) {
+      DATA = d;
+      var preview = shuffle(pool()).slice(0, MAX_SEG);
+      if (preview.length) buildWheel(preview);
+    })
     .catch(function () { sub.textContent = "메뉴 데이터를 불러오지 못했어요."; });
 })();
 </script>
