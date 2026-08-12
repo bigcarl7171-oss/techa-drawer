@@ -79,6 +79,8 @@
   // ---------- 매거진 글 레지스트리 (홈 검색용) ----------
   // 새 글 추가 시 이 배열과 blog/index.html의 카드를 함께 추가할 것
   var POSTS = [
+    { title: "학예회·발표회 꽃다발, 생화 대신 비누꽃을 고르는 이유", emoji: "💐",
+      desc: "미리 사둘 수 있고, 옮기기 편하고, 사진에 아이 얼굴이 나오는 행사 꽃다발", path: "/blog/event-bouquet-soap-flower/", date: "2026-08-12" },
     { title: "프리저브드 꽃, 조화 아니야? 사실은 진짜 생화입니다", emoji: "🌹",
       desc: "조화와 뭐가 다른지, 어떻게 시들지 않는지 정리했습니다", path: "/blog/preserved-flower-real-flower/", date: "2026-07-29" },
     { title: "한여름 생화, 유독 빨리 시드는 이유와 오래 보는 법", emoji: "🌸",
