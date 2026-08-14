@@ -13,3 +13,19 @@ assets/banners/*
 !assets/banners/lifestyle.jpg
 !assets/banners/workshop.jpg
 !assets/banners/brand-*.jpg
+
+# 위와 같은 이유로 블로그 글의 원본 소재도 추적하지 않는다.
+# 글이 실제로 참조하는 건 리사이즈한 .jpg 파생본이고(예: summer-fresh-flower-care는
+# cover.jpg / stem-trim.jpg / mood-lamp.jpg만 쓴다), 촬영 원본 PNG·MP4는 수 MB짜리다.
+blog/**/*.png
+blog/**/*.mp4
+!blog/**/cover.png
+
+# 아직 글로 만들지 않은 소재 사진 모음 폴더 (참조하는 글이 생기면
+# 웹용으로 압축해 해당 글 폴더에 .jpg로 넣고 커밋한다)
+blog/preserved/
+blog/택배/
+
+# 상세페이지·카드뉴스 작업용 원본 사진 (웹에 올리는 파생본만 커밋)
+assets/*.png
+!assets/icons/
