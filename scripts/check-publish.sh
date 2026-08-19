@@ -100,7 +100,7 @@ if [ -n "$SHORTS" ]; then
     if [ "$inref" -ge 1 ] && [ "$inboard" -ge 1 ]; then ok "$3" "$1 일치"
     else bad "$3" "$1 — stage3:$inref board:$inboard 불일치"; fi
   }
-  chk "1,200~1,800" stage3-magazine.md "매거진 분량"
+  chk "1,800~2,800" stage3-magazine.md "매거진 분량"
   chk "1,500~2,000" stage3-blog.md     "네이버 분량"
   chk "300~500"     stage3-threads.md  "스레드 분량"
 else
