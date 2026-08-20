@@ -47,6 +47,7 @@ techa.kr/care/?p=soap&utm_source=tag&utm_medium=product
 | `care_view` | 관리법 탭 조회 | `product` | 어떤 제품이 실제로 선물됐나 |
 | `news_signup_click` | 알림받기 유도 클릭 | `situation` | **핵심 전환 지표** (실제 동의 여부는 네이버 쪽이라 클릭까지만 측정됨) |
 | `shop_click` | 스마트스토어 이동 | `placement` | 어느 페이지가 실제로 파는가 |
+| `contact_click` | `/contact/` 등 문의 페이지로 이동 (2026-08-20 추가) | `placement` | B2B·단체 문의 글이 실제 문의로 이어지는가. `#techa-cta`에 `data-href`를 지정한 글에서만 발생 — `shop_click`(스토어 이동)과 섞이지 않게 별도 이벤트로 분리했다 |
 
 ### GA4에서 확인하는 법
 보고서 → 참여도 → 이벤트에서 위 4개를 확인한다.

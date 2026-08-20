@@ -335,19 +335,27 @@
 
   // ---------- TECHA 선물샵 CTA (탄생화·탄생석 등) ----------
   // 페이지에 <div id="techa-cta" data-text="..."></div> 가 있으면 채움
+  // data-href/data-label 을 지정하면 스토어 대신 그 링크로 보낸다(예: B2B 글 -> /contact/).
+  // 지정 안 하면 기존 그대로 스마트스토어 링크 + "테차 꽃 선물 보러가기 →".
   function renderShopCTA() {
     var el = document.getElementById("techa-cta");
     if (!el) return;
     var text = el.getAttribute("data-text") || "이 감성을 담은 프리저브드 플라워 선물, 테차에서 만나보세요";
+    var overrideHref = el.getAttribute("data-href");
+    var href = overrideHref || SITE.shopUrl;
+    var label = el.getAttribute("data-label") || "테차 꽃 선물 보러가기 →";
     var base = 'margin:22px 0;padding:18px 20px;border-radius:var(--radius-md);background:var(--amber-soft);border:1px solid var(--amber-border);';
-    if (SITE.shopUrl) {
+    if (href) {
+      var targetAttr = overrideHref ? "" : ' target="_blank" rel="noopener"';
       el.innerHTML = '<div style="' + base + '">' +
         '<div style="font-weight:700;color:var(--amber-strong-ink);margin-bottom:10px">🌸 ' + text + '</div>' +
-        '<a class="btn btn-primary btn-sm" href="' + SITE.shopUrl + '" target="_blank" rel="noopener">테차 꽃 선물 보러가기 →</a></div>';
-      // 어느 페이지의 CTA가 실제로 스토어로 보내는지 측정
+        '<a class="btn btn-primary btn-sm" href="' + href + '"' + targetAttr + '>' + label + '</a></div>';
+      // 어느 페이지의 CTA가 실제로 스토어/문의로 보내는지 측정
+      // 오버라이드 링크는 스토어 이동이 아니므로 shop_click 이 아니라 contact_click 으로 구분한다
+      // (shop_click 은 GA에 "스마트스토어 이동"으로 문서화된 주요 이벤트라 섞으면 안 됨 — docs/techa-kr-funnel.md)
       var link = el.querySelector("a");
       if (link) link.addEventListener("click", function () {
-        track("shop_click", { placement: document.body.dataset.placement || location.pathname });
+        track(overrideHref ? "contact_click" : "shop_click", { placement: document.body.dataset.placement || location.pathname });
       });
     } else {
       el.innerHTML = '<div style="' + base + 'opacity:.85">' +
