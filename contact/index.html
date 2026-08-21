@@ -48,6 +48,51 @@
   }
   .btob-form-note { font-size: 13.5px; color: var(--body-text); }
   .btob-form-note ul { padding-left: 18px; margin: 8px 0 0; }
+
+  /* ---- 단체 행사·맞춤형 납품 강조 섹션 ---- */
+  .btob-hero {
+    margin: 8px 0 34px; padding: 28px 24px;
+    background: linear-gradient(160deg, var(--blue-soft) 0%, var(--amber-soft) 130%);
+    border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-lg);
+  }
+  .btob-hero-eyebrow {
+    display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--amber-strong-ink);
+    background: var(--white); border: 1px solid var(--amber-border); border-radius: var(--radius-pill);
+    padding: 4px 12px; margin-bottom: 12px;
+  }
+  .article h2.btob-hero-title {
+    font-family: "Gowun Batang", serif; font-weight: 700; line-height: 1.45;
+    font-size: clamp(20px, 4.6vw, 27px); margin: 0 0 8px; padding-bottom: 0; border-bottom: none; color: var(--brown);
+  }
+  .btob-hero-title em { font-style: normal; color: var(--amber-strong-ink); }
+  .btob-hero-sub { font-size: 14.5px; color: var(--body-text); margin: 0 0 24px; }
+
+  .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 0 0 24px; }
+  .tier-card {
+    position: relative; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md);
+    padding: 22px 16px 20px; text-align: center; box-shadow: var(--shadow);
+  }
+  .tier-card--top { border-color: var(--amber-border); box-shadow: 0 3px 14px rgba(239,176,84,.28); }
+  .tier-badge {
+    position: absolute; top: -11px; left: 50%; transform: translateX(-50%); white-space: nowrap;
+    background: linear-gradient(180deg, #f3c169 0%, var(--amber) 100%); color: var(--amber-cta-ink);
+    font-size: 11.5px; font-weight: 700; padding: 3px 11px; border-radius: var(--radius-pill);
+    box-shadow: 0 2px 6px rgba(239,176,84,.4);
+  }
+  .tier-range { display: block; font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+  .tier-discount { display: block; font-family: "Gowun Batang", serif; font-size: 25px; font-weight: 700; color: var(--blue-ink); }
+  .tier-card--top .tier-discount { color: var(--amber-strong-ink); }
+
+  .btob-hero-facts {
+    list-style: none; padding: 0; margin: 0 0 26px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 9px 22px;
+  }
+  .btob-hero-facts li { position: relative; padding-left: 14px; font-size: 13.5px; color: var(--body-text); line-height: 1.55; }
+  .btob-hero-facts li::before {
+    content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--blue);
+  }
+  .btob-hero-facts b { color: var(--brown); font-weight: 700; }
+  .btob-hero-cta { text-decoration: none; }
 </style>
 </head>
 <body>
@@ -65,6 +110,52 @@
     <p>테차는 단순한 상품 제작을 넘어, 기업과 기관이 필요로 하는 목적에 맞춰 체계적이고 전문적인
        맞춤형 솔루션을 제안합니다. 아래의 대표적인 협업 분야 외에도 귀사의 비즈니스에 필요한 형태가
        있다면 편하게 제안해 주시기 바랍니다.</p>
+
+    <section class="btob-hero">
+      <span class="btob-hero-eyebrow">단체 행사 · 맞춤형 납품</span>
+      <h2 class="btob-hero-title">기업 단체 꽃 선물, <em>100개도 하나처럼</em> 정확하게</h2>
+      <p class="btob-hero-sub">최소 10개부터 문의 가능하며, 수량이 많아질수록 할인율도 함께 커집니다.</p>
+
+      <div class="tier-grid">
+        <div class="tier-card">
+          <span class="tier-range">10~30개</span>
+          <span class="tier-discount">5% 할인</span>
+        </div>
+        <div class="tier-card">
+          <span class="tier-range">31~100개</span>
+          <span class="tier-discount">10% 할인</span>
+        </div>
+        <div class="tier-card tier-card--top">
+          <span class="tier-badge">최대 할인</span>
+          <span class="tier-range">100개 이상</span>
+          <span class="tier-discount">20% 할인</span>
+        </div>
+      </div>
+
+      <ul class="btob-hero-facts">
+        <li><b>최소 주문(MOQ)</b> 10개부터</li>
+        <li><b>제작 리드타임</b> 기본 3영업일</li>
+        <li><b>긴급 납기</b> 익일 필요 시 협의 가능 (추가 작업으로 비용이 발생할 수 있습니다)</li>
+        <li><b>배송</b> 전국 배송 · 고양/서울 권역 당일 배송</li>
+        <li><b>정산</b> 세금계산서·견적서 발행 가능</li>
+        <li><b>결제</b> 선입금 또는 온라인 주문 후 진행</li>
+        <li><b>노하우</b> 5년째 이어온 기업 단체 납품 경험</li>
+      </ul>
+
+      <a href="#contact-form" class="btn btn-primary btob-hero-cta">지금 견적 문의하기</a>
+    </section>
+
+    <h2>실제 진행 사례</h2>
+    <p>테차가 실제로 진행한 기업 단체 납품과 클래스 출강 현장입니다. 행사 컬러는 기업 CI나 원하는
+       분위기에 맞춰 준비할 수 있습니다.</p>
+    <div class="photo-grid">
+      <img src="delivery-batch-01.jpg" alt="실제 납품한 옐로우 장미 다발들이 상자 위에 나란히 준비된 모습" width="1058" height="1058" loading="lazy">
+      <img src="delivery-batch-02.jpg" alt="완성된 꽃다발들이 선반에 진열된 모습" width="1058" height="1058" loading="lazy">
+      <img src="corporate-class-01.jpg" alt="기업 대상 플라워 클래스 출강 현장" width="720" height="720" loading="lazy">
+      <img src="color-line-blue.jpg" alt="블루 컬러 라인 꽃다발이 기업 데스크에 놓인 모습" width="1024" height="1024" loading="lazy">
+      <img src="color-line-purple.jpg" alt="퍼플 컬러 라인 꽃다발이 기업 데스크에 놓인 모습" width="1024" height="1024" loading="lazy">
+      <img src="color-line-yellow.jpg" alt="옐로우 컬러 라인 꽃다발이 기업 데스크에 놓인 모습" width="1024" height="1024" loading="lazy">
+    </div>
 
     <h2>핵심 협업 분야</h2>
     <div class="btob-grid">
@@ -118,7 +209,7 @@
       <span class="btob-fact">오프라인 디자인 자산 200여 종</span>
     </div>
 
-    <h2>제휴 및 협업 문의</h2>
+    <h2 id="contact-form" style="scroll-margin-top: 80px;">제휴 및 협업 문의</h2>
     <p style="font-size:18px"><b>이메일: <a id="mail" href="#">운영자 이메일 (등록 예정)</a></b></p>
     <p class="btob-form-note">
       빠른 확인이 필요하신 경우 <a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">테차톡톡</a>으로
