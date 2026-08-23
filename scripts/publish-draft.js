@@ -22,18 +22,25 @@ const { ROOT, readText, writeText, setEol, die, rel } = D;
 
 // ── 인자
 const argv = process.argv.slice(2);
-const slug = argv.find((a) => !a.startsWith("-"));
+const FLAGS = ["emoji", "tag", "desc", "cta"];
+// 플래그 값을 슬러그로 착각하지 않게 먼저 표시해둔다 —
+// `--emoji 🌷 <slug>` 순서로 불러도 🌷 를 슬러그로 잡으면 안 된다.
+const taken = new Set();
 const opt = (name, dflt) => {
   const i = argv.indexOf("--" + name);
-  return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith("--") ? argv[i + 1] : dflt;
+  if (i < 0 || !argv[i + 1] || argv[i + 1].startsWith("--")) return dflt;
+  taken.add(i).add(i + 1);
+  return argv[i + 1];
 };
+const values = Object.fromEntries(FLAGS.map((f) => [f, opt(f, null)]));
+const slug = argv.find((a, i) => !taken.has(i) && !a.startsWith("-"));
 const DRY = argv.includes("--dry-run");
 if (!slug) die("사용법: node scripts/publish-draft.js <slug> --emoji 🌷 --tag 태그 --desc 설명");
 
-const emoji = opt("emoji", "🌸");
-const tag = opt("tag", "테차 매거진");
-const cardDesc = opt("desc", null);
-const ctaText = opt("cta", null);
+const emoji = values.emoji || "🌸";
+const tag = values.tag || "테차 매거진";
+const cardDesc = values.desc;
+const ctaText = values.cta;
 
 // ── 1. 초안
 const d = D.loadDraft(slug);
@@ -143,9 +150,13 @@ if (!DRY) {
   for (const [p, c] of writes) writeText(p, c);
 }
 
-// 본문 분량: check-publish.sh 와 같은 기준(문단·목록·소제목의 텍스트)으로 센다
-const bodyChars = (bodyHtml.match(/<(?:p|li|h2|h3)>[^<]*/g) || [])
-  .join("").replace(/<[^>]*>/g, "").length;
+// 본문 분량: check-publish.sh 의 body_chars() 와 똑같은 기준으로 센다 —
+// article 에서 태그와 사진 설명을 지우고 공백을 뺀 문자 수. 두 도구가 다른 숫자를
+// 내면 어느 쪽을 믿어야 할지 알 수 없게 된다.
+const bodyChars = article
+  .replace(/<figcaption>[^<]*<\/figcaption>/g, "")
+  .replace(/<[^>]*>/g, " ")
+  .replace(/\s/g, "").length;
 
 const missing = d.images.filter((im) => !fs.existsSync(path.join(outDir, im.file)));
 console.log(JSON.stringify({
@@ -190,8 +201,9 @@ function mdToHtml(md) {
     }
     if (line.startsWith("### ")) { flush(); out.push(`    <h3>${esc(line.slice(4).trim())}</h3>`); continue; }
     if (line.startsWith("## ")) { flush(); out.push(`    <h2>${esc(line.slice(3).trim())}</h2>`); continue; }
-    // **Q. …** 한 줄 = FAQ 질문
-    const q = line.match(/^\*\*(.+)\*\*$/);
+    // **Q. …** 한 줄 = FAQ 질문. 안쪽에 `**`가 없어야 한다 —
+    // "**앞**  가운데 **뒤**" 같은 평범한 문단이 소제목으로 둔갑하던 걸 막는다.
+    const q = line.match(/^\*\*([^*]+)\*\*$/);
     if (q) { flush(); out.push(`    <h3>${esc(q[1].trim())}</h3>`); continue; }
     if (line.startsWith("- ")) { (ul = ul || []).push(`      <li>${inline(line.slice(2).trim())}</li>`); continue; }
     flush();

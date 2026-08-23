@@ -81,6 +81,7 @@ for (const im of d.images) {
     try {
       execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", src, "-vf", FILTER[mode], "-q:v", "4", dest]);
     } catch (e) {
+      if (e.code === "ENOENT") die("ffmpeg 을 찾을 수 없다 — 설치하거나 PATH 에 넣어야 이미지를 만들 수 있다");
       die(`ffmpeg 실패 (${rel(src)} → ${rel(dest)}): ${e.message}`);
     }
   }

@@ -81,12 +81,15 @@ function subBody(sec, name) {
     [이미지 자리 1: 설명 — alt: 대체텍스트 — prompt: English generation prompt]
   `— ` 로 끊고 `키: 값` 을 찾는다. alt·prompt 는 없어도 된다(없으면 설명을 alt 로 쓰고,
   prompt 가 없으면 자동 생성 대상에서 빠져 사람이 사진을 넣어야 한다).
+
+  구분자는 em dash 가 규격이지만 en dash·하이픈도 받는다 — 초안을 쓰는 쪽이 글자를
+  바꿔 쓰면 alt·prompt 가 통째로 설명에 먹혀 조용히 사라지기 때문이다.
 */
 const IMG_MARKER = /^\[이미지 자리\s*(\d+)\s*:\s*(.+?)\]$/;
 function parseMarker(line) {
   const m = line.trim().match(IMG_MARKER);
   if (!m) return null;
-  const parts = m[2].split(/\s+—\s+/);
+  const parts = m[2].split(/\s+[—–-]\s+/);
   const slot = Number(m[1]);
   const out = { slot, file: `img-${slot}.jpg`, desc: parts[0].trim(), alt: null, prompt: null };
   for (const p of parts.slice(1)) {

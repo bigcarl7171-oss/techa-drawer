@@ -25,6 +25,29 @@ find_repo() {  # $1=특징파일
 CARDNEWS="$(find_repo topic-pool.md || true)"
 SHORTS="$(find_repo script-guide.md || true)"
 
+# ── 본문 자수 세기
+#
+# ⚠️ wc -m 은 로케일이 UTF-8 이 아니면 '문자'가 아니라 '바이트'를 센다. 한글은 3바이트라
+# 자수가 3배로 부풀려졌고, 그래서 분량 경고가 한 번도 걸리지 않았다(2026-08-23 발견).
+# 실측 결과 발행글 14편의 실제 본문은 746~2,152자였다 — 표시값은 2,156~6,232자였다.
+CHARLOC=""
+for loc in C.UTF-8 en_US.UTF-8 ko_KR.UTF-8; do
+  [ "$(printf '가나다' | LC_ALL="$loc" wc -m 2>/dev/null)" = "3" ] && { CHARLOC="$loc"; break; }
+done
+
+# 줄 단위로 뽑으면 <p> 가 여러 줄에 걸친 옛 글이 통째로 누락된다. article 을 한 줄로
+# 만든 뒤 태그를 지운다. 사진 설명(figcaption)은 본문이 아니라 뺀다.
+body_chars() {
+  local txt
+  txt=$(tr '\n' ' ' < "$1" \
+    | sed 's/.*<article class="article">//; s|</article>.*||' \
+    | sed 's|<figcaption>[^<]*</figcaption>||g' \
+    | sed 's/<[^>]*>/ /g' \
+    | tr -d '[:space:]')
+  if [ -n "$CHARLOC" ]; then printf '%s' "$txt" | LC_ALL="$CHARLOC" wc -m
+  else printf '%s' "$txt" | wc -c; fi   # UTF-8 로케일이 없으면 바이트 수라도 낸다
+}
+
 FAIL=0; WARN=0
 ok()   { printf "  \033[32m✅\033[0m %-26s %s\n" "$1" "${2:-}"; }
 bad()  { printf "  \033[31m❌\033[0m %-26s %s\n" "$1" "${2:-}"; FAIL=$((FAIL+1)); }
@@ -38,14 +61,12 @@ echo
 # ── 1. 글 파일
 echo "[1] 글 파일"
 if [ -f "blog/$SLUG/index.html" ]; then
-  # 문단·목록·소제목의 텍스트만 센다. <p> 만 세면 목록이 많은 글이 실제보다 짧게 잡히고,
-  # 태그를 안 지우면 <strong> 이 낀 문장이 잘려 나간다.
-  chars=$(sed -n 's/.*<\(p\|li\|h2\|h3\)>\(.*\)<\/\1>.*/\2/p' "blog/$SLUG/index.html" \
-    | sed 's/<[^>]*>//g' | tr -d '[:space:]' | wc -m)
+  chars=$(body_chars "blog/$SLUG/index.html")
   imgs=$(grep -c '<img ' "blog/$SLUG/index.html")
   ok "blog/$SLUG/index.html" "본문 약 ${chars}자 · 이미지 ${imgs}장"
+  [ -z "$CHARLOC" ] && warn "자수 신뢰도" "UTF-8 로케일이 없어 바이트로 셌다 — 한글은 약 3배로 부풀려진다"
   # 목표는 stage3-magazine.md 원본과 같은 1,800~2,800자 (2026-08-19 상향).
-  # 이 줄만 옛 기준 1,200~1,800으로 남아 아래 [규격] 대조와 자기모순이었다.
+  # 예전엔 이 줄만 옛 기준 1,200~1,800으로 남아 아래 [규격] 대조와 자기모순이었다.
   [ "$chars" -lt 1800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,800~2,800자"
   [ "$chars" -gt 2800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,800~2,800자"
   og=$(grep -o 'og:image" content="[^"]*' "blog/$SLUG/index.html" | head -1)
