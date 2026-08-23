@@ -1,7 +1,7 @@
 ---
 date: 2026-08-23
 platform: magazine
-status: draft
+status: published
 topic_no: 88
 group: I
 skeleton: 사례스토리형

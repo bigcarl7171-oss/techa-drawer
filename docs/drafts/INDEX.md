@@ -6,4 +6,4 @@
 
 | 날짜 | 번호 | 군 | 뼈대 | 슬러그 | 제목 | draft | 미채택 2안 번호 |
 |---|---|---|---|---|---|---|---|
-| 2026-08-23 | 88 | I | 사례스토리형 | convenience-store-flower-emergency | 편의점 꽃다발, 급할 때 사도 될까요 | docs/drafts/2026-08-23-convenience-store-flower-emergency.md | 98, 111 |
+| 2026-08-23 | 88 | I | 사례스토리형 | convenience-store-flower-emergency | 편의점 꽃다발, 급할 때 사도 될까요 | published | 98, 111 |
