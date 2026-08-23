@@ -69,6 +69,14 @@ if [ -f "blog/$SLUG/index.html" ]; then
   # 예전엔 이 줄만 옛 기준 1,200~1,800으로 남아 아래 [규격] 대조와 자기모순이었다.
   [ "$chars" -lt 1800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,800~2,800자"
   [ "$chars" -gt 2800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,800~2,800자"
+  # 참조한 이미지 파일이 실제로 있는지. 없으면 라이브에 깨진 이미지가 그대로 나간다 —
+  # 무인 발행이라 사람 눈이 중간에 없다.
+  missing=""
+  for src in $(grep -o 'src="/blog/'"$SLUG"'/[^"]*"' "blog/$SLUG/index.html" | sed 's/src="//; s/"$//'); do
+    [ -f ".$src" ] || missing="$missing $(basename "$src")"
+  done
+  [ -z "$missing" ] && ok "이미지 파일 실재" "${imgs}장 모두 있음" \
+    || bad "이미지 파일 실재" "없음 —$missing"
   og=$(grep -o 'og:image" content="[^"]*' "blog/$SLUG/index.html" | head -1)
   [ -n "$og" ] && ok "대표 이미지" "$(basename "$og")" || bad "대표 이미지" "og:image 없음"
 else
