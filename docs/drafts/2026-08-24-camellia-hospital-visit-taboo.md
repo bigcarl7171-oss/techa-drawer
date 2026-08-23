@@ -1,7 +1,7 @@
 ---
 date: 2026-08-24
 platform: magazine
-status: draft
+status: ready
 topic_no: 8
 group: A
 skeleton: 반전형
@@ -53,11 +53,11 @@ camellia-hospital-visit-taboo
 
 ## 대표 이미지 alt
 
-동백꽃과 프리저브드 꽃다발을 나란히 놓은 병문안 선물 비교 이미지
+병문안 선물로 고른 보라색 프리저브드 장미 꽃다발
 
 ## 대표 이미지 프롬프트
 
-Photorealistic camellia flower branch beside a wrapped preserved flower bouquet on a hospital room windowsill, warm natural light, no people, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background
+(실사 사용 — docs/drafts/images/<슬러그>/cover.jpg. 생성이 필요할 때만: Photorealistic wrapped preserved flower bouquet with a purple rose centerpiece, soft lilac wrapping paper, warm natural light, no people, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background)
 
 ## 본문
 
@@ -81,7 +81,7 @@ Photorealistic camellia flower branch beside a wrapped preserved flower bouquet 
 
 이런 이유들 때문에 병문안 선물로는 생화보다 프리저브드 꽃을 고르시는 분들이 많아요. 생화를 특수 용액으로 오래 보존되게 만든 꽃이라 물을 갈아줄 필요가 없고, 흙이나 물이 없어서 반입 제한 때문에 곤란해질 일도 적어요. 향도 원래 생화보다 은은해서 좁은 병실에서도 부담이 덜하고, 꽃가루가 날릴 걱정도 없어요. 무엇보다 동백꽃처럼 갑자기 통째로 떨어지는 일 없이 그 모습 그대로 오래 유지되니, 회복하시는 동안 계속 옆에 두고 보실 수 있어요. 병문안이라는 순간이 지나도 한참을 그 자리에 남아 있는 것도 프리저브드 꽃만의 장점이고요. 퇴원하실 때 챙겨서 집으로 가져가셔도 되니, 병실에서만 잠깐 보고 버려지는 꽃이 아니라 그 이후까지 이어지는 선물이 되는 셈이에요.
 
-[이미지 자리 2: 병실 협탁 위에 놓인 프리저브드 꽃다발 — alt: 병실 협탁 위 프리저브드 꽃다발 — prompt: Photorealistic preserved flower bouquet wrapped neatly on a hospital bedside table near a window, warm natural light, no people, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background]
+[이미지 자리 2: 물을 갈아줄 필요 없는 프리저브드 꽃다발 클로즈업 — alt: 물을 갈아줄 필요 없는 프리저브드 장미 꽃다발 — prompt: (실사 사용 — 2.jpg. 생성이 필요할 때만: Photorealistic close-up of a preserved flower bouquet with purple roses and hydrangea, warm natural light, no people, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background)]
 
 ### 정리하면 이렇게 확인해보세요
 
