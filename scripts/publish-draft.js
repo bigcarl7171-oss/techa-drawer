@@ -183,11 +183,24 @@ function esc(s) {
 
 /** 본문 마크다운 → article 안에 들어갈 HTML */
 function mdToHtml(md) {
+  const lines = md.split(/\r?\n/);
+  // 소제목 깊이는 '#' 개수의 절대값이 아니라 본문 안에서의 상대값으로 본다.
+  // 루틴이 본문 소제목을 ## 로도 ### 로도 쓴다(2026-08-24 실측: ###).
+  // article 안에서 가장 얕은 제목이 <h2> 가 되어야 문서 구조가 맞는다.
+  const levels = lines.map((l) => D.heading(l.trim())).filter(Boolean).map((h) => h.level);
+  const minHead = levels.length ? Math.min(...levels) : 2;
+
   const out = [];
   let ul = null;
-  const flush = () => { if (ul) { out.push(`    <ul>\n${ul.join("\n")}\n    </ul>`); ul = null; } };
+  const flush = () => {
+    if (!ul) return;
+    out.push("    <ul>");
+    out.push(...ul);
+    out.push("    </ul>");
+    ul = null;
+  };
 
-  for (const raw of md.split("\n")) {
+  for (const raw of lines) {
     const line = raw.trim();
     if (!line) { flush(); continue; }
 
@@ -199,19 +212,29 @@ function mdToHtml(md) {
       out.push(`    </figure>`);
       continue;
     }
-    if (line.startsWith("### ")) { flush(); out.push(`    <h3>${esc(line.slice(4).trim())}</h3>`); continue; }
-    if (line.startsWith("## ")) { flush(); out.push(`    <h2>${esc(line.slice(3).trim())}</h2>`); continue; }
+
+    const h = D.heading(line);
+    if (h) {
+      flush();
+      const tag = h.level <= minHead ? "h2" : "h3";
+      out.push(`    <${tag}>${esc(h.title)}</${tag}>`);
+      continue;
+    }
+
     // **Q. …** 한 줄 = FAQ 질문. 안쪽에 `**`가 없어야 한다 —
-    // "**앞**  가운데 **뒤**" 같은 평범한 문단이 소제목으로 둔갑하던 걸 막는다.
+    // "**앞** 가운데 **뒤**" 같은 평범한 문단이 소제목으로 둔갑하던 걸 막는다.
     const q = line.match(/^\*\*([^*]+)\*\*$/);
     if (q) { flush(); out.push(`    <h3>${esc(q[1].trim())}</h3>`); continue; }
+
     if (line.startsWith("- ")) { (ul = ul || []).push(`      <li>${inline(line.slice(2).trim())}</li>`); continue; }
+
     flush();
     out.push(`    <p>${inline(line)}</p>`);
   }
   flush();
   return out.join("\n");
 }
+
 function inline(s) {
   return esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
 }

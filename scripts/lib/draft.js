@@ -3,6 +3,10 @@
   초안(docs/drafts/YYYY-MM-DD-<slug>.md) 파서 — publish-draft.js 와 prepare-images.js 가
   같은 규칙으로 읽어야 해서 한 곳에 둔다. 이미지 슬롯 정의가 두 스크립트에서 어긋나면
   발행본이 참조하는 파일명과 실제로 만든 파일명이 달라진다.
+
+  ⚠️ 제목의 '#' 개수에 의존하지 않는다. 초안을 쓰는 건 매일 도는 루틴이고, 같은 지시로도
+  전부 `##` 로 평평하게 쓸 때가 있다(2026-08-24 실제로 그래서 파서가 멈췄다).
+  절을 이름으로 찾고, 끝나는 지점은 '같거나 더 얕은 레벨의 다음 제목'으로 잡는다.
 */
 const fs = require("fs");
 const path = require("path");
@@ -51,29 +55,39 @@ function parseFrontmatter(text) {
   return out;
 }
 
-/** `# 제목` 부터 다음 `# ` 직전까지 */
-function section(text, heading) {
+/** 제목 줄이면 {level, title}, 아니면 null */
+function heading(line) {
+  const m = line.match(/^(#{1,6})\s+(.*?)\s*$/);
+  return m ? { level: m[1].length, title: m[2] } : null;
+}
+
+/**
+ * 이름으로 절을 찾는다. '#' 개수는 상관없다.
+ * 절은 같거나 더 얕은 레벨의 다음 제목 직전에서 끝난다.
+ * @returns {{level:number, body:string}|null}
+ */
+function section(text, name) {
   const lines = text.split("\n");
-  const start = lines.findIndex((l) => l.trim() === `# ${heading}`);
+  let start = -1, level = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const h = heading(lines[i]);
+    if (h && h.title === name) { start = i; level = h.level; break; }
+  }
   if (start < 0) return null;
   let end = lines.length;
   for (let i = start + 1; i < lines.length; i++) {
-    if (/^# \S/.test(lines[i])) { end = i; break; }
+    const h = heading(lines[i]);
+    if (h && h.level <= level) { end = i; break; }
   }
-  return lines.slice(start + 1, end).join("\n");
+  return { level, body: lines.slice(start + 1, end).join("\n") };
 }
 
-/** 섹션 안의 `## 이름` 한 줄짜리 값 */
-function sub(sec, name) {
-  const m = sec.match(new RegExp(`^## ${name}\\s*\\n+([^\\n]+)`, "m"));
-  return m ? m[1].trim() : null;
-}
-
-/** 섹션 안의 `## 본문` 이하 전체 (하위 `## ` 소제목 포함) */
-function subBody(sec, name) {
-  const i = sec.search(new RegExp(`^## ${name}\\s*$`, "m"));
-  if (i < 0) return null;
-  return sec.slice(i).replace(new RegExp(`^## ${name}\\s*\\n`), "").replace(/\n*---\s*$/, "").trim();
+/** 이름으로 찾은 절의 첫 내용 줄 (제목·요약처럼 한 줄짜리 값) */
+function sectionLine(text, name) {
+  const s = section(text, name);
+  if (!s) return null;
+  const line = s.body.split("\n").map((l) => l.trim()).find(Boolean);
+  return line || null;
 }
 
 /*
@@ -106,22 +120,28 @@ function loadDraft(slug) {
   const file = findDraft(slug);
   const text = readText(file);
   const fm = parseFrontmatter(text);
-  const manuscript = section(text, "초안 원고");
-  if (!manuscript) die(`초안에 "# 초안 원고" 섹션이 없다: ${rel(file)}`);
 
-  const title = sub(manuscript, "제목");
-  const summary = sub(manuscript, "한 줄 요약");
-  const bodyMd = subBody(manuscript, "본문");
-  if (!title) die("초안에 `## 제목` 이 없다");
-  if (!summary) die("초안에 `## 한 줄 요약` 이 없다");
-  if (!bodyMd) die("초안에 `## 본문` 이 없다");
+  // '초안 원고' 절은 있으면 그 안에서, 없으면 문서 전체에서 찾는다.
+  // 루틴이 전부 같은 레벨로 평평하게 쓰면 '초안 원고' 절이 바로 다음 제목에서
+  // 끝나버려 비어 보인다 — 그때는 문서 전체를 훑는 쪽이 맞다.
+  const ms = section(text, "초안 원고");
+  const scope = ms && ms.body.includes("## ") ? ms.body : text;
 
+  const title = sectionLine(scope, "제목");
+  const summary = sectionLine(scope, "한 줄 요약");
+  const bodySec = section(scope, "본문");
+  if (!title) die(`초안에 "제목" 절이 없다: ${rel(file)}`);
+  if (!summary) die(`초안에 "한 줄 요약" 절이 없다: ${rel(file)}`);
+  if (!bodySec) die(`초안에 "본문" 절이 없다: ${rel(file)}`);
+  const bodyMd = bodySec.body.replace(/\n*---\s*$/, "").trim();
+
+  const coverAlt = sectionLine(scope, "대표 이미지 alt") || title;
   const cover = {
     slot: "cover",
     file: "cover.jpg",
-    desc: sub(manuscript, "대표 이미지 alt") || title,
-    alt: sub(manuscript, "대표 이미지 alt") || title,
-    prompt: sub(manuscript, "대표 이미지 프롬프트"),
+    desc: coverAlt,
+    alt: coverAlt,
+    prompt: sectionLine(scope, "대표 이미지 프롬프트"),
   };
   const body = bodyMd.split("\n").map(parseMarker).filter(Boolean);
 
@@ -136,5 +156,5 @@ function loadDraft(slug) {
 
 module.exports = {
   ROOT, readText, writeText, setEol, die, rel, assertRepo,
-  findDraft, parseFrontmatter, section, sub, subBody, parseMarker, loadDraft,
+  findDraft, parseFrontmatter, heading, section, sectionLine, parseMarker, loadDraft,
 };
