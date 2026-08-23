@@ -1,0 +1,188 @@
+---
+name: techa-publish
+description: >
+  테차서랍 매거진 초안을 발행까지 끝낸다. 사람이 `docs/drafts/`의 초안을 검토·수정하고
+  사진을 넣은 뒤 frontmatter를 `status: ready`로 바꿔 커밋하면, 이 스킬이 나머지를 전부
+  처리한다 — 빈 이미지 슬롯 생성, 발행본 HTML 생성, 목록·메인·사이트맵 반영, 내부링크
+  연결, check-publish.sh 검증, 커밋·푸시(=Cloudflare 배포), 네이버 블로그용 재구성 원고
+  생성, topic-pool·INDEX·원고 보드 이력 갱신.
+  트리거: '초안 발행해줘', '매거진 올려줘', '오늘 초안 발행', '<슬러그> 발행',
+  그리고 매일 도는 2차 클라우드 루틴.
+---
+
+# 테차 매거진 발행 (techa-publish)
+
+매일 05:30 루틴이 `docs/drafts/`에 초안을 만든다. 이 스킬은 **그 다음부터 끝까지**를 맡는다.
+사람이 하는 일은 셋뿐: ①원고 검토·수정 ②사진 넣기 ③`status: ready`로 바꿔 커밋.
+
+> ⚠️ 규칙이 서로 어긋나면 **`techa-content-studio` 스킬 쪽이 최신이다.** 이 저장소의
+> `docs/blog-seo-guide.md`가 더 오래된 방침을 담고 있던 전례가 있다(네이버 링크백 건,
+> 열흘간 어긋나 있었다). 판단이 갈리면 `references/stage3-*.md`를 따른다.
+
+## 저장소 찾기 — 절대경로를 외우지 않는다
+
+작업 PC마다 드라이브·폴더명이 다르다. 하드코딩했다가 "그런 파일 없다"고 오판한 사고가
+있었다(2026-08-17). 부모 폴더에서 **특징 파일**로 찾는다 — `check-publish.sh`의 `find_repo()`와 같은 방식.
+
+| 별칭 | 특징 파일 |
+|---|---|
+| `techa-drawer` (여기) | 루트의 `techa-brand-rules.md` |
+| `techa-cardnews` | 루트의 `topic-pool.md` |
+| `techa-shorts` | 루트의 `script-guide.md` — `references/stage3-*.md`가 여기 있다 |
+
+`techa-content-studio` 스킬이 형제 저장소에 없으면 `D:\claude-practice\.claude\skills\techa-content-studio\`
+도 확인한다(이 PC의 실제 위치, `CLAUDE.md` 저장소 지도 참조).
+
+---
+
+## S0 — 대상 찾기
+
+1. `git pull`
+2. `docs/drafts/*.md` 중 frontmatter가 **`status: ready`** 인 것을 찾는다 (`-naver.md` 제외).
+   - **없으면 아무것도 하지 않고 종료한다.** "오늘은 발행할 초안이 없다"만 보고.
+   - 여러 개면 날짜가 오래된 것부터 하나씩.
+   - 슬러그를 사용자가 직접 지정했으면 `status`와 무관하게 그걸 쓴다.
+3. 초안 전문을 읽는다. 이후 단계에서 계속 참조한다.
+
+## S1 — 이미지 채우기
+
+```
+node scripts/prepare-images.js <slug>
+```
+
+JSON의 `missing[]`을 본다. 비어 있으면 S2로.
+
+빈 슬롯이 있으면 **그 슬롯만** 생성한다:
+
+- 각 항목의 `prompt`(초안 이미지 마커의 `— prompt:` 영문 프롬프트)로 힉스필드 `generate_image` 호출.
+- `prompt`가 비어 있으면 `desc`(한글 설명)를 근거로 영문 프롬프트를 직접 만든다. `blog-seo-guide.md`
+  이미지 규칙을 반드시 지킨다:
+  - `Photorealistic`, 따뜻한 자연광
+  - `no text, no watermark, no logos`
+  - `keep the bottom-right corner as simple, uncluttered background` (워터마크 잘라낼 자리)
+  - 사람이 나오면 안 되는 컷이면 `no people`
+- 받은 파일을 한 폴더에 `cover.png` / `1.png` / `2.png`… 이름으로 내려받은 뒤:
+```
+node scripts/prepare-images.js <slug> --from <그 폴더>
+```
+  이러면 우하단 워터마크가 잘리고 3:2·1200px·q4 jpg로 `blog/<slug>/`에 들어간다.
+  **원본 PNG는 저장소에 넣지 않는다** (`.gitignore`가 `blog/**/*.png`를 막지만 애초에 옮기지 않는다).
+- 결과 jpg가 100~150KB 범위인지 `filled[].kb`로 확인한다. 크게 벗어나면 사용자에게 알린다.
+
+> 직접 촬영본이 `docs/drafts/images/<slug>/`에 있으면 그게 **항상 우선**한다. AI 컷으로 덮어쓰지 않는다.
+
+## S2 — 발행본 생성
+
+원고를 읽고 세 가지를 정한 뒤 스크립트에 넘긴다:
+
+- `--emoji` 소재에 맞는 이모지 1개 (기존 카드들과 겹쳐도 된다)
+- `--tag` 캐러셀 태그, 2~5자 (예: `꽃 고르기`, `기업 행사`, `보관법`)
+- `--desc` 목록 카드 한 줄 — 한 줄 요약을 그대로 쓰지 말고 **뭘 알 수 있는 글인지** 30~45자로
+- `--cta` (선택) 이 글과 어울리는 선물 문구. 억지스러우면 넣지 않는다
+
+```
+node scripts/publish-draft.js <slug> --emoji 🌷 --tag "꽃 고르기" --desc "…" [--cta "…"]
+```
+
+이 스크립트가 처리하는 것 (손대지 말 것):
+발행본 HTML · `og:image`를 글별 cover로 · `blog/index.html` 카드 · `index.html` 캐러셀(상한 3,
+`transition-delay` 재부여) · 위젯(상한 5) · `sitemap.xml` · 멱등 재실행.
+
+JSON의 `warnings[]`를 확인한다. **본문이 1,800자 미만이면 여기서 멈추고 사용자에게 알린다** —
+매거진 목표는 1,800~2,800자(`stage3-magazine.md`)다. 무단으로 살을 붙이지 않는다.
+
+## S3 — 내부링크 (판단이 필요한 단계)
+
+새 글로 들어오는 링크를 **블로그 밖 페이지 최소 1곳**에 만든다. 2026-08-17·08-18 두 번 연속
+누락된 지점이라 `check-publish.sh`가 실패로 잡는다.
+
+- 후보: `care/`, `about/`, `ko/<도구>/` 중 **소재가 실제로 맞닿는** 곳
+- 문맥 안에 자연스러운 문장으로 넣는다. "관련 글" 목록을 새로 만들지 않는다
+- 억지로 맞는 곳이 없으면 그 사실을 보고하고 사용자 판단을 받는다 — 아무 데나 꽂지 않는다
+
+## S4 — 검증 (게이트)
+
+```
+bash scripts/check-publish.sh <slug>
+```
+
+- **❌가 하나라도 있으면 커밋하지 않고 멈춘다.** 뭐가 걸렸는지 그대로 보고한다.
+- ⚠️ 중 "라이브 페이지/sitemap"은 아직 배포 전이라 정상이다. 나머지 ⚠️는 사용자에게 알린다.
+
+## S5 — 커밋·푸시 (배포)
+
+통과했을 때만:
+
+```
+git add blog/<slug> blog/index.html index.html sitemap.xml <내부링크 건드린 파일>
+git commit -m "매거진 발행: <제목>"
+git push
+```
+
+푸시하면 Cloudflare Workers Builds가 자동 배포한다. 1~2분 뒤:
+
+```
+curl -s -o /dev/null -w '%{http_code}' https://www.techa.kr/blog/<slug>/
+```
+200이 아니면 보고한다.
+
+## S6 — 네이버 블로그용 재구성 원고
+
+발행본(`blog/<slug>/index.html`)을 소스로 **각도를 갈아** 다시 쓴다.
+`references/stage3-blog.md`가 원본 스펙이다. 요약판이 아니다 — 문장을 전부 새로 쓴다.
+
+| | 매거진 (방금 발행) | 네이버 블로그 |
+|---|---|---|
+| 성격 | 정보형 — 판단 기준 | 경험형 — 고민 → 결정 → 그 이후 |
+| 분량 | 1,800~2,800자 | **1,500~2,000자** |
+| 소제목 | 4~6 + FAQ | **2~3** + 리스트 최소 1곳 |
+| 제목 | 1개 | **3안, 각 25~30자, 글자수 병기** |
+| 이미지 | 대표 + 본문 2~3 | **3장 이상** (매거진 컷 재사용 가능) |
+| 링크 | canonical | ⛔ **techa.kr 링크백 금지** — "테차" 브랜드명만 언급 |
+
+⛔ 링크백 금지는 2026-08-07 방침 변경이다. 상업적 외부링크가 반복되면 네이버가 저품질로
+판단할 위험이 있어서다. 필요하면 블로그 프로필 영역에 1회성으로만.
+
+검색량 수치를 모르면 **지어내지 말고** "경쟁 지형으로만 판단했다"고 밝힌다.
+1인칭 경험담을 쓰되 **없는 사례를 지어내지 않는다** — 브랜드 규칙의 "지어낸 사례 금지"가 우선한다.
+
+`docs/drafts/<날짜>-<slug>-naver.md`로 저장하고 커밋한다
+(frontmatter: `date, platform: naver-blog, status: draft, source, topic_no, angle, char_count`).
+
+## S7 — 이력 갱신 (빠뜨리면 같은 주제를 또 추천하게 된다)
+
+1. `techa-cardnews/topic-pool.md` **두 표 다**:
+   - 번호 표 해당 행 `사용함` 열 → `날짜 + 뼈대 유형` (예: `2026-08-24 사례·스토리형`)
+   - "이미 다룬 주제" 표 → 제목 · 채널 · `슬러그`, 발행일, 네이버 재구성 각도 한 줄
+   - 커밋한다 (다른 저장소다)
+2. `docs/drafts/INDEX.md` 해당 행 `draft` 열을 `published`로, 네이버판을 만들었으면 함께 표기
+3. 초안 frontmatter `status: ready` → `published`
+4. **원고 보드 재발행** — 소스 `techa-content-studio/references/topic-board.html`을 고치고
+   Artifact를 **`url` 파라미터에 기존 주소를 넣어** 재발행한다:
+   `https://claude.ai/code/artifact/d186c5b8-c22a-4f17-af60-693ba18ba6c2`
+   `url` 없이 발행하면 별개 아티팩트가 생겨 사용자가 보던 링크는 안 바뀐다.
+
+## S8 — 사람 몫만 보고하고 끝낸다
+
+API가 없어 자동화할 수 없는 셋:
+
+- 구글 서치콘솔 → URL 검사 → 색인 생성 요청
+- 네이버 서치어드바이저 → 요청 → 웹 페이지 수집 요청
+- 네이버 블로그에 `-naver.md` 붙여넣기 (제목 3안 중 1개 확정 + 이미지 3장 업로드)
+
+최종 보고: 발행 URL · 본문 자수 · 이미지 출처(직접 촬영 / AI 생성) · 내부링크 건 페이지 ·
+`check-publish.sh` 결과 · 네이버 원고 경로 · 위 3가지 남은 일.
+
+---
+
+## 실행 전 체크리스트
+
+- [ ] S0: `status: ready` 초안만 건드렸는가 (없으면 아무것도 안 하고 끝냈는가)
+- [ ] S1: 직접 촬영본을 AI 컷으로 덮어쓰지 않았는가 / 워터마크가 잘렸는가
+- [ ] S2: 본문 1,800자 미만이면 **멈췄는가** (몰래 늘리지 않았는가)
+- [ ] S3: 블로그 밖 내부링크를 문맥 안에 자연스럽게 넣었는가
+- [ ] S4: ❌ 없이 통과한 뒤에만 커밋했는가
+- [ ] S6: 네이버판이 매거진 문장 복사가 아니라 **각도를 갈아 새로 쓴 글**인가 / ⛔ techa.kr 링크가 없는가
+- [ ] S7: `topic-pool.md` **두 표 다** 갱신하고 커밋했는가 / 보드를 **기존 URL로** 재발행했는가
+- [ ] 브랜드 사실: 누적 판매량·리뷰 건수를 **숫자로 쓰지 않았는가** (평점 4.8+ 만 숫자 허용).
+      손님 문의는 허용된 3가지(배송·맞춤 제작·생화 여부) 밖으로 나가지 않았는가

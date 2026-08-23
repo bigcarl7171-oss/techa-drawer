@@ -38,10 +38,16 @@ echo
 # ── 1. 글 파일
 echo "[1] 글 파일"
 if [ -f "blog/$SLUG/index.html" ]; then
-  chars=$(grep -o '<p>[^<]*' "blog/$SLUG/index.html" | wc -m)
+  # 문단·목록·소제목의 텍스트만 센다. <p> 만 세면 목록이 많은 글이 실제보다 짧게 잡히고,
+  # 태그를 안 지우면 <strong> 이 낀 문장이 잘려 나간다.
+  chars=$(sed -n 's/.*<\(p\|li\|h2\|h3\)>\(.*\)<\/\1>.*/\2/p' "blog/$SLUG/index.html" \
+    | sed 's/<[^>]*>//g' | tr -d '[:space:]' | wc -m)
   imgs=$(grep -c '<img ' "blog/$SLUG/index.html")
   ok "blog/$SLUG/index.html" "본문 약 ${chars}자 · 이미지 ${imgs}장"
-  [ "$chars" -lt 1200 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,200~1,800자"
+  # 목표는 stage3-magazine.md 원본과 같은 1,800~2,800자 (2026-08-19 상향).
+  # 이 줄만 옛 기준 1,200~1,800으로 남아 아래 [규격] 대조와 자기모순이었다.
+  [ "$chars" -lt 1800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,800~2,800자"
+  [ "$chars" -gt 2800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,800~2,800자"
   og=$(grep -o 'og:image" content="[^"]*' "blog/$SLUG/index.html" | head -1)
   [ -n "$og" ] && ok "대표 이미지" "$(basename "$og")" || bad "대표 이미지" "og:image 없음"
 else
