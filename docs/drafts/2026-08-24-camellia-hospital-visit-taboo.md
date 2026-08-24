@@ -1,7 +1,7 @@
 ---
 date: 2026-08-24
 platform: magazine
-status: ready
+status: published
 topic_no: 8
 group: A
 skeleton: 반전형
