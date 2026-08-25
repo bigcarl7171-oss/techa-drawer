@@ -1,0 +1,970 @@
+<title>테차 쇼츠 자막 시스템</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+
+<style>
+/* ============ 토큰 ============ */
+:root{
+  --ground:#F1F0ED; --ground-2:#E6E4DF; --surface:#FFFFFF; --surface-2:#FAF9F7;
+  --hairline:#DBD8D2; --hairline-2:#C3BFB7;
+  --ink:#1D1F24; --ink-2:#4A4E57; --ink-3:#757A85;
+  --accent:#9E8551; --accent-soft:#EFE7D6; --accent-ink:#FFFFFF;
+  --bad:#A33A2A; --bad-soft:#F7E7E3;
+  --good:#4C7648; --good-soft:#E4EDE2;
+  --shadow:0 1px 2px rgba(29,31,36,.06), 0 8px 24px -12px rgba(29,31,36,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#131519; --ground-2:#0C0E11; --surface:#1B1E24; --surface-2:#22262E;
+    --hairline:#2E333C; --hairline-2:#424956;
+    --ink:#E9EBEF; --ink-2:#A7ADB9; --ink-3:#78808D;
+    --accent:#C9A961; --accent-soft:#2A2418; --accent-ink:#191510;
+    --bad:#E28B7B; --bad-soft:#2F1F1B;
+    --good:#93C08C; --good-soft:#1B2A1A;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#131519; --ground-2:#0C0E11; --surface:#1B1E24; --surface-2:#22262E;
+  --hairline:#2E333C; --hairline-2:#424956;
+  --ink:#E9EBEF; --ink-2:#A7ADB9; --ink-3:#78808D;
+  --accent:#C9A961; --accent-soft:#2A2418; --accent-ink:#191510;
+  --bad:#E28B7B; --bad-soft:#2F1F1B;
+  --good:#93C08C; --good-soft:#1B2A1A;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+
+/* ============ 기본 ============ */
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',system-ui,sans-serif;
+  font-weight:400; font-size:16px; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px}
+section{padding:64px 0; border-top:1px solid var(--hairline)}
+section:first-of-type{border-top:0}
+
+h1,h2,h3,h4{margin:0; font-weight:600; line-height:1.3; text-wrap:balance}
+h2{font-size:26px; letter-spacing:-.01em}
+h3{font-size:18px}
+h4{font-size:15px}
+p{margin:0}
+
+.eyebrow{
+  font-family:'JetBrains Mono',ui-monospace,monospace; font-size:11px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+}
+.lede{color:var(--ink-2); font-size:17px; max-width:62ch}
+.note{color:var(--ink-3); font-size:13.5px; line-height:1.65}
+.stack{display:flex; flex-direction:column; gap:14px}
+.stack-lg{display:flex; flex-direction:column; gap:28px}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.val{font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:700; color:var(--accent)}
+b,strong{font-weight:600}
+a{color:var(--accent)}
+
+/* ============ 헤더 ============ */
+header{padding:72px 0 8px}
+.h-top{display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap}
+h1{font-size:clamp(30px,5vw,44px); letter-spacing:-.02em; font-weight:600}
+.h-meta{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-3)}
+.thesis{
+  margin-top:22px; padding-left:18px; border-left:2px solid var(--accent);
+  font-size:19px; line-height:1.6; color:var(--ink); max-width:60ch;
+}
+
+/* ============ 폰 플레이어 ============ */
+.stage{
+  display:grid; grid-template-columns:minmax(0,340px) minmax(0,1fr);
+  gap:44px; align-items:start; margin-top:40px;
+}
+@media (max-width:820px){ .stage{grid-template-columns:1fr; gap:32px} }
+
+.phone{
+  position:relative; width:100%; max-width:340px; aspect-ratio:9/16;
+  border-radius:22px; overflow:hidden; container-type:inline-size;
+  background:#241E19; box-shadow:var(--shadow);
+  border:1px solid var(--hairline-2);
+  justify-self:center;
+}
+
+/* 목업 사진 */
+.photo{position:absolute; inset:0; transition:opacity .4s ease}
+.photo.dark{
+  background:
+    radial-gradient(52% 38% at 68% 26%, #7A5F3E 0%, transparent 62%),
+    radial-gradient(46% 32% at 26% 62%, #5B4630 0%, transparent 60%),
+    radial-gradient(70% 46% at 44% 88%, #3A2E22 0%, transparent 70%),
+    linear-gradient(168deg,#2E251D 0%,#1D1712 100%);
+}
+.photo.light{
+  background:
+    radial-gradient(52% 38% at 66% 28%, #F7E4DC 0%, transparent 62%),
+    radial-gradient(46% 34% at 24% 60%, #EFE3CC 0%, transparent 60%),
+    radial-gradient(70% 46% at 46% 88%, #F8EFE2 0%, transparent 70%),
+    linear-gradient(168deg,#F5EBDD 0%,#E7DAC6 100%);
+  opacity:0;
+}
+.phone[data-photo="light"] .photo.dark{opacity:0}
+.phone[data-photo="light"] .photo.light{opacity:1}
+.photo-tag{
+  position:absolute; left:5.6%; top:11.5%; z-index:6;
+  font-family:'JetBrains Mono',monospace; font-size:2.4cqw; letter-spacing:.08em;
+  color:rgba(250,243,234,.5); text-transform:uppercase;
+}
+.phone[data-photo="light"] .photo-tag{color:rgba(38,32,28,.45)}
+
+/* 스크림 */
+.scrim{position:absolute; left:0; right:0; pointer-events:none; z-index:2; transition:opacity .3s}
+.scrim.top{top:0; height:35%; background:linear-gradient(to bottom,rgba(38,32,28,.70),transparent)}
+.scrim.bottom{bottom:0; height:35%; background:linear-gradient(to top,rgba(38,32,28,.70),transparent)}
+.phone[data-photo="light"] .scrim.top{background:linear-gradient(to bottom,rgba(250,243,234,.78),transparent)}
+.phone[data-photo="light"] .scrim.bottom{background:linear-gradient(to top,rgba(250,243,234,.78),transparent)}
+
+/* 세이프존 오버레이 */
+.safe{position:absolute; inset:0; z-index:8; pointer-events:none; opacity:0; transition:opacity .25s}
+.phone.show-safe .safe{opacity:1}
+.safe i{position:absolute; background:rgba(226,139,123,.20); display:block}
+.safe i.t{top:0; left:0; right:0; height:11.46%}
+.safe i.b{bottom:0; left:0; right:0; height:22.40%}
+.safe i.r{top:11.46%; bottom:22.40%; right:0; width:12.04%}
+.safe i.l{top:11.46%; bottom:22.40%; left:0; width:5.56%}
+.safe u{
+  position:absolute; left:5.56%; right:12.04%; bottom:26.04%; height:16.66%;
+  border:1px dashed rgba(201,169,97,.85); text-decoration:none;
+}
+.safe span{
+  position:absolute; left:5.56%; bottom:43.2%; font-family:'JetBrains Mono',monospace;
+  font-size:2.2cqw; color:#C9A961; letter-spacing:.06em;
+}
+
+/* 자막 레이어 */
+.cap-ink{color:#FAF3EA}
+.phone[data-photo="light"] .cap-ink{color:#26201C}
+
+.L1{
+  position:absolute; z-index:4; left:5.56%; right:12.04%; top:17.7%;
+  font-family:'Gowun Batang',serif; font-weight:700;
+  font-size:8.52cqw; line-height:1.25; letter-spacing:-.02em;
+}
+.L1 .ln{display:block}
+
+.lower{
+  position:absolute; z-index:4; left:5.56%; right:12.04%; bottom:26.04%;
+  display:flex; flex-direction:column; align-items:flex-start; gap:3.7cqw;
+}
+.L3{display:flex; flex-wrap:wrap; gap:1.8cqw}
+.chip{
+  font-family:'Pretendard','Noto Sans KR',sans-serif; font-weight:600;
+  font-size:3.70cqw; line-height:1.2; padding:1.3cqw 2.2cqw; border-radius:.8cqw;
+  background:rgba(38,32,28,.85); color:#FAF3EA; white-space:nowrap;
+}
+.phone[data-photo="light"] .chip{background:rgba(250,243,234,.9); color:#26201C}
+.L2{
+  font-family:'Pretendard','Noto Sans KR',sans-serif; font-weight:500;
+  font-size:5.56cqw; line-height:1.35; letter-spacing:.02em;
+}
+.L2 .em{position:relative; display:inline-block}
+.L2 .em::after{
+  content:""; position:absolute; left:0; bottom:-.8cqw; height:.6cqw; width:100%;
+  background:#C9A961; transform:scaleX(0); transform-origin:left;
+}
+.L2.on .em::after{transform:scaleX(1); transition:transform 200ms cubic-bezier(.22,1,.36,1) 120ms}
+
+.L4{
+  position:absolute; inset:0; z-index:7; background:#FAF3EA; color:#3A322B;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4cqw;
+  opacity:0; transition:opacity 300ms ease;
+}
+.L4.on{opacity:1}
+.L4 .mark{
+  font-family:'Gowun Batang',serif; font-weight:700; font-size:9cqw; letter-spacing:.02em;
+  color:#3A322B; opacity:0; transition:opacity 400ms ease;
+}
+.L4 .line{
+  font-family:'Gowun Batang',serif; font-weight:700; font-size:7.04cqw; line-height:1.3;
+  letter-spacing:-.02em; text-align:center; opacity:0; transform:translateY(2.2cqw);
+}
+.L4.on .mark{opacity:1}
+.L4.on .line{opacity:1; transform:none; transition:opacity 240ms cubic-bezier(.22,1,.36,1) 80ms, transform 240ms cubic-bezier(.22,1,.36,1) 80ms}
+.L4 .mark-note{font-family:'JetBrains Mono',monospace; font-size:2.4cqw; color:#8A7F72; letter-spacing:.08em}
+
+/* 등장/퇴장 */
+.anim{opacity:0; transform:translateY(2.2cqw)}
+.anim.on{opacity:1; transform:none; transition:opacity 240ms cubic-bezier(.22,1,.36,1), transform 240ms cubic-bezier(.22,1,.36,1)}
+.anim.off{opacity:0; transform:none; transition:opacity 160ms cubic-bezier(.4,0,1,1)}
+.L1 .ln:nth-child(2){transition-delay:80ms}
+.chip:nth-child(2){transition-delay:80ms}
+.chip:nth-child(3){transition-delay:160ms}
+
+/* 밈 자막 모드 */
+.phone.meme .scrim{opacity:0}
+.phone.meme .L2, .phone.meme .L1{
+  font-family:'Noto Sans KR',sans-serif !important; font-weight:900 !important;
+  color:#fff !important; -webkit-text-stroke:.55cqw #000; letter-spacing:0 !important;
+}
+.phone.meme .L2{font-size:6.4cqw}
+.phone.meme .L2 .em::after{background:#FFE24A; height:0}
+.phone.meme .L2 .em{color:#FFE24A !important}
+.phone.meme .chip{background:#FFE24A; color:#000; border-radius:2cqw}
+.phone.meme .anim.on{
+  animation:memepop 420ms cubic-bezier(.34,1.7,.64,1) both;
+  transition:none;
+}
+@keyframes memepop{
+  0%{opacity:0; transform:scale(.55)}
+  60%{opacity:1; transform:scale(1.14)}
+  100%{opacity:1; transform:scale(1)}
+}
+
+/* 컨트롤 */
+.controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; justify-content:center}
+button.ctl{
+  font-family:'IBM Plex Sans KR',sans-serif; font-size:13px; font-weight:500;
+  padding:8px 14px; border-radius:999px; cursor:pointer;
+  border:1px solid var(--hairline-2); background:var(--surface); color:var(--ink-2);
+  transition:background .18s, color .18s, border-color .18s;
+}
+button.ctl:hover{border-color:var(--accent); color:var(--ink)}
+button.ctl[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink); font-weight:600}
+button.ctl:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+/* 스테이지 사이드 */
+.readout{display:flex; flex-direction:column; gap:2px; margin-bottom:22px}
+.readout .k{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3)}
+.readout .v{font-size:22px; font-weight:600; letter-spacing:-.01em}
+.layer-key{display:flex; flex-direction:column; gap:0; border-top:1px solid var(--hairline)}
+.layer-key .row{
+  display:grid; grid-template-columns:46px 1fr auto; gap:14px; align-items:baseline;
+  padding:13px 0; border-bottom:1px solid var(--hairline);
+  opacity:.4; transition:opacity .25s;
+}
+.layer-key .row.live{opacity:1}
+.layer-key .tag{
+  font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:var(--accent);
+}
+.layer-key .row.live .tag::after{content:" ●"; font-size:9px; vertical-align:middle}
+.layer-key .desc{font-size:14px; color:var(--ink-2)}
+.layer-key .spec{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-3); text-align:right}
+
+/* ============ 좌표 ============ */
+.axis-wrap{margin-top:28px; overflow-x:auto}
+svg.axis{display:block; width:100%; min-width:600px; height:auto}
+
+/* ============ 카드 ============ */
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; margin-top:30px}
+.card{
+  background:var(--surface); border:1px solid var(--hairline); border-radius:12px;
+  padding:22px; display:flex; flex-direction:column; gap:14px;
+}
+.card.anti{background:var(--bad-soft); border-color:var(--bad)}
+.card h3{letter-spacing:-.01em}
+.card .quote{font-size:14.5px; color:var(--ink-2); line-height:1.6}
+.kv{display:flex; flex-direction:column; gap:9px; margin-top:2px}
+.kv div{display:grid; grid-template-columns:74px 1fr; gap:10px; font-size:13.5px; line-height:1.55}
+.kv b{
+  font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700;
+  letter-spacing:.06em; padding-top:4px; text-transform:uppercase;
+}
+.kv .take b{color:var(--good)}
+.kv .drop b{color:var(--bad)}
+.kv span{color:var(--ink-2)}
+
+/* ============ 애니메이션 타일 ============ */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; margin-top:26px}
+.tile{border:1px solid var(--hairline); border-radius:12px; overflow:hidden; background:var(--surface)}
+.tile .demo{
+  position:relative; height:132px; container-type:inline-size;
+  background:linear-gradient(168deg,#3A2E22,#221B15);
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.tile.bad .demo{background:linear-gradient(168deg,#2B2320,#191413)}
+.tile .foot{padding:13px 15px; border-top:1px solid var(--hairline); display:flex; flex-direction:column; gap:4px}
+.tile .foot .nm{font-size:14px; font-weight:600}
+.tile .foot .sp{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-3); line-height:1.5}
+.tile.bad .foot .nm{color:var(--bad)}
+.dtext{
+  font-family:'Pretendard','Noto Sans KR',sans-serif; font-weight:500; color:#FAF3EA;
+  font-size:9cqw; letter-spacing:.02em; white-space:nowrap;
+}
+
+@keyframes d-rise{
+  0%{opacity:0; transform:translateY(9%)} 8%{opacity:1; transform:none}
+  78%{opacity:1; transform:none} 83%{opacity:0} 100%{opacity:0}
+}
+.d1{animation:d-rise 3s cubic-bezier(.22,1,.36,1) infinite}
+
+.d2{position:relative}
+.d2::after{
+  content:""; position:absolute; left:0; right:0; bottom:-14%; height:7%;
+  background:#C9A961; transform-origin:left; animation:d-wipe 3s infinite;
+}
+@keyframes d-wipe{
+  0%,10%{transform:scaleX(0)} 17%{transform:scaleX(1)}
+  78%{transform:scaleX(1)} 83%{opacity:0; transform:scaleX(1)} 84%,100%{opacity:0; transform:scaleX(0)}
+}
+
+.d3{
+  background:rgba(38,32,28,.85); color:#FAF3EA; padding:3.5cqw 5cqw; border-radius:2cqw;
+  font-size:6.4cqw; font-weight:600; animation:d-chip 3s cubic-bezier(.22,1,.36,1) infinite;
+}
+@keyframes d-chip{
+  0%{opacity:0; transform:scale(.96)} 8%{opacity:1; transform:scale(1)}
+  78%{opacity:1} 83%,100%{opacity:0}
+}
+
+.d4{
+  position:absolute; inset:0; background:#FAF3EA; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:4%;
+  animation:d-card 3s ease infinite;
+}
+.d4 .m{font-family:'Gowun Batang',serif; font-weight:700; font-size:11cqw; color:#3A322B}
+.d4 .l{font-family:'Gowun Batang',serif; font-weight:700; font-size:7cqw; color:#3A322B; animation:d-rise 3s cubic-bezier(.22,1,.36,1) infinite .08s}
+@keyframes d-card{0%{opacity:0} 10%{opacity:1} 80%{opacity:1} 90%,100%{opacity:0}}
+
+/* 타일마다 시작점을 어긋나게 — 전부 동시에 깜빡이면 기계적으로 보인다 */
+.tiles .tile:nth-child(2) .d2::after,
+.tiles .tile:nth-child(2) .b2{animation-delay:-.7s}
+.tiles .tile:nth-child(3) .d3,
+.tiles .tile:nth-child(3) .b3{animation-delay:-1.4s}
+.tiles .tile:nth-child(4) .d4{animation-delay:-2.1s}
+.tiles .tile:nth-child(4) .d4 .l{animation-delay:-2.02s}
+
+.dtext.bad{font-family:'Noto Sans KR',sans-serif; font-weight:900; color:#fff; -webkit-text-stroke:.5cqw #000}
+.b1 span{display:inline-block; animation:b-pop 3s cubic-bezier(.34,1.7,.64,1) infinite}
+.b1 span:nth-child(2){animation-delay:.28s}
+.b1 span:nth-child(3){animation-delay:.56s}
+@keyframes b-pop{
+  0%{opacity:0; transform:scale(.4)} 7%{opacity:1; transform:scale(1.35)}
+  12%{transform:scale(1)} 80%{opacity:1} 88%,100%{opacity:0}
+}
+.b2{overflow:hidden; animation:b-type 3s steps(9) infinite; width:0}
+@keyframes b-type{0%{width:0} 45%{width:100%} 85%{width:100%} 86%,100%{width:0}}
+.b3{animation:b-shake 3s ease infinite}
+@keyframes b-shake{
+  0%,100%{opacity:0; transform:none} 6%{opacity:1}
+  10%{transform:translateX(-6%) rotate(-3deg)} 14%{transform:translateX(6%) rotate(3deg)}
+  18%{transform:translateX(-4%) rotate(-2deg)} 22%{transform:none}
+  80%{opacity:1} 88%,99%{opacity:0}
+}
+
+/* ============ 표 ============ */
+.tbl-wrap{overflow-x:auto; margin-top:24px; border:1px solid var(--hairline); border-radius:12px}
+table{border-collapse:collapse; width:100%; min-width:560px; background:var(--surface); font-size:14px}
+th,td{padding:12px 16px; text-align:left; border-bottom:1px solid var(--hairline)}
+th{
+  font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3); background:var(--surface-2);
+}
+tr:last-child td{border-bottom:0}
+td.n{font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums; color:var(--accent); font-weight:700}
+td.lab{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:12.5px}
+
+/* ============ 타임라인 ============ */
+.tl{display:flex; margin-top:20px; border-radius:10px 10px 0 0; overflow:hidden; border:1px solid var(--hairline); min-height:76px}
+.tl > div{
+  padding:12px 14px; display:flex; flex-direction:column; gap:3px; justify-content:center;
+  border-right:1px solid var(--hairline); background:var(--surface); min-width:76px;
+}
+.budget{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px;
+  background:var(--hairline); border:1px solid var(--hairline); border-top:0;
+  border-radius:0 0 10px 10px; overflow:hidden;
+}
+.budget > div{background:var(--surface); padding:13px 15px; display:flex; flex-direction:column; gap:3px}
+.budget .k{font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.budget .v{font-size:15px; font-weight:600}
+.budget .v.off{color:var(--ink-3); font-weight:400}
+.tl > div:last-child{border-right:0}
+.tl .s{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--ink-3); letter-spacing:.06em}
+.tl .n2{font-size:13px; font-weight:600; line-height:1.35}
+.tl > div:first-child{background:var(--accent-soft)}
+.tl > div:last-child{background:var(--accent-soft)}
+
+/* ============ 체크리스트 ============ */
+.check{display:flex; flex-direction:column; gap:0; margin-top:24px; border-top:1px solid var(--hairline)}
+.check label{
+  display:grid; grid-template-columns:22px 1fr auto; gap:13px; align-items:start;
+  padding:13px 4px; border-bottom:1px solid var(--hairline); cursor:pointer; font-size:14.5px;
+}
+.check label:hover{background:var(--surface-2)}
+.check input{
+  appearance:none; width:18px; height:18px; margin-top:3px; border-radius:5px;
+  border:1.5px solid var(--hairline-2); background:var(--surface); cursor:pointer;
+  display:grid; place-content:center; transition:background .15s, border-color .15s;
+}
+.check input:checked{background:var(--accent); border-color:var(--accent)}
+.check input:checked::after{content:"✓"; color:var(--accent-ink); font-size:12px; font-weight:700; line-height:1}
+.check input:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.check .ref{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-3); padding-top:3px}
+.check input:checked + .txt{color:var(--ink-3); text-decoration:line-through; text-decoration-color:var(--hairline-2)}
+
+/* ============ 미정 ============ */
+.open{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-top:26px}
+.open .o{border:1px dashed var(--hairline-2); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:9px}
+.open .o .t{font-size:15px; font-weight:600}
+.open .o .d{font-size:14px; color:var(--ink-2); line-height:1.6}
+
+footer{padding:44px 0 72px; border-top:1px solid var(--hairline); color:var(--ink-3); font-size:13px; line-height:1.7}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::after,*::before{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important}
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="h-top">
+    <h1>테차 쇼츠 자막 시스템</h1>
+    <div class="h-meta">1분 이내 제품 광고 · 2026-08-25</div>
+  </div>
+  <p class="thesis">1분짜리 영상에서 로고는 2초, 자막은 50초 넘게 떠 있다.
+  브랜드를 기억시키는 지분은 자막 쪽이 훨씬 크다.</p>
+</header>
+
+<section>
+  <p class="eyebrow">재생해서 판단하기</p>
+  <h2 style="margin-top:10px">240ms는 표로 판단할 수 없다</h2>
+  <p class="lede" style="margin-top:12px">아래가 제안하는 자막 그대로다. 사진 밝기를 바꾸면 글자색과 스크림이 규칙대로 뒤집히고,
+  세이프존을 켜면 앱 UI가 가리는 영역이 보인다. 밈 자막과 나란히 놓고 보면 차이가 분명해진다.</p>
+
+  <div class="stage">
+    <div>
+      <div class="phone" id="phone" data-photo="dark">
+        <div class="photo dark"></div>
+        <div class="photo light"></div>
+        <div class="photo-tag">사진 자리 (목업)</div>
+        <div class="scrim top"></div>
+        <div class="scrim bottom"></div>
+
+        <div class="L1 cap-ink" id="L1"></div>
+        <div class="lower">
+          <div class="L3" id="L3"></div>
+          <div class="L2 cap-ink anim" id="L2"></div>
+        </div>
+        <div class="L4" id="L4">
+          <div class="mark">techa</div>
+          <div class="mark-note">로고 원본 자리</div>
+          <div class="line">변치 않는 선물,<br>스토어에서 기다릴게요</div>
+        </div>
+
+        <div class="safe" aria-hidden="true">
+          <i class="t"></i><i class="b"></i><i class="r"></i><i class="l"></i>
+          <u></u><span>자막 블록 500–820px</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="ctl" id="btn-play" aria-pressed="true">일시정지</button>
+        <button class="ctl" id="btn-safe" aria-pressed="false">세이프존</button>
+        <button class="ctl" id="btn-photo" aria-pressed="false">밝은 사진</button>
+        <button class="ctl" id="btn-meme" aria-pressed="false">밈 자막으로</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="readout">
+        <div class="k">지금 화면</div>
+        <div class="v" id="ro">훅 · L1</div>
+      </div>
+
+      <div class="layer-key" id="key">
+        <div class="row" data-k="L1">
+          <div class="tag">L1</div>
+          <div class="desc">훅 — 0~3초, 스크롤을 멈추게 한다</div>
+          <div class="spec">Gowun Batang 700<br>92px · 9자 · 2줄</div>
+        </div>
+        <div class="row" data-k="L2">
+          <div class="tag">L2</div>
+          <div class="desc">자막 — 본문 내레이션</div>
+          <div class="spec">Pretendard 500<br>60px · 14자 · 2줄</div>
+        </div>
+        <div class="row" data-k="L3">
+          <div class="tag">L3</div>
+          <div class="desc">정보칩 — 가격·구성·소재</div>
+          <div class="spec">Pretendard 600<br>40px · 1줄</div>
+        </div>
+        <div class="row" data-k="L4">
+          <div class="tag">L4</div>
+          <div class="desc">엔드카드 — 마지막 2~3초</div>
+          <div class="spec">Gowun Batang 700<br>76px · 11자</div>
+        </div>
+      </div>
+
+      <p class="note" style="margin-top:18px">글자색은 크림 <span class="mono">#FAF3EA</span> 와
+      브라운 deep <span class="mono">#26201C</span> 둘뿐이고, 언제나 스크림 위에 올라간다.
+      골드는 글자색이 아니라 <b>밑줄 면</b>으로만 들어간다 — 사진 위에서 골드 글자는 배경 밝기와
+      겹치는 구간에서 통째로 사라지기 때문이다.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">레퍼런스</p>
+  <h2 style="margin-top:10px">잘하는 곳은 무엇을 고정했나</h2>
+  <p class="lede" style="margin-top:12px">브랜드마다 고정한 대상이 다르다. 무엇을 가져오고 무엇을 버릴지만 본다.</p>
+
+  <div class="cards">
+    <div class="card">
+      <h3>애플</h3>
+      <p class="quote">폰트 1종, 색은 순백 또는 순흑. 그라디언트·외곽선·그림자가 없다.
+      한 화면에 한 구절, 등장과 퇴장이 음악에 정확히 물린다.</p>
+      <div class="kv">
+        <div class="take"><b>가져옴</b><span>장식을 뺄수록 브랜드가 선명해진다</span></div>
+        <div class="drop"><b>버림</b><span>제품 인지도가 있어 훅 없이 시작한다. 테차는 첫 3초를 잡아야 한다</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>배달의민족</h3>
+      <p class="quote">전용 폰트가 그 자체로 식별자다. 로고가 안 보여도 자막 한 줄이면 어디인지 안다.</p>
+      <div class="kv">
+        <div class="take"><b>가져옴</b><span>폰트 고정이 로고 노출보다 강하다. 테차는 이미 Gowun Batang을 갖고 있으면서 영상에 안 쓰고 있다 — 최대 미사용 자산</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>커머스 정보형 자막</h3>
+      <p class="quote">굵은 고딕 + 반투명 카드 + 키워드 하나만 강조 + 문장 단위 교체.
+      소리를 꺼도 100% 이해된다.</p>
+      <div class="kv">
+        <div class="take"><b>가져옴</b><span>강조 어절은 자막 하나당 최대 1개</span></div>
+        <div class="drop"><b>바꿈</b><span>이들은 글자 색으로 강조한다. 사진 위 색 강조는 금지라, 골드 밑줄 면으로 대체</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>감성 뷰티·향 브랜드</h3>
+      <p class="quote">자막이 거의 없다. 있어도 라틴 대문자 한 줄, 아주 느린 페이드.
+      조용한 타이포가 곧 가격대를 말한다.</p>
+      <div class="kv">
+        <div class="take"><b>가져옴</b><span>조용한 타이포의 격</span></div>
+        <div class="drop"><b>버림</b><span>2~5만 원대 선물은 무드만으로 안 팔린다. 가격·구성·배송은 화면에 있어야 한다</span></div>
+      </div>
+    </div>
+
+    <div class="card anti">
+      <h3>편집 앱 기본 밈 자막</h3>
+      <p class="quote">흰 굵은 고딕 + 검정 두꺼운 외곽선 + 단어별로 튀는 팝.
+      <b>가장 흔하기 때문에 브랜드가 지워진다.</b></p>
+      <div class="kv">
+        <div class="drop"><b>금지</b><span>위 플레이어에서 &lsquo;밈 자막으로&rsquo;를 눌러 직접 비교해볼 것</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="axis-wrap">
+    <svg class="axis" viewBox="0 52 800 138" role="img" aria-label="조용한 타이포와 정보형 자막 사이에서 테차는 레이어를 나눠 양쪽에 걸친다">
+      <line x1="60" y1="96" x2="740" y2="96" stroke="var(--hairline-2)" stroke-width="1.5"/>
+      <g fill="var(--ink-3)" font-family="'JetBrains Mono',monospace" font-size="11" letter-spacing="1">
+        <text x="60" y="128">조용한 타이포</text>
+        <text x="740" y="128" text-anchor="end">정보형 자막</text>
+      </g>
+      <g font-family="'IBM Plex Sans KR',sans-serif" font-size="12.5" fill="var(--ink-2)" text-anchor="middle">
+        <circle cx="130" cy="96" r="4.5" fill="var(--ink-3)"/><text x="130" y="80">감성 뷰티</text>
+        <circle cx="300" cy="96" r="4.5" fill="var(--ink-3)"/><text x="300" y="80">애플</text>
+        <circle cx="520" cy="96" r="4.5" fill="var(--ink-3)"/><text x="520" y="80">배민</text>
+        <circle cx="680" cy="96" r="4.5" fill="var(--ink-3)"/><text x="680" y="80">커머스</text>
+      </g>
+      <path d="M200 152 L200 166 L660 166 L660 152" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+      <rect x="352" y="156" width="156" height="21" fill="var(--ground)"/>
+      <text x="430" y="172" text-anchor="middle" font-family="'IBM Plex Sans KR',sans-serif"
+            font-size="13" font-weight="600" fill="var(--accent)">테차 — 레이어로 나눔</text>
+      <g font-family="'IBM Plex Sans KR',sans-serif" font-size="11.5" fill="var(--ink-3)" text-anchor="middle">
+        <text x="200" y="146">L4 엔드카드</text>
+        <text x="660" y="146">L1 훅 · L3 정보칩</text>
+      </g>
+    </svg>
+  </div>
+  <p class="note" style="margin-top:14px">어느 한 지점에 서지 않는다. 훅은 커머스처럼 세게, 본문은 조용하게, 정보는 칩으로 떼어낸다.</p>
+</section>
+
+<section>
+  <p class="eyebrow">애니메이션</p>
+  <h2 style="margin-top:10px">이 4개만 쓴다</h2>
+  <p class="lede" style="margin-top:12px">전부 브랜드 규칙 §5-1의 이징·이동거리·스케일과 §5-2의 지속시간에서 그대로 나온 값이다.
+  새로 만들지 않는다.</p>
+
+  <div class="tiles">
+    <div class="tile">
+      <div class="demo"><div class="dtext d1">시들지 않는 꽃</div></div>
+      <div class="foot">
+        <div class="nm">① 페이드 라이즈</div>
+        <div class="sp">opacity 0→1 · Y +24px→0<br>240ms · cubic-bezier(.22,1,.36,1)</div>
+      </div>
+    </div>
+    <div class="tile">
+      <div class="demo"><div class="dtext d2">한 송이씩</div></div>
+      <div class="foot">
+        <div class="nm">② 밑줄 와이프</div>
+        <div class="sp">골드 #C9A961 · 높이 6px<br>200ms · 자막 뜨고 120ms 뒤</div>
+      </div>
+    </div>
+    <div class="tile">
+      <div class="demo"><div class="dtext d3">프리저브드</div></div>
+      <div class="foot">
+        <div class="nm">③ 칩 스케일</div>
+        <div class="sp">scale .96→1.0 + opacity<br>240ms · 여러 개는 80ms 간격</div>
+      </div>
+    </div>
+    <div class="tile">
+      <div class="demo"><div class="d4"><div class="m">techa</div><div class="l">변치 않는 선물,<br>스토어에서 기다릴게요</div></div></div>
+      <div class="foot">
+        <div class="nm">④ 엔드카드</div>
+        <div class="sp">배경 300ms · 로고 400ms<br>한 줄은 80ms 뒤따라</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:44px">쓰지 않는 것</h3>
+  <div class="tiles" style="margin-top:16px">
+    <div class="tile bad">
+      <div class="demo"><div class="dtext bad b1"><span>이거</span> <span>진짜</span> <span>대박</span></div></div>
+      <div class="foot">
+        <div class="nm">단어별 팝 + 외곽선</div>
+        <div class="sp">가장 흔한 기본값이라 브랜드가 지워진다</div>
+      </div>
+    </div>
+    <div class="tile bad">
+      <div class="demo"><div class="dtext bad b2">시들지 않는 꽃</div></div>
+      <div class="foot">
+        <div class="nm">타자기</div>
+        <div class="sp">읽는 속도를 시청자가 아니라 편집자가 정하게 된다</div>
+      </div>
+    </div>
+    <div class="tile bad">
+      <div class="demo"><div class="dtext bad b3">지금 주문!</div></div>
+      <div class="foot">
+        <div class="nm">셰이크 · 바운스</div>
+        <div class="sp">목표를 지나쳤다 되돌아오는 움직임은 손으로 놓는 동작이 아니다</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">수치</p>
+  <h2 style="margin-top:10px">줄당 글자수는 안전영역에서 나온다</h2>
+  <p class="lede" style="margin-top:12px">한글은 전각이라 글자 폭이 곧 폰트 크기다.
+  앱 UI를 피하고 남은 폭 <span class="val">890px</span>을 글자 크기로 나눈 값이 한 줄 상한이 된다.
+  임의로 정한 숫자가 아니다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>레이어</th><th>크기</th><th>계산</th><th>한 줄</th><th>줄수</th><th>자간</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">L1 훅</td><td class="n">92px</td><td class="mono" style="color:var(--ink-3)">890 ÷ 92 = 9.6</td><td class="n">9자</td><td>2줄</td><td class="mono">-2%</td></tr>
+        <tr><td class="lab">L2 자막</td><td class="n">60px</td><td class="mono" style="color:var(--ink-3)">890 ÷ 60 = 14.8</td><td class="n">14자</td><td>2줄</td><td class="mono">+2%</td></tr>
+        <tr><td class="lab">L3 칩</td><td class="n">40px</td><td class="mono" style="color:var(--ink-3)">890 ÷ 40 = 22.2</td><td class="n">22자</td><td>1줄</td><td class="mono">0</td></tr>
+        <tr><td class="lab">L4 엔드</td><td class="n">76px</td><td class="mono" style="color:var(--ink-3)">890 ÷ 76 = 11.7</td><td class="n">11자</td><td>2줄</td><td class="mono">-2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:14px">큰 세리프는 조여야 한 덩어리로 읽히고, 작은 글자는 벌려야 사진 위에서 안 뭉친다.
+  브랜드 규칙 §4의 &lsquo;한 줄 45자&rsquo;는 읽는 원고 기준이라 영상에는 적용하지 않는다.</p>
+
+  <h3 style="margin-top:44px">타이밍</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>항목</th><th>값</th><th>이유</th></tr></thead>
+      <tbody>
+        <tr><td>자막이 음성보다 먼저 뜨는 시간</td><td class="n">120ms</td><td>읽는 속도가 듣는 속도보다 빠르다</td></tr>
+        <tr><td>한 자막이 머무는 시간</td><td class="n">1.5–3초</td><td>—</td></tr>
+        <tr><td>자막 교체 사이 공백</td><td class="n">200ms</td><td>눈이 리셋할 시간</td></tr>
+        <tr><td>한 자막의 최대 체류</td><td class="n">3초</td><td>넘으면 화면이 멈춘 것처럼 보인다 — 문장을 쪼갠다</td></tr>
+        <tr><td>음성보다 먼저 띄우는 한계</td><td class="n">300ms</td><td>넘으면 화면과 소리가 따로 논다</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:44px">길이가 달라지면</h3>
+  <p class="lede" style="margin-top:10px"><b>자막 속도는 길이를 따라가지 않는다.</b>
+  체류 1.5~3초는 사람이 읽는 속도라 영상 길이와 상관이 없다. 15초라고 1초로 넘기면
+  빠른 영상이 되는 게 아니라 안 읽히는 자막이 된다. 짧아질 때 줄이는 건
+  자막 속도가 아니라 <b>메시지 개수</b>다.</p>
+
+  <div class="controls" style="justify-content:flex-start; margin-top:20px" id="len-ctl">
+    <button class="ctl" data-len="15">15초</button>
+    <button class="ctl" data-len="20">20초</button>
+    <button class="ctl" data-len="30">30초</button>
+    <button class="ctl" data-len="45">45초</button>
+    <button class="ctl" data-len="60" aria-pressed="true">60초</button>
+  </div>
+
+  <div class="tl" id="tl"></div>
+
+  <div class="budget" id="budget"></div>
+
+  <p class="note" style="margin-top:16px">훅과 엔드카드는 <b>고정 오버헤드</b>라 영상이 짧아져도 비례해서 줄지 않는다 —
+  훅은 계속 볼지 결정하는 구간이라 최소 2.5초, 엔드카드는 로고 등장 400ms에 읽는 시간을 더해 최소 2초.
+  15초 영상이면 이 둘로 4.5초가 먼저 나간다. 구간은 비례해서 줄이는 게 아니라 <b>통째로 뺀다.</b></p>
+
+  <p class="note" style="margin-top:12px"><b>길이와 무관하게 그대로인 것</b> — 폰트·굵기·크기·줄당 글자수·위치·세이프존·애니메이션 4종과 그 지속시간·자간.
+  전부 화면 폭과 인지 속도에서 나온 값이라 영상 길이가 건드리지 않는다.
+  15초짜리라고 자막을 작게 하거나 애니메이션을 120ms로 줄이지 않는다.</p>
+</section>
+
+<section>
+  <p class="eyebrow">고정하는 법</p>
+  <h2 style="margin-top:10px">문서에만 적어두면 지켜지지 않는다</h2>
+  <p class="lede" style="margin-top:12px">편집 도구 안에 스타일로 저장해서 매번 새로 만들지 않게 한다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>도구</th><th>방법</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">Premiere Pro</td><td>기본 그래픽에 마스터 스타일 4종(L1~L4) 저장. 스타일 하나만 고쳐도 전체 자막이 한 번에 바뀐다</td></tr>
+        <tr><td class="lab">CapCut</td><td>텍스트 → 스타일 저장. L1~L4를 각각 템플릿으로</td></tr>
+        <tr><td class="lab">Canva</td><td>브랜드 키트에 폰트·색 등록 (로고 원본은 이미 등록되어 있음)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:14px">세이프존 오버레이 PNG를 만들어 편집 프로젝트 최상단에 깔고 작업하고, 내보낼 때만 끈다.
+  기존 텍스트를 복사해 재활용하면 원본 폰트가 그대로 남는다 — 반드시 저장된 스타일을 적용할 것.</p>
+</section>
+
+<section>
+  <p class="eyebrow">발행 전</p>
+  <h2 style="margin-top:10px">체크리스트</h2>
+  <div class="check" id="check">
+    <label><input type="checkbox"><span class="txt">폰트가 Gowun Batang·Pretendard 2종뿐인가</span><span class="ref">§3-4</span></label>
+    <label><input type="checkbox"><span class="txt">글자색이 크림·브라운 deep 2색뿐이고 전부 스크림 위에 있는가</span><span class="ref">§3-2-1</span></label>
+    <label><input type="checkbox"><span class="txt">외곽선(스트로크)이 하나도 없는가</span><span class="ref">§5-6-2</span></label>
+    <label><input type="checkbox"><span class="txt">자막이 2줄을 넘지 않고, 훅 9자·자막 14자 안에 들어오는가</span><span class="ref">3-1</span></label>
+    <label><input type="checkbox"><span class="txt">자막 위치가 바닥에서 500–820px에 고정되어 있는가</span><span class="ref">§5-5</span></label>
+    <label><input type="checkbox"><span class="txt">소리를 끄고 끝까지 봤을 때 메시지가 전부 전달되는가</span><span class="ref">§5-3</span></label>
+    <label><input type="checkbox"><span class="txt">자막이 제품을 가리는 컷이 없는가</span><span class="ref">§5-6-8</span></label>
+    <label><input type="checkbox"><span class="txt">강조가 자막 하나당 1어절 이하인가</span><span class="ref">4-②</span></label>
+    <label><input type="checkbox"><span class="txt">실제 폰으로 한 번 돌려봤는가</span><span class="ref">§5-5</span></label>
+    <label><input type="checkbox"><span class="txt">엔드카드 CTA가 세트 중 하나이고, 한 영상에 하나뿐인가</span><span class="ref">§4-3</span></label>
+    <label><input type="checkbox"><span class="txt">엔드카드 구간에서 좌상단 워터마크를 뺐는가</span><span class="ref">§3-4</span></label>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">엔드카드</p>
+  <h2 style="margin-top:10px">CTA는 3개로 고정한다</h2>
+  <p class="lede" style="margin-top:12px">숏폼 화면 안에는 누를 링크가 없다.
+  <b>&lsquo;지금 구매하기&rsquo;는 실행할 수 없는 지시라 CTA가 아니라 장식이다.</b>
+  화면에서 실제로 가능한 동작은 셋뿐이라, CTA도 셋이면 충분하다.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>순위</th><th>목적</th><th>1줄 — 정체성</th><th>2줄 — 동작</th><th>노리는 동작</th></tr></thead>
+      <tbody>
+        <tr><td class="lab" style="color:var(--accent)">기본값</td><td>전환형 — 특정 상품을 다룬 영상</td><td>변치 않는 선물,</td><td>스토어에서 기다릴게요</td><td class="note" style="font-size:13px">프로필 → 스마트스토어</td></tr>
+        <tr><td class="lab">2순위</td><td>상담형 — 맞춤 제작이 소재인 영상</td><td>원하시는 대로,</td><td>맞춤 제작해드려요</td><td class="note" style="font-size:13px">댓글·문의</td></tr>
+        <tr><td class="lab">3순위</td><td>관계형 — 특정 상품을 말하지 않는 영상</td><td>다음 꽃도</td><td>보여드릴게요</td><td class="note" style="font-size:13px">저장·팔로우</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:14px">목적이 애매하면 전환형을 쓴다 — 판매가 온라인 9:1로 스마트스토어 중심이라 그게 기본값이다.
+  상담형이 2순위인 건 이미 손님들이 가장 많이 묻는 것 중 하나가 맞춤 제작이기 때문이고, 새로 만든 소구점이 아니다.
+  판정법은 하나다: <b>공방 사장이 손님 앞에서 직접 말한다고 상상했을 때 어색하지 않은가.</b></p>
+
+  <div class="open" style="margin-top:34px">
+    <div class="o">
+      <div class="t">쓰지 않는 CTA</div>
+      <div class="d">&lsquo;지금 구매하기&rsquo; · &lsquo;링크 클릭&rsquo; — 실행할 수 없다 &nbsp;/&nbsp;
+      &lsquo;오늘만&rsquo; · 남은 수량 — 거짓 긴급성 &nbsp;/&nbsp;
+      &lsquo;놓치지 마세요&rsquo; — 공포 압박 &nbsp;/&nbsp;
+      &lsquo;많은 관심 부탁드려요&rsquo; — 부탁이지 동작 지정이 아니다</div>
+    </div>
+    <div class="o">
+      <div class="t">로고는 파일을 늘리지 않는다</div>
+      <div class="d">사진 위에 얹을 크림 버전이 필요하다고 파일을 새로 만들면 버전이 셋으로 늘고,
+      그 순간 누군가는 틀린 걸 쓴다. SVG 원본 하나에 <b>자막 글자색 규칙을 그대로 적용</b>한다 —
+      단색 배경엔 공방 브라운, 어두운 사진엔 크림, 밝은 사진엔 브라운 deep.
+      엔드카드 구간에는 좌상단 워터마크를 뺀다.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  상위 규칙: <span class="mono">techa-brand-rules.md</span> §5(모션·영상 공통) · §3-2-1(사진 위 대비) · §3-4(폰트 굵기).
+  상충하면 상위 규칙이 이긴다.<br>
+  이 페이지의 강조색은 밝은 화면에서 골드 deep <span class="mono">#9E8551</span>, 어두운 화면에서 뮤트 골드
+  <span class="mono">#C9A961</span>로 바뀐다 — 브랜드 규칙 §3-1의 파생 톤 규칙을 그대로 따른 것이다.<br>
+  자막 미리보기는 Pretendard가 설치된 기기에서는 실제 Pretendard로, 아닌 경우 Noto Sans KR로 대체 표시된다.
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var phone=document.getElementById("phone"),
+      L1=document.getElementById("L1"), L2=document.getElementById("L2"),
+      L3=document.getElementById("L3"), L4=document.getElementById("L4"),
+      ro=document.getElementById("ro"), keyRows=document.querySelectorAll("#key .row");
+
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // 카피는 전부 브랜드 규칙 §1에서 나온 표현만 쓴다
+  var SEQ=[
+    {t:0,    a:"hook",  lines:["시들지 않는 꽃","있잖아요"], label:"훅 · L1"},
+    {t:3000, a:"hookout"},
+    {t:3400, a:"cap",   text:"생화는 사흘이면 시들어요", label:"자막 · L2"},
+    {t:6000, a:"capout"},
+    {t:6400, a:"cap",   text:"공방에서 <em>한 송이씩</em>", label:"자막 · L2 + 강조"},
+    {t:9000, a:"chips", chips:["프리저브드","수국 무드등"], label:"자막 + 정보칩 · L3"},
+    {t:11800,a:"capout"},
+    {t:11900,a:"chipsout"},
+    {t:12300,a:"cap",   text:"마음이 오래 남게", label:"자막 · L2"},
+    {t:14800,a:"capout"},
+    {t:15400,a:"end",   label:"엔드카드 · L4"},
+    {t:18600,a:"reset"}
+  ];
+  var TOTAL=19000;
+
+  var t0=null, raf=null, idx=0, lastEl=0, playing=true;
+
+  function setKey(k){
+    keyRows.forEach(function(r){ r.classList.toggle("live", r.dataset.k===k); });
+  }
+  function label(s){
+    if(!s) return;
+    ro.textContent=s;
+    setKey(s.indexOf("L1")>-1?"L1":s.indexOf("L4")>-1?"L4":s.indexOf("L3")>-1?"L3":"L2");
+  }
+
+  function apply(step){
+    switch(step.a){
+      case "hook":
+        L1.innerHTML=step.lines.map(function(l){return '<span class="ln anim">'+l+'</span>';}).join("");
+        void L1.offsetWidth;
+        L1.querySelectorAll(".ln").forEach(function(n){ n.classList.add("on"); });
+        break;
+      case "hookout":
+        L1.querySelectorAll(".ln").forEach(function(n){ n.classList.remove("on"); n.classList.add("off"); });
+        break;
+      case "cap":
+        L2.innerHTML=step.text.replace(/<em>/g,'<span class="em">').replace(/<\/em>/g,"</span>");
+        L2.classList.remove("off","on");
+        void L2.offsetWidth;
+        L2.classList.add("on");
+        break;
+      case "capout":
+        L2.classList.remove("on"); L2.classList.add("off");
+        break;
+      case "chips":
+        L3.innerHTML=step.chips.map(function(c){return '<span class="chip anim">'+c+"</span>";}).join("");
+        void L3.offsetWidth;
+        L3.querySelectorAll(".chip").forEach(function(n){ n.classList.add("on"); });
+        break;
+      case "chipsout":
+        L3.querySelectorAll(".chip").forEach(function(n){ n.classList.remove("on"); n.classList.add("off"); });
+        break;
+      case "end":
+        L4.classList.add("on");
+        break;
+      case "reset":
+        L4.classList.remove("on"); L2.innerHTML=""; L3.innerHTML=""; L1.innerHTML="";
+        break;
+    }
+    label(step.label);
+  }
+
+  function tick(now){
+    if(t0===null){ t0=now; lastEl=0; idx=0; }
+    var el=(now-t0)%TOTAL;
+    if(el<lastEl) idx=0;              // 한 바퀴 돌았으면 처음으로
+    lastEl=el;
+    while(idx<SEQ.length && SEQ[idx].t<=el){ apply(SEQ[idx]); idx++; }
+    raf=requestAnimationFrame(tick);
+  }
+
+  function start(){ if(raf) return; raf=requestAnimationFrame(tick); }
+  function stop(){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+
+  var bPlay=document.getElementById("btn-play");
+  bPlay.addEventListener("click",function(){
+    playing=!playing;
+    bPlay.textContent=playing?"일시정지":"재생";
+    bPlay.setAttribute("aria-pressed",String(playing));
+    if(playing){ t0=null; idx=0; apply({a:"reset"}); start(); } else { stop(); }
+  });
+
+  function toggle(id,fn){
+    var b=document.getElementById(id);
+    b.addEventListener("click",function(){
+      var on=b.getAttribute("aria-pressed")!=="true";
+      b.setAttribute("aria-pressed",String(on));
+      fn(on,b);
+    });
+  }
+  toggle("btn-safe",function(on){ phone.classList.toggle("show-safe",on); });
+  toggle("btn-photo",function(on,b){
+    phone.dataset.photo=on?"light":"dark";
+    b.textContent=on?"어두운 사진":"밝은 사진";
+  });
+  toggle("btn-meme",function(on,b){
+    phone.classList.toggle("meme",on);
+    b.textContent=on?"테차 자막으로":"밈 자막으로";
+  });
+
+  if(reduce){
+    playing=false; bPlay.textContent="재생"; bPlay.setAttribute("aria-pressed","false");
+    apply(SEQ[0]);
+  } else {
+    start();
+  }
+
+  // 길이별 배분 — 훅/엔드카드는 고정 오버헤드, 본문만 늘고 준다
+  var LEN={
+    15:{p:[["훅",0,2.5],["핵심 메시지 하나",2.5,13],["엔드카드",13,15]],
+        caps:"3~4개", msg:"1개", chip:null, cta:"1줄 (동작만)"},
+    20:{p:[["훅",0,3],["핵심 메시지 하나",3,18],["엔드카드",18,20]],
+        caps:"5~6개", msg:"1개", chip:null, cta:"1줄 (동작만)"},
+    30:{p:[["훅",0,3],["공감",3,12],["제품·장점",12,27],["엔드카드",27,30]],
+        caps:"8~9개", msg:"2개", chip:"1세트", cta:"2줄"},
+    45:{p:[["훅",0,3],["공감",3,14],["제품·장점",14,32],["안심",32,42],["엔드카드",42,45]],
+        caps:"14~15개", msg:"3개", chip:"1~2세트", cta:"2줄"},
+    60:{p:[["훅",0,3],["공감·문제",3,15],["제품·장점",15,40],["안심",40,57],["엔드카드",57,60]],
+        caps:"19~20개", msg:"3~4개", chip:"2세트", cta:"2줄"}
+  };
+  function fmt(n){ return n%1===0 ? String(n) : n.toFixed(1); }
+  function drawLen(n){
+    var d=LEN[n];
+    document.getElementById("tl").innerHTML=d.p.map(function(x){
+      return '<div style="flex:'+(x[2]-x[1])+'"><div class="s">'+fmt(x[1])+"–"+fmt(x[2])+
+             's</div><div class="n2">'+x[0]+"</div></div>";
+    }).join("");
+    document.getElementById("budget").innerHTML=
+      '<div><div class="k">자막 수</div><div class="v">'+d.caps+"</div></div>"+
+      '<div><div class="k">담을 메시지</div><div class="v">'+d.msg+"</div></div>"+
+      '<div><div class="k">L3 정보칩</div><div class="v'+(d.chip?"":" off")+'">'+
+        (d.chip||"쓰지 않음")+"</div></div>"+
+      '<div><div class="k">엔드카드 CTA</div><div class="v">'+d.cta+"</div></div>";
+  }
+  var lenCtl=document.getElementById("len-ctl");
+  lenCtl.addEventListener("click",function(e){
+    var b=e.target.closest("button[data-len]");
+    if(!b) return;
+    Array.prototype.forEach.call(lenCtl.querySelectorAll("button"),function(x){
+      x.setAttribute("aria-pressed","false");
+    });
+    b.setAttribute("aria-pressed","true");
+    drawLen(b.dataset.len);
+  });
+  drawLen(60);
+
+  // 체크리스트 — 저장은 편의 기능이라 실패해도 페이지는 그대로 동작한다
+  var KEY="techa-caption-check-v1";
+  var boxes=document.querySelectorAll("#check input");
+  try{
+    var saved=JSON.parse(localStorage.getItem(KEY)||"[]");
+    boxes.forEach(function(b,i){ b.checked=!!saved[i]; });
+  }catch(e){}
+  boxes.forEach(function(b){
+    b.addEventListener("change",function(){
+      try{
+        localStorage.setItem(KEY,JSON.stringify(Array.prototype.map.call(boxes,function(x){return x.checked;})));
+      }catch(e){}
+    });
+  });
+})();
+</script>
