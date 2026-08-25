@@ -1,7 +1,7 @@
 ---
 date: 2026-08-25
 platform: magazine
-status: ready
+status: published
 topic_no: 49
 group: D
 skeleton: 기준·목록형
