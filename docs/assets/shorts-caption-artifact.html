@@ -402,6 +402,16 @@ td.lab{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:12.5px
 .check .ref{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-3); padding-top:3px}
 .check input:checked + .txt{color:var(--ink-3); text-decoration:line-through; text-decoration-color:var(--hairline-2)}
 
+/* ============ 세팅 단계 ============ */
+.steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:26px}
+.st{display:grid; grid-template-columns:34px 1fr; gap:14px; align-items:start;
+    background:var(--surface); border:1px solid var(--hairline); border-radius:12px; padding:20px}
+.stn{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700;
+     width:34px; height:34px; border-radius:50%; display:grid; place-content:center;
+     background:var(--accent); color:var(--accent-ink)}
+.stt{font-size:15px; font-weight:600; margin-bottom:6px}
+.std{font-size:13.5px; color:var(--ink-2); line-height:1.6}
+
 /* ============ 미정 ============ */
 .open{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-top:26px}
 .open .o{border:1px dashed var(--hairline-2); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:9px}
@@ -709,21 +719,83 @@ footer{padding:44px 0 72px; border-top:1px solid var(--hairline); color:var(--in
 </section>
 
 <section>
-  <p class="eyebrow">고정하는 법</p>
-  <h2 style="margin-top:10px">문서에만 적어두면 지켜지지 않는다</h2>
-  <p class="lede" style="margin-top:12px">편집 도구 안에 스타일로 저장해서 매번 새로 만들지 않게 한다.</p>
+  <p class="eyebrow">CapCut</p>
+  <h2 style="margin-top:10px">템플릿 프로젝트 하나가 전부다</h2>
+  <p class="lede" style="margin-top:12px">CapCut에는 텍스트 스타일을 전역 프리셋으로 저장하는 안정적인 방법이 없다.
+  그래서 <b>템플릿 프로젝트를 만들어두고 매번 복제하는 것</b>이 스타일을 고정하는 가장 확실한 경로다.
+  자막을 추가할 때도 새 텍스트를 만들지 말고 <b>기존 자막을 복사·붙여넣기</b> 한다 —
+  새로 만들면 CapCut 기본 폰트로 돌아간다.</p>
+
+  <div class="steps">
+    <div class="st"><div class="stn">1</div><div><div class="stt">폰트 2종 설치</div>
+      <div class="std">Gowun Batang은 Google Fonts, Pretendard는 GitHub 릴리스에서.
+      설치 후 CapCut 재시작. 둘 다 OFL이라 영상에 구워 넣어도 된다.
+      <b>모바일 CapCut은 로컬 폰트를 못 불러오니 데스크톱으로 작업한다.</b></div></div></div>
+    <div class="st"><div class="stn">2</div><div><div class="stt">세이프존 오버레이를 맨 위 트랙에</div>
+      <div class="std">1080×1920 투명 PNG. 작업 내내 켜두고 내보내기 직전에 끈다.</div></div></div>
+    <div class="st"><div class="stn">3</div><div><div class="stt">템플릿 프로젝트 생성</div>
+      <div class="std">오버레이 + L1~L4 텍스트 4개를 스타일 적용된 채로 넣어두고 저장.
+      이후 모든 영상은 이걸 복제해서 시작한다.</div></div></div>
+  </div>
+
+  <h3 style="margin-top:44px">크기는 px가 아니라 글자수로 맞춘다</h3>
+  <p class="lede" style="margin-top:10px">CapCut 폰트 크기는 자체 단위라 92px·60px을 입력할 수 없다.
+  대신 <b>글자수로 캘리브레이션한다</b> — 어차피 글자수 상한이 화면 폭에서 나온 값이라 결과가 같다.</p>
   <div class="tbl-wrap">
     <table>
-      <thead><tr><th>도구</th><th>방법</th></tr></thead>
+      <thead><tr><th>레이어</th><th>넣어볼 문자열</th><th>맞추는 기준</th></tr></thead>
       <tbody>
-        <tr><td class="lab">Premiere Pro</td><td>기본 그래픽에 마스터 스타일 4종(L1~L4) 저장. 스타일 하나만 고쳐도 전체 자막이 한 번에 바뀐다</td></tr>
-        <tr><td class="lab">CapCut</td><td>텍스트 → 스타일 저장. L1~L4를 각각 템플릿으로</td></tr>
-        <tr><td class="lab">Canva</td><td>브랜드 키트에 폰트·색 등록 (로고 원본은 이미 등록되어 있음)</td></tr>
+        <tr><td class="lab">L2 자막</td><td class="mono">가나다라마바사아자차카타파하</td><td>자막 블록 폭에 꽉 차는 크기</td></tr>
+        <tr><td class="lab">L1 훅</td><td class="mono">가나다라마바사아자</td><td>안전영역 폭에 꽉 차는 크기</td></tr>
+        <tr><td class="lab">L4 엔드</td><td class="mono">가나다라마바사아자차카</td><td>안전영역 폭 기준</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note" style="margin-top:14px">세이프존 오버레이 PNG를 만들어 편집 프로젝트 최상단에 깔고 작업하고, 내보낼 때만 끈다.
-  기존 텍스트를 복사해 재활용하면 원본 폰트가 그대로 남는다 — 반드시 저장된 스타일을 적용할 것.</p>
+
+  <h3 style="margin-top:44px">애니메이션 대응</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>스펙</th><th>CapCut에서</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">① 페이드 라이즈 240ms</td><td>등장 → 위로 올라오며 나타나는 계열, 지속시간 <b>0.2초</b></td><td class="note" style="font-size:13px">지속시간이 0.1초 단위</td></tr>
+        <tr><td class="lab">퇴장 160ms</td><td>퇴장 → 페이드, <b>0.2초</b></td><td class="note" style="font-size:13px">0.1초는 인식이 안 된다</td></tr>
+        <tr><td class="lab">③ 칩 스케일 240ms</td><td>커지며 나타나는 계열, 0.2초</td><td class="note" style="font-size:13px">튀는 것 제외</td></tr>
+        <tr><td class="lab">④ 엔드카드</td><td>배경 디졸브 0.3초 · 로고 페이드 0.4초</td><td></td></tr>
+        <tr><td class="lab" style="color:var(--bad)">② 밑줄 와이프</td><td colspan="2">기본 기능에 <b>없다</b> — 아래 셋 중 하나로 정한다</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="open" style="margin-top:20px">
+    <div class="o" style="border-style:solid; border-color:var(--accent)">
+      <div class="t">① 정적 밑줄 <span class="mono" style="font-size:11px; color:var(--accent)">권장</span></div>
+      <div class="d">색 도형을 밑줄 자리에 두고 자막과 함께 페이드. 가장 간단하고 강조 기능은 그대로 산다.</div>
+    </div>
+    <div class="o">
+      <div class="t">② 키프레임 와이프</div>
+      <div class="d">도형에 키프레임 2개(폭 0% → 100%, 0.2초). 스펙대로지만 자막마다 반복해야 한다.</div>
+    </div>
+    <div class="o">
+      <div class="t">③ 밑줄 생략</div>
+      <div class="d">강조를 아예 쓰지 않는다. 정보형 자막의 힘이 빠져서 권하지 않는다.</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:44px">흔히 무너지는 지점</h3>
+  <div class="tiles" style="margin-top:16px">
+    <div class="tile bad" style="grid-column:span 1"><div class="foot" style="border-top:0">
+      <div class="nm">드래그로 자막 옮기기</div>
+      <div class="sp">자막 블록 고정이 깨지는 가장 흔한 경로. 오버레이 박스에 맞추고 이후엔 복사해서 쓴다</div></div></div>
+    <div class="tile bad"><div class="foot" style="border-top:0">
+      <div class="nm">CapCut 기본 텍스트 템플릿</div>
+      <div class="sp">화려한 것들이 바로 밈 자막이다. 쓰지 않는다</div></div></div>
+    <div class="tile bad"><div class="foot" style="border-top:0">
+      <div class="nm">자동 캡션 그대로 노출</div>
+      <div class="sp">기본 스타일로 들어오고 오탈자가 섞인다. 검수하고 스타일을 다시 적용한다</div></div></div>
+    <div class="tile bad"><div class="foot" style="border-top:0">
+      <div class="nm">자막 클립을 붙여놓기</div>
+      <div class="sp">교체 사이 0.2초 공백이 사라진다. 의도적으로 띄운다</div></div></div>
+  </div>
 </section>
 
 <section>
