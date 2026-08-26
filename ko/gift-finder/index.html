@@ -37,13 +37,13 @@
     padding: 8px 16px; font-size: 14px; font-weight: 600; color: var(--brown); cursor: pointer;
     transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, transform 120ms var(--ease-out);
   }
-  .gf-chip.on { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .gf-chip.on { background: var(--gold-deep); color: #fff; border-color: var(--gold-deep); }
   .gf-chip:active { transform: scale(0.94); }
   .gf-more { margin-top: 8px; animation: gf-more-in .2s var(--ease-out); }
   @keyframes gf-more-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
   .gf-more-btn {
     margin-top: 10px; background: none; border: 0; cursor: pointer; padding: 4px 0;
-    font-size: 13px; font-weight: 600; color: var(--blue-ink); font-family: inherit;
+    font-size: 13px; font-weight: 600; color: var(--brown); font-family: inherit;
   }
   .gf-more-btn:active { transform: scale(0.96); }
   .gf-occasion-hint { font-size: 12.5px; color: var(--muted-soft); margin-top: 6px; }
@@ -66,7 +66,7 @@
     margin: -18px -18px 14px;              /* 카드 패딩을 상쇄해 위쪽을 꽉 채움 */
     aspect-ratio: 1; overflow: hidden;
     border-radius: var(--radius) var(--radius) 0 0;
-    background: var(--blue-soft);
+    background: var(--sage-soft);
   }
   .gf-card-photo img {
     width: 100%; height: 100%; object-fit: cover; display: block;
@@ -76,20 +76,20 @@
   .gf-card-photo-empty {
     width: 100%; height: 100%; font-size: 44px;
     display: flex; align-items: center; justify-content: center;
-    background: radial-gradient(circle at 30% 25%, var(--blue-soft), var(--white));
+    background: radial-gradient(circle at 30% 25%, var(--sage-soft), var(--white));
   }
   .gf-card-top { display: flex; align-items: center; gap: 10px; }
   .gf-card-emoji {
     font-size: 20px; width: 38px; height: 38px; flex: none;
     display: inline-flex; align-items: center; justify-content: center;
-    border-radius: 50%; background: radial-gradient(circle at 30% 30%, var(--blue-soft), #fff);
+    border-radius: 50%; background: radial-gradient(circle at 30% 30%, var(--sage-soft), #fff);
   }
   .gf-card-name { font-weight: 700; font-size: 15.5px; }
   .gf-card-price { font-size: 13px; color: var(--muted); margin-top: 1px; }
   .gf-card-situation { font-size: 13.5px; color: var(--body-text); margin: 12px 0 6px; }
   .gf-card-reason { font-size: 13px; color: var(--muted); }
   .gf-card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-  .gf-tag { font-size: 11px; background: var(--amber-soft); color: var(--amber-strong-ink); border-radius: var(--radius-pill); padding: 3px 9px; }
+  .gf-tag { font-size: 11px; background: var(--gold-soft); color: var(--gold-strong-ink); border-radius: var(--radius-pill); padding: 3px 9px; }
   .gf-card-link { display: block; margin-top: 12px; }
   .gf-card-nolink { display: block; margin-top: 12px; font-size: 12px; color: var(--muted-soft); }
   .gf-empty { text-align: center; padding: 30px 0; color: var(--muted); }
@@ -97,7 +97,7 @@
 
   /* ---------- 추천 받기 / 결과 판정 ---------- */
   .gf-go { margin-top: 18px; }
-  .gf-stale { font-size: 13px; color: var(--amber-muted-ink); margin-top: 10px; }
+  .gf-stale { font-size: 13px; color: var(--gold-muted-ink); margin-top: 10px; }
 
   /* 찾는 중 */
   .gf-searching { text-align: center; padding: 34px 18px; }
@@ -105,7 +105,7 @@
   .gf-searching-note { font-size: 13.5px; color: var(--muted); margin-top: 6px; }
   .gf-dots span {
     display: inline-block; width: 7px; height: 7px; margin: 14px 3px 0; border-radius: 50%;
-    background: var(--blue); animation: gf-dot 1s ease-in-out infinite;
+    background: var(--gold-deep); animation: gf-dot 1s ease-in-out infinite;
   }
   .gf-dots span:nth-child(2) { animation-delay: .15s; }
   .gf-dots span:nth-child(3) { animation-delay: .3s; }
@@ -115,14 +115,14 @@
   .gf-stage { perspective: 1000px; }
   .gf-hero {
     background: linear-gradient(180deg, #fffefc 0%, var(--white) 100%);
-    border: 1px solid var(--amber-border); border-radius: var(--radius);
+    border: 1px solid var(--gold-border); border-radius: var(--radius);
     box-shadow: var(--shadow-lg); padding: 20px;
     animation: gf-turn .62s var(--ease-in-out) backwards;
   }
   @keyframes gf-turn { from { opacity: 0; transform: rotateY(-38deg) scale(.94); } to { opacity: 1; transform: none; } }
   .gf-hero-badge {
     display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: .02em;
-    background: var(--amber-soft); color: var(--amber-strong-ink);
+    background: var(--gold-soft); color: var(--gold-strong-ink);
     border-radius: var(--radius-pill); padding: 4px 11px;
   }
   .gf-hero-cond { font-size: 12.5px; color: var(--muted-soft); margin-top: 10px; }
@@ -130,22 +130,22 @@
   .gf-hero-media { display: flex; gap: 16px; align-items: flex-start; }
   .gf-hero-thumb {
     width: 116px; flex: none; aspect-ratio: 1; overflow: hidden;
-    border-radius: var(--radius-md); background: var(--blue-soft);
+    border-radius: var(--radius-md); background: var(--sage-soft);
   }
   .gf-hero-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; box-shadow: var(--img-outline); }
   .gf-hero-thumb-empty {
     width: 100%; height: 100%; font-size: 46px; display: flex; align-items: center; justify-content: center;
-    background: radial-gradient(circle at 30% 25%, var(--blue-soft), var(--white));
+    background: radial-gradient(circle at 30% 25%, var(--sage-soft), var(--white));
   }
   .gf-hero-name { font-weight: 700; font-size: 18px; line-height: 1.35; }
   .gf-hero-price { font-size: 13.5px; color: var(--muted); margin-top: 3px; }
   .gf-hero-rate { margin-top: 10px; font-size: 13px; color: var(--muted); }
-  .gf-hero-rate b { font-size: 30px; color: var(--blue-ink); font-variant-numeric: tabular-nums; }
+  .gf-hero-rate b { font-size: 30px; color: var(--brown); font-variant-numeric: tabular-nums; }
   .gf-hero-why { margin-top: 16px; font-size: 14px; line-height: 1.65; color: var(--body-text); }
   .gf-hero-why b { color: var(--brown); }
   .gf-hero-pricenote {
     margin-top: 10px; font-size: 13px; line-height: 1.6;
-    background: var(--amber-soft); color: var(--amber-strong-ink);
+    background: var(--gold-soft); color: var(--gold-strong-ink);
     border-radius: var(--radius-sm); padding: 10px 12px;
   }
   @media (max-width: 480px) {
@@ -156,7 +156,7 @@
 
   .gf-subhead { font-size: 14px; font-weight: 700; color: var(--brown); margin: 26px 0 10px; }
   .gf-rest { margin-top: 22px; }
-  .gf-rest > summary { cursor: pointer; font-size: 14px; color: var(--blue-ink); font-weight: 600; padding: 6px 0; }
+  .gf-rest > summary { cursor: pointer; font-size: 14px; color: var(--brown); font-weight: 600; padding: 6px 0; }
   .gf-rest[open] > summary { margin-bottom: 12px; }
   .gf-card-rate { font-size: 12px; color: var(--muted-soft); margin-top: 8px; }
 

@@ -32,10 +32,10 @@
 <style>
   .labels { display:flex; }
   .labels .lbl { flex:1; text-align:center; font-size:13px; font-weight:700; padding:6px 2px; word-break:break-all; }
-  .labels .lbl.top { cursor:pointer; color:var(--blue); }
+  .labels .lbl.top { cursor:pointer; color:var(--gold-deep); }
   .labels .lbl.top:hover { text-decoration:underline; }
   .labels .lbl.bottom { color:var(--brown); }
-  .labels .lbl.hit { background:var(--amber-soft); border-radius:var(--radius-sm); }
+  .labels .lbl.hit { background:var(--gold-soft); border-radius:var(--radius-sm); }
   #ladder { width:100%; display:block; background:var(--paper); border-radius:var(--radius-sm); touch-action:manipulation; }
   #outcome { margin-top:12px; }
 </style>
@@ -204,7 +204,7 @@ TECHA.initPage({
     }
     // 경로 하이라이트
     if (highlightPath && highlightPath.length) {
-      ctx.strokeStyle = "#EFB054"; ctx.lineWidth = 4;
+      ctx.strokeStyle = "#C9A961"; ctx.lineWidth = 4;
       ctx.beginPath(); ctx.moveTo(highlightPath[0].x, highlightPath[0].y);
       for (var k = 1; k < highlightPath.length; k++) ctx.lineTo(highlightPath[k].x, highlightPath[k].y);
       ctx.stroke();

@@ -34,9 +34,9 @@
   .cat-btn { border:1px solid var(--line); background:var(--white); border-radius:var(--radius-pill);
     padding:8px 16px; font-size:14px; font-weight:600; color:var(--brown); cursor:pointer;
     transition:background-color 150ms ease,color 150ms ease,border-color 150ms ease,transform 120ms var(--ease-out); }
-  .cat-btn.on { background:var(--blue); color:#fff; border-color:var(--blue); }
+  .cat-btn.on { background:var(--gold-deep); color:#fff; border-color:var(--gold-deep); }
   .cat-btn:active { transform:scale(0.94); }
-  #spinResult { font-family:"Gowun Batang",serif; font-size:40px; font-weight:700; color:var(--blue); min-height:52px; }
+  #spinResult { font-family:"Gowun Batang",serif; font-size:40px; font-weight:700; color:var(--gold-deep); min-height:52px; }
   .spinning #spinResult { color:var(--muted); }
 
   .wheel-wrap { position:relative; width:min(280px,78vw); aspect-ratio:1/1; margin:24px auto 4px; }
@@ -169,7 +169,7 @@ TECHA.initPage({
   var spinBtn = document.getElementById("spin");
   var wheelGroup = document.getElementById("wheelGroup");
   var animating = false;
-  var COLORS = ["#EFB054", "#6E82A6", "#7C8B6F"];
+  var COLORS = ["#C9A961", "#3A322B", "#A8B89A"];
   var MAX_SEG = 12;
 
   function shuffle(arr) {
