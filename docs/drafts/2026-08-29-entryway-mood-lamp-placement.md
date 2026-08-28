@@ -7,7 +7,7 @@ group: F
 skeleton: 사례·스토리형
 slug: entryway-mood-lamp-placement
 alternates: [72, 16]
-char_count: 2085
+char_count: 2194
 generated_by: routine-daily
 ---
 
@@ -49,7 +49,7 @@ entryway-mood-lamp-placement
 현관이 허전하게 느껴진다면, 신발장 위에 놓는 것과 빈 벽에 거는 것을 하나씩만 정해도 인상이 달라지는 이유를 확인해보세요.
 
 ## 대표 이미지 alt
-현관문을 열자 신발장 위 무드등과 벽에 걸린 해바라기 액자가 보이는 모습
+현관 신발장 위에 켜진 유리돔 무드등과 그 위 벽에 걸린 해바라기 액자
 
 ## 대표 이미지 프롬프트
 Photorealistic Korean apartment entryway seen from just inside the front door, a glass dome preserved-flower mood lamp glowing on a shoe cabinet and a light oak pressed-sunflower frame on the wall, warm evening light, no people, no text, no watermark, no logos, every tag and paper surface blank, keep the bottom-right corner as simple, uncluttered background
@@ -86,13 +86,15 @@ Photorealistic Korean apartment entryway seen from just inside the front door, a
 
 테차 해바라기 액자는 프리저브드 해바라기를 원목 프레임에 담은 벽걸이용 액자예요. 배경은 맑은 배경과 황금 배경 두 가지가 있고, 크기는 A4와 A3 두 가지예요. A4는 좁은 현관 벽에도 부담 없이 걸리는 크기이고, A3는 벽 한 면을 확실히 채우고 싶을 때 고르시면 돼요.
 
+액자 아래쪽에는 손글씨 문구가 함께 들어가요. 「눈부시게 빛날 당신의 내일을 응원합니다」처럼요. 꽃만 있는 액자와 달리 읽을 문장이 하나 있으면, 지나가며 눈이 한 번 더 머물게 되더라고요. 현관은 나갈 때 마지막으로 보는 자리이기도 해서, 그 한 줄이 걸리는 위치로는 꽤 잘 맞아요.
+
 해바라기는 재물운을 상징하는 꽃으로 알려져 있어서, 집들이나 개업 선물로 특히 많이 나가는 상품이에요. 현관은 집에 들어오는 첫 자리라 그런 의미를 두기에도 잘 맞는 위치이고요. 생화 액자와 달리 물을 줄 일이 없으니, 한 번 걸어두면 손이 갈 일이 거의 없다는 점도 현관에 어울리는 이유예요.
 
-[이미지 자리 2: 현관 벽에 걸린 해바라기 액자 — alt: 현관 벽에 걸린 프리저브드 해바라기 액자]
+[이미지 자리 2: 현관 벽에 걸린 해바라기 액자와 손글씨 문구 — alt: 손글씨 문구가 들어간 프리저브드 해바라기 액자가 현관 벽에 걸린 모습]
 
 ### 자리를 정하기 전에 확인해두면 편한 것
 
-무드등은 **전원**을 먼저 정하면 배치가 수월해요. 콘센트가 가까운 자리라면 USB 타입을, 콘센트가 멀거나 선이 보이는 게 싫으면 건전지 타입을 고르는 식이에요. USB 타입은 전원선을 신발장 뒤쪽으로 숨기기 편하고, 건전지 타입은 전선이 아예 안 보여서 깔끔하게 두고 싶은 자리에 잘 맞아요.
+무드등은 **콘센트를 신경 쓰지 않아도 되는 자리**라는 점이 현관에 잘 맞아요. 현관은 콘센트가 아예 없거나 신발장 뒤쪽에 하나 있는 정도인 경우가 많은데, 전선을 끌어올 필요가 없으니 신발장 위 어디든 원하는 자리에 그냥 올려두시면 돼요. 지나다니며 발에 걸릴 선도 없고요.
 
 액자는 **벽에 못을 박을 수 있는지**를 먼저 확인해보세요. 전세라 타공이 어렵다면 무타공 걸이나 접착식 후크를 쓰시면 되는데, A3는 무게가 있으니 하중을 확인하고 고르시는 게 안전해요. 걸 자리는 눈높이보다 살짝 아래, 문을 열었을 때 시선이 자연스럽게 닿는 높이가 좋아요.
 
