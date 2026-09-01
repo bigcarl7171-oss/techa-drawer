@@ -196,7 +196,7 @@
 
     <section class="home-section home-tools-section reveal" id="tools" aria-labelledby="tool-table-head">
     <div class="shell-section-head shell-section-head-editorial">
-      <div><p class="home-section-number">03 · TOOLS</p><h2 id="tool-table-head">계산부터 추첨까지,<br>필요한 도구 한곳에 <span id="tool-count"></span></h2><p>D-Day, 만 나이, 날짜 계산부터 금융 계산과 재미 기능까지<br>필요한 것을 바로 사용하세요.</p></div>
+      <div><p class="home-section-number">03 · TOOLS</p><h2 id="tool-table-head">계산부터 추첨까지,<br>필요한 도구 한곳에</h2><p>D-Day, 만 나이, 날짜 계산부터 금융 계산과 재미 기능까지<br>필요한 것을 바로 사용하세요.</p></div>
     </div>
     <div class="home-featured-tools" aria-label="대표 도구">
       <a href="/ko/dday/"><span>01</span><b>D-Day</b><small>목표일까지 남은 날</small></a>
@@ -283,10 +283,6 @@
       })
       .filter(function (c) { return c.n > 0; })
       .sort(function (a, b) { return b.n - a.n; });
-
-    // 전체 도구 개수 (섹션 제목 옆)
-    document.getElementById("tool-count").textContent =
-      counts.reduce(function (sum, c) { return sum + c.n; }, 0) + "개";
 
     // 상황 카드 클릭 기록 — 어떤 상황에 수요가 있는지가 다음 상품 기획의 근거가 된다
     document.querySelectorAll(".shell-situation").forEach(function (el) {
