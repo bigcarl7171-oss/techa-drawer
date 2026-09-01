@@ -80,7 +80,7 @@
   <div class="shell-main">
     <div class="shell-topbar">
       <div class="shell-search">
-        <input type="text" id="tool-search" placeholder="도구·매거진 검색..." autocomplete="off">
+        <input type="text" id="tool-search" placeholder="무엇을 찾고 계세요?" autocomplete="off">
         <button type="button" class="shell-search-icon" id="tool-search-clear" aria-label="검색어 지우기" hidden>✕</button>
         <button type="button" class="shell-search-icon" id="tool-search-btn" aria-label="검색">🔍</button>
         <div class="shell-search-results" id="tool-search-results"></div>
@@ -90,56 +90,57 @@
         <a class="shell-icon-btn" href="/contact/" title="문의하기">✉️</a>
         <a class="shell-cta-pill smartstore" href="https://smartstore.naver.com/itecha" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          테차스마트스토어
+          테차 선물 보러가기 <span aria-hidden="true">↗</span>
         </a>
       </div>
     </div>
 
-    <section class="shell-hero">
+    <section class="shell-hero" aria-labelledby="home-hero-title">
       <div class="shell-hero-content">
-        <h1>변치 않는 선물,<br>당신의 꽃 가게</h1>
-        <p>선물 고르는 일부터 매일의 계산까지, 테차 서랍에서 필요한 걸 꺼내 쓰세요.</p>
+        <p class="shell-hero-kicker">TECHA · PRESERVED FLOWERS</p>
+        <h1 id="home-hero-title">시들지 않는 꽃을 만드는<br>테차입니다</h1>
+        <p class="shell-hero-description">선물 고르는 일부터 꽃을 오래 보는 법,<br>날짜 계산과 D-Day처럼 필요할 때 바로 쓰는 기능까지<br>테차 서랍에 하나씩 담았습니다.</p>
         <div class="shell-hero-actions">
-          <a class="shell-hero-cta" href="/ko/gift-finder/" id="entry-gift">🎁 선물 찾기</a>
-          <a class="shell-hero-cta shell-hero-cta-ghost" href="#tool-table-head" id="entry-tools">🧰 도구 쓰기</a>
+          <a class="shell-hero-cta" href="/ko/gift-finder/" id="entry-gift">선물 추천받기 <span aria-hidden="true">→</span></a>
+          <a class="shell-hero-cta shell-hero-cta-ghost" href="#tools" id="entry-tools">계산·도구 보기</a>
         </div>
       </div>
-      <div class="shell-hero-media" aria-hidden="true"></div>
+      <div class="shell-hero-media" role="img" aria-label="테차 플로리스트가 꽃다발을 만드는 모습"></div>
     </section>
 
-    <p class="shell-brand-note">🌿 시들지 않는 꽃을 만드는 <b>테차</b>가, 매일 쓰는 도구도 그렇게 만들어봤어요.
-       <a href="/about/">이야기 보기 →</a></p>
-
+    <section class="home-section home-photo-section reveal" aria-label="테차의 꽃 선물">
     <div class="shell-brandband">
       <a class="shell-brandband-item" href="/ko/gift-finder/?occasion=%EB%B3%91%EB%AC%B8%EC%95%88">
         <img src="/assets/banners/brand-hospital-visit.jpg" alt="프리저브드 꽃다발을 들고 있는 간호복 차림의 손님" loading="lazy">
-        <span>병문안에도 부담 없는 프리저브드 꽃</span>
+        <span>오래 두어도 부담 없는 꽃</span>
       </a>
       <a class="shell-brandband-item" href="/ko/gift-finder/?recipient=%EB%B6%80%EB%AA%A8%EB%8B%98">
         <img src="/assets/banners/brand-carnation-parents.jpg" alt="빨강·하양 카네이션 꽃다발" loading="lazy">
-        <span>부모님 손에 들려드리는 카네이션</span>
+        <span>마음까지 오래 남는 카네이션</span>
       </a>
       <a class="shell-brandband-item" href="/ko/gift-finder/?recipient=%EB%B3%B8%EC%9D%B8">
         <img src="/assets/banners/brand-moodlamp-cozy.jpg" alt="거실 소파 옆 테이블 위 프리저브드 꽃 무드등" loading="lazy">
-        <span>밤에도 은은하게, 오래 두고 보는 무드등</span>
+        <span>낮에는 꽃, 밤에는 은은한 빛</span>
       </a>
       <a class="shell-brandband-item" href="/care/">
         <img src="/assets/banners/brand-gift-moment.jpg" alt="불빛이 켜진 선물 상자를 건네는 두 사람의 손" loading="lazy">
-        <span>선물하는 순간까지 생각한 포장</span>
+        <span>받은 뒤까지 생각하는 꽃 선물</span>
       </a>
     </div>
+    </section>
 
-    <div class="shell-section-head">
-      <h2>🎁 이런 날, 챙기고 계신가요?</h2>
+    <section class="home-section home-gift-section reveal" aria-labelledby="gift-heading">
+    <div class="shell-section-head shell-section-head-editorial">
+      <div><p class="home-section-number">01 · GIFT</p><h2 id="gift-heading">선물 고민,<br>상황부터 골라보세요</h2></div>
     </div>
-    <p class="shell-situation-lead">선물 뭐 살지 모르겠으면 먼저 눌러보세요. 아니면 며칠 남았는지 세어보거나 그 달의 꽃을 확인해보세요.</p>
+    <p class="shell-situation-lead">누구에게 주는지, 어떤 날인지 정해졌다면<br>선물 고르기는 훨씬 쉬워집니다.</p>
     <div class="shell-situations">
       <a class="shell-situation shell-situation-featured" href="/ko/gift-finder/" data-situation="gift-finder">
-        <span class="shell-situation-icon" aria-hidden="true">🎁</span>
         <span class="shell-situation-body">
-          <b>선물 뭐 살지 모르겠으면</b><span>누구에게·어떤 상황·얼마짜리만 고르면 딱 맞는 선물 추천</span>
+          <small>TECHA GIFT FINDER</small>
+          <b>무슨 선물을 해야 할지 고민이라면</b><span>누구에게 · 어떤 날 · 얼마까지<br>세 가지만 고르면 테차가 어울리는 선물을 찾아드려요.</span>
         </span>
-        <span class="shell-situation-arrow" aria-hidden="true">→</span>
+        <span class="shell-situation-arrow">선물 추천받기 <span aria-hidden="true">→</span></span>
       </a>
       <a class="shell-situation" href="/ko/birth-flower/" data-situation="birthday">
         <span class="shell-situation-icon" aria-hidden="true">🌸</span>
@@ -158,10 +159,12 @@
         <b>100일·1주년</b><span>만난 날부터</span>
       </a>
     </div>
+    </section>
 
-    <div class="shell-section-head">
-      <h2>테차 매거진 · 꽃과 선물 이야기</h2>
-      <a href="/blog/">전체 보기 →</a>
+    <section class="home-section home-magazine-section reveal" aria-labelledby="magazine-heading">
+    <div class="shell-section-head shell-section-head-editorial">
+      <div><p class="home-section-number">02 · MAGAZINE</p><h2 id="magazine-heading">꽃과 선물을<br>조금 더 잘 고르는 법</h2><p>꽃을 만드는 사람의 경험으로<br>고르는 법부터 관리하는 법까지 하나씩 정리합니다.</p></div>
+      <a href="/blog/">더 많은 이야기 <span aria-hidden="true">→</span></a>
     </div>
     <div class="shell-carousel">
       <a class="shell-mag-card reveal" href="/blog/kids-recital-bouquet-size-guide/">
@@ -189,17 +192,37 @@
         </div>
       </a>
     </div>
+    </section>
 
-    <div class="shell-trust">
-      <div><span class="shell-trust-icon">🔒</span><div><b>로그인 없이 바로</b><span>회원가입, 앱 설치 모두 없어요</span></div></div>
-      <div><span class="shell-trust-icon">🛡️</span><div><b>입력값은 안 보내요</b><span>계산은 브라우저 안에서만 끝나요</span></div></div>
-      <div><span class="shell-trust-icon">📐</span><div><b>근거를 같이 적어요</b><span>계산 공식과 기준을 함께 안내해요</span></div></div>
+    <section class="home-section home-tools-section reveal" id="tools" aria-labelledby="tool-table-head">
+    <div class="shell-section-head shell-section-head-editorial">
+      <div><p class="home-section-number">03 · TOOLS</p><h2 id="tool-table-head">계산부터 추첨까지,<br>필요한 도구 한곳에 <span id="tool-count"></span></h2><p>D-Day, 만 나이, 날짜 계산부터 금융 계산과 재미 기능까지<br>필요한 것을 바로 사용하세요.</p></div>
     </div>
-
-    <div class="shell-section-head">
-      <h2 id="tool-table-head">전체 도구 <span id="tool-count"></span></h2>
+    <div class="home-featured-tools" aria-label="대표 도구">
+      <a href="/ko/dday/"><span>01</span><b>D-Day</b><small>목표일까지 남은 날</small></a>
+      <a href="/ko/age-calculator/"><span>02</span><b>만 나이</b><small>생년월일로 바로 계산</small></a>
+      <a href="/ko/date-diff/"><span>03</span><b>날짜 계산</b><small>두 날짜의 차이 확인</small></a>
+      <a href="/ko/percent/"><span>04</span><b>퍼센트 계산</b><small>증감률과 비율 계산</small></a>
+      <a href="/ko/gift-finder/"><span>05</span><b>선물 추천</b><small>상황에 맞는 테차 선물</small></a>
+      <a href="/ko/lotto/"><span>06</span><b>로또 추첨</b><small>1부터 45까지 번호 추첨</small></a>
     </div>
+    <h3 class="home-all-tools-title">전체 도구</h3>
     <div id="tool-table"></div>
+    </section>
+
+    <section class="home-section home-trust-section reveal" aria-labelledby="trust-heading">
+      <div class="shell-section-head"><h2 id="trust-heading">편하게 바로 사용하세요</h2></div>
+      <div class="shell-trust">
+        <div><div><b>로그인 없이 바로</b><span>회원가입이나 앱 설치 없이 사용할 수 있어요.</span></div></div>
+        <div><div><b>입력값은 보내지 않아요</b><span>계산은 브라우저 안에서 처리돼요.</span></div></div>
+        <div><div><b>기준을 함께 안내해요</b><span>계산 공식과 기준도 같이 확인할 수 있어요.</span></div></div>
+      </div>
+    </section>
+
+    <section class="home-closing reveal" aria-labelledby="closing-heading">
+      <div class="home-closing-media" role="img" aria-label="따뜻한 빛 아래 놓인 테차의 꽃 선물"></div>
+      <div class="home-closing-copy"><p class="home-section-number">TECHA FLOWERS</p><h2 id="closing-heading">오래 남는 마음을<br>꽃으로 전하고 싶다면</h2><p>시들지 않는 꽃을 만드는<br>테차의 선물을 만나보세요.</p><a href="https://smartstore.naver.com/itecha" target="_blank" rel="noopener">테차 선물 보러가기 <span aria-hidden="true">→</span></a></div>
+    </section>
   </div>
 
   <aside class="shell-right">
@@ -309,8 +332,19 @@
     });
     tableEl.innerHTML = html;
 
-    // 스크롤 등장 애니메이션 (동작 축소 설정 시 즉시 표시)
+    // 첫 방문 히어로 등장 — 같은 탭에서는 한 번만 실행
     var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var introSeen = false;
+    try { introSeen = sessionStorage.getItem("techa-home-intro") === "1"; } catch (_err) {}
+    if (!reduceMotion && !introSeen) {
+      document.body.classList.add("home-intro");
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { document.body.classList.add("home-intro-ready"); });
+      });
+      try { sessionStorage.setItem("techa-home-intro", "1"); } catch (_err) {}
+    }
+
+    // 스크롤 등장 애니메이션. JS가 중단되면 reveal-ready가 붙지 않아 콘텐츠는 보인다.
     var revealEls = document.querySelectorAll(".reveal");
     if (reduceMotion || !("IntersectionObserver" in window)) {
       revealEls.forEach(function (el) { el.classList.add("is-visible"); });
@@ -323,7 +357,10 @@
           }
         });
       }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
-      revealEls.forEach(function (el) { io.observe(el); });
+      revealEls.forEach(function (el) {
+        el.classList.add("reveal-ready");
+        io.observe(el);
+      });
     }
 
     // 사이트 검색 (띄어쓰기 무시, 도구 + 매거진 글의 제목/설명은 물론 본문
