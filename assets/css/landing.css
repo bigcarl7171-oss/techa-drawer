@@ -484,9 +484,14 @@ body.landing { background: #f6f1e7; }
   border: 1px solid var(--brown); font-weight: 600;
 }
 .shell-hero-cta-ghost { background: transparent; color: var(--brown); border-color: var(--line-strong); }
+.shell-hero-tools-link {
+  flex-basis: 100%; align-self: flex-start; margin-top: 3px;
+  color: var(--muted); font-size: 12.5px; font-weight: 500;
+}
 @media (hover: hover) and (pointer: fine) {
   .shell-hero-cta:hover { filter: none; transform: translateY(-2px); }
   .shell-hero-cta-ghost:hover { background: var(--paper); }
+  .shell-hero-tools-link:hover { color: var(--brown); text-decoration: underline; }
 }
 .motion-enabled.home-intro .shell-hero-kicker,
 .motion-enabled.home-intro .shell-hero h1,
