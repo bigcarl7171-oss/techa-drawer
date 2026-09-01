@@ -13,11 +13,11 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
 
 | 찾는 것 | 실제 위치 |
 |---|---|
-| **원고 작성 파이프라인 (원본)** | `D:\claude-practice\.claude\skills\techa-content-studio\SKILL.md` |
-| **주제 후보 + 이미 다룬 주제 이력** | `D:\techa-cardnews\topic-pool.md` |
-| **원고 보드** (주제 고르는 대시보드) | https://claude.ai/code/artifact/d186c5b8-c22a-4f17-af60-693ba18ba6c2<br>소스: `…\techa-content-studio\references\topic-board.html` · 재발행 시 반드시 이 URL로 |
-| 시의성 주제 리서치 (추석 등) | `…\techa-content-studio\references\topic-research-2026-08.md` |
-| 카드뉴스 카피 규칙 | `D:\techa-cardnews\card-copy-guide.md` |
+| **원고 작성 파이프라인 (원본)** | `D:\\claude-practice\\.claude\\skills\\techa-content-studio\\SKILL.md` |
+| **주제 후보 + 이미 다룬 주제 이력** | `D:\\techa-cardnews\\topic-pool.md` |
+| **원고 보드** (주제 고르는 대시보드) | https://claude.ai/code/artifact/d186c5b8-c22a-4f17-af60-693ba18ba6c2<br>소스: `…\\techa-content-studio\\references\\topic-board.html` · 재발행 시 반드시 이 URL로 |
+| 시의성 주제 리서치 (추석 등) | `…\\techa-content-studio\\references\\topic-research-2026-08.md` |
+| 카드뉴스 카피 규칙 | `D:\\techa-cardnews\\card-copy-guide.md` |
 | 브랜드 톤·품질게이트·색상 | `techa-brand-rules.md` (이 저장소 = 원본) |
 | 매거진 발행 절차·SEO | `docs/blog-seo-guide.md` (이 저장소 = 원본) |
 
@@ -46,3 +46,11 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
 
 ⚠️ 규칙이 서로 어긋나면 **`techa-content-studio` 쪽이 최신**이다. 이 저장소의
 `blog-seo-guide.md`가 더 오래된 방침을 담고 있던 전례가 있다(네이버 링크백 건).
+
+# 사이트 개발 작업 안전 규칙
+
+- 기존 예약 매거진 초안·발행 루틴은 현재 방식대로 유지한다.
+- `techa-publish`의 정상 발행에 한해 `main` 직접 push를 허용한다.
+- 홈페이지, CSS, JavaScript, 도구, 배포 설정 등 구조적 개발 작업은 `main`이 아닌 별도 브랜치에서 진행한다.
+- Codex 작업 브랜치를 Claude가 임의로 수정하지 않는다.
+- `AGENTS.md`는 Codex 규칙이므로 Claude가 임의로 변경하지 않는다.
