@@ -342,11 +342,7 @@
     fetch("/assets/data/search-index.json").then(function (r) {
       return r.ok ? r.json() : [];
     }).then(function (data) {
-      var byPath = {};
-      data.forEach(function (d) { byPath[d.path] = d; });
-      searchIndex.forEach(function (item) {
-        if (byPath[item.path]) item.body = byPath[item.path].body || "";
-      });
+      if (data.length) searchIndex = data;
     }).catch(function () { /* 본문 검색 없이도 제목·설명 검색은 계속 동작 */ });
 
     function closeResults() {

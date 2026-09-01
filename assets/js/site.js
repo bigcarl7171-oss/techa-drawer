@@ -133,6 +133,12 @@
       return { emoji: p.emoji, title: p.title, desc: p.desc, path: p.path, tag: "매거진" };
     }));
 
+    fetch("/assets/data/search-index.json").then(function (r) {
+      return r.ok ? r.json() : [];
+    }).then(function (data) {
+      if (data.length) index = data;
+    }).catch(function () { /* 생성 인덱스가 없어도 기존 APPS·POSTS 검색은 계속 동작 */ });
+
     function open() {
       panel.classList.add("is-open");
       toggle.setAttribute("aria-expanded", "true");
