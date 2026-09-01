@@ -7,8 +7,9 @@ group: C
 skeleton: 기준·목록형
 slug: kids-recital-bouquet-size-guide
 alternates: [94, 41]
-char_count: 1859
+char_count: 2497
 generated_by: routine-daily
+edited_by: human-review 2026-09-01 (순차 발송·리본 문구 미표기 반영, 실사진 4장 적용, 자수 재측정)
 ---
 
 # 오늘의 주제 3안
@@ -46,10 +47,10 @@ kids-recital-bouquet-size-guide
 발표회 꽃다발, 예쁜 것만 보고 고르면 사진에서 아이 얼굴이 가려질 수 있어요. 미리 확인해두면 좋은 기준을 정리했어요.
 
 ## 대표 이미지 alt
-발표회 무대에서 인형꽃다발을 든 아이
+노란 인형꽃다발을 받고 환하게 웃는 아이
 
 ## 대표 이미지 프롬프트
-Photorealistic children's recital stage, a child holding a small doll flower bouquet, warm natural stage lighting, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background
+(실사진 사용: docs/drafts/images/kids-recital-bouquet-size-guide/cover.jpg — 아이가 노란 프리저브드 인형꽃다발을 건네받으며 환하게 웃는 모습)
 
 ## 본문
 
@@ -61,7 +62,7 @@ Photorealistic children's recital stage, a child holding a small doll flower bou
 
 나이대별로 감을 잡아두면 더 쉬워요. 유치원생이라면 손바닥 두 개를 겹친 정도, 초등학생 저학년이라면 그보다 한 뼘 정도 큰 사이즈가 무난하고요. 반대로 "화려해 보이니까"라는 이유로 아이 몸통보다 넓은 꽃다발을 고르면, 정작 무대 위에서는 꽃이 아이를 가리는 그림이 돼버려요. 꽃다발은 아이를 돋보이게 하는 소품이지, 그 자체가 주인공이 되면 안 된다는 걸 기억해두시면 좋아요.
 
-[이미지 자리 1: 유치원생 아이가 작은 인형꽃다발을 안고 있는 모습 — alt: 유치원생 아이가 안고 있는 작은 인형꽃다발 — prompt: Photorealistic young child hugging a small doll flower bouquet, kindergarten recital setting, warm natural light, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background]
+[이미지 자리 1: 작은 아이가 분홍 인형꽃다발을 품에 안고 있는 모습(아이 몸통과 크기 비교) — alt: 작은 아이가 품에 안은 분홍 인형꽃다발 — prompt: (실사진 사용: docs/drafts/images/kids-recital-bouquet-size-guide/1.jpg — 어린아이가 분홍 인형꽃다발을 두 팔로 품에 안고 웃는 모습, 아이 몸통 대비 꽃다발 크기가 보임)]
 
 ### 오래 들고 있어야 한다는 것도 기준이에요
 
@@ -75,7 +76,7 @@ Photorealistic children's recital stage, a child holding a small doll flower bou
 
 색을 고를 때는 아이가 입을 의상 색도 함께 떠올려보시면 좋아요. 무대 의상이 어두운 톤이라면 꽃다발은 밝은 색으로, 반대로 의상이 화사하다면 꽃다발은 한 톤 차분하게 맞춰서 서로 묻히지 않게 하는 게 사진이 잘 나오는 요령이에요.
 
-[이미지 자리 2: 무대 조명 아래 밝은 색 인형꽃다발을 든 아이의 뒷모습 — alt: 무대 조명 아래에서 꽃다발을 든 아이 — prompt: Photorealistic child on a stage under warm spotlight holding a bright pastel doll bouquet, recital atmosphere, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background]
+[이미지 자리 2: 색이 또렷한 분홍 계열 인형꽃다발 제품 컷 — alt: 밝은 분홍 계열 인형꽃다발 — prompt: (실사진 사용: docs/drafts/images/kids-recital-bouquet-size-guide/2.jpg — 밝은 분홍 톤 인형꽃다발 제품 컷, 조명 아래서도 또렷하게 남는 색)]
 
 ### 그래서 인형꽃다발을 찾는 손님이 많으세요
 
@@ -92,12 +93,12 @@ Photorealistic children's recital stage, a child holding a small doll flower bou
 발표회 꽃다발은 예쁜 것 하나만 보고 고르기 쉬운데, 막상 그날 현장에서는 폭·무게·색이 사진 결과를 더 크게 좌우해요. 특히 처음 발표회를 준비하는 부모님이라면 이런 부분까지 미리 챙기기가 쉽지 않죠. 다음 발표회를 준비하신다면, 오늘 정리한 기준들을 먼저 떠올려보세요 ✨.
 
 **Q. 발표회 날짜에 맞춰 미리 받아볼 수 있나요?**
-네, 날짜를 미리 알려주시면 그에 맞춰 배송해드려요. 발표회는 날짜가 정해져 있는 경우가 많으니, 여유 있게 주문해주시는 게 안전해요. 특히 학기말처럼 발표회가 몰리는 시기에는 주문이 함께 몰릴 수 있어서, 일정이 확정되는 대로 미리 알려주시면 저희도 준비하기가 훨씬 수월해요.
+테차는 주문이 들어온 순서대로 순차 발송하고 있어서, 특정 날짜에 딱 맞춰 제작해 보내드리는 방식은 아니에요. 대신 발표회처럼 날짜가 정해진 자리라면, 일정을 확인하시는 대로 여유 있게 미리 주문해두시는 걸 권해드려요. 특히 학기말처럼 발표회가 몰리는 시기에는 주문도 함께 몰리니, 서두르시는 편이 안전해요.
 
 **Q. 아이 옷 색이나 좋아하는 캐릭터에 맞춰 맞춤 제작도 가능한가요?**
-네, 색상 조합이나 리본 문구 같은 부분은 맞춤 제작으로 요청하실 수 있어요. 주문 전에 원하시는 스타일을 말씀해주시면 맞춰서 준비해드려요.
+색상 조합은 원하시는 방향으로 요청하실 수 있고, 메시지카드 문구도 자유롭게 적어드려요. 다만 리본에는 따로 문구를 넣지 않아요. 주문 전에 원하시는 스타일과 카드에 담고 싶은 문구를 말씀해주시면 맞춰서 준비해드려요.
 
-[이미지 자리 3: 발표회 로비에서 부모와 아이가 인형꽃다발을 들고 있는 모습 — alt: 발표회 로비에서 인형꽃다발을 든 아이와 부모 — prompt: Photorealistic parent and child in a recital hall lobby, child holding a small doll flower bouquet, warm natural light, no watermark, no text, no logos, keep the bottom-right corner as simple, uncluttered background]
+[이미지 자리 3: 파란 계열 인형꽃다발 제품 컷(캐릭터 인형이 함께 들어간 구성) — alt: 캐릭터 인형이 함께 들어간 파란 계열 인형꽃다발 — prompt: (실사진 사용: docs/drafts/images/kids-recital-bouquet-size-guide/3.jpg — 파란 톤 프리저브드 인형꽃다발 제품 컷, 캐릭터 인형이 가운데 자리)]
 
 # 품질게이트 자가검사
 
@@ -112,7 +113,7 @@ Photorealistic children's recital stage, a child holding a small doll flower bou
 | 과도한 공포·죄책감 압박 금지 | ✅ | 담백한 공감 톤 유지 |
 | 거짓 긴급성("오늘만!") 금지 | ✅ | 미사용 |
 | "~인 것 같아요" 류 자신 없는 표현 금지 | ✅ | 초안 중 "좋을 것 같아요" 1건 발견해 "떠올려보세요"로 수정 |
-| **표현 규칙 1 — 본문 자수(본문만 측정)** | ✅ | 1,859자, 1,800~2,800자 범위 안. 이미지 마커·마크다운 기호·공백 제외 후 측정 |
+| **표현 규칙 1 — 본문 자수(본문만 측정)** | ✅ | 2,497자, 1,800~2,800자 범위 안. 이미지 마커·마크다운 기호·공백 제외 후 재측정(2026-09-01 수정 반영) |
 | **표현 규칙 2 — 실적 숫자 미사용** | ✅ | 판매량·리뷰 건수·고객 수 등 실적 수치 0건. "많이 나가는", "많이들 좋아하세요" 등 두루뭉술한 표현만 사용 |
 | **표현 규칙 6 — 공정 용어 대신 손님 말로 설명** | ✅ | "프리저브드 소재라 생화보다 가벼운 편"처럼 감각적 표현만 사용. "보존액 치환"·"제작 과정" 등 공정 용어 미사용 |
 
@@ -121,7 +122,7 @@ Photorealistic children's recital stage, a child holding a small doll flower bou
 - 본문은 통계·수치·인용이 아니라 발표회 꽃다발 크기·무게·색이라는 **일반 상식 수준**의 조언이라 별도 웹 검색 교차검증은 하지 않았다.
 - 사용한 브랜드 표현: 인형꽃다발이 유치원~졸업식 전용 상품이라는 점, 프리저브드 소재라 생화보다 가벼운 경향이 있다는 점 — 둘 다 `refs/brand.md` 상품표 기반이며 실적 수치는 아니다.
 - 리뷰·후기 건수는 숫자로도 문장으로도 언급하지 않았다(이번 소재와 직접 관련이 없어 아예 배제).
-- 손님이 자주 묻는 것으로 언급한 항목은 ①배송(발표회 날짜 맞춤) ②맞춤 제작(색상·캐릭터) 두 가지뿐이다. 세 번째 허용 항목(생화 여부)은 이번 주제와 관련이 낮아 쓰지 않았고, 네 번째 항목은 만들지 않았다.
+- 손님이 자주 묻는 것으로 언급한 항목은 ①배송(순차 발송 원칙, 여유 주문 권장 — 날짜 맞춤 제작·발송은 하지 않음) ②맞춤 제작(색상 조합 요청 가능, 메시지카드 문구 자유 작성, 리본 문구는 넣지 않음) 두 가지뿐이다. 세 번째 허용 항목(생화 여부)은 이번 주제와 관련이 낮아 쓰지 않았고, 네 번째 항목은 만들지 않았다.
 - 후기 원문·구체적 고객 사례·통계는 지어낸 것이 0건이다. 테차만의 실제 에피소드가 없어서, 상품 데이터에 기반한 일반적 설명 수준에서 멈췄다는 점을 위 STAGE 1 자가 응답에도 명시했다.
 
 # 사람이 해야 할 남은 작업
