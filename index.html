@@ -138,7 +138,7 @@
       <a class="shell-situation shell-situation-featured" href="/ko/gift-finder/" data-situation="gift-finder">
         <span class="shell-situation-body">
           <small>TECHA GIFT FINDER</small>
-          <b>무슨 선물을 해야 할지 고민이라면</b><span>누구에게 · 어떤 날 · 얼마까지<br>세 가지만 고르면 테차가 어울리는 선물을 찾아드려요.</span>
+          <b>무슨 선물을 해야 할지 고민이라면</b><span><strong class="shell-gift-criteria">누구에게&nbsp; · &nbsp;어떤 날&nbsp; · &nbsp;얼마까지</strong><br>세 가지만 고르면 테차가 어울리는 선물을 찾아드려요.</span>
         </span>
         <span class="shell-situation-arrow">선물 추천받기 <span aria-hidden="true">→</span></span>
       </a>
@@ -332,23 +332,10 @@
     });
     tableEl.innerHTML = html;
 
-    // 첫 방문 히어로 등장 — 같은 탭에서는 한 번만 실행
+    // 모션은 observer가 모든 대상을 정상 등록한 뒤에만 활성화한다.
     var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var introSeen = false;
-    try { introSeen = sessionStorage.getItem("techa-home-intro") === "1"; } catch (_err) {}
-    if (!reduceMotion && !introSeen) {
-      document.body.classList.add("home-intro");
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () { document.body.classList.add("home-intro-ready"); });
-      });
-      try { sessionStorage.setItem("techa-home-intro", "1"); } catch (_err) {}
-    }
-
-    // 스크롤 등장 애니메이션. JS가 중단되면 reveal-ready가 붙지 않아 콘텐츠는 보인다.
     var revealEls = document.querySelectorAll(".reveal");
-    if (reduceMotion || !("IntersectionObserver" in window)) {
-      revealEls.forEach(function (el) { el.classList.add("is-visible"); });
-    } else {
+    if (!reduceMotion && "IntersectionObserver" in window) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -357,10 +344,22 @@
           }
         });
       }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+      revealEls.forEach(function (el) { io.observe(el); });
+      document.body.classList.add("motion-enabled");
       revealEls.forEach(function (el) {
         el.classList.add("reveal-ready");
-        io.observe(el);
       });
+    }
+
+    // 첫 방문 히어로 등장 — 같은 탭에서는 한 번만 실행한다.
+    var introSeen = false;
+    try { introSeen = sessionStorage.getItem("techa-home-intro") === "1"; } catch (_err) {}
+    if (document.body.classList.contains("motion-enabled") && !introSeen) {
+      document.body.classList.add("home-intro");
+      var showIntro = function () { document.body.classList.add("home-intro-ready"); };
+      setTimeout(showIntro, 120);
+      requestAnimationFrame(function () { requestAnimationFrame(showIntro); });
+      try { sessionStorage.setItem("techa-home-intro", "1"); } catch (_err) {}
     }
 
     // 사이트 검색 (띄어쓰기 무시, 도구 + 매거진 글의 제목/설명은 물론 본문
