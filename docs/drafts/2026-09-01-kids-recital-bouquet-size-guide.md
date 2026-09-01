@@ -1,7 +1,7 @@
 ---
 date: 2026-09-01
 platform: magazine
-status: draft
+status: published
 topic_no: 34
 group: C
 skeleton: 기준·목록형
