@@ -13,11 +13,11 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
 
 | 찾는 것 | 실제 위치 |
 |---|---|
-| **원고 작성 파이프라인 (원본)** | `D:\\claude-practice\\.claude\\skills\\techa-content-studio\\SKILL.md` |
-| **주제 후보 + 이미 다룬 주제 이력** | `D:\\techa-cardnews\\topic-pool.md` |
-| **원고 보드** (주제 고르는 대시보드) | https://claude.ai/code/artifact/d186c5b8-c22a-4f17-af60-693ba18ba6c2<br>소스: `…\\techa-content-studio\\references\\topic-board.html` · 재발행 시 반드시 이 URL로 |
-| 시의성 주제 리서치 (추석 등) | `…\\techa-content-studio\\references\\topic-research-2026-08.md` |
-| 카드뉴스 카피 규칙 | `D:\\techa-cardnews\\card-copy-guide.md` |
+| **원고 작성 파이프라인 (원본)** | `D:\claude-practice\.claude\skills\techa-content-studio\SKILL.md` |
+| **주제 후보 + 이미 다룬 주제 이력** | `D:\techa-cardnews\topic-pool.md` |
+| **원고 보드** (주제 고르는 대시보드) | https://claude.ai/code/artifact/d186c5b8-c22a-4f17-af60-693ba18ba6c2<br>소스: `…\techa-content-studio\references\topic-board.html` · 재발행 시 반드시 이 URL로 |
+| 시의성 주제 리서치 (추석 등) | `…\techa-content-studio\references\topic-research-2026-08.md` |
+| 카드뉴스 카피 규칙 | `D:\techa-cardnews\card-copy-guide.md` |
 | 브랜드 톤·품질게이트·색상 | `techa-brand-rules.md` (이 저장소 = 원본) |
 | 매거진 발행 절차·SEO | `docs/blog-seo-guide.md` (이 저장소 = 원본) |
 
