@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <title>선물부터 인테리어 꽃 소품까지, 실패 없는 테차의 상황별 맞춤 큐레이션 | 테차 서랍</title>
-<meta name="description" content="누구에게, 어떤 날에, 어느 정도 예산으로 선물할지 고르면 테차 상품 중 잘 맞는 세 가지를 추천합니다. 어버이날·프러포즈·병문안·집들이 등 21가지 상황 지원.">
+<meta name="description" content="누구에게, 어떤 날에, 어떤 느낌으로 선물할지 고르면 테차 상품 중 잘 맞는 상품을 가격대별로 추천합니다. 어버이날·프러포즈·병문안·집들이 등 21가지 상황 지원.">
 <link rel="canonical" href="https://www.techa.kr/ko/gift-finder/">
 <meta property="og:image" content="https://www.techa.kr/assets/og/og-default.png">
 <meta property="og:image:width" content="1200">
@@ -19,7 +19,7 @@
 <link rel="alternate" hreflang="x-default" href="https://www.techa.kr/ko/gift-finder/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="선물부터 인테리어 꽃 소품까지, 실패 없는 테차의 상황별 맞춤 큐레이션">
-<meta property="og:description" content="누구에게·어떤 상황에·얼마짜리인지 고르면 테차 상품 중 딱 맞는 것만 추려드립니다.">
+<meta property="og:description" content="누구에게·어떤 상황에 선물할지 고르면 테차 상품 중 잘 맞는 선택을 가격대별로 보여드립니다.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
@@ -42,13 +42,13 @@
     <div class="gf-intro">
       <p class="gf-eyebrow">TECHA GIFT FINDER</p>
       <h1>선물 고민,<br>상황부터 골라보세요</h1>
-      <p>네 가지 질문을 따라가면 테차의 꽃 선물 중 지금 상황에 잘 맞는 세 가지를 골라드려요.</p>
+      <p>세 가지 질문을 따라가면 지금 상황에 잘 맞는 꽃 선물을 가격대별로 골라드려요.</p>
       <div class="gf-assurance"><span>약 1분</span><span>회원가입 없음</span><span>선택 정보 저장 안 함</span></div>
     </div>
 
     <div class="gf-app" id="gf-app">
       <div class="gf-progress" aria-label="추천 진행 단계">
-        <div><strong id="gf-progress-text">1 / 4</strong><span id="gf-progress-label">받는 분 선택</span></div>
+        <div><strong id="gf-progress-text">1 / 3</strong><span id="gf-progress-label">받는 분 선택</span></div>
         <div class="gf-progress-track" aria-hidden="true"><i id="gf-progress-bar"></i></div>
       </div>
 
@@ -62,13 +62,8 @@
         <div class="gf-step-summary" aria-live="polite"></div>
         <div class="gf-step-options"><div class="gf-chips" id="gf-occasion"></div><button type="button" class="gf-more" id="gf-occasion-more" aria-expanded="false">다른 상황 보기 +</button></div>
       </div>
-      <div class="gf-step" data-step="2" data-key="budget">
-        <div class="gf-step-head"><div><span class="gf-step-no">03</span><h2>예산은 어느 정도인가요?</h2><p>정확하지 않아도 괜찮아요.</p></div><button type="button" class="gf-step-edit" data-edit-step="2" hidden>수정</button></div>
-        <div class="gf-step-summary" aria-live="polite"></div>
-        <div class="gf-step-options"><div class="gf-chips" id="gf-budget"></div><button type="button" class="gf-skip" data-skip-key="budget">예산은 상관없어요 →</button></div>
-      </div>
-      <div class="gf-step" data-step="3" data-key="giftType">
-        <div class="gf-step-head"><div><span class="gf-step-no">04 · 선택</span><h2>어떤 느낌의 선물이 좋나요?</h2><p>선택하면 결과를 조금 더 세밀하게 골라드려요.</p></div><button type="button" class="gf-step-edit" data-edit-step="3" hidden>수정</button></div>
+      <div class="gf-step" data-step="2" data-key="giftType">
+        <div class="gf-step-head"><div><span class="gf-step-no">03 · 선택</span><h2>어떤 느낌의 선물이 좋나요?</h2><p>선택하면 결과를 조금 더 세밀하게 골라드려요.</p></div><button type="button" class="gf-step-edit" data-edit-step="2" hidden>수정</button></div>
         <div class="gf-step-summary" aria-live="polite"></div>
         <div class="gf-step-options"><div class="gf-chips gf-type" id="gf-type"></div></div>
       </div>
@@ -83,17 +78,16 @@
 
     <section class="gf-note">
       <h2>추천은 이렇게 정합니다</h2>
-      <p>받는 분과 상황을 가장 크게 보고, 예산과 선물 형태를 더합니다. 판매 반응은 참고만 하고, 테차가 자신 있게 권하는 상품은 실제로 잘 맞는 상황에서만 추천 순위를 높입니다.</p>
+      <p>받는 분과 상황을 가장 크게 보고 선물 형태를 더합니다. 조건에 맞는 상품만 고른 뒤, 부담 없이 준비하는 선물부터 조금 더 특별한 선물까지 가격대별로 나누어 보여드립니다.</p>
     </section>
   </section>
 
   <article class="article">
     <h2>이 도구, 어떻게 골라주나요?</h2>
-    <p>테차가 실제로 판매 중인 상품 25개 종류를 <b>받는 분 · 선물하는 날 · 예산 · 선물 형태</b>에 따라
-       미리 분류해뒀습니다. 네 가지 질문을 따라가면 가장 잘 맞는 하나와 느낌이 다른 대안 두 가지를 보여드립니다.</p>
-    <p>조건에 안 맞는다고 버리지 않고 순서를 매기는 방식이라 <b>결과가 비는 일이 없습니다.</b>
-       선물하는 날만 고르면 추천받을 수 있고, 받는 분과 예산·선물 형태를 더하면 결과가 더욱 세밀해져요.
-       예산이 한 단계 어긋났을 때는 숨기지 않고 "한 단계 위에서 골랐다"고 먼저 알려드립니다.</p>
+    <p>테차가 실제로 판매 중인 상품 25개 종류를 <b>받는 분 · 선물하는 날 · 선물 형태</b>에 따라
+       미리 분류해뒀습니다. 세 가지 질문을 따라가면 가장 잘 맞는 하나와 가격대가 다른 선택지를 보여드립니다.</p>
+    <p>관계와 상황에 맞는 상품만 먼저 고르기 때문에 엉뚱한 선물이 섞이지 않습니다.
+       선물하는 날만 고르면 추천받을 수 있고, 받는 분과 선물 형태를 더하면 결과가 더욱 세밀해져요.</p>
 
     <h2>"어떤 상황" 21가지, 이렇게 정했습니다</h2>
     <p>어버이날·스승의날처럼 뻔한 것부터, 병문안·화이트데이·크리스마스처럼 놓치기 쉬운 것까지
@@ -102,7 +96,7 @@
 
     <h3>이럴 때 특히 유용해요</h3>
     <ul>
-      <li>부모님 생신·환갑·칠순에 뭘 드려야 할지 막막할 때 (예산부터 좁혀보세요)</li>
+      <li>부모님 생신·환갑·칠순에 어떤 가격대의 선물이 좋을지 비교하고 싶을 때</li>
       <li>병문안 갈 때 생화 대신 뭘 가져갈지 고민될 때 (<a href="/blog/camellia-hospital-visit-taboo/">피해야 할 꽃도 있어요</a>)</li>
       <li>같은 분 퇴원 축하 선물을 고를 때 (<a href="/blog/hospital-discharge-gift/">병문안 때와 기준이 달라요</a>)</li>
       <li>화이트데이·발렌타인데이가 코앞인데 아직 못 정했을 때</li>
@@ -119,8 +113,8 @@
     <p>네, 가격 정책 변경 시 이 페이지 갱신이 며칠 늦을 수 있습니다. 정확한 최종 가격은
        스마트스토어 상품 페이지에서 확인해 주세요.</p>
     <h3>Q. 첫 번째 추천만 보면 되나요?</h3>
-    <p>첫 번째 상품은 고르신 조건을 가장 고르게 충족하는 선물입니다. 아래의 두 상품은 전달 방식이나 사용 형태를
-       조금 다르게 고르고 싶을 때 참고할 수 있는 대안이에요. 예산이 살짝 벗어나는 경우에는 결과에 그대로 안내합니다.</p>
+    <p>첫 번째 상품은 고르신 조건을 가장 고르게 충족하는 선물입니다. 아래에는 조건에 맞는 상품을
+       부담 없이 준비하기, 가장 많이 고르는 가격대, 조금 더 특별하게로 나누어 보여드립니다.</p>
     <h3>Q. 여러 명에게 같이 선물할 때도 쓸 수 있나요?</h3>
     <p>네, "단체·답례품" 상황을 골라보세요. 여러 개를 한 번에 돌리기 좋은 낱개 구성 위주로 보여드립니다.</p>
 
