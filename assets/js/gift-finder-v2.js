@@ -1,13 +1,14 @@
 
 (() => {
   const state = {
-    recipient: "", occasion: "", occasionTags: [], budget: "", giftType: "",
-    labels: { recipient: "", occasion: "", budget: "", giftType: "" }
+    recipient: "", occasion: "", occasionTags: [], giftType: "",
+    labels: { recipient: "", occasion: "", giftType: "" }
   };
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const fmt = n => new Intl.NumberFormat("ko-KR").format(n);
   const completedSteps = new Set();
+  let catalog = [];
   const escapeHtml = (value = "") => String(value).replace(/[&<>"']/g, ch => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[ch]));
@@ -21,43 +22,94 @@
     window.dataLayer.push({ event:name, ...params });
   }
 
-  const budgetBands = {
-    "under-20": { min: 0, max: 19999, label: "2만원 미만", order: 0 },
-    "20s": { min: 20000, max: 29999, label: "2만원대", order: 1 },
-    "30s": { min: 30000, max: 39999, label: "3만원대", order: 2 },
-    "40s": { min: 40000, max: 49999, label: "4만원대", order: 3 },
-    "50plus": { min: 50000, max: 999999, label: "5만원 이상", order: 4 }
+  const recipientRules = {
+    부모님생신: ["부모님", "조부모님"],
+    어버이날: ["부모님", "조부모님"],
+    칠순팔순: ["부모님", "조부모님"],
+    스승의날: ["선생님"],
+    발표회: ["아이", "유치원", "초등학생"],
+    아이용: ["아이", "유치원", "초등학생"]
   };
 
-  function rangeBand(product) {
-    if (product.priceMin == null) return null;
-    const midpoint = product.priceMax == null ? product.priceMin : (product.priceMin + product.priceMax) / 2;
-    if (midpoint < 20000) return 0;
-    if (midpoint < 30000) return 1;
-    if (midpoint < 40000) return 2;
-    if (midpoint < 50000) return 3;
-    return 4;
-  }
-
-  function scoreBudget(product, budgetId) {
-    if (!budgetId) return { score: 0, note: "" };
-    const band = budgetBands[budgetId];
-    if (product.priceMin == null || product.priceMax == null) return { score: 4, note: "가격은 상품 페이지에서 확인해 주세요" };
-    const overlaps = product.priceMin <= band.max && product.priceMax >= band.min;
-    if (overlaps) return { score: 15, note: "예산 범위에 들어와요" };
-    const pb = rangeBand(product);
-    const dist = Math.abs(pb - band.order);
-    if (dist === 1) return { score: 8, note: pb > band.order ? "예산보다 한 단계 높아요" : "예산보다 한 단계 낮아요" };
-    return { score: 2, note: pb > band.order ? "예산보다 높은 편이에요" : "예산보다 낮은 편이에요" };
+  function allowedForRecipient(choiceId) {
+    if (!state.recipient || !recipientRules[choiceId]) return true;
+    return recipientRules[choiceId].includes(state.recipient);
   }
 
   function has(list, value) {
     return !value || (Array.isArray(list) && list.includes(value));
   }
 
+  function matchesOccasion(product) {
+    return !state.occasionTags.length || state.occasionTags.some(tag => product.occasions?.includes(tag));
+  }
+
+  function isEligible(product) {
+    return has(product.recipients, state.recipient)
+      && matchesOccasion(product)
+      && has(product.giftTypes, state.giftType);
+  }
+
+  function productsForStep(step) {
+    return catalog.filter(product => {
+      if (step > 0 && !has(product.recipients, state.recipient)) return false;
+      if (step > 1 && !matchesOccasion(product)) return false;
+      return true;
+    });
+  }
+
+  function refreshChoiceAvailability() {
+    const rules = [
+      { root:"#gf-occasion", step:1, match:(product, chip) => {
+        if (!allowedForRecipient(chip.dataset.value)) return false;
+        const tags = JSON.parse(chip.dataset.tags || "[]");
+        return tags.some(tag => product.occasions?.includes(tag));
+      }},
+      { root:"#gf-type", step:2, match:(product, chip) => {
+        if (!allowedForRecipient(chip.dataset.value)) return false;
+        return product.giftTypes?.includes(chip.dataset.value);
+      }}
+    ];
+    rules.forEach(rule => {
+      const candidates = productsForStep(rule.step);
+      $$(`${rule.root} .gf-chip`).forEach(chip => {
+        const available = candidates.some(product => rule.match(product, chip));
+        chip.hidden = !available;
+        chip.disabled = !available;
+      });
+    });
+  }
+
+  const downstreamKeys = {
+    recipient: ["occasion", "giftType"],
+    occasion: ["giftType"],
+    giftType: []
+  };
+
+  function clearDownstream(key) {
+    downstreamKeys[key].forEach(nextKey => {
+      state[nextKey] = "";
+      state.labels[nextKey] = "";
+      if (nextKey === "occasion") state.occasionTags = [];
+      const rootId = { occasion:"#gf-occasion", giftType:"#gf-type" }[nextKey];
+      $$(`${rootId} .gf-chip`).forEach(chip => {
+        chip.classList.remove("is-selected");
+        chip.setAttribute("aria-pressed", "false");
+      });
+      const stepIndex = { occasion:1, giftType:2 }[nextKey];
+      completedSteps.delete(stepIndex);
+      const step = $(`.gf-step[data-step="${stepIndex}"]`);
+      step?.classList.remove("is-complete");
+      if (step) {
+        $(".gf-step-edit", step).hidden = true;
+        $(".gf-step-summary", step).textContent = "";
+      }
+    });
+  }
+
   function scoreProduct(product) {
     const recipientMatch = has(product.recipients, state.recipient);
-    const occasionMatch = !state.occasionTags.length || state.occasionTags.some(tag => product.occasions?.includes(tag));
+    const occasionMatch = matchesOccasion(product);
     const typeMatch = has(product.giftTypes, state.giftType);
 
     let score = 0;
@@ -72,10 +124,6 @@
       if (recipientMatch) { score += 25; reasons.push(`${state.recipient}에게 추천하는 구성`); }
       else misses.push(`${state.recipient} 대상 태그가 없어요`);
     }
-    const budget = scoreBudget(product, state.budget);
-    score += budget.score;
-    if (budget.note) (budget.score >= 8 ? reasons : misses).push(budget.note);
-
     if (state.giftType) {
       if (typeMatch) { score += 10; reasons.push("원하는 선물 형태와 맞아요"); }
       else misses.push("원하는 선물 형태와는 조금 달라요");
@@ -97,7 +145,7 @@
     // 정확히 원하는 선물형태가 아니면 전략상품이라도 1위 독주 방지
     if (state.giftType && !typeMatch) score -= 4;
 
-    return { product, score: Math.max(0, score), reasons, misses, budget };
+    return { product, score: Math.max(0, score), reasons, misses };
   }
 
   function priceText(p) {
@@ -106,38 +154,22 @@
     return `${fmt(p.priceMin)}~${fmt(p.priceMax)}원`;
   }
 
-  function selectAlternatives(scored, top) {
-    const selected = [];
-    const topType = top.product.giftTypes?.[0] || "";
-    for (const item of scored) {
-      if (item.product.id === top.product.id) continue;
-      if (selected.length === 0) {
-        // 첫 대안은 가능하면 다른 선물형태
-        if ((item.product.giftTypes?.[0] || "") !== topType) { selected.push(item); continue; }
-      } else {
-        const used = new Set([top, ...selected].flatMap(x => x.product.giftTypes || []));
-        if (!(item.product.giftTypes || []).every(t => used.has(t))) { selected.push(item); }
-      }
-      if (selected.length >= 2) break;
-    }
-    if (selected.length < 2) {
-      for (const item of scored) {
-        if (item.product.id === top.product.id || selected.some(x => x.product.id === item.product.id)) continue;
-        selected.push(item);
-        if (selected.length >= 2) break;
-      }
-    }
-    return selected.slice(0,2);
+  function priceTier(product) {
+    if (product.priceMin == null) return null;
+    const midpoint = product.priceMax == null ? product.priceMin : (product.priceMin + product.priceMax) / 2;
+    if (midpoint < 30000) return { id:"easy", label:"부담 없이 준비하기" };
+    if (midpoint < 45000) return { id:"popular", label:"가장 많이 고르는 가격대" };
+    return { id:"special", label:"조금 더 특별하게" };
   }
 
-  function labelForAlternative(item, top) {
-    const p = item.product;
-    if (p.giftTypes?.includes("인테리어형") && !top.product.giftTypes?.includes("인테리어형")) return "오래 두고 보는 선물이라면";
-    if (p.giftTypes?.includes("휴대전달형") && !top.product.giftTypes?.includes("휴대전달형")) return "직접 건네는 꽃을 원한다면";
-    if (p.giftTypes?.includes("현금동봉형")) return "현금도 함께 전하고 싶다면";
-    if (p.id === "superior-rose") return "조금 더 특별한 꽃다발이라면";
-    if (p.id === "sunflower-frame") return "집들이·개업에 오래 남는 선물이라면";
-    return "이런 선택도 잘 맞아요";
+  function selectPriceAlternatives(scored, top) {
+    const chosen = new Map();
+    for (const item of scored) {
+      if (item.product.id === top.product.id) continue;
+      const tier = priceTier(item.product);
+      if (tier && !chosen.has(tier.id)) chosen.set(tier.id, { ...item, tier });
+    }
+    return ["easy", "popular", "special"].map(id => chosen.get(id)).filter(Boolean);
   }
 
   function imgMarkup(p, cls = "") {
@@ -159,7 +191,6 @@
     const p = item.product;
     const badges = (p.badges || []).map(x => `<span class="gf-badge">${escapeHtml(x)}</span>`).join("");
     const reason = item.reasons[0] || p.situation || "선택한 조건을 종합해 추천했어요.";
-    const note = item.budget.note && item.budget.score < 8 ? `<p class="gf-budget-note">${escapeHtml(item.budget.note)}</p>` : "";
     const cta = p.shopUrl
       ? `<a class="gf-buy" href="${escapeHtml(p.shopUrl)}" target="_blank" rel="noopener noreferrer" data-gf-product="${escapeHtml(p.id)}" data-gf-rank="primary">상품 보러가기 →</a>`
       : `<span class="gf-buy gf-buy--disabled">링크 준비중</span>`;
@@ -178,20 +209,19 @@
             <strong>이 상품의 좋은 점</strong>
             <p>${escapeHtml(p.reason || reason)}</p>
           </div>
-          ${note}
           ${cta}
           <p class="gf-delivery-note"><strong>행사일이 가까우신가요?</strong> 상품 페이지에서 예상 출고일을 먼저 확인해 주세요. 시들지 않는 꽃이라 3~4일 여유 있게 준비하셔도 좋아요.</p>
         </div>
       </article>`;
   }
 
-  function altCard(item, top) {
+  function altCard(item) {
     const p = item.product;
     return `
       <article class="gf-alt-card">
         <div class="gf-alt-media">${imgMarkup(p)}</div>
         <div class="gf-alt-body">
-          <p class="gf-alt-label">${escapeHtml(labelForAlternative(item, top))}</p>
+          <p class="gf-alt-label">${escapeHtml(item.tier.label)}</p>
           <h3>${escapeHtml(p.name)}</h3>
           <p class="gf-price">${escapeHtml(priceText(p))}</p>
           <p>${escapeHtml(p.reason || p.situation || "")}</p>
@@ -202,9 +232,15 @@
 
   function renderResults(data) {
     const root = $("#gf-results");
-    const scored = data.products.map(scoreProduct).sort((a,b) => b.score - a.score);
+    const scored = data.products.filter(isEligible).map(scoreProduct).sort((a,b) => b.score - a.score);
+    if (!scored.length) {
+      root.innerHTML = `<div class="gf-result-intro"><p class="gf-eyebrow">TECHA GIFT CURATION</p><h2>조건에 맞는 상품을 찾지 못했어요</h2><p>받는 분이나 선물 형태를 선택하지 않고 다시 살펴봐 주세요.</p></div><button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>`;
+      root.hidden = false;
+      $("#gf-reset")?.addEventListener("click", () => window.location.reload());
+      return;
+    }
     const top = scored[0];
-    const alternatives = selectAlternatives(scored.slice(1), top);
+    const alternatives = selectPriceAlternatives(scored, top);
     const selections = Object.values(state.labels).filter(Boolean);
     root.innerHTML = `
       <div class="gf-result-intro">
@@ -214,10 +250,10 @@
         <div class="gf-selection" aria-label="선택한 조건">${selections.map(x => `<span>${escapeHtml(x)}</span>`).join("")}</div>
       </div>
       ${heroCard(top)}
-      <div class="gf-alt-section">
-        <div class="gf-alt-heading"><h2>이런 선물도 잘 맞아요</h2><p>느낌을 조금 바꿔 고르고 싶을 때</p></div>
-        <div class="gf-alt-grid">${alternatives.map(x => altCard(x, top)).join("")}</div>
-      </div>
+      ${alternatives.length ? `<div class="gf-alt-section">
+        <div class="gf-alt-heading"><h2>가격대별로 비교해 보세요</h2><p>조건에 맞는 상품만 가격대별로 골랐어요</p></div>
+        <div class="gf-alt-grid">${alternatives.map(altCard).join("")}</div>
+      </div>` : ""}
       <button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>
     `;
     root.hidden = false;
@@ -231,7 +267,7 @@
     }));
     root.scrollIntoView({ behavior: "smooth", block: "start" });
     $("#gf-reset")?.addEventListener("click", () => {
-      state.recipient = state.occasion = state.budget = state.giftType = "";
+      state.recipient = state.occasion = state.giftType = "";
       state.occasionTags = [];
       Object.keys(state.labels).forEach(key => { state.labels[key] = ""; });
       completedSteps.clear();
@@ -264,14 +300,16 @@
     }).join("");
     group.addEventListener("click", e => {
       const btn = e.target.closest(".gf-chip");
-      if (!btn) return;
+      if (!btn || btn.disabled) return;
       const was = btn.classList.contains("is-selected");
+      clearDownstream(key);
       $$(".gf-chip", group).forEach(x => { x.classList.remove("is-selected"); x.setAttribute("aria-pressed","false"); });
       state[key] = was ? "" : btn.dataset.value;
       state.labels[key] = was ? "" : (btn.querySelector("span")?.textContent || btn.dataset.value);
       if (key === "occasion") {
         state.occasionTags = was ? [] : JSON.parse(btn.dataset.tags || "[]");
       }
+      refreshChoiceAvailability();
       if (!was) {
         btn.classList.add("is-selected");
         btn.setAttribute("aria-pressed","true");
@@ -280,18 +318,18 @@
     });
   }
 
-  const stepLabels = ["받는 분 선택", "선물 상황 선택", "예산 선택", "선물 느낌 선택"];
+  const stepLabels = ["받는 분 선택", "선물 상황 선택", "선물 느낌 선택"];
 
   function updateProgress(index) {
-    const current = Math.min(3, Math.max(0, index));
-    $("#gf-progress-text").textContent = `${current + 1} / 4`;
+    const current = Math.min(2, Math.max(0, index));
+    $("#gf-progress-text").textContent = `${current + 1} / 3`;
     $("#gf-progress-label").textContent = stepLabels[current];
-    $("#gf-progress-bar").style.width = `${(current + 1) * 25}%`;
+    $("#gf-progress-bar").style.width = `${((current + 1) / 3) * 100}%`;
   }
 
   function activateStep(index) {
     $$(".gf-step").forEach(step => step.classList.toggle("is-active", Number(step.dataset.step) === index));
-    $("#gf-app").classList.toggle("is-ready", index === 3);
+    $("#gf-app").classList.toggle("is-ready", index === 2);
     updateProgress(index);
     const active = $(`.gf-step[data-step="${index}"]`);
     active?.scrollIntoView({ behavior:"smooth", block:"nearest" });
@@ -308,7 +346,7 @@
       completedSteps.add(index);
       trackEvent("gift_finder_step_complete", { step_number:index + 1 });
     }
-    activateStep(Math.min(3, index + 1));
+    activateStep(Math.min(2, index + 1));
   }
 
   async function init() {
@@ -321,18 +359,21 @@
       ]);
       const productData = await productRes.json();
       const ui = await uiRes.json();
+      catalog = productData.products;
 
       chipGroup("#gf-recipient", ui.recipients, "recipient");
       chipGroup("#gf-occasion", ui.occasions, "occasion", { featuredOnly: true });
-      chipGroup("#gf-budget", ui.budgets, "budget");
       chipGroup("#gf-type", ui.giftTypes, "giftType");
+      refreshChoiceAvailability();
       updateProgress(0);
 
       $$('[data-edit-step]').forEach(btn => btn.addEventListener("click", () => activateStep(Number(btn.dataset.editStep))));
       $$('[data-skip-key]').forEach(btn => btn.addEventListener("click", () => {
         const key = btn.dataset.skipKey;
+        clearDownstream(key);
         state[key] = "";
         state.labels[key] = "";
+        refreshChoiceAvailability();
         completeStep(Number(btn.closest(".gf-step").dataset.step), "선택 안 함");
       }));
       $("#gf-occasion-more")?.addEventListener("click", e => {
@@ -349,7 +390,7 @@
           x.classList.remove("is-selected");
           x.setAttribute("aria-pressed", "false");
         });
-        completeStep(3, "선택 안 함");
+        completeStep(2, "선택 안 함");
       });
 
       $("#gf-submit").addEventListener("click", e => {
