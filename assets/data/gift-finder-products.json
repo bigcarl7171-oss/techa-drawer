@@ -1,0 +1,1111 @@
+{
+  "version": "2.2",
+  "updatedAt": "2026-09-02",
+  "scoring": {
+    "occasion": 35,
+    "recipient": 25,
+    "budget": 15,
+    "giftType": 10,
+    "sales": 5,
+    "strategy": 10,
+    "notes": "판매량은 옵션/상품페이지 혼재 때문에 보조 신호로만 사용. 전략점수는 핵심 조건이 맞을 때만 적용."
+  },
+  "products": [
+    {
+      "id": "rose-hydrangea-bouquet",
+      "name": "장미수국 꽃다발",
+      "category": "꽃다발",
+      "recipients": [
+        "연인",
+        "배우자",
+        "직장동료"
+      ],
+      "occasions": [
+        "기념일",
+        "프러포즈",
+        "생일",
+        "화이트데이",
+        "발렌타인데이",
+        "크리스마스",
+        "병문안",
+        "승진·퇴임",
+        "졸업·입학"
+      ],
+      "giftTypes": [
+        "휴대전달형"
+      ],
+      "situation": "연인·배우자에게 기념일이나 프러포즈처럼 마음을 제대로 전하고 싶을 때",
+      "reason": "장미와 수국을 함께 엮은 프리저브드 꽃다발이라 생화처럼 며칠 만에 시들지 않고, 받은 날 그대로의 모습이 오래 남아요.",
+      "role": "판매핵심 · 범용 프리저브드 꽃다발",
+      "tier": "A (검증상품)",
+      "strategyBase": 4,
+      "occasionBoosts": {
+        "기념일": 3,
+        "프러포즈": 3,
+        "졸업·입학": 4,
+        "생일": 2
+      },
+      "priceMin": 30000,
+      "priceMax": 49000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/6202622460",
+      "image1": "/assets/images/gift-finder/rose-hydrangea-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/rose-hydrangea-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "꾸준히 선택되는 선물"
+      ],
+      "sales": {
+        "totalRef": 1878,
+        "recentRef": 213,
+        "score": 5.0
+      },
+      "note": "연인 상황컷을 대표로, 행사·승진 계열에 활용 가능한 블루 꽃다발 컷을 보조로 사용."
+    },
+    {
+      "id": "hydrangea-bouquet",
+      "name": "수국 꽃다발",
+      "category": "꽃다발",
+      "recipients": [
+        "연인",
+        "친구",
+        "부모님"
+      ],
+      "occasions": [
+        "생일",
+        "기념일",
+        "병문안"
+      ],
+      "giftTypes": [
+        "휴대전달형"
+      ],
+      "situation": "연인·친구·부모님 누구에게 드려도 부담 없는 무난한 꽃 선물을 찾을 때, 또는 물·흙 없는 꽃다발이 필요한 병문안 자리",
+      "reason": "수국은 색이 은은해서 취향을 크게 타지 않고, 프리저브드라 오래 두고 볼 수 있어요. 순수 프리저브드 소재라 물 관리가 필요 없어 병문안에...",
+      "role": "보조 꽃다발",
+      "tier": "B",
+      "strategyBase": 2,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 28500,
+      "priceMax": 43500,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/7513702882",
+      "image1": "/assets/images/gift-finder/hydrangea-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/hydrangea-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 57,
+        "recentRef": 4,
+        "score": 2.14
+      },
+      "note": "인물 상황컷 + 3색 옵션 제품컷 조합이 좋음."
+    },
+    {
+      "id": "superior-rose",
+      "name": "수페리어 장미",
+      "category": "꽃다발",
+      "recipients": [
+        "연인",
+        "배우자",
+        "친구",
+        "직장동료"
+      ],
+      "occasions": [
+        "프러포즈",
+        "기념일",
+        "화이트데이",
+        "발렌타인데이",
+        "병문안",
+        "승진·퇴임",
+        "졸업·입학",
+        "생일",
+        "크리스마스"
+      ],
+      "giftTypes": [
+        "휴대전달형"
+      ],
+      "situation": "프러포즈·기념일·생일처럼 꽃 자체의 존재감이 중요한 날, 또는 졸업·승진처럼 한 단계 더 격식 있는 축하 꽃다발이 필요할 때",
+      "reason": "큰 송이 프리저브드 장미 한 종으로 구성해 꽃 자체가 주인공이 되는 프리미엄 꽃다발이에요. 중요한 날에 일반 꽃다발보다 존재감 있게 마음을...",
+      "role": "성장전략 핵심 · 프리미엄 꽃다발",
+      "tier": "A+ (적극 육성)",
+      "strategyBase": 7,
+      "occasionBoosts": {
+        "프러포즈": 3,
+        "기념일": 3,
+        "생일": 2,
+        "졸업·입학": 3,
+        "승진·퇴임": 2
+      },
+      "priceMin": 42500,
+      "priceMax": 42500,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/10663209995",
+      "image1": "/assets/images/gift-finder/superior-rose-01.webp",
+      "image2": "/assets/images/gift-finder/superior-rose-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "테차 추천",
+        "프리미엄 꽃다발"
+      ],
+      "sales": {
+        "totalRef": 389,
+        "recentRef": 4,
+        "score": 2.81
+      },
+      "note": "전략상품. 고급 레스토랑 연인 전달 장면을 대표로 사용. 보조컷은 꽃 자체의 존재감이 잘 보임."
+    },
+    {
+      "id": "rose-soap-bouquet",
+      "name": "장미 비누꽃다발",
+      "category": "꽃다발",
+      "recipients": [
+        "연인",
+        "배우자",
+        "친구"
+      ],
+      "occasions": [
+        "생일",
+        "기념일",
+        "화이트데이",
+        "발렌타인데이",
+        "졸업·입학"
+      ],
+      "giftTypes": [
+        "휴대전달형"
+      ],
+      "situation": "생일·기념일에 은은한 꽃 향까지 함께 전하고 싶을 때",
+      "reason": "비누로 빚은 꽃송이에 테차가 은은한 향을 더해 보내드려요. 향이 부담스러우면 주문 시 배송 요청 란에 \"향 제거\"나 \"향 조금\"이라고 적어...",
+      "role": "판매핵심 · 가성비/범용 꽃다발",
+      "tier": "A (검증상품)",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "졸업·입학": 4,
+        "생일": 3,
+        "화이트데이": 2,
+        "발렌타인데이": 2
+      },
+      "priceMin": 27000,
+      "priceMax": 34500,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/7563519851",
+      "image1": "/assets/images/gift-finder/rose-soap-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/rose-soap-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "꾸준히 선택되는 선물"
+      ],
+      "sales": {
+        "totalRef": 1200,
+        "recentRef": 112,
+        "score": 4.56
+      },
+      "note": "핑크/보라 두 분위기를 모두 활용 가능."
+    },
+    {
+      "id": "pinkpeach-bouquet",
+      "name": "핑크피치 꽃다발",
+      "category": "꽃다발",
+      "recipients": [
+        "연인",
+        "친구"
+      ],
+      "occasions": [
+        "생일",
+        "기념일",
+        "화이트데이"
+      ],
+      "giftTypes": [
+        "휴대전달형"
+      ],
+      "situation": "화사한 색감의 꽃다발로 생일을 축하하고 싶을 때",
+      "reason": "핑크와 피치 톤을 섞어 사진에 특히 예쁘게 담기는 조합이에요.",
+      "role": "보조 꽃다발",
+      "tier": "B",
+      "strategyBase": 2,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 32500,
+      "priceMax": 43000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/7563519851",
+      "image1": "/assets/images/gift-finder/pinkpeach-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/pinkpeach-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 1200,
+        "recentRef": 112,
+        "score": 4.56
+      },
+      "note": "인물 상황컷을 대표로, 제품 단독컷을 보조로 사용."
+    },
+    {
+      "id": "sunflower-bouquet",
+      "name": "해바라기 꽃다발",
+      "category": "꽃다발",
+      "recipients": [
+        "부모님",
+        "친구",
+        "직장동료"
+      ],
+      "occasions": [
+        "집들이·개업",
+        "승진·퇴임"
+      ],
+      "giftTypes": [
+        "휴대전달형"
+      ],
+      "situation": "집들이·개업·승진처럼 좋은 기운을 빌어주고 싶은 자리",
+      "reason": "해바라기는 예로부터 재물운을 상징해 개업·집들이 선물로 많이 찾으세요.",
+      "role": "보조 꽃다발",
+      "tier": "B",
+      "strategyBase": 2,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 32500,
+      "priceMax": 37000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/7563519851",
+      "image1": "",
+      "image2": "",
+      "photoStatus": "검토 필요",
+      "badges": [],
+      "sales": {
+        "totalRef": 1200,
+        "recentRef": 112,
+        "score": 4.56
+      },
+      "note": "ZIP에서 해바라기 꽃다발 사진 2장을 찾지 못함. 해바라기 액자 사진으로 대체하지 말 것."
+    },
+    {
+      "id": "carnation-rose-bouquet",
+      "name": "카네이션장미 꽃다발",
+      "category": "꽃다발",
+      "recipients": [
+        "부모님",
+        "조부모님",
+        "선생님"
+      ],
+      "occasions": [
+        "생신·환갑",
+        "어버이날",
+        "스승의날",
+        "설날·명절",
+        "칠순",
+        "팔순"
+      ],
+      "giftTypes": [
+        "휴대전달형"
+      ],
+      "situation": "어버이날·스승의날·생신처럼 카네이션을 챙겨야 하지만 조금 더 풍성하고 정돈된 꽃다발을 원할 때",
+      "reason": "카네이션과 장미를 함께 엮어 카네이션만 있을 때보다 풍성하고, 프리저브드 소재라 받은 뒤에도 오래 두고 볼 수 있어요.",
+      "role": "시즌 핵심 · 부모님/선생님 감사",
+      "tier": "A (시즌집중)",
+      "strategyBase": 4,
+      "occasionBoosts": {
+        "어버이날": 5,
+        "스승의날": 5,
+        "생신·환갑": 3,
+        "칠순": 3,
+        "팔순": 3
+      },
+      "priceMin": 31000,
+      "priceMax": 42000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/6205690862",
+      "image1": "/assets/images/gift-finder/carnation-rose-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/carnation-rose-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "꾸준히 선택되는 선물"
+      ],
+      "sales": {
+        "totalRef": 71,
+        "recentRef": 6,
+        "score": 2.36
+      },
+      "note": "가족이 부모님께 드리는 장면을 대표로, 여성 간 전달 장면을 보조로 사용."
+    },
+    {
+      "id": "carnation-money-bouquet",
+      "name": "카네이션 돈꽃다발",
+      "category": "돈꽃다발",
+      "recipients": [
+        "부모님",
+        "조부모님"
+      ],
+      "occasions": [
+        "생신·환갑",
+        "어버이날",
+        "설날·명절",
+        "칠순",
+        "팔순"
+      ],
+      "giftTypes": [
+        "현금동봉형",
+        "휴대전달형"
+      ],
+      "situation": "어버이날이나 생신에 현금을 드리고 싶은데 봉투만 드리기는 밋밋할 때",
+      "reason": "카네이션 사이에 지폐를 꽂는 구조라 현금의 실용성과 꽃의 정성을 같이 전할 수 있어요.",
+      "role": "현금선물 핵심 · 부모님",
+      "tier": "A (검증상품)",
+      "strategyBase": 4,
+      "occasionBoosts": {
+        "어버이날": 5,
+        "생신·환갑": 5,
+        "칠순": 5,
+        "팔순": 5
+      },
+      "priceMin": 30000,
+      "priceMax": 45000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/6205690862",
+      "image1": "/assets/images/gift-finder/carnation-money-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/carnation-money-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "현금과 함께"
+      ],
+      "sales": {
+        "totalRef": 355,
+        "recentRef": 117,
+        "score": 4.15
+      },
+      "note": "식사자리 전달 장면을 대표로 사용하면 어버이날/생신 상황이 바로 이해됨."
+    },
+    {
+      "id": "rose-money-bouquet",
+      "name": "장미 돈꽃다발",
+      "category": "돈꽃다발",
+      "recipients": [
+        "부모님",
+        "조부모님"
+      ],
+      "occasions": [
+        "생신·환갑",
+        "어버이날",
+        "설날·명절",
+        "칠순",
+        "팔순"
+      ],
+      "giftTypes": [
+        "현금동봉형",
+        "휴대전달형"
+      ],
+      "situation": "부모님 생신·환갑·칠순에 현금 선물을 준비할 때",
+      "reason": "며느리·사위·손주가 어른께 드리는 선물로 가장 많이 찾는 구성이에요.",
+      "role": "현금선물 핵심 · 부모님",
+      "tier": "A (검증상품)",
+      "strategyBase": 4,
+      "occasionBoosts": {
+        "생신·환갑": 5,
+        "칠순": 5,
+        "팔순": 5,
+        "어버이날": 4
+      },
+      "priceMin": 30000,
+      "priceMax": 45000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/8528473340",
+      "image1": "/assets/images/gift-finder/rose-money-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/rose-money-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "현금과 함께"
+      ],
+      "sales": {
+        "totalRef": 355,
+        "recentRef": 117,
+        "score": 4.15
+      },
+      "note": "가족 생일 장면을 대표로, 보라 돈꽃다발 인물컷을 보조로 사용."
+    },
+    {
+      "id": "single-stem-soap-box",
+      "name": "비누꽃 한송이·두송이 박스",
+      "category": "소품",
+      "recipients": [
+        "친구",
+        "직장동료",
+        "선생님",
+        "연인"
+      ],
+      "occasions": [
+        "스승의날",
+        "소소한 감사",
+        "단체·답례품",
+        "화이트데이",
+        "발렌타인데이",
+        "빼빼로데이"
+      ],
+      "giftTypes": [
+        "휴대전달형",
+        "단체·답례품"
+      ],
+      "situation": "행사·모임에서 여러 명에게 하나씩 돌리거나, 부담 없이 마음만 가볍게 전할 때",
+      "reason": "1만원 안쪽 가격에 투명 박스까지 포함이라 답례품이나 단체 선물로 쓰기 좋아요.",
+      "role": "가벼운 선물/추가구성",
+      "tier": "B",
+      "strategyBase": 1,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 9400,
+      "priceMax": 10400,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/6563272914",
+      "image1": "/assets/images/gift-finder/single-stem-soap-box-01.webp",
+      "image2": "/assets/images/gift-finder/single-stem-soap-box-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 2,
+        "recentRef": 0,
+        "score": 0.39
+      },
+      "note": "가까운 제품컷을 대표로, 전체 옵션 라인업을 보조로 사용."
+    },
+    {
+      "id": "kinderjoy-doll-bouquet",
+      "name": "킨더조이 레보니 인형꽃다발",
+      "category": "인형꽃다발",
+      "recipients": [
+        "유치원",
+        "초등학생"
+      ],
+      "occasions": [
+        "생일",
+        "발표회·재롱잔치",
+        "학예회",
+        "유치원·초등학교 졸업·입학"
+      ],
+      "giftTypes": [
+        "아이용",
+        "휴대전달형"
+      ],
+      "situation": "유치원·초등 저학년 발표회·재롱잔치·졸업식에서 2만원대 인형꽃다발을 찾을 때",
+      "reason": "가격표 기준 22,500원이며 레보니 인형과 비누장미 조합입니다. 상품명에 '킨더조이'가 있으나 소재 열에는 표기가 없어 실제 킨더조이 포...",
+      "role": "아이 행사 입문형 · 2만원대",
+      "tier": "A (상황집중)",
+      "strategyBase": 4,
+      "occasionBoosts": {
+        "발표회·재롱잔치": 6,
+        "학예회": 6,
+        "유치원·초등학교 졸업·입학": 6,
+        "생일": 3
+      },
+      "priceMin": 22500,
+      "priceMax": 22500,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/12333689454",
+      "image1": "/assets/images/gift-finder/kinderjoy-doll-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/kinderjoy-doll-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "아이 행사 추천"
+      ],
+      "sales": {
+        "totalRef": 3,
+        "recentRef": 0,
+        "score": 0.49
+      },
+      "note": "가족·아이 상황컷을 대표로, 3색 제품 옵션컷을 보조로 사용. '킨더조이 레보니 인형꽃다발01.jpg' 한 장은 미사용."
+    },
+    {
+      "id": "character-doll-bouquet",
+      "name": "산리오 캐릭터 인형꽃다발",
+      "category": "인형꽃다발",
+      "recipients": [
+        "유치원",
+        "초등학생"
+      ],
+      "occasions": [
+        "생일",
+        "발표회·재롱잔치",
+        "학예회",
+        "유치원·초등학교 졸업·입학"
+      ],
+      "giftTypes": [
+        "아이용",
+        "휴대전달형"
+      ],
+      "situation": "마이멜로디·시나모롤처럼 특정 산리오 캐릭터를 좋아하는 아이의 생일·발표회·졸업 선물",
+      "reason": "마이멜로디·시나모롤 캐릭터 선택이 핵심입니다. 가격표 기준 31,400원이며 시나모롤 옵션은 소재 열에 트로피포트가 표기되어 있습니다. 따...",
+      "role": "아이 취향형 · 산리오 캐릭터",
+      "tier": "B",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 31400,
+      "priceMax": 31400,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/10968901786",
+      "image1": "/assets/images/gift-finder/character-doll-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/character-doll-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "아이 행사 추천"
+      ],
+      "sales": {
+        "totalRef": 0,
+        "recentRef": 0,
+        "score": 0.0
+      },
+      "note": "시나모롤 제품컷을 대표로, 제작과정 컷을 보조로 사용. 추후 마이멜로디/시나모롤 전달 상황컷이 생기면 보조컷 교체 권장."
+    },
+    {
+      "id": "rebony-trophy-doll-bouquet",
+      "name": "레보니 트로피포트 인형꽃다발",
+      "category": "인형꽃다발",
+      "recipients": [
+        "유치원",
+        "초등학생"
+      ],
+      "occasions": [
+        "생일",
+        "발표회·재롱잔치",
+        "학예회",
+        "유치원·초등학교 졸업·입학"
+      ],
+      "giftTypes": [
+        "아이용"
+      ],
+      "situation": "발표회·콩쿠르·졸업식처럼 레보니 인형 옵션을 중심으로 조금 더 존재감 있는 선물을 주고 싶을 때",
+      "reason": "가격표 기준 36,400원이며 깡총커플 레보니·앙증맞은 레보니 두 옵션입니다. 두 옵션 모두 트로피포트가 표기되어 있지만 산리오 시나모롤 ...",
+      "role": "아이 행사 강조형 · 레보니 인형 옵션군",
+      "tier": "B",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 36400,
+      "priceMax": 36400,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/10968901786",
+      "image1": "/assets/images/gift-finder/rebony-trophy-doll-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/rebony-trophy-doll-bouquet-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "아이 행사 추천"
+      ],
+      "sales": {
+        "totalRef": 0,
+        "recentRef": 0,
+        "score": 0.0
+      },
+      "note": "단일 구성 제품컷 + 옵션 비교컷 조합."
+    },
+    {
+      "id": "glassdome-moodlamp",
+      "name": "유리돔 무드등",
+      "category": "무드등",
+      "recipients": [
+        "연인",
+        "배우자",
+        "친구",
+        "본인"
+      ],
+      "occasions": [
+        "기념일",
+        "집들이·개업",
+        "생일",
+        "화이트데이",
+        "발렌타인데이",
+        "크리스마스",
+        "병문안"
+      ],
+      "giftTypes": [
+        "인테리어형"
+      ],
+      "situation": "선물한 뒤에도 방에 두고 매일 보게 되는 것을 찾을 때, 또는 물·흙 없이 병문안에 가져갈 꽃을 찾을 때",
+      "reason": "유리돔 안에 꽃을 담고 조명을 넣어, 꽃 선물이면서 동시에 인테리어 조명 역할을 해요. 물이 없어 병실에 가져가도 관리 부담이 없어요.",
+      "role": "감성 인테리어 선물",
+      "tier": "A-",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "기념일": 3,
+        "생일": 2,
+        "집들이·개업": 2,
+        "크리스마스": 3
+      },
+      "priceMin": 49000,
+      "priceMax": 49000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/7090535704",
+      "image1": "/assets/images/gift-finder/glassdome-moodlamp-01.webp",
+      "image2": "/assets/images/gift-finder/glassdome-moodlamp-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 188,
+        "recentRef": 98,
+        "score": 3.85
+      },
+      "note": "침실/책상 야간 연출을 대표로, 컬러 옵션 라인업을 보조로 사용."
+    },
+    {
+      "id": "classic-money-box",
+      "name": "클래식투명 용돈박스",
+      "category": "용돈박스",
+      "recipients": [
+        "부모님",
+        "조부모님"
+      ],
+      "occasions": [
+        "생신·환갑",
+        "어버이날",
+        "설날·명절",
+        "칠순",
+        "팔순"
+      ],
+      "giftTypes": [
+        "현금동봉형"
+      ],
+      "situation": "현금을 드리되 봉투 대신 형태를 갖춰 전하고 싶을 때",
+      "reason": "투명 박스라 안에 든 꽃과 현금이 함께 보이고, 돈티슈·머니캡 두 방식 중 고를 수 있어요.",
+      "role": "현금선물",
+      "tier": "B",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 21900,
+      "priceMax": 22900,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/6506821191",
+      "image1": "/assets/images/gift-finder/classic-money-box-01.webp",
+      "image2": "/assets/images/gift-finder/classic-money-box-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 33,
+        "recentRef": 4,
+        "score": 1.95
+      },
+      "note": "메시지판과 내부 구성이 보이는 컷을 대표로, 다색 옵션 제품군을 보조로 사용."
+    },
+    {
+      "id": "premium-window-money-box",
+      "name": "프리미엄창문 용돈박스",
+      "category": "용돈박스",
+      "recipients": [
+        "부모님",
+        "조부모님"
+      ],
+      "occasions": [
+        "생신·환갑",
+        "어버이날",
+        "설날·명절",
+        "칠순",
+        "팔순"
+      ],
+      "giftTypes": [
+        "현금동봉형"
+      ],
+      "situation": "용돈박스 중에서도 조금 더 격식 있는 구성을 원할 때",
+      "reason": "창문형 박스에 꽃을 배치해 정면에서 봤을 때 정돈된 느낌이 나요. 스몰·라지 두 크기가 있습니다.",
+      "role": "현금선물",
+      "tier": "B",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 20900,
+      "priceMax": 31900,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/6622301544",
+      "image1": "/assets/images/gift-finder/premium-window-money-box-01.webp",
+      "image2": "/assets/images/gift-finder/premium-window-money-box-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 0,
+        "recentRef": 0,
+        "score": 0.0
+      },
+      "note": "지폐 구조가 보이는 제품군 컷을 대표로 사용."
+    },
+    {
+      "id": "sunflower-frame",
+      "name": "해바라기 액자",
+      "category": "액자",
+      "recipients": [
+        "친구",
+        "직장동료",
+        "부모님",
+        "지인",
+        "본인"
+      ],
+      "occasions": [
+        "집들이·개업",
+        "승진·퇴임",
+        "실내 인테리어"
+      ],
+      "giftTypes": [
+        "인테리어형"
+      ],
+      "situation": "친구의 집들이나 카페·매장·사무실 개업에 꽃 대신 오래 남는 인테리어 선물을 하고 싶을 때",
+      "reason": "밝은 해바라기를 액자에 담아 가게·사무실·거실에 바로 걸어둘 수 있어요. 개업·집들이처럼 공간에 오래 남는 축하 선물로 특히 잘 어울립니다.",
+      "role": "성장전략 핵심 · 집들이·개업 대표",
+      "tier": "A+ (상황집중 육성)",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "집들이·개업": 7,
+        "승진·퇴임": 4,
+        "실내 인테리어": 5
+      },
+      "priceMin": 36000,
+      "priceMax": 48000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/6957075209",
+      "image1": "/assets/images/gift-finder/sunflower-frame-01.webp",
+      "image2": "/assets/images/gift-finder/sunflower-frame-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "집들이·개업 추천",
+        "전략상품"
+      ],
+      "sales": {
+        "totalRef": 0,
+        "recentRef": 0,
+        "score": 0.0
+      },
+      "note": "전략상품. 실제 카페/공방 전달 장면을 대표로, 사이즈·디자인 라인업을 보조로 사용."
+    },
+    {
+      "id": "cup-moodlamp-single",
+      "name": "프리저브드 꽃 무드등 한송이",
+      "category": "무드등",
+      "recipients": [
+        "연인",
+        "친구",
+        "본인"
+      ],
+      "occasions": [
+        "생일",
+        "기념일",
+        "화이트데이",
+        "발렌타인데이",
+        "병문안"
+      ],
+      "giftTypes": [
+        "인테리어형"
+      ],
+      "situation": "2만원대에서 오래 두고 볼 수 있는 선물을 찾을 때, 또는 병문안처럼 관리 부담 없는 꽃이 필요할 때",
+      "reason": "컵 모양 무드등에 꽃 한 송이를 담은 구성이라 책상이나 머리맡에 두기 좋은 크기예요. 물을 안 갈아줘도 돼서 병실에도 부담 없어요.",
+      "role": "인테리어 선물",
+      "tier": "B",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 23500,
+      "priceMax": 25000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/8424617454",
+      "image1": "/assets/images/gift-finder/cup-moodlamp-single-01.webp",
+      "image2": "/assets/images/gift-finder/cup-moodlamp-single-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 9,
+        "recentRef": 0,
+        "score": 0.82
+      },
+      "note": "한송이 제품이 선명한 컷을 대표로, 여러 색상 점등 컷을 보조로 사용."
+    },
+    {
+      "id": "ionantha-moodlamp",
+      "name": "이오난사 스칸디아모스 무드등",
+      "category": "무드등",
+      "recipients": [
+        "직장동료",
+        "본인",
+        "친구"
+      ],
+      "occasions": [
+        "집들이·개업",
+        "승진·퇴임",
+        "취미·자기계발"
+      ],
+      "giftTypes": [
+        "인테리어형"
+      ],
+      "situation": "사무실 책상이나 작업 공간에 둘 식물 소품을 찾을 때",
+      "reason": "이오난사와 스칸디아모스는 물 주기가 거의 필요 없는 공기정화 식물이라, 관리할 시간이 없어도 괜찮아요.",
+      "role": "인테리어 선물",
+      "tier": "B",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 42500,
+      "priceMax": 42500,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/9333901539",
+      "image1": "/assets/images/gift-finder/ionantha-moodlamp-01.webp",
+      "image2": "/assets/images/gift-finder/ionantha-moodlamp-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 0,
+        "recentRef": 0,
+        "score": 0.0
+      },
+      "note": "인테리어 라인업 컷을 대표로 사용. 보조사진은 EXIF 회전정보를 반영해 세로 방향으로 보정."
+    },
+    {
+      "id": "centerpiece",
+      "name": "센터피스",
+      "category": "센터피스",
+      "recipients": [
+        "부모님",
+        "본인",
+        "직장동료",
+        "지인"
+      ],
+      "occasions": [
+        "집들이·개업",
+        "생신·환갑",
+        "크리스마스"
+      ],
+      "giftTypes": [
+        "인테리어형"
+      ],
+      "situation": "식탁이나 거실 테이블 가운데 놓을 장식을 찾을 때",
+      "reason": "사방 어느 각도에서 봐도 균형이 잡히도록 만든 구성이라 테이블 가운데 두기에 맞아요.",
+      "role": "공간장식 선물",
+      "tier": "B",
+      "strategyBase": 2,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 36000,
+      "priceMax": 47000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/9333901539",
+      "image1": "/assets/images/gift-finder/centerpiece-01.webp",
+      "image2": "/assets/images/gift-finder/centerpiece-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 1,
+        "recentRef": 0,
+        "score": 0.25
+      },
+      "note": "핑크 톤과 블랙&화이트 톤 두 스타일을 모두 보여줌."
+    },
+    {
+      "id": "topiary-moodlamp",
+      "name": "토피어리 수국 무드등",
+      "category": "무드등",
+      "recipients": [
+        "연인",
+        "부모님",
+        "본인"
+      ],
+      "occasions": [
+        "집들이·개업",
+        "생일",
+        "기념일",
+        "크리스마스",
+        "프러포즈"
+      ],
+      "giftTypes": [
+        "인테리어형"
+      ],
+      "situation": "화분 형태의 조명 소품을 찾을 때",
+      "reason": "동그랗게 다듬은 수국에 LED를 넣어, 불을 켜면 화분이 조명이 되는 구조예요.",
+      "role": "인테리어 선물",
+      "tier": "B",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": 42000,
+      "priceMax": 42000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/12236511010",
+      "image1": "/assets/images/gift-finder/topiary-moodlamp-01.webp",
+      "image2": "/assets/images/gift-finder/topiary-moodlamp-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 4,
+        "recentRef": 3,
+        "score": 1.17
+      },
+      "note": "점등된 인테리어 연출을 대표로, 색상 옵션 제품컷을 보조로 사용."
+    },
+    {
+      "id": "money-cake",
+      "name": "용돈케이크 머니박스",
+      "category": "용돈박스",
+      "recipients": [
+        "부모님",
+        "조부모님"
+      ],
+      "occasions": [
+        "생신·환갑",
+        "어버이날",
+        "설날·명절",
+        "칠순",
+        "팔순"
+      ],
+      "giftTypes": [
+        "현금동봉형"
+      ],
+      "situation": "현금만 드리기엔 민망하고 거창한 이벤트는 부담스러울 때",
+      "reason": "케이크 모양에 현금을 꽂고 LED 조명까지 들어가, 촛불 대신 불을 켜고 축하하는 자리를 만들 수 있어요.",
+      "role": "이벤트형 현금선물 · 부모님",
+      "tier": "A (성장후보)",
+      "strategyBase": 4,
+      "occasionBoosts": {
+        "생신·환갑": 5,
+        "칠순": 6,
+        "팔순": 6,
+        "어버이날": 4
+      },
+      "priceMin": 29800,
+      "priceMax": 49800,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/13346419874",
+      "image1": "/assets/images/gift-finder/money-cake-01.webp",
+      "image2": "/assets/images/gift-finder/money-cake-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "현금과 함께"
+      ],
+      "sales": {
+        "totalRef": 81,
+        "recentRef": 2,
+        "score": 2.04
+      },
+      "note": "돈이 펼쳐지는 사용 장면을 대표로, 점등 제품컷을 보조로 사용."
+    },
+    {
+      "id": "hydrangea-moodlamp",
+      "name": "수국꽃무드등",
+      "category": "무드등",
+      "recipients": [
+        "연인",
+        "배우자",
+        "부모님",
+        "친구"
+      ],
+      "occasions": [
+        "기념일",
+        "프러포즈",
+        "생일",
+        "생신·환갑",
+        "화이트데이",
+        "발렌타인데이",
+        "크리스마스",
+        "집들이·개업"
+      ],
+      "giftTypes": [
+        "인테리어형"
+      ],
+      "situation": "받은 날만 예쁜 꽃보다 오래 두고 볼 수 있는 선물을 원하거나, 한 번의 선물에 확실한 존재감을 주고 싶을 때",
+      "reason": "프리저브드 수국을 풍성하게 채우고 조명을 더한 대표 무드등이에요. 낮에는 꽃 장식으로, 밤에는 은은한 조명으로 오래 사용할 수 있어요.",
+      "role": "판매반응 핵심 · 프리미엄 인테리어 선물",
+      "tier": "A+ (대표상품)",
+      "strategyBase": 5,
+      "occasionBoosts": {
+        "기념일": 4,
+        "프러포즈": 4,
+        "생일": 3,
+        "크리스마스": 3,
+        "집들이·개업": 2
+      },
+      "priceMin": 49900,
+      "priceMax": 63900,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/13355757045",
+      "image1": "/assets/images/gift-finder/hydrangea-moodlamp-01.webp",
+      "image2": "/assets/images/gift-finder/hydrangea-moodlamp-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "최근 반응 좋은 선물"
+      ],
+      "sales": {
+        "totalRef": 428,
+        "recentRef": 152,
+        "score": 4.33
+      },
+      "note": "실내 인물컷을 대표로, 야외/저녁 분위기 인물컷을 보조로 사용."
+    },
+    {
+      "id": "flower-postcard",
+      "name": "꽃엽서카드",
+      "category": "소품",
+      "recipients": [
+        "연인",
+        "부모님",
+        "친구",
+        "선생님",
+        "직장동료",
+        "아이"
+      ],
+      "occasions": [
+        "소소한 감사",
+        "생일",
+        "기념일",
+        "화이트데이",
+        "발렌타인데이",
+        "빼빼로데이",
+        "크리스마스",
+        "병문안"
+      ],
+      "giftTypes": [
+        "휴대전달형",
+        "함께보내기"
+      ],
+      "situation": "다른 선물에 손편지를 곁들이거나, 카드 한 장으로 마음만 전할 때",
+      "reason": "크래프트 카드에 미니 드라이플라워를 붙여, 카드 자체가 작은 꽃다발이 돼요.",
+      "role": "저가 진입/함께보내기",
+      "tier": "B+",
+      "strategyBase": 2,
+      "occasionBoosts": {
+        "소소한 감사": 4,
+        "함께보내기 상황": 4
+      },
+      "priceMin": 9000,
+      "priceMax": 9000,
+      "shopUrl": "https://smartstore.naver.com/itecha/products/13337020734",
+      "image1": "/assets/images/gift-finder/flower-postcard-01.webp",
+      "image2": "/assets/images/gift-finder/flower-postcard-02.webp",
+      "photoStatus": "확정",
+      "badges": [],
+      "sales": {
+        "totalRef": 0,
+        "recentRef": 0,
+        "score": 0.0
+      },
+      "note": "책장/선반 라이프스타일 연출을 대표로, 4종 라인업 제품컷을 보조로 사용."
+    },
+    {
+      "id": "flower-class",
+      "name": "플라워클래스 (원데이)",
+      "category": "체험",
+      "recipients": [
+        "연인",
+        "친구",
+        "본인"
+      ],
+      "occasions": [
+        "데이트",
+        "취미·자기계발",
+        "기념일"
+      ],
+      "giftTypes": [
+        "체험형"
+      ],
+      "situation": "물건 대신 함께 시간을 보내는 경험을 선물하고 싶을 때",
+      "reason": "조소를 전공한 플로리스트가 직접 지도하고, 완성한 작품은 그대로 가져가실 수 있어요.",
+      "role": "경험형 선물",
+      "tier": "B",
+      "strategyBase": 1,
+      "occasionBoosts": {
+        "상황 적합 시": 1
+      },
+      "priceMin": null,
+      "priceMax": null,
+      "shopUrl": "",
+      "image1": "/assets/images/gift-finder/flower-class-01.webp",
+      "image2": "/assets/images/gift-finder/flower-class-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "함께 만드는 선물"
+      ],
+      "sales": {
+        "totalRef": 0,
+        "recentRef": 0,
+        "score": 0.0
+      },
+      "note": "가격·구매 링크는 현재 가격표에 없어 결과 카드에서 '가격/신청 문의'로 처리. 실제 수강생 제작 장면 확보 시 대표사진 교체 권장."
+    }
+  ]
+}
