@@ -1,6 +1,9 @@
 
 (() => {
-  const state = { recipient: "", occasion: "", occasionTags: [], budget: "", giftType: "" };
+  const state = {
+    recipient: "", occasion: "", occasionTags: [], budget: "", giftType: "",
+    labels: { recipient: "", occasion: "", budget: "", giftType: "" }
+  };
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const fmt = n => new Intl.NumberFormat("ko-KR").format(n);
@@ -132,6 +135,16 @@
     return `<img class="gf-image ${cls}" src="${escapeHtml(p.image1)}" alt="${escapeHtml(p.name)}" loading="lazy">`;
   }
 
+  function heroGallery(p) {
+    if (!p.image1) return imgMarkup(p);
+    const images = [p.image1, p.image2].filter(Boolean);
+    const thumbs = images.length > 1 ? `<div class="gf-thumbs" aria-label="상품 사진 선택">${images.map((src, i) => `
+      <button type="button" class="gf-thumb" data-image-src="${escapeHtml(src)}" aria-label="${escapeHtml(p.name)} 사진 ${i + 1}" aria-pressed="${i === 0}">
+        <img src="${escapeHtml(src)}" alt="" loading="lazy">
+      </button>`).join("")}</div>` : "";
+    return `<img class="gf-image gf-hero-main-image" src="${escapeHtml(p.image1)}" alt="${escapeHtml(p.name)}">${thumbs}`;
+  }
+
   function heroCard(item) {
     const p = item.product;
     const badges = (p.badges || []).map(x => `<span class="gf-badge">${escapeHtml(x)}</span>`).join("");
@@ -142,7 +155,7 @@
       : `<span class="gf-buy gf-buy--disabled">링크 준비중</span>`;
     return `
       <article class="gf-hero-card">
-        <div class="gf-hero-media">${imgMarkup(p)}</div>
+        <div class="gf-hero-media">${heroGallery(p)}</div>
         <div class="gf-hero-body">
           <div class="gf-badges">${badges}</div>
           <p class="gf-eyebrow">테차가 가장 추천해요</p>
@@ -169,7 +182,7 @@
           <h3>${escapeHtml(p.name)}</h3>
           <p class="gf-price">${escapeHtml(priceText(p))}</p>
           <p>${escapeHtml(p.reason || p.situation || "")}</p>
-          ${p.shopUrl ? `<a href="${escapeHtml(p.shopUrl)}" target="_blank" rel="noopener noreferrer" data-gf-product="${escapeHtml(p.id)}">상품 보러가기 →</a>` : ""}
+          ${p.shopUrl ? `<a class="gf-alt-buy" href="${escapeHtml(p.shopUrl)}" target="_blank" rel="noopener noreferrer" data-gf-product="${escapeHtml(p.id)}">상품 보러가기 →</a>` : ""}
         </div>
       </article>`;
   }
@@ -179,11 +192,13 @@
     const scored = data.products.map(scoreProduct).sort((a,b) => b.score - a.score);
     const top = scored[0];
     const alternatives = selectAlternatives(scored.slice(1), top);
+    const selections = Object.values(state.labels).filter(Boolean);
     root.innerHTML = `
       <div class="gf-result-intro">
         <p class="gf-eyebrow">TECHA GIFT CURATION</p>
         <h2>이 상황이라면,<br>이 선물부터 보세요</h2>
-        <p>판매량만 줄 세우지 않고, 고르신 조건과 테차가 실제로 추천하는 상황을 함께 봤어요.</p>
+        <p>고르신 조건과 테차가 실제로 추천하는 상황을 함께 살펴봤어요.</p>
+        <div class="gf-selection" aria-label="선택한 조건">${selections.map(x => `<span>${escapeHtml(x)}</span>`).join("")}</div>
       </div>
       ${heroCard(top)}
       <div class="gf-alt-section">
@@ -193,11 +208,30 @@
       <button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>
     `;
     root.hidden = false;
+    $$(".gf-thumb", root).forEach(btn => btn.addEventListener("click", () => {
+      const media = btn.closest(".gf-hero-media");
+      const main = $(".gf-hero-main-image", media);
+      if (!main) return;
+      main.src = btn.dataset.imageSrc || main.src;
+      $$(".gf-thumb", media).forEach(x => x.setAttribute("aria-pressed", String(x === btn)));
+    }));
     root.scrollIntoView({ behavior: "smooth", block: "start" });
     $("#gf-reset")?.addEventListener("click", () => {
       state.recipient = state.occasion = state.budget = state.giftType = "";
       state.occasionTags = [];
-      $$(".gf-chip.is-selected").forEach(el => el.classList.remove("is-selected"));
+      Object.keys(state.labels).forEach(key => { state.labels[key] = ""; });
+      $$(".gf-chip.is-selected").forEach(el => {
+        el.classList.remove("is-selected");
+        el.setAttribute("aria-pressed", "false");
+      });
+      $$(".gf-step").forEach((step, i) => {
+        step.classList.toggle("is-active", i === 0);
+        step.classList.remove("is-complete");
+        $(".gf-step-edit", step).hidden = true;
+        $(".gf-step-summary", step).textContent = "";
+      });
+      $("#gf-app").classList.remove("is-ready");
+      updateProgress(0);
       root.hidden = true;
       $("#gf-app")?.scrollIntoView({ behavior:"smooth", block:"start" });
     });
@@ -219,11 +253,42 @@
       const was = btn.classList.contains("is-selected");
       $$(".gf-chip", group).forEach(x => { x.classList.remove("is-selected"); x.setAttribute("aria-pressed","false"); });
       state[key] = was ? "" : btn.dataset.value;
+      state.labels[key] = was ? "" : (btn.querySelector("span")?.textContent || btn.dataset.value);
       if (key === "occasion") {
         state.occasionTags = was ? [] : JSON.parse(btn.dataset.tags || "[]");
       }
-      if (!was) { btn.classList.add("is-selected"); btn.setAttribute("aria-pressed","true"); }
+      if (!was) {
+        btn.classList.add("is-selected");
+        btn.setAttribute("aria-pressed","true");
+        window.setTimeout(() => completeStep(Number(group.closest(".gf-step")?.dataset.step || 0), state.labels[key]), 160);
+      }
     });
+  }
+
+  const stepLabels = ["받는 분 선택", "선물 상황 선택", "예산 선택", "선물 느낌 선택"];
+
+  function updateProgress(index) {
+    const current = Math.min(3, Math.max(0, index));
+    $("#gf-progress-text").textContent = `${current + 1} / 4`;
+    $("#gf-progress-label").textContent = stepLabels[current];
+    $("#gf-progress-bar").style.width = `${(current + 1) * 25}%`;
+  }
+
+  function activateStep(index) {
+    $$(".gf-step").forEach(step => step.classList.toggle("is-active", Number(step.dataset.step) === index));
+    $("#gf-app").classList.toggle("is-ready", index === 3);
+    updateProgress(index);
+    const active = $(`.gf-step[data-step="${index}"]`);
+    active?.scrollIntoView({ behavior:"smooth", block:"nearest" });
+  }
+
+  function completeStep(index, label) {
+    const step = $(`.gf-step[data-step="${index}"]`);
+    if (!step) return;
+    step.classList.add("is-complete");
+    $(".gf-step-summary", step).textContent = label || "선택 안 함";
+    $(".gf-step-edit", step).hidden = false;
+    activateStep(Math.min(3, index + 1));
   }
 
   async function init() {
@@ -241,6 +306,15 @@
       chipGroup("#gf-occasion", ui.occasions, "occasion", { featuredOnly: true });
       chipGroup("#gf-budget", ui.budgets, "budget");
       chipGroup("#gf-type", ui.giftTypes, "giftType");
+      updateProgress(0);
+
+      $$('[data-edit-step]').forEach(btn => btn.addEventListener("click", () => activateStep(Number(btn.dataset.editStep))));
+      $$('[data-skip-key]').forEach(btn => btn.addEventListener("click", () => {
+        const key = btn.dataset.skipKey;
+        state[key] = "";
+        state.labels[key] = "";
+        completeStep(Number(btn.closest(".gf-step").dataset.step), "선택 안 함");
+      }));
       $("#gf-occasion-more")?.addEventListener("click", e => {
         const expanded = e.currentTarget.getAttribute("aria-expanded") === "true";
         $("#gf-occasion").classList.toggle("show-extra", !expanded);
@@ -248,7 +322,34 @@
         e.currentTarget.textContent = expanded ? "다른 상황 보기 +" : "접기 −";
       });
 
-      $("#gf-submit").addEventListener("click", () => renderResults(productData));
+      $("#gf-type-skip").addEventListener("click", () => {
+        state.giftType = "";
+        state.labels.giftType = "";
+        $$("#gf-type .gf-chip").forEach(x => {
+          x.classList.remove("is-selected");
+          x.setAttribute("aria-pressed", "false");
+        });
+        completeStep(3, "선택 안 함");
+      });
+
+      $("#gf-submit").addEventListener("click", e => {
+        const help = $("#gf-form-help");
+        if (!state.occasion) {
+          help.textContent = "어떤 날인지 한 가지만 선택해 주세요.";
+          help.classList.add("gf-form-error");
+          activateStep(1);
+          return;
+        }
+        help.classList.remove("gf-form-error");
+        const button = e.currentTarget;
+        button.disabled = true;
+        button.textContent = "조건을 살펴보는 중…";
+        window.setTimeout(() => {
+          renderResults(productData);
+          button.disabled = false;
+          button.textContent = "테차의 추천 받기 →";
+        }, 450);
+      });
 
       document.addEventListener("click", e => {
         const link = e.target.closest("[data-gf-product]");
