@@ -8,6 +8,7 @@
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const fmt = n => new Intl.NumberFormat("ko-KR").format(n);
   const completedSteps = new Set();
+  let catalog = [];
   const escapeHtml = (value = "") => String(value).replace(/[&<>"']/g, ch => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[ch]));
@@ -28,6 +29,20 @@
     "40s": { min: 40000, max: 49999, label: "4만원대", order: 3 },
     "50plus": { min: 50000, max: 999999, label: "5만원 이상", order: 4 }
   };
+
+  const recipientRules = {
+    부모님생신: ["부모님", "조부모님"],
+    어버이날: ["부모님", "조부모님"],
+    칠순팔순: ["부모님", "조부모님"],
+    스승의날: ["선생님"],
+    발표회: ["아이", "유치원", "초등학생"],
+    아이용: ["아이", "유치원", "초등학생"]
+  };
+
+  function allowedForRecipient(choiceId) {
+    if (!state.recipient || !recipientRules[choiceId]) return true;
+    return recipientRules[choiceId].includes(state.recipient);
+  }
 
   function rangeBand(product) {
     if (product.priceMin == null) return null;
@@ -55,9 +70,91 @@
     return !value || (Array.isArray(list) && list.includes(value));
   }
 
+  function matchesOccasion(product) {
+    return !state.occasionTags.length || state.occasionTags.some(tag => product.occasions?.includes(tag));
+  }
+
+  function matchesBudget(product) {
+    if (!state.budget) return true;
+    const band = budgetBands[state.budget];
+    return product.priceMin != null && product.priceMax != null
+      && product.priceMin <= band.max && product.priceMax >= band.min;
+  }
+
+  function isEligible(product) {
+    return has(product.recipients, state.recipient)
+      && matchesOccasion(product)
+      && matchesBudget(product)
+      && has(product.giftTypes, state.giftType);
+  }
+
+  function productsForStep(step) {
+    return catalog.filter(product => {
+      if (step > 0 && !has(product.recipients, state.recipient)) return false;
+      if (step > 1 && !matchesOccasion(product)) return false;
+      if (step > 2 && !matchesBudget(product)) return false;
+      return true;
+    });
+  }
+
+  function refreshChoiceAvailability() {
+    const rules = [
+      { root:"#gf-occasion", step:1, match:(product, chip) => {
+        if (!allowedForRecipient(chip.dataset.value)) return false;
+        const tags = JSON.parse(chip.dataset.tags || "[]");
+        return tags.some(tag => product.occasions?.includes(tag));
+      }},
+      { root:"#gf-budget", step:2, match:(product, chip) => {
+        const band = budgetBands[chip.dataset.value];
+        return product.priceMin != null && product.priceMax != null
+          && product.priceMin <= band.max && product.priceMax >= band.min;
+      }},
+      { root:"#gf-type", step:3, match:(product, chip) => {
+        if (!allowedForRecipient(chip.dataset.value)) return false;
+        return product.giftTypes?.includes(chip.dataset.value);
+      }}
+    ];
+    rules.forEach(rule => {
+      const candidates = productsForStep(rule.step);
+      $$(`${rule.root} .gf-chip`).forEach(chip => {
+        const available = candidates.some(product => rule.match(product, chip));
+        chip.hidden = !available;
+        chip.disabled = !available;
+      });
+    });
+  }
+
+  const downstreamKeys = {
+    recipient: ["occasion", "budget", "giftType"],
+    occasion: ["budget", "giftType"],
+    budget: ["giftType"],
+    giftType: []
+  };
+
+  function clearDownstream(key) {
+    downstreamKeys[key].forEach(nextKey => {
+      state[nextKey] = "";
+      state.labels[nextKey] = "";
+      if (nextKey === "occasion") state.occasionTags = [];
+      const rootId = { occasion:"#gf-occasion", budget:"#gf-budget", giftType:"#gf-type" }[nextKey];
+      $$(`${rootId} .gf-chip`).forEach(chip => {
+        chip.classList.remove("is-selected");
+        chip.setAttribute("aria-pressed", "false");
+      });
+      const stepIndex = { occasion:1, budget:2, giftType:3 }[nextKey];
+      completedSteps.delete(stepIndex);
+      const step = $(`.gf-step[data-step="${stepIndex}"]`);
+      step?.classList.remove("is-complete");
+      if (step) {
+        $(".gf-step-edit", step).hidden = true;
+        $(".gf-step-summary", step).textContent = "";
+      }
+    });
+  }
+
   function scoreProduct(product) {
     const recipientMatch = has(product.recipients, state.recipient);
-    const occasionMatch = !state.occasionTags.length || state.occasionTags.some(tag => product.occasions?.includes(tag));
+    const occasionMatch = matchesOccasion(product);
     const typeMatch = has(product.giftTypes, state.giftType);
 
     let score = 0;
@@ -202,7 +299,13 @@
 
   function renderResults(data) {
     const root = $("#gf-results");
-    const scored = data.products.map(scoreProduct).sort((a,b) => b.score - a.score);
+    const scored = data.products.filter(isEligible).map(scoreProduct).sort((a,b) => b.score - a.score);
+    if (!scored.length) {
+      root.innerHTML = `<div class="gf-result-intro"><p class="gf-eyebrow">TECHA GIFT CURATION</p><h2>조건에 맞는 상품을 찾지 못했어요</h2><p>예산이나 선물 형태를 선택하지 않고 다시 살펴봐 주세요.</p></div><button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>`;
+      root.hidden = false;
+      $("#gf-reset")?.addEventListener("click", () => window.location.reload());
+      return;
+    }
     const top = scored[0];
     const alternatives = selectAlternatives(scored.slice(1), top);
     const selections = Object.values(state.labels).filter(Boolean);
@@ -264,14 +367,16 @@
     }).join("");
     group.addEventListener("click", e => {
       const btn = e.target.closest(".gf-chip");
-      if (!btn) return;
+      if (!btn || btn.disabled) return;
       const was = btn.classList.contains("is-selected");
+      clearDownstream(key);
       $$(".gf-chip", group).forEach(x => { x.classList.remove("is-selected"); x.setAttribute("aria-pressed","false"); });
       state[key] = was ? "" : btn.dataset.value;
       state.labels[key] = was ? "" : (btn.querySelector("span")?.textContent || btn.dataset.value);
       if (key === "occasion") {
         state.occasionTags = was ? [] : JSON.parse(btn.dataset.tags || "[]");
       }
+      refreshChoiceAvailability();
       if (!was) {
         btn.classList.add("is-selected");
         btn.setAttribute("aria-pressed","true");
@@ -321,11 +426,13 @@
       ]);
       const productData = await productRes.json();
       const ui = await uiRes.json();
+      catalog = productData.products;
 
       chipGroup("#gf-recipient", ui.recipients, "recipient");
       chipGroup("#gf-occasion", ui.occasions, "occasion", { featuredOnly: true });
       chipGroup("#gf-budget", ui.budgets, "budget");
       chipGroup("#gf-type", ui.giftTypes, "giftType");
+      refreshChoiceAvailability();
       updateProgress(0);
 
       $$('[data-edit-step]').forEach(btn => btn.addEventListener("click", () => activateStep(Number(btn.dataset.editStep))));
