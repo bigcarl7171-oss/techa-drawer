@@ -6,6 +6,7 @@
 
 | 날짜 | 번호 | 군 | 뼈대 | 슬러그 | 제목 | draft | 미채택 2안 번호 |
 |---|---|---|---|---|---|---|---|
+| 2026-09-03 | 86 | H | 정보형(이유 설명) | flower-delivery-bubble-wrap-packaging | 택배 상자를 열었는데 뽁뽁이부터 나온다면, 이런 이유가 있어요 | draft | 23, 17 |
 | 2026-09-02 | 78 | G | 사례·스토리형 | engineer-and-sculptor-flower-shop | 하드웨어 엔지니어와 조소 전공자가 꽃집을 열었습니다 | published | 74, 79 |
 | 2026-09-01 | 34 | C | 기준·목록형 | kids-recital-bouquet-size-guide | 아이 발표회 꽃다발, 얼굴 안 가리는 크기 확인해보세요 | published | 94, 41 |
 | 2026-08-31 | 18 | B | 정보형(문제 해결) | glass-dome-mood-lamp-condensation | 유리돔 무드등 안에 김이 서렸다면, 이렇게 확인해보세요 | draft | 42, 6 |
