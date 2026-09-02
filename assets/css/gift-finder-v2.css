@@ -73,12 +73,17 @@
 .gf-hero-body h2 { font-size:clamp(28px,4vw,42px); margin:0 0 8px; letter-spacing:-.035em; }
 .gf-price { font-weight:700; color:var(--gf-brown); margin:0 0 18px; }
 .gf-lead { font-size:17px; line-height:1.7; margin:0 0 22px; }
+.gf-match { margin:0 0 18px; padding:15px 16px; border-radius:12px; background:var(--gf-sage-soft); }
+.gf-match strong { display:block; margin-bottom:7px; color:var(--gf-sage); font-size:13px; }
+.gf-match ul { margin:0; padding-left:19px; color:var(--gf-ink); font-size:14px; line-height:1.7; }
 .gf-why { padding-top:18px; border-top:1px solid var(--gf-line); }
 .gf-why strong { display:block; margin-bottom:8px; font-size:14px; }
 .gf-why p { margin:0; color:var(--gf-muted); line-height:1.65; }
 .gf-budget-note { font-size:13px; color:var(--gf-muted); margin-top:16px; }
 .gf-buy { display:inline-flex; margin-top:22px; color:#fff; background:var(--gf-sage); border-radius:999px; padding:12px 17px; text-decoration:none; font-weight:700; }
 .gf-buy--disabled { opacity:.55; }
+.gf-delivery-note { margin:16px 0 0!important; padding-top:14px; border-top:1px solid var(--gf-line); color:var(--gf-muted); font-size:12.5px; line-height:1.6; }
+.gf-delivery-note strong { display:block; color:var(--gf-brown); }
 .gf-alt-section { margin-top:48px; }
 .gf-alt-heading { display:flex; justify-content:space-between; align-items:end; gap:20px; margin-bottom:16px; }
 .gf-alt-heading h2 { margin:0; font-size:28px; letter-spacing:-.025em; }

@@ -7,9 +7,19 @@
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const fmt = n => new Intl.NumberFormat("ko-KR").format(n);
+  const completedSteps = new Set();
   const escapeHtml = (value = "") => String(value).replace(/[&<>"']/g, ch => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[ch]));
+
+  function trackEvent(name, params = {}) {
+    if (window.TECHA && typeof window.TECHA.track === "function") {
+      window.TECHA.track(name, params);
+      return;
+    }
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event:name, ...params });
+  }
 
   const budgetBands = {
     "under-20": { min: 0, max: 19999, label: "2만원 미만", order: 0 },
@@ -149,10 +159,11 @@
     const p = item.product;
     const badges = (p.badges || []).map(x => `<span class="gf-badge">${escapeHtml(x)}</span>`).join("");
     const reason = item.reasons[0] || p.situation || "선택한 조건을 종합해 추천했어요.";
-    const note = item.budget.note ? `<p class="gf-budget-note">${escapeHtml(item.budget.note)}</p>` : "";
+    const note = item.budget.note && item.budget.score < 8 ? `<p class="gf-budget-note">${escapeHtml(item.budget.note)}</p>` : "";
     const cta = p.shopUrl
-      ? `<a class="gf-buy" href="${escapeHtml(p.shopUrl)}" target="_blank" rel="noopener noreferrer" data-gf-product="${escapeHtml(p.id)}">상품 보러가기 →</a>`
+      ? `<a class="gf-buy" href="${escapeHtml(p.shopUrl)}" target="_blank" rel="noopener noreferrer" data-gf-product="${escapeHtml(p.id)}" data-gf-rank="primary">상품 보러가기 →</a>`
       : `<span class="gf-buy gf-buy--disabled">링크 준비중</span>`;
+    const matches = item.reasons.slice(0, 3);
     return `
       <article class="gf-hero-card">
         <div class="gf-hero-media">${heroGallery(p)}</div>
@@ -162,12 +173,14 @@
           <h2>${escapeHtml(p.name)}</h2>
           <p class="gf-price">${escapeHtml(priceText(p))}</p>
           <p class="gf-lead">${escapeHtml(p.situation || reason)}</p>
+          ${matches.length ? `<div class="gf-match"><strong>선택한 조건과 맞는 점</strong><ul>${matches.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul></div>` : ""}
           <div class="gf-why">
-            <strong>추천하는 이유</strong>
+            <strong>이 상품의 좋은 점</strong>
             <p>${escapeHtml(p.reason || reason)}</p>
           </div>
           ${note}
           ${cta}
+          <p class="gf-delivery-note"><strong>행사일이 가까우신가요?</strong> 상품 페이지에서 예상 출고일을 먼저 확인해 주세요. 시들지 않는 꽃이라 3~4일 여유 있게 준비하셔도 좋아요.</p>
         </div>
       </article>`;
   }
@@ -182,7 +195,7 @@
           <h3>${escapeHtml(p.name)}</h3>
           <p class="gf-price">${escapeHtml(priceText(p))}</p>
           <p>${escapeHtml(p.reason || p.situation || "")}</p>
-          ${p.shopUrl ? `<a class="gf-alt-buy" href="${escapeHtml(p.shopUrl)}" target="_blank" rel="noopener noreferrer" data-gf-product="${escapeHtml(p.id)}">상품 보러가기 →</a>` : ""}
+          ${p.shopUrl ? `<a class="gf-alt-buy" href="${escapeHtml(p.shopUrl)}" target="_blank" rel="noopener noreferrer" data-gf-product="${escapeHtml(p.id)}" data-gf-rank="alternative">상품 보러가기 →</a>` : ""}
         </div>
       </article>`;
   }
@@ -208,6 +221,7 @@
       <button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>
     `;
     root.hidden = false;
+    trackEvent("gift_finder_complete");
     $$(".gf-thumb", root).forEach(btn => btn.addEventListener("click", () => {
       const media = btn.closest(".gf-hero-media");
       const main = $(".gf-hero-main-image", media);
@@ -220,6 +234,7 @@
       state.recipient = state.occasion = state.budget = state.giftType = "";
       state.occasionTags = [];
       Object.keys(state.labels).forEach(key => { state.labels[key] = ""; });
+      completedSteps.clear();
       $$(".gf-chip.is-selected").forEach(el => {
         el.classList.remove("is-selected");
         el.setAttribute("aria-pressed", "false");
@@ -288,6 +303,11 @@
     step.classList.add("is-complete");
     $(".gf-step-summary", step).textContent = label || "선택 안 함";
     $(".gf-step-edit", step).hidden = false;
+    if (!completedSteps.has(index)) {
+      if (completedSteps.size === 0) trackEvent("gift_finder_start");
+      completedSteps.add(index);
+      trackEvent("gift_finder_step_complete", { step_number:index + 1 });
+    }
     activateStep(Math.min(3, index + 1));
   }
 
@@ -354,10 +374,9 @@
       document.addEventListener("click", e => {
         const link = e.target.closest("[data-gf-product]");
         if (!link) return;
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: "gift_finder_product_click",
-          gift_product_id: link.dataset.gfProduct || ""
+        trackEvent("gift_finder_product_click", {
+          gift_product_id: link.dataset.gfProduct || "",
+          result_position: link.dataset.gfRank || ""
         });
       });
     } catch (err) {
