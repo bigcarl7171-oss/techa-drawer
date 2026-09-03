@@ -28,7 +28,13 @@ blog/택배/
 # 졸업식 소재 원본 — 손님 아이 이름이 찍힌 토퍼 사진이 섞여 있어 특히 배포되면 안 된다
 blog/새 폴더/
 
-# 초안에 넣을 사진을 슬롯별로 모아두는 곳 (docs/drafts/images/<slug>/cover.jpg, 1.jpg …).
+# 초안에 넣을 사진을 슬롯별로 모아두는 곳 (docs/drafts/images/
+
+# 주문서에 딸린 레퍼런스 사진은 **커밋한다** — 04:00 초안 루틴이 새 체크아웃에서
+# 이걸 봐야 사진에 맞춰 원고를 쓸 수 있다. new-order.js 가 3:2·1200px·q4 로 압축해
+# 넣으므로 용량이 작다. 원본 고해상도는 여기 넣지 말고 각자 클라우드에 둔다.
+!docs/drafts/refs/
+!docs/drafts/refs/**<slug>/cover.jpg, 1.jpg …).
 # prepare-images.js 가 여기서 읽어 3:2·1200px 로 압축해 blog/<slug>/ 에 넣는다.
 # 촬영 원본은 수 MB짜리라 추적하지 않는다 — 커밋되는 건 그 파생본뿐.
 docs/drafts/images/

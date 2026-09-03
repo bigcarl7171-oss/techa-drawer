@@ -35,6 +35,7 @@ if (FROM && !fs.existsSync(FROM)) die(`--from 폴더가 없다: ${FROM}`);
 
 const d = D.loadDraft(slug);
 const shotDir = path.join(ROOT, "docs", "drafts", "images", slug);
+const refDir  = path.join(ROOT, "docs", "drafts", "refs", slug);   // 주문서에 딸려 온 사진(커밋됨)
 const outDir = path.join(ROOT, "blog", slug);
 
 // 3:2 크롭 — 치수를 미리 몰라도 되게 ffmpeg 표현식으로 계산한다(ffprobe 불필요).
@@ -67,8 +68,14 @@ if (!DRY) fs.mkdirSync(outDir, { recursive: true });
 for (const im of d.images) {
   const ai = findSource(FROM, im);
   const shot = findSource(shotDir, im);
-  const src = shot || ai;              // 직접 촬영본이 있으면 그걸 우선한다
-  const mode = shot ? "photo" : "watermark";
+  // 주문서 사진: 초안 마커의 ref: 가 가리키는 파일을 docs/drafts/refs/<slug>/ 에서 찾는다
+  let order = null;
+  if (im.ref) {
+    const cand = path.join(refDir, String(im.ref).trim());
+    if (fs.existsSync(cand)) order = cand;
+  }
+  const src = shot || order || ai;     // 직접 촬영본 > 주문서 사진 > AI 생성분
+  const mode = (shot || order) ? "photo" : "watermark";
   const dest = path.join(outDir, im.file);
 
   if (!src) {
@@ -94,7 +101,7 @@ for (const im of d.images) {
 
 console.log(JSON.stringify({
   slug, dryRun: DRY,
-  sources: { shots: rel(shotDir), generated: FROM ? rel(FROM) : null },
+  sources: { shots: rel(shotDir), refs: fs.existsSync(refDir) ? rel(refDir) : null, generated: FROM ? rel(FROM) : null },
   filled, kept, missing,
   note: missing.length
     ? `빈 슬롯 ${missing.length}개 — prompt 로 생성한 뒤 --from 으로 다시 실행`
