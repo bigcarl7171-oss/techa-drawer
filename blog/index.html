@@ -22,17 +22,40 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/magazine.css">
 <script type="application/ld+json">
 { "@context":"https://schema.org","@type":"Blog","name":"테차 매거진",
   "url":"https://www.techa.kr/blog/","description":"시들지 않는 꽃 이야기와 테차 소식, 생활 도구 활용 팁" }
 </script>
 </head>
-<body>
+<body class="magazine-page">
 <header id="site-header"></header>
 <div id="page-head"></div>
 
-<main class="wrap">
+<main class="wrap magazine-main">
   <div class="ad-slot"></div>
+
+  <section class="magazine-hero" aria-labelledby="magazine-title">
+    <div>
+      <p class="magazine-kicker">TECHA MAGAZINE</p>
+      <h1 id="magazine-title">꽃이 오래 남으면,<br>이야기도 오래 남습니다</h1>
+    </div>
+    <div>
+      <p class="magazine-hero-copy">꽃을 만드는 사람의 경험으로 선물 고르는 법과 공간에 꽃을 두는 방법, 테차를 만들어가는 이야기를 전합니다.</p>
+      <div class="magazine-topics" aria-label="매거진 주제 선택">
+        <button type="button" class="magazine-topic is-active" data-filter="all" aria-pressed="true">전체</button>
+        <button type="button" class="magazine-topic" data-filter="gift" aria-pressed="false">꽃 선물 가이드</button>
+        <button type="button" class="magazine-topic" data-filter="space" aria-pressed="false">공간과 꽃</button>
+        <button type="button" class="magazine-topic" data-filter="techa" aria-pressed="false">테차 이야기</button>
+        <button type="button" class="magazine-topic" data-filter="business" aria-pressed="false">기업·단체</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="magazine-list-head">
+    <h2>지금 읽기 좋은 이야기</h2>
+    <p id="magazine-count">이야기를 불러오는 중</p>
+  </div>
 
   <section id="magazine-grid">
     <div class="grid post-grid">
@@ -171,12 +194,18 @@
     </div>
   </section>
 
+  <section class="magazine-cta" aria-labelledby="magazine-cta-title">
+    <div><p>TECHA GIFT FINDER</p><h2 id="magazine-cta-title">무엇을 선물할지 고민된다면<br>상황부터 천천히 골라보세요</h2></div>
+    <a href="/ko/gift-finder/">선물 추천받기 <span aria-hidden="true">→</span></a>
+  </section>
+
   <div class="ad-slot"></div>
 </main>
 
 <footer id="site-footer"></footer>
 
 <script src="/assets/js/site.js"></script>
+<script src="/assets/js/magazine.js"></script>
 <script>
   TECHA.initPage({ title: "테차 매거진", desc: "시들지 않는 꽃 이야기와 테차 소식, 생활에 도움 되는 이야기를 전합니다." });
 </script>

@@ -556,6 +556,11 @@ body.landing { background: #f6f1e7; }
 }
 
 /* Magazine HTML contract is unchanged for scripts/publish-draft.js. */
+.home-magazine-topics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.home-magazine-topics a { padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 12px; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+  .home-magazine-topics a:hover { border-color: var(--brown); color: var(--brown); }
+}
 .shell-carousel { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 18px; margin: 0; }
 .shell-mag-card {
   display: block; border: 0; border-top: 1px solid var(--line);
