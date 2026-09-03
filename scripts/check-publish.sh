@@ -65,10 +65,11 @@ if [ -f "blog/$SLUG/index.html" ]; then
   imgs=$(grep -c '<img ' "blog/$SLUG/index.html")
   ok "blog/$SLUG/index.html" "본문 약 ${chars}자 · 이미지 ${imgs}장"
   [ -z "$CHARLOC" ] && warn "자수 신뢰도" "UTF-8 로케일이 없어 바이트로 셌다 — 한글은 약 3배로 부풀려진다"
-  # 목표는 stage3-magazine.md 원본과 같은 1,800~2,800자 (2026-08-19 상향).
-  # 예전엔 이 줄만 옛 기준 1,200~1,800으로 남아 아래 [규격] 대조와 자기모순이었다.
-  [ "$chars" -lt 1800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,800~2,800자"
-  [ "$chars" -gt 2800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,800~2,800자"
+  # 목표는 stage3-magazine.md 원본과 같은 1,500~2,800자 (2026-09-03 하한 완화).
+  # 이 숫자는 공백을 뺀 문자 수다. 세 곳(여기·publish-draft.js·stage3-magazine.md)이
+  # 같은 값을 써야 [규격] 대조가 통과한다.
+  [ "$chars" -lt 1500 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,500~2,800자"
+  [ "$chars" -gt 2800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,500~2,800자"
   # 참조한 이미지 파일이 실제로 있는지. 없으면 라이브에 깨진 이미지가 그대로 나간다 —
   # 무인 발행이라 사람 눈이 중간에 없다.
   missing=""
@@ -135,7 +136,7 @@ if [ -n "$SHORTS" ]; then
     if [ "$inref" -ge 1 ] && [ "$inboard" -ge 1 ]; then ok "$3" "$1 일치"
     else bad "$3" "$1 — stage3:$inref board:$inboard 불일치"; fi
   }
-  chk "1,800~2,800" stage3-magazine.md "매거진 분량"
+  chk "1,500~2,800" stage3-magazine.md "매거진 분량"
   chk "1,500~2,000" stage3-blog.md     "네이버 분량"
   chk "300~500"     stage3-threads.md  "스레드 분량"
 else

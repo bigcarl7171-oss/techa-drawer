@@ -170,7 +170,7 @@ console.log(JSON.stringify({
   missingImages: missing.map((im) => im.file),
   written: DRY ? [] : writes.map(([p]) => rel(p)),
   warnings: [
-    bodyChars < 1800 ? `본문 약 ${bodyChars}자 — 매거진 목표는 1,800~2,800자` : null,
+    bodyChars < 1500 ? `본문 약 ${bodyChars}자 — 매거진 목표는 1,500~2,800자` : null,
     missing.length ? `이미지 파일 없음: ${missing.map((im) => im.file).join(", ")} — prepare-images.js 먼저` : null,
   ].filter(Boolean),
 }, null, 2));
