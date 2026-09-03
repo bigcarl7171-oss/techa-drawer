@@ -1,7 +1,7 @@
 ---
 date: 2026-09-03
 platform: magazine
-status: ready
+status: published
 topic_no: 106
 slug: preserved-flower-volume-guide
 angle: 손님이 받고 '생각보다 작네' 하는 순간에서 출발. 왜 그런지(수분을 빼서 부피가 준다) 설명하고, 그 대신 얻는 것(색·꽃 종류 조합의 폭)과 실패를 줄이는 사이즈 선택 기준까지 준다. 변명이 아니라 고를 때 쓰는 정보가 되게.
