@@ -264,16 +264,16 @@
       "priceMin": 32500,
       "priceMax": 37000,
       "shopUrl": "https://smartstore.naver.com/itecha/products/7563519851",
-      "image1": "",
-      "image2": "",
-      "photoStatus": "검토 필요",
+      "image1": "/assets/images/gift-finder/sunflower-bouquet-01.webp",
+      "image2": "/assets/images/gift-finder/sunflower-bouquet-02.webp",
+      "photoStatus": "확정",
       "badges": [],
       "sales": {
         "totalRef": 1200,
         "recentRef": 112,
         "score": 4.56
       },
-      "note": "ZIP에서 해바라기 꽃다발 사진 2장을 찾지 못함. 해바라기 액자 사진으로 대체하지 말 것."
+      "note": "개업 축하 전달 장면을 대표로, 승진 축하 장면을 보조로 사용."
     },
     {
       "id": "carnation-rose-bouquet",
