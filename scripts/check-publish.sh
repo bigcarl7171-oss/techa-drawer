@@ -131,12 +131,12 @@ if [ -n "$SHORTS" ]; then
   REF="$SHORTS/.claude/skills/techa-content-studio/references"
   chk() { # $1=수치  $2=stage3파일  $3=이름
     local inref inboard
-    inref=$(grep -c -- "$1" "$REF/$2" 2>/dev/null || echo 0)
-    inboard=$(grep -c -- "$1" "$REF/topic-board.html" 2>/dev/null || echo 0)
+    inref=$(grep -c -- "$1" "$REF/$2" 2>/dev/null) || inref=0
+    inboard=$(grep -c -- "$1" "$REF/topic-board.html" 2>/dev/null) || inboard=0
     if [ "$inref" -ge 1 ] && [ "$inboard" -ge 1 ]; then ok "$3" "$1 일치"
     else bad "$3" "$1 — stage3:$inref board:$inboard 불일치"; fi
   }
-  chk "1,500~2,800" stage3-magazine.md "매거진 분량"
+  chk "1,800~2,800" stage3-magazine.md "매거진 분량"
   chk "1,500~2,000" stage3-blog.md     "네이버 분량"
   chk "300~500"     stage3-threads.md  "스레드 분량"
 else
