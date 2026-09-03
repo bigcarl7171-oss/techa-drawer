@@ -6,6 +6,7 @@
 
 | 날짜 | 번호 | 군 | 뼈대 | 슬러그 | 제목 | draft | 미채택 2안 번호 |
 |---|---|---|---|---|---|---|---|
+| 2026-09-03 | 106 | A | 도움형(이유 설명) | preserved-flower-volume-guide | 프리저브드 꽃다발이 생화보다 아담해 보이는 이유 | draft | 사람 주문(대안 없음) |
 | 2026-09-03 | 54 | D | 정보형(관점 전환) | autumn-flower-gift-offseason | 발표회·집들이·개업, 가을 선물은 경우마다 고르는 법이 달라요 | published | 사람 주문(대안 없음) |
 | 2026-09-03 | 86 | H | 정보형(이유 설명) | flower-delivery-bubble-wrap-packaging | 택배 상자를 열었는데 뽁뽁이부터 나온다면, 이런 이유가 있어요 | draft | 23, 17 |
 | 2026-09-02 | 78 | G | 사례·스토리형 | engineer-and-sculptor-flower-shop | 하드웨어 엔지니어와 조소 전공자가 꽃집을 열었습니다 | published | 74, 79 |
