@@ -1,7 +1,7 @@
 ---
 date: 2026-09-03
 platform: magazine
-status: draft
+status: published
 topic_no: 54
 slug: autumn-flower-gift-offseason
 angle: (2026-09-03 사람 정정 2회) 최초 '비수기' 전제도, 그다음 '기업vs개인' 축도 판매자 시점이라 폐기. 손님이 가을에 실제로 마주하는 선물 경우 네 가지를 열거하고 경우마다 볼 기준을 주는 도움형으로 다시 씀.
@@ -21,10 +21,10 @@ autumn-flower-gift-offseason
 가을에 선물할 일은 생각보다 여럿 생겨요. 발표회·집들이·개업처럼 경우가 다르면 봐야 할 것도 달라서, 그 기준부터 정리했어요.
 
 ## 대표 이미지 alt
-가을 실내 테이블에 놓인 시들지 않는 꽃 소품
+밤에 협탁 위에서 켜진 유리돔 꽃무드등
 
 ## 대표 이미지 프롬프트
-Photorealistic autumn interior table with a small preserved-flower arrangement, soft warm daylight through a window, calm quiet mood, no people, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background
+(실사진 사용: docs/drafts/images/autumn-flower-gift-offseason/cover.png — 어두운 실내 협탁 위에서 켜진 유리돔 꽃무드등, 옆에 찻잔과 책)
 
 ## 본문
 
@@ -40,7 +40,7 @@ Photorealistic autumn interior table with a small preserved-flower arrangement, 
 
 무게도 봐야 해요. 발표회는 꽃다발을 받는 순간으로 끝나지 않아요. 커튼콜 인사하고 친구들과 사진 찍고 로비에서 부모님 만날 때까지 계속 들고 있게 되는데, 무거우면 팔이 내려가고 처음 잡았던 구도가 흐트러져요. 색도 한 번 보시면 좋아요. 무대 조명 아래에서 배경이나 아이 옷 색과 비슷하면 사진에서 꽃다발이 묻히거든요.
 
-[이미지 자리 1: 아이 품에 안기는 크기의 작은 꽃다발 — alt: 아이가 두 손으로 안을 수 있는 크기의 꽃다발 — prompt: Photorealistic small flower bouquet sized to be held by a child, placed on a table, warm natural light, no people, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background]
+[이미지 자리 1: 아이가 인형꽃다발을 품에 안고 서 있는 모습 — alt: 아이가 두 팔로 안고 있는 분홍 인형꽃다발 — prompt: (실사진 사용: docs/drafts/images/autumn-flower-gift-offseason/1.png)]
 
 ### 이사·집들이 — 받는 분이 둘 곳을 바로 정할 수 있는 것으로
 
@@ -58,7 +58,7 @@ Photorealistic autumn interior table with a small preserved-flower arrangement, 
 
 크기는 매장 규모에 맞춰야 하는데 이건 미리 물어보기 애매해서, 너무 크지 않은 쪽이 무난해요. 자리를 많이 차지하면 결국 안 보이는 곳으로 밀려나거든요.
 
-[이미지 자리 2: 매장 카운터나 선반에 놓인 작은 꽃 소품 — alt: 가게 선반에 놓인 시들지 않는 꽃 소품 — prompt: Photorealistic small dried-flower interior piece placed on a shop counter shelf, warm ambient lighting, no people, no text, no watermark, no logos, keep the bottom-right corner as simple, uncluttered background]
+[이미지 자리 2: 매장 선반에 줄지어 놓인 유리돔 무드등과 선물 구성 — alt: 가게 선반에 진열된 시들지 않는 꽃 선물들 — prompt: (실사진 기반 생성: docs/drafts/images/autumn-flower-gift-offseason/2.png)]
 
 ### 아무 날도 아닐 때 — 부담을 낮추는 쪽으로
 
