@@ -70,7 +70,8 @@
 
 기존 규칙 그대로다. `techa-brand-rules.md` §2 품질게이트와 표현 규칙을 전부 적용한다.
 
-- 본문 분량은 **`node scripts/publish-draft.js <slug> --dry-run` 이 세는 기준**으로 1,800~2,800자.
+- 본문 분량은 **`node scripts/publish-draft.js <slug> --dry-run` 이 세는 기준**으로 1,500~2,800자.
+  (이 값은 공백을 뺀 문자 수다. 하한은 2026-09-03에 1,800에서 내렸다 — 아래 §분량 근거 참고)
   루틴이 자체적으로 센 숫자는 이 기준과 다르다 — 프론트매터 `char_count` 는 참고값일 뿐이다.
 - `status: draft` 로 쓴다. 사람이 검토하고 `ready` 로 바꾼다.
 
