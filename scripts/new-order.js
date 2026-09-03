@@ -49,18 +49,21 @@ const title = opt("title") || "";
 const angle = opt("angle") || "";
 const note = opt("note") || "";
 
-if (!SRC || !slug) die('사용법: node scripts/new-order.js <사진폴더> --slug <슬러그> [--topic N] [--title "…"] [--angle "…"]');
+if (!slug) die('사용법: node scripts/new-order.js [사진폴더] --slug <슬러그> [--topic N] [--title "…"] [--angle "…"]');
 if (!/^[a-z0-9-]+$/.test(slug)) die("슬러그는 영소문자·숫자·하이픈만 쓴다: " + slug);
-if (!fs.existsSync(SRC)) die("사진 폴더가 없다: " + SRC);
+if (SRC && !fs.existsSync(SRC)) die("사진 폴더가 없다: " + SRC);
+// 사진 폴더는 선택이다. 사진이 뭐가 될지 원고를 봐야 아는 주제(계절·기준·비교형 등)는
+// 폴더 없이 주문하면 된다 — 루틴이 이미지 자리를 영문 prompt 로 남기고,
+// 사람이 초안을 본 뒤 사진을 고른다.
 
 const EXT = [".jpg", ".jpeg", ".png", ".webp"];
-const shots = fs.readdirSync(SRC)
-  .filter((f) => EXT.includes(path.extname(f).toLowerCase()))
-  .sort((a, b) => a.localeCompare(b, "ko"));
+const shots = SRC
+  ? fs.readdirSync(SRC).filter((f) => EXT.includes(path.extname(f).toLowerCase())).sort((a, b) => a.localeCompare(b, "ko"))
+  : [];
 
 // 폴더에 메모 파일이 있으면 읽는다
 let folderNote = "";
-for (const n of ["order.md", "주제.md", "주제.txt", "order.txt"]) {
+for (const n of SRC ? ["order.md", "주제.md", "주제.txt", "order.txt"] : []) {
   const p = path.join(SRC, n);
   if (fs.existsSync(p)) { folderNote = fs.readFileSync(p, "utf8").trim(); break; }
 }
@@ -70,7 +73,7 @@ const CROP_3_2 = "w='min(iw,ih*3/2)':h='min(ih,iw*2/3)'";
 const FILTER = `crop=${CROP_3_2}:x='(iw-ow)/2':y='(ih-oh)/2',scale=1200:-2`;
 
 const made = [];
-if (!DRY) fs.mkdirSync(refDir, { recursive: true });
+if (!DRY && shots.length) fs.mkdirSync(refDir, { recursive: true });
 shots.forEach((f, i) => {
   const out = path.join(refDir, String(i + 1).padStart(2, "0") + ".jpg");
   if (!DRY) {
@@ -94,7 +97,7 @@ const body = [
   `topic_no: ${topic}`,
   `title_hint: ${title}`,
   `angle: ${angle}`,
-  `refs: docs/drafts/refs/${slug}/`,
+  `refs: ${shots.length ? `docs/drafts/refs/${slug}/` : ""}`,
   `ordered_at: ${new Date().toISOString().slice(0, 10)}`,
   "---",
   "",
@@ -108,10 +111,14 @@ if (!DRY) fs.writeFileSync(nextPath, body, "utf8");
 
 console.log(JSON.stringify({
   slug, topic_no: topic, dryRun: DRY,
-  source: SRC,
-  refs: rel(refDir),
+  source: SRC || null,
+  refs: shots.length ? rel(refDir) : null,
   images: made,
   order: rel(nextPath),
-  note: made.length ? null : "⚠️ 사진이 0장이다 — 폴더를 확인해라",
-  next: `git add docs/drafts/NEXT.md docs/drafts/refs/${slug} && git commit -m "주문: ${slug}" && git push`,
+  note: shots.length
+    ? null
+    : "사진 없는 주문이다 — 루틴이 이미지 자리를 영문 prompt 로 남긴다. 초안을 보고 나서 사진을 고르면 된다.",
+  next: shots.length
+    ? `git add docs/drafts/NEXT.md docs/drafts/refs/${slug} && git commit -m "주문: ${slug}" && git push`
+    : `git add docs/drafts/NEXT.md && git commit -m "주문: ${slug} (사진 없음)" && git push`,
 }, null, 2));
