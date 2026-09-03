@@ -72,6 +72,8 @@ node scripts/prepare-images.js <slug> --from <그 폴더>
 - 결과 jpg가 100~150KB 범위인지 `filled[].kb`로 확인한다. 크게 벗어나면 사용자에게 알린다.
 
 > 직접 촬영본이 `docs/drafts/images/<slug>/`에 있으면 그게 **항상 우선**한다. AI 컷으로 덮어쓰지 않는다.
+> 그다음이 **주문서 사진** `docs/drafts/refs/<slug>/` — 초안 마커의 `ref: 04.jpg` 가 가리키는 파일이다
+> (2026-09-03 추가). 이건 커밋되므로 **클라우드 루틴도 볼 수 있다.** 우선순위: images → refs → AI.
 
 > ⚠️ **클라우드 루틴은 사람이 넣은 사진을 볼 수 없다 (2026-08-24 확인)**
 >

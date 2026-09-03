@@ -92,7 +92,8 @@ function sectionLine(text, name) {
 
 /*
   이미지 자리 마커
-    [이미지 자리 1: 설명 — alt: 대체텍스트 — prompt: English generation prompt]
+    [이미지 자리 1: 설명 — alt: 대체텍스트 — ref: 04.jpg — prompt: English generation prompt]
+  `ref:` 는 주문서에 딸려 온 docs/drafts/refs/<slug>/ 안의 파일명이다. 있으면 그 사진을 쓴다.
   `— ` 로 끊고 `키: 값` 을 찾는다. alt·prompt 는 없어도 된다(없으면 설명을 alt 로 쓰고,
   prompt 가 없으면 자동 생성 대상에서 빠져 사람이 사진을 넣어야 한다).
 
@@ -105,9 +106,9 @@ function parseMarker(line) {
   if (!m) return null;
   const parts = m[2].split(/\s+[—–-]\s+/);
   const slot = Number(m[1]);
-  const out = { slot, file: `img-${slot}.jpg`, desc: parts[0].trim(), alt: null, prompt: null };
+  const out = { slot, file: `img-${slot}.jpg`, desc: parts[0].trim(), alt: null, prompt: null, ref: null };
   for (const p of parts.slice(1)) {
-    const kv = p.match(/^(alt|prompt)\s*:\s*([\s\S]+)$/i);
+    const kv = p.match(/^(alt|prompt|ref)\s*:\s*([\s\S]+)$/i);
     if (kv) out[kv[1].toLowerCase()] = kv[2].trim();
   }
   out.alt = out.alt || out.desc;
@@ -142,6 +143,7 @@ function loadDraft(slug) {
     desc: coverAlt,
     alt: coverAlt,
     prompt: sectionLine(scope, "대표 이미지 프롬프트"),
+    ref: sectionLine(scope, "대표 이미지 ref"),
   };
   const body = bodyMd.split("\n").map(parseMarker).filter(Boolean);
 
