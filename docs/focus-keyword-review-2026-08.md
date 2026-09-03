@@ -10,7 +10,7 @@
 **근거**
 - `docs/MASTER-REPORT-2026-08.md` (판매 30일 / 광고 90일)
 - `docs/naver-ranking-analysis-2026-08.md` (상품명 31개 전수, 광고그룹 90일)
-- `docs/keyword-landscape-2026-08.md` (네이버쇼핑 경쟁 지형 — ⚠️ 노출 판정부는 폐기됨)
+- `docs/archive/keyword-landscape-2026-08.md` (네이버쇼핑 경쟁 지형 — ⚠️ 노출 판정부는 폐기됨)
 - `docs/seasonality-analysis-2026-08.md` (3년 계절성·리드타임)
 - 상품명 15개 키워드 매칭은 이 문서에서 새로 계산했다
 
