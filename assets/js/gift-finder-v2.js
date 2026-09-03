@@ -200,7 +200,7 @@
         <div class="gf-hero-media">${heroGallery(p)}</div>
         <div class="gf-hero-body">
           <div class="gf-badges">${badges}</div>
-          <p class="gf-eyebrow">테차가 가장 추천해요</p>
+          <p class="gf-eyebrow">먼저 살펴볼 선물</p>
           <h2>${escapeHtml(p.name)}</h2>
           <p class="gf-price">${escapeHtml(priceText(p))}</p>
           <p class="gf-lead">${escapeHtml(p.situation || reason)}</p>
@@ -230,11 +230,20 @@
       </article>`;
   }
 
+  function storeMoreMarkup() {
+    return `<section class="gf-store-more" aria-labelledby="gf-store-more-title">
+      <p class="gf-eyebrow">MORE FROM TECHA</p>
+      <h2 id="gf-store-more-title">여기 나온 상품이 전부는 아니에요</h2>
+      <p>테차 꽃가게에는 꽃다발, 꽃무드등, 용돈선물, 인테리어 꽃 소품 등 다양한 디자인과 색상, 크기의 상품이 준비되어 있습니다. 추천 결과를 참고하신 뒤 마음에 맞는 선물을 조금 더 천천히 살펴보세요.</p>
+      <a href="https://smartstore.naver.com/itecha" target="_blank" rel="noopener noreferrer">테차의 다양한 꽃 선물 보기 →</a>
+    </section>`;
+  }
+
   function renderResults(data) {
     const root = $("#gf-results");
     const scored = data.products.filter(isEligible).map(scoreProduct).sort((a,b) => b.score - a.score);
     if (!scored.length) {
-      root.innerHTML = `<div class="gf-result-intro"><p class="gf-eyebrow">TECHA GIFT CURATION</p><h2>조건에 맞는 상품을 찾지 못했어요</h2><p>받는 분이나 선물 형태를 선택하지 않고 다시 살펴봐 주세요.</p></div><button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>`;
+      root.innerHTML = `<div class="gf-result-intro"><p class="gf-eyebrow">TECHA GIFT CURATION</p><h2>조건에 맞는 상품을 찾지 못했어요</h2><p>조건을 조금 넓혀 다시 살펴보거나, 테차 꽃가게에서 다양한 상품을 확인해 주세요.</p></div>${storeMoreMarkup()}<button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>`;
       root.hidden = false;
       $("#gf-reset")?.addEventListener("click", () => window.location.reload());
       return;
@@ -245,15 +254,16 @@
     root.innerHTML = `
       <div class="gf-result-intro">
         <p class="gf-eyebrow">TECHA GIFT CURATION</p>
-        <h2>이 상황이라면,<br>이 선물부터 보세요</h2>
-        <p>고르신 조건과 테차가 실제로 추천하는 상황을 함께 살펴봤어요.</p>
+        <h2>이런 선물부터<br>살펴보세요</h2>
+        <p>선택하신 상황을 바탕으로 잘 어울리는 상품을 골라봤어요. 선물을 고르기 위한 참고로 가볍게 살펴봐 주세요.</p>
         <div class="gf-selection" aria-label="선택한 조건">${selections.map(x => `<span>${escapeHtml(x)}</span>`).join("")}</div>
       </div>
       ${heroCard(top)}
       ${alternatives.length ? `<div class="gf-alt-section">
-        <div class="gf-alt-heading"><h2>가격대별로 비교해 보세요</h2><p>조건에 맞는 상품만 가격대별로 골랐어요</p></div>
+        <div class="gf-alt-heading"><h2>다른 가격대도 살펴보세요</h2><p>같은 상황에 어울리는 상품을 가격대별로 골랐어요</p></div>
         <div class="gf-alt-grid">${alternatives.map(altCard).join("")}</div>
       </div>` : ""}
+      ${storeMoreMarkup()}
       <button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>
     `;
     root.hidden = false;
