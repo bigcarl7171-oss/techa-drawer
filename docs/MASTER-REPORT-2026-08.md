@@ -308,7 +308,7 @@
 | `brand-field-fix-checklist.md` | 31개 상품별 브랜드 필드 수정 체크리스트 |
 | `naver-ranking-analysis-2026-08.md` | 랭킹 3요소 · 상품명 31개 전수 진단 · 조치 21건 |
 | `seasonality-analysis-2026-08.md` | 3년 계절성 · 이벤트 리드타임 · 월별 실행 캘린더 |
-| `keyword-landscape-2026-08.md` | 7개 키워드 경쟁 지형 |
+| `docs/archive/keyword-landscape-2026-08.md` | 7개 키워드 경쟁 지형 |
 | `focus-keyword-review-2026-08.md` | **중점 키워드 15개 기준 재점검** — 졸업 클러스터 공백 발견 (2026-08-19) |
 | `store-diagnosis-2026-08.md` | 1차 진단 (일부 정정됨 — 상단 경고 참고) |
 | `store-metrics-2026-08/README.md` | 판매자센터 데이터 받는 법 |
