@@ -24,8 +24,11 @@
 #   SERP_SLEEP  요청 간 대기 초 (기본 2). 과하게 두드리지 않기 위한 것이니 줄이지 말 것
 #   KEEP_HTML   1 이면 받은 HTML 을 남긴다 (기본은 임시폴더에 두고 지움)
 #
-# 출력: TSV — 키워드 / 페이지KB / 브랜드노출 / 쇼핑모듈 / 브랜드필터 / 판정
+# 출력: TSV — 키워드 / 페이지KB / 브랜드노출 / 쇼핑모듈 / 브랜드필터 / 지금광고중 / 판정
 #   그대로 열어봐도 되고, 마크다운 표로 옮겨 원장에 붙여도 된다.
+#   `지금광고중` 은 그 순간 쇼핑광고를 돌리고 있는 브랜드다 — **요일·시간대마다 달라진다.**
+#   요일별 광고 판단을 하려면 같은 시각대에 며칠치를 재서 비교해야 한다
+#   (docs/ad-daypart-2026-09.md 참고).
 #
 # ⚠️ 한계 — 결론을 어디까지 쓸 수 있는지가 여기서 정해진다:
 #   · 비로그인 PC 통합검색 1회다. 개인화·지역·모바일·시간대에 따라 달라진다.
@@ -64,7 +67,8 @@ mkdir -p "$WORK"
 # curl --data-urlencode 는 Git Bash 로케일에 따라 빈 쿼리를 보내는 일이 있었다(2026-09-05 확인).
 urlenc() { printf '%s' "$1" | od -An -tx1 | tr -d ' \n' | sed 's/\(..\)/%\1/g'; }
 
-printf '키워드\t페이지KB\t%s노출\t쇼핑모듈\t브랜드필터\t판정\n' "$BRAND"
+printf '# 측정: %s\n' "$(TZ='Asia/Seoul' date '+%Y-%m-%d(%a) %H:%M KST')"
+printf '키워드\t페이지KB\t%s노출\t쇼핑모듈\t브랜드필터\t지금광고중\t판정\n' "$BRAND"
 
 first=1
 for kw in "${KEYWORDS[@]}"; do
@@ -94,6 +98,15 @@ for kw in "${KEYWORDS[@]}"; do
            | grep -o '"name":"[^"]*"' | sed 's/"name":"//; s/"$//' \
            | grep -v '^브랜드$' | head -8 | paste -sd' ' -)
 
+  # 지금 쇼핑광고를 돌리고 있는 브랜드. 요일·시간대별로 누가 켜는지 보려고 넣었다
+  # (2026-09-05 토요일에 손으로 재보니 테차와 배송 조건이 같은 프리저브드 업체들이
+  #  주말에도 광고를 돌리고 있었다 — 그 관측을 재현 가능하게 만든 것).
+  # ⚠️ 클래스명이 해시라 네이버가 마크업을 바꾸면 조용히 빈 값이 된다.
+  #    빈 값이 곧 "광고 없음"은 아니니, 결과가 계속 비면 셀렉터부터 의심할 것.
+  advertisers=$(grep -o '>[^<>]\{2,20\}</a><div class="[^"]*"><button[^>]*><span class="blind">광고' "$f" \
+           | sed 's/^>//; s/<.*//' | sort | uniq -c | sort -rn \
+           | awk '{printf "%s(%s) ",$2,$1}')
+
   # 판정 — 위 주석의 네 갈래. ①과 ②는 업계 판단이 필요해 사람이 봐야 한다.
   if [ "$shop" -eq 0 ]; then
     verdict="④ 정보탐색 — 매거진"
@@ -108,5 +121,5 @@ for kw in "${KEYWORDS[@]}"; do
   fi
   [ "$hits" -gt 0 ] && verdict="$verdict · $BRAND 노출됨"
 
-  printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$kw" "$kb" "$hits" "$shop" "${brands:--}" "$verdict"
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$kw" "$kb" "$hits" "$shop" "${brands:--}" "${advertisers:--}" "$verdict"
 done
