@@ -67,7 +67,10 @@ mkdir -p "$WORK"
 # curl --data-urlencode 는 Git Bash 로케일에 따라 빈 쿼리를 보내는 일이 있었다(2026-09-05 확인).
 urlenc() { printf '%s' "$1" | od -An -tx1 | tr -d ' \n' | sed 's/\(..\)/%\1/g'; }
 
-printf '# 측정: %s\n' "$(TZ='Asia/Seoul' date '+%Y-%m-%d(%a) %H:%M KST')"
+# KST 는 UTC 에 9시간을 더해 구한다. `TZ='Asia/Seoul'` 을 쓰면 안 된다 —
+# Git Bash 의 tzdata 에 Asia/Seoul 이 없어서 조용히 UTC 로 떨어진다.
+# 그래서 2026-09-05 첫 관측이 22:44 인데 13:44 로 기록됐다(사람이 발견).
+printf '# 측정: %s\n' "$(date -u -d '+9 hours' '+%Y-%m-%d(%a) %H:%M KST')"
 printf '키워드\t페이지KB\t%s노출\t쇼핑모듈\t브랜드필터\t지금광고중\t판정\n' "$BRAND"
 
 first=1
