@@ -15,7 +15,7 @@
 | 질문 | 문서 |
 |---|---|
 | 매거진을 발행하려면 | `blog-seo-guide.md` — 절차·SEO·이미지 규칙. 분량 기준의 근거도 여기 |
-| 04:00 초안 루틴이 뭘 하나 | `routine-draft.md` — 루틴이 그대로 따르는 정본 |
+| "초안 써줘" 하면 뭘 하나 | `routine-draft.md` — 초안 작성이 그대로 따르는 정본 |
 | 여러 AI가 이 저장소를 어떻게 나눠 쓰나 | `AI-WORKFLOW.md` — 역할 분담, 브랜치 규칙 (루트 `AGENTS.md` 와 한 쌍) |
 | 쇼츠 자막을 어떻게 만드나 | `shorts-caption-system-2026-08.md` — `assets/` 의 스크림·세이프존 PNG와 함께 본다 |
 

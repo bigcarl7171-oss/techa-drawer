@@ -66,8 +66,8 @@
 > `node scripts/publish-draft.js <slug> --emoji … --tag … --desc …` 가 처리한다.
 > 이미지는 `node scripts/prepare-images.js <slug>` 가 3:2·1200px로 맞춰 넣는다.
 > 전체 흐름(초안 → 이미지 → 발행 → 검증 → 배포 → 네이버판 → 이력)은
-> `.claude/skills/techa-publish/SKILL.md` 가 정본이고, 매일 9·10·11시 클라우드 루틴이
-> `status: ready` 초안을 자동으로 발행한다.
+> `.claude/skills/techa-publish/SKILL.md` 가 정본이고, 사람이 "초안 발행해줘"로 부를 때
+> `status: ready` 초안을 발행한다 (정시 클라우드 루틴은 2026-09-05 폐지).
 > **아래 서술은 스크립트가 무엇을 왜 하는지에 대한 근거로 남긴다** — 규칙이 바뀌면
 > 문서와 스크립트를 함께 고쳐야 한다.
 
