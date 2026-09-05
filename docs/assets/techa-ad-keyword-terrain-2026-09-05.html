@@ -1,0 +1,661 @@
+<title>광고 키워드 지형도</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#FAF8F4; --surface:#FFFFFF; --sunken:#F1EEE7;
+    --ink:#25221F; --ink-2:#4A453E; --muted:#81766B;
+    --line:#E2DDD2; --line-soft:#EDE9E0;
+    --accent:#4F6B47; --accent-dim:#E9EFE5;
+    --flag:#9C3348; --flag-dim:#F7E8EB;
+    --warn:#9A722C; --warn-dim:#F5EEDE;
+    --other:#6B7A8C; --other-dim:#E8ECF1;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#16140F; --surface:#1F1C16; --sunken:#1A1813;
+      --ink:#F2EFE7; --ink-2:#CAC4B8; --muted:#8E8578;
+      --line:#312D25; --line-soft:#26231C;
+      --accent:#9EBC8E; --accent-dim:#212819;
+      --flag:#E4899D; --flag-dim:#2B1A1E;
+      --warn:#D5AC63; --warn-dim:#282017;
+      --other:#9FB0C4; --other-dim:#1D2229;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#16140F; --surface:#1F1C16; --sunken:#1A1813;
+    --ink:#F2EFE7; --ink-2:#CAC4B8; --muted:#8E8578;
+    --line:#312D25; --line-soft:#26231C;
+    --accent:#9EBC8E; --accent-dim:#212819;
+    --flag:#E4899D; --flag-dim:#2B1A1E;
+    --warn:#D5AC63; --warn-dim:#282017;
+    --other:#9FB0C4; --other-dim:#1D2229;
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink-2);font-family:"IBM Plex Sans KR",-apple-system,"Malgun Gothic",sans-serif;font-weight:300;font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 26px 88px}
+
+  .masthead{padding:60px 0 30px;border-bottom:1px solid var(--ink);display:flex;flex-direction:column;gap:15px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  h1{font-family:"Gowun Batang","Nanum Myeongjo",serif;font-weight:700;font-size:clamp(32px,5.2vw,47px);line-height:1.2;letter-spacing:-.01em;color:var(--ink);margin:0;text-wrap:balance}
+  .standfirst{font-size:16.5px;max-width:62ch;margin:0}
+  .runline{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+
+  section{padding-top:52px}
+  h2{font-family:"Gowun Batang",serif;font-weight:700;font-size:24px;color:var(--ink);margin:0 0 5px;letter-spacing:-.005em}
+  .section-note{font-size:13.5px;color:var(--muted);margin:0 0 24px;max-width:66ch}
+  h3{font-weight:600;font-size:16px;color:var(--ink);margin:0;line-height:1.45}
+  p{margin:0 0 11px}p:last-child{margin-bottom:0}
+  strong{font-weight:600;color:var(--ink)}
+  em{font-style:normal;color:var(--accent);font-weight:500}
+  code{font-family:"IBM Plex Mono",monospace;font-size:.87em;color:var(--ink);background:var(--sunken);padding:1px 5px;border-radius:3px}
+
+  /* method note */
+  .method{border:1px solid var(--line);background:var(--surface);padding:18px 22px;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+  .method .h{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;color:var(--muted);text-transform:uppercase}
+  .method ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:5px}
+
+  /* terrain table */
+  .scroller{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:660px;font-size:13.5px}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  thead th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--sunken);border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  td.kw{color:var(--ink);font-weight:500;white-space:nowrap}
+  td.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+  tbody tr.band-top{background:var(--accent-dim)}
+  tbody tr.band-bad{background:var(--flag-dim)}
+
+  .badge{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;white-space:nowrap;display:inline-block}
+  .badge.top{background:var(--accent);color:var(--ground)}
+  .badge.mid{background:var(--accent-dim);color:var(--accent)}
+  .badge.ad{background:var(--warn-dim);color:var(--warn)}
+  .badge.none{background:var(--flag-dim);color:var(--flag)}
+  .badge.thin{background:var(--sunken);color:var(--muted)}
+
+  /* brand terrain strips */
+  .terrains{display:flex;flex-direction:column;gap:2px}
+  .terr{background:var(--surface);border-left:3px solid var(--line);padding:16px 20px;display:grid;grid-template-columns:118px 1fr;gap:0 20px}
+  .terr.is-light{border-left-color:var(--flag)}
+  .terr.is-mixed{border-left-color:var(--warn)}
+  .terr.is-flower{border-left-color:var(--accent)}
+  .terr .kwname{font-weight:600;color:var(--ink);font-size:14.5px}
+  .terr .kwsub{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);margin-top:3px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;align-content:flex-start}
+  .chip{font-size:12px;padding:3px 9px;border-radius:2px;background:var(--sunken);color:var(--ink-2);white-space:nowrap}
+  .chip.lamp{background:var(--other-dim);color:var(--other)}
+  .chip.flower{background:var(--accent-dim);color:var(--accent)}
+  .chip.us{background:var(--accent);color:var(--ground);font-weight:500}
+  .chip.rival{background:var(--flag-dim);color:var(--flag);font-weight:500}
+
+  /* budget chart */
+  .chart{border:1px solid var(--line);background:var(--surface);padding:20px 22px;display:flex;flex-direction:column;gap:14px}
+  .chart-cap{font-size:12.5px;color:var(--muted);margin:0}
+  .cmp{display:flex;flex-direction:column;gap:14px}
+  .cmp-row{display:flex;flex-direction:column;gap:6px}
+  .cmp-name{font-size:13.5px;color:var(--ink);font-weight:500}
+  .pair{display:grid;grid-template-columns:52px 1fr 62px;gap:0 12px;align-items:center}
+  .pair .lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--muted);text-align:right}
+  .track{height:14px;background:var(--sunken);border-radius:2px;overflow:hidden}
+  .fill{height:100%;border-radius:2px}
+  .pair .val{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink)}
+
+  .callout{border-left:3px solid var(--accent);background:var(--accent-dim);padding:16px 20px;font-size:14px;color:var(--ink-2)}
+  .callout.warn{border-left-color:var(--warn);background:var(--warn-dim)}
+  .callout strong{color:var(--ink)}
+
+  .quote{font-size:13px;color:var(--ink-2);background:var(--sunken);border-radius:3px;padding:9px 13px;line-height:1.65}
+  .quote .lbl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:3px}
+
+  .cards{display:flex;flex-direction:column;gap:2px}
+  .card{background:var(--surface);border:1px solid var(--line);padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+  .card p{font-size:14px;margin:0}
+
+  footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 20px}
+  a{color:var(--accent)}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  @media (max-width:700px){
+    .wrap{padding:0 17px 68px}
+    .terr{grid-template-columns:1fr;gap:10px;padding:15px 17px}
+    .pair{grid-template-columns:44px 1fr 54px;gap:0 9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">네이버 SERP 실측 · 2026.09.05</div>
+    <h1>광고 키워드 지형도</h1>
+    <p class="standfirst">키워드 <strong>58개의 검색결과를 실제로 열어</strong>, 각 화면을 어떤 브랜드가 차지하고 있고 그중 테차가 보이는지를 쟀다. <strong>지금 광고비가 들어가는 19개</strong>와, 자동완성에서 수확해 검증한 <strong>후보 39개</strong>다. 90일 실적표가 <em>무엇이 나쁜지</em>를 말해준다면, 이 지형도는 <em>왜 그런지</em>와 <em>다음에 어디로 갈지</em>를 말한다.</p>
+    <div class="runline">
+      <span>집행 중 19개 + 후보 39개</span>
+      <span>PC 통합검색 · 비로그인</span>
+      <span>테차 브랜드 ID 3645192</span>
+      <span>실적 수치는 90일 데이터 인용</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>어떻게 쟀고, 어디까지 믿을 수 있나</h2>
+    <p class="section-note">먼저 한계를 적는다. 이 문서의 결론을 어디까지 쓸 수 있는지가 여기서 정해진다.</p>
+    <div class="method">
+      <div class="h">측정 방법</div>
+      <ul>
+        <li>각 키워드로 네이버 PC 통합검색을 <strong>비로그인 상태에서 1회</strong> 요청해 원본 HTML을 받았다.</li>
+        <li>쇼핑 영역의 <strong>브랜드 필터 목록</strong>과 그 순서, 그리고 테차의 등장 여부를 읽었다.</li>
+        <li>CPC·CTR·ROAS·광고비 수치는 <strong>측정한 게 아니라</strong> <code>naver-ranking-analysis</code>·<code>MASTER-REPORT</code>·<code>focus-keyword-review</code>의 90일 데이터를 인용했다.</li>
+      </ul>
+      <div class="h" style="margin-top:6px">믿을 수 있는 범위</div>
+      <ul>
+        <li><strong>"화면에 있나 없나"까지만 확실하다.</strong> 브랜드 필터의 정렬 기준을 네이버가 공개하지 않아, 순위 숫자를 절대적으로 읽으면 안 된다.</li>
+        <li>1회 조회라 <strong>개인화·지역·모바일·시간대</strong>에 따라 달라질 수 있다. 특히 광고는 시간대마다 바뀐다.</li>
+        <li>브랜드 필터 노출과 <strong>상품 개별 순위는 다른 것</strong>이다. 이 문서는 전자만 본다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>19개 키워드가 세 무리로 갈린다</h2>
+    <p class="section-note">테차가 화면에 있느냐로 나누면, 광고비가 어디로 새는지가 한 장에 들어온다.</p>
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>키워드</th><th>테차</th><th>그 화면의 브랜드 지형</th><th>90일 실적 (문서 인용)</th></tr>
+        </thead>
+        <tbody>
+          <tr class="band-top"><td class="kw">프리저브드플라워</td><td><span class="badge top">필터 1위</span></td><td>꽃 브랜드</td><td class="num">CPC 966 · CTR 2.84% · ROAS 1,068%</td></tr>
+          <tr class="band-top"><td class="kw">드라이플라워</td><td><span class="badge mid">필터 4위</span></td><td>꽃 브랜드</td><td class="num">CPC 940 · CTR 1.55% · ROAS 1,081%</td></tr>
+          <tr class="band-top"><td class="kw">졸업식꽃다발</td><td><span class="badge mid">필터 4위</span></td><td>꽃 브랜드</td><td class="num">전용 광고그룹 없음</td></tr>
+          <tr class="band-top"><td class="kw">여자친구꽃선물</td><td><span class="badge ad">선물샵 + 광고</span></td><td>선물 브랜드</td><td class="num">CPC 1,732 · CTR 0.97% · ROAS 512%</td></tr>
+          <tr class="band-top"><td class="kw">돈꽃다발</td><td><span class="badge ad">광고 노출</span></td><td>꽃 브랜드</td><td class="num">CPC 379 · CTR 5.92% · ROAS 2,197%</td></tr>
+
+          <tr class="band-bad"><td class="kw">무드등</td><td><span class="badge none">없음</span></td><td>렉슨 · 루메나 · 이케아 (조명)</td><td class="num">CPC 1,348 · CTR 0.17% · 순위 7.01</td></tr>
+          <tr class="band-bad"><td class="kw">꽃무드등</td><td><span class="badge none">없음</span></td><td>리비트 · 로랑 · 램플로우</td><td class="num">CPC 2,001 · CTR 0.48% · ROAS 302%</td></tr>
+          <tr class="band-bad"><td class="kw">LED무드등</td><td><span class="badge none">없음</span></td><td>어스피스 · 레토 · 렉슨 (조명)</td><td class="num">미집행 · 제품 실체 불일치</td></tr>
+          <tr class="band-bad"><td class="kw">비누꽃다발</td><td><span class="badge none">없음</span></td><td>로사리움 · 포포팬시 · 더봄</td><td class="num">CPC 1,168 · CTR 1.82% · ROAS 1,015%</td></tr>
+          <tr class="band-bad"><td class="kw">용돈꽃다발</td><td><span class="badge none">없음</span></td><td>다람쥐화원 · 센트바스켓</td><td class="num">—</td></tr>
+          <tr class="band-bad"><td class="kw">비누꽃장미</td><td><span class="badge none">없음</span></td><td>브랜드 모듈 없음</td><td class="num">순위 14.47 · 전환 0</td></tr>
+          <tr class="band-bad"><td class="kw">환갑돈꽃다발</td><td><span class="badge none">없음</span></td><td>브랜드 모듈 없음</td><td class="num">순위 35.73 · 노출 168</td></tr>
+
+          <tr><td class="kw">장미돈꽃다발</td><td><span class="badge ad">광고 노출</span></td><td><span class="badge thin">브랜드 모듈 없음</span></td><td class="num">CPC 333 · ROAS 7,617%</td></tr>
+          <tr><td class="kw">칠순돈꽃다발</td><td><span class="badge ad">광고 노출</span></td><td><span class="badge thin">브랜드 모듈 없음</span></td><td class="num">ROAS 6,343%</td></tr>
+          <tr><td class="kw">수국드라이플라워</td><td><span class="badge ad">광고 노출</span></td><td><span class="badge thin">브랜드 모듈 없음</span></td><td class="num">CPC 479 · ROAS 2,313%</td></tr>
+          <tr><td class="kw">생신돈꽃다발</td><td><span class="badge ad">광고 노출</span></td><td><span class="badge thin">브랜드 모듈 없음</span></td><td class="num">CPC 294 · 순위 8.76</td></tr>
+          <tr><td class="kw">비누돈꽃다발</td><td><span class="badge ad">광고 노출</span></td><td>로사리움 · 라봄플라워 (2개뿐)</td><td class="num">노출 4,045 · <strong>전환 0</strong></td></tr>
+
+          <tr><td class="kw">돈케이크</td><td><span class="badge none">없음</span></td><td>파티용품 · 케이크토퍼</td><td class="num">미집행 · 신설 검토 중</td></tr>
+          <tr><td class="kw">용돈케이크</td><td><span class="badge none">없음</span></td><td>케이크 · 떡집 · 토퍼</td><td class="num">미집행 · 신설 검토 중</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>예산 67%가 가는 곳에 테차가 없다</h2>
+    <p class="section-note">무드등 3캠페인은 90일 광고비의 <strong>67.4%</strong>를 쓰고 매출의 42.8%를 만든다. 나머지 32.1%가 매출의 57.1%를 만든다. 이 불균형이 왜 생기는지가 브랜드 필터에 그대로 보인다.</p>
+
+    <div class="chart">
+      <p class="chart-cap">90일 광고비와 매출 — 캠페인 묶음별 (문서 인용)</p>
+      <div class="cmp">
+        <div class="cmp-row">
+          <div class="cmp-name">무드등 3캠페인</div>
+          <div class="pair"><span class="lbl">광고비</span><div class="track"><div class="fill" style="width:67.4%;background:var(--flag)"></div></div><span class="val">67.4%</span></div>
+          <div class="pair"><span class="lbl">매출</span><div class="track"><div class="fill" style="width:42.8%;background:var(--muted)"></div></div><span class="val">42.8%</span></div>
+        </div>
+        <div class="cmp-row">
+          <div class="cmp-name">돈꽃다발 · 비누꽃 · 드라이플라워</div>
+          <div class="pair"><span class="lbl">광고비</span><div class="track"><div class="fill" style="width:32.1%;background:var(--accent)"></div></div><span class="val">32.1%</span></div>
+          <div class="pair"><span class="lbl">매출</span><div class="track"><div class="fill" style="width:57.1%;background:var(--accent)"></div></div><span class="val">57.1%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-note" style="margin-top:30px;max-width:66ch">무드등 계열 세 키워드의 브랜드 필터를 나란히 놓으면, <strong>이게 꽃 시장이 아니라 조명 시장</strong>이라는 게 드러난다.</p>
+
+    <div class="terrains">
+      <div class="terr is-light">
+        <div><div class="kwname">무드등</div><div class="kwsub">CTR 0.17% · 전체 최저</div></div>
+        <div class="chips">
+          <span class="chip lamp">렉슨</span><span class="chip lamp">루메나</span><span class="chip lamp">덱스탑</span><span class="chip lamp">JJBB</span><span class="chip lamp">이케아</span><span class="chip lamp">레나에너지</span><span class="chip lamp">루미앤</span><span class="chip lamp">모던포인트</span><span class="chip lamp">몬스터라이트</span><span class="chip lamp">어스피스</span>
+        </div>
+      </div>
+      <div class="terr is-light">
+        <div><div class="kwname">LED무드등</div><div class="kwsub">미집행 · 그룹만 존재</div></div>
+        <div class="chips">
+          <span class="chip lamp">어스피스</span><span class="chip lamp">레토</span><span class="chip lamp">레나에너지</span><span class="chip lamp">렉슨</span><span class="chip lamp">까사미코</span><span class="chip lamp">모던포인트</span><span class="chip lamp">오아</span><span class="chip lamp">덱스탑</span>
+        </div>
+      </div>
+      <div class="terr is-mixed">
+        <div><div class="kwname">꽃무드등</div><div class="kwsub">CPC 2,001원 · CTR 0.48%</div></div>
+        <div class="chips">
+          <span class="chip rival">리비트</span><span class="chip flower">로랑</span><span class="chip">램플로우</span><span class="chip">비아케이스튜디오</span><span class="chip">인크리코</span><span class="chip">빛내는사람들</span><span class="chip flower">더라임코리아</span><span class="chip">MOMENT</span><span class="chip">아르띠콜로</span><span class="chip lamp">이케아</span>
+        </div>
+      </div>
+      <div class="terr is-flower">
+        <div><div class="kwname">프리저브드플라워</div><div class="kwsub">비교용 — 자리 잡은 화면</div></div>
+        <div class="chips">
+          <span class="chip us">테차</span><span class="chip flower">더봄</span><span class="chip flower">비바플라워</span><span class="chip flower">라이블리블룸</span><span class="chip flower">로랑</span><span class="chip flower">뷰티풀데코센스</span><span class="chip flower">데일리로맨틱</span><span class="chip flower">드라이데코</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:22px">
+      <p><strong><code>무드등</code>과 <code>LED무드등</code>은 조명 브랜드가 열 자리를 전부 채운다.</strong> 꽃 브랜드가 하나도 없다. 이 검색어를 치는 사람이 기대하는 건 이케아 조명이지 프리저브드 플라워가 아니다 — CTR 0.17%는 소재가 나빠서가 아니라 <em>애초에 다른 시장의 화면</em>이기 때문일 가능성이 크다.</p>
+      <p style="margin-top:10px">기존 문서는 이를 "적합도 열위형"으로 분류하고 <strong>"키워드 축을 좁힌다"</strong>는 처방을 이미 내렸다. 이 지형도는 그 처방이 맞다는 걸 화면으로 확인해준다. 다만 <strong>좁힌 자리에도 테차가 아직 없다</strong>는 게 새로 나온 사실이다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>리비트 — 두 화면에서 겹치는 이름</h2>
+    <p class="section-note">이 지형도에서 유일하게 두 번 나온 경쟁자다. 그리고 하필 테차의 육성 라인 자리다.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>꽃무드등 브랜드 필터 1위</h3>
+        <p>테차가 육성 중인 최고 단가 라인의 키워드에서, <strong>리비트가 첫 자리를 차지하고 있다.</strong> 이케아를 포함한 조명 브랜드들 사이에서 꽃·감성 선물 쪽으로 그 자리를 만든 유일한 이름이다.</p>
+      </div>
+      <div class="card">
+        <h3>여자친구 꽃선물 파워링크</h3>
+        <div class="quote">
+          <span class="lbl">리비트 광고 문안 · rebeat.co.kr</span>
+          리비트, 감성을 선물하세요 · 누적 판매량 7만건<br>
+          <strong>"아직도 흔한 꽃선물 하시나요? 세상에 없던 선물을 제안합니다"</strong>
+        </div>
+        <p>생화 당일배송으로 싸우는 다른 광고주 8곳과 달리, <strong>생화 시장 자체를 부정하며 포지셔닝한다.</strong> 테차의 <em>"테차에는 생화가 없습니다"</em> 와 논리 구조가 같다.</p>
+      </div>
+      <div class="card">
+        <h3>그래서 뭘 뜻하나</h3>
+        <p>이 전략이 유효하다는 <strong>검증</strong>이면서, 그 자리가 비어 있지 않다는 <strong>경고</strong>다. 다만 리비트는 "꽃이 아닌 대체 선물" 쪽이고 테차는 "시들지 않는 꽃"이라, 메시지는 갈라질 여지가 있다.</p>
+        <p style="margin-top:9px">참고로 리비트는 <em>누적 판매량 7만건</em>을 전면에 쓴다. 테차 브랜드 규칙은 누적 판매량·리뷰 건수를 금지하고 평점만 허용한다 — <strong>이 무기는 안 쓰기로 이미 정한 것</strong>이므로, 같은 방식으로 맞붙지 않는다는 전제에서 대응을 짜야 한다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>롱테일이 브랜드 모듈조차 못 띄운다 — 그런데 ROAS는 최고다</h2>
+    <p class="section-note">돈꽃다발 조합형 6개는 화면 구조부터 다르다. 이게 나쁜 신호가 아니라는 게 요점이다.</p>
+
+    <div class="callout">
+      <p><code>장미돈꽃다발</code> <code>칠순돈꽃다발</code> <code>생신돈꽃다발</code> <code>수국드라이플라워</code> <code>환갑돈꽃다발</code> <code>비누꽃장미</code> — 여섯 개 전부 <strong>쇼핑 브랜드 필터 모듈이 아예 뜨지 않는다.</strong> 검색 수요가 그 모듈을 띄울 만큼 안 된다는 뜻이고, <code>naver-ads-keyword-data</code> 가 실측으로 내린 "조합형 키워드는 검색량 사실상 0" 결론과 정확히 맞아떨어진다.</p>
+      <p style="margin-top:10px"><strong>그런데 이 자리들의 ROAS가 7,617% · 6,343% · 2,313% 로 전체 최상위다.</strong> 모순이 아니다 — 경쟁자가 없으니 CPC가 333원 · 324원 · 479원으로 싸고, 그 문구를 그대로 검색하는 소수는 <em>사려는 것이 이미 정해진 사람</em>이라 전환된다. 볼륨이 작아 매출 총액은 못 키우지만, <strong>가장 싸게 사는 자리</strong>다.</p>
+    </div>
+
+    <p style="margin-top:20px">그래서 기존 문서의 <strong>"저입찰 4그룹 입찰가 상향"</strong> 권고는 이 지형도로도 지지된다. 다만 두 건은 화면에서 다르게 보였다.</p>
+
+    <div class="terrains" style="margin-top:16px">
+      <div class="terr is-light">
+        <div><div class="kwname">환갑돈꽃다발</div><div class="kwsub">순위 35.73 · 노출 168</div></div>
+        <div class="chips" style="align-items:center">
+          <span class="chip">광고를 걸어놨는데 <strong>테차가 화면에 한 번도 안 나온다.</strong> 입찰가를 올리기 전에 노출 자체가 되는지부터 확인할 자리다.</span>
+        </div>
+      </div>
+      <div class="terr is-light">
+        <div><div class="kwname">비누돈꽃다발</div><div class="kwsub">노출 4,045 · 전환 0</div></div>
+        <div class="chips" style="align-items:center">
+          <span class="chip">브랜드 필터에 <strong>로사리움과 라봄플라워 둘뿐</strong>이다. <code>비누꽃</code> 과 <code>돈꽃다발</code> 두 카테고리에 걸친 키워드라 화면이 얇고, 노출 4,045에 전환 0인 것과 부합한다.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>돈케이크 vs 용돈케이크 — 미결 항목에 대한 답</h2>
+    <p class="section-note"><code>focus-keyword-review</code> 가 <strong>"이번 주 할 일 #2"</strong> 로 올려둔 채 미결로 남긴 질문이다. 두 화면을 나란히 열어봤다.</p>
+
+    <div class="terrains">
+      <div class="terr is-mixed">
+        <div><div class="kwname">돈케이크</div><div class="kwsub">771KB · 브랜드 7개</div></div>
+        <div class="chips">
+          <span class="chip">라비나</span><span class="chip">여신케이크토퍼</span><span class="chip">르파티에</span><span class="chip">센트바스켓</span><span class="chip">애니데이파티</span><span class="chip">파티붕붕</span><span class="chip">파티테마</span>
+        </div>
+      </div>
+      <div class="terr is-mixed">
+        <div><div class="kwname">용돈케이크</div><div class="kwsub">904KB · 브랜드 7개</div></div>
+        <div class="chips">
+          <span class="chip">라비나</span><span class="chip">여신케이크토퍼</span><span class="chip">센트바스켓</span><span class="chip">르파티에</span><span class="chip">애정담아</span><span class="chip">파티붕붕</span><span class="chip">파티테마</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px">
+      <p><strong>브랜드 집합이 사실상 같다</strong> — 7개 중 6개가 겹친다. 네이버가 두 검색어를 거의 같은 의도로 처리한다는 뜻이고, <em>"어느 쪽이 실검색어냐"는 질문 자체가 생각보다 덜 중요할 수 있다</em>는 신호다.</p>
+      <p style="margin-top:10px">다만 상위 노출 상품에서는 갈렸다. <code>돈케이크</code> 쪽에는 <strong>「[아이올라]플라워 트로피 반전 용돈박스」처럼 꽃+현금 상품이 실제로 걸린다.</strong> <code>용돈케이크</code> 쪽은 케이크토퍼·떡집(우리떡방)·할인쿠폰이 앞에 나와 <strong>진짜 먹는 케이크 쪽으로 기운다.</strong></p>
+      <p style="margin-top:10px">→ 테차 상품(꽃+현금)의 의도에 더 가까운 건 <strong><code>돈케이크</code></strong> 로 보인다. 다만 페이지 크기는 <code>용돈케이크</code> 가 더 컸다 — 수요는 더 클 수 있다는 뜻이라, <strong>수요가 큰 쪽과 의도가 맞는 쪽이 어긋나는 전형적인 구도</strong>다. 확정하려면 문서가 이미 권고한 대로 <strong>키워드도구 실측 조회</strong>가 필요하다. 이 지형도만으로는 결론을 못 낸다.</p>
+    </div>
+
+    <div class="callout warn" style="margin-top:16px">
+      <p><strong>신설 전에 알고 들어갈 것 하나.</strong> 두 화면 모두 <strong>파티용품·케이크토퍼 브랜드가 채우고 있고 꽃 브랜드는 없다.</strong> 이건 <code>무드등</code> 에서 이미 한 번 겪은 구도다 — 다른 시장의 화면에 광고를 걸면 CTR이 죽는다. 소액으로 시작해 CTR을 먼저 보라는 기존 방침이 특히 맞는 자리다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>아직 안 켠 자리 15개</h2>
+    <p class="section-note">후보는 지어내지 않았다. <strong>테차가 이미 자리 잡은 화면의 네이버 자동완성</strong>에서 실제로 사람들이 치는 문구를 수확한 뒤, 테차 상품·기획전과 맞고 <em>소재 이름 또는 상황</em> 축에 있는 것만 골라 같은 방법으로 열어봤다. 결과가 셋으로 갈렸다.</p>
+
+    <div class="callout" style="margin-bottom:30px">
+      <p><strong>가장 큰 발견부터.</strong> <code>시들지 않는 꽃</code> 의 쇼핑 브랜드 필터에서 <strong>테차가 2위다. 그것도 광고 없이.</strong></p>
+      <p style="margin-top:10px">돈꽃다발·프리저브드플라워 화면에서 테차 링크에는 <code>광고</code> 표식이 붙어 있는데, 이 화면의 테차 링크에는 <strong>표식이 없다</strong> — 광고비 0원으로 서 있다는 뜻이다. 그리고 이 문구는 <em>브랜드 규칙이 소재를 부를 때 쓰라고 정해둔 말</em>("시들지 않는 소재/꽃")이자 Brand Story 원고의 논지 그 자체다. <strong>전용 광고그룹은 없다.</strong></p>
+    </div>
+
+    <h3 style="margin-bottom:14px">A. 지금 켤 자리 — 이미 서 있는데 광고가 없다</h3>
+    <div class="terrains">
+      <div class="terr is-flower">
+        <div><div class="kwname">시들지 않는 꽃</div><div class="kwsub">테차 4회 · 자연 2위</div></div>
+        <div class="chips">
+          <span class="chip flower">비바플라워</span><span class="chip us">테차</span><span class="chip flower">로랑</span><span class="chip flower">라이블리블룸</span><span class="chip">인크리코</span><span class="chip flower">더봄</span><span class="chip flower">팔팔플라워</span><span class="chip flower">로사리움</span>
+        </div>
+      </div>
+      <div class="terr is-flower">
+        <div><div class="kwname">시들지 않는 꽃 선물</div><div class="kwsub">테차 5회 — 34개 중 최다</div></div>
+        <div class="chips" style="align-items:center">
+          <span class="chip">브랜드 모듈이 안 뜰 만큼 <strong>경쟁이 얕은데</strong> 테차 노출은 가장 많다. 구매 의도가 명확한 롱테일 — <code>장미돈꽃다발</code> 이 ROAS 7,617%를 낸 것과 같은 구조의 자리다.</span>
+        </div>
+      </div>
+      <div class="terr is-flower">
+        <div><div class="kwname">프리저브드 꽃다발</div><div class="kwsub">테차 4회 · 필터 밖</div></div>
+        <div class="chips">
+          <span class="chip flower">비바플라워</span><span class="chip flower">라이블리블룸</span><span class="chip flower">더봄</span><span class="chip flower">뷰티풀데코센스</span><span class="chip flower">로랑</span><span class="chip flower">데일리로맨틱</span><span class="chip flower">로사리움</span>
+        </div>
+      </div>
+      <div class="terr is-flower">
+        <div><div class="kwname">프리저브드 장미</div><div class="kwsub">테차 2회 · 필터 밖</div></div>
+        <div class="chips">
+          <span class="chip flower">로랑</span><span class="chip flower">라이블리블룸</span><span class="chip flower">로사리움</span><span class="chip">보존화</span>
+        </div>
+      </div>
+      <div class="terr is-mixed">
+        <div><div class="kwname">비누꽃바구니</div><div class="kwsub">테차 0회</div></div>
+        <div class="chips">
+          <span class="chip">라비나</span><span class="chip flower">로사리움</span><span class="chip">모리앤</span><span class="chip flower">더라임코리아</span><span class="chip flower">라봄플라워</span>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-size:14px"><code>프리저브드플라워</code> 는 필터 1위인데 <code>프리저브드 꽃다발</code> 은 필터 밖이다 — <strong>붙어 있어 보이지만 다른 화면이고, 브랜드 구성도 다르다.</strong> 자리 하나를 잡았다고 옆자리가 따라오지 않는다는 뜻이라, 이 둘은 따로 다뤄야 한다.</p>
+
+    <h3 style="margin-top:40px;margin-bottom:6px">B. 켜기 전에 멈출 자리 — 무드등 함정이 그대로 재현된다</h3>
+    <p class="section-note" style="margin-bottom:16px">다섯 개 전부 <strong>테차 0회</strong>이고, 화면을 채운 브랜드가 꽃 업계가 아니다. <code>무드등</code> 에서 이미 한 번 겪은 구조다.</p>
+    <div class="terrains">
+      <div class="terr is-light">
+        <div><div class="kwname">용돈박스</div><div class="kwsub">파티용품 시장</div></div>
+        <div class="chips">
+          <span class="chip lamp">르파티에</span><span class="chip lamp">르씨엘</span><span class="chip lamp">애정담아</span><span class="chip lamp">즐러비</span><span class="chip lamp">여신케이크토퍼</span><span class="chip lamp">갓샵</span><span class="chip lamp">체크스토리</span><span class="chip lamp">라비나</span>
+        </div>
+      </div>
+      <div class="terr is-light">
+        <div><div class="kwname">반전용돈박스</div><div class="kwsub">파티용품 시장</div></div>
+        <div class="chips">
+          <span class="chip lamp">르파티에</span><span class="chip lamp">르씨엘</span><span class="chip lamp">애정담아</span><span class="chip lamp">갓샵</span><span class="chip lamp">올댓파티</span><span class="chip lamp">이플린</span><span class="chip lamp">라비나</span><span class="chip lamp">파티테마</span>
+        </div>
+      </div>
+      <div class="terr is-light">
+        <div><div class="kwname">칠순 용돈박스</div><div class="kwsub">파티용품 시장</div></div>
+        <div class="chips">
+          <span class="chip lamp">르파티에</span><span class="chip lamp">여신케이크토퍼</span><span class="chip lamp">르씨엘</span><span class="chip lamp">애정담아</span><span class="chip lamp">갓샵</span><span class="chip lamp">쏭벌룬</span><span class="chip lamp">라비나</span><span class="chip lamp">애니데이파티</span>
+        </div>
+      </div>
+      <div class="terr is-light">
+        <div><div class="kwname">해바라기 액자</div><div class="kwsub">액자 · 그림 시장</div></div>
+        <div class="chips">
+          <span class="chip lamp">인메이블</span><span class="chip lamp">한결같이</span><span class="chip lamp">아란아트</span><span class="chip lamp">피포페인팅</span><span class="chip lamp">골드디자인</span><span class="chip lamp">프레임아트</span><span class="chip lamp">더아트컴퍼니</span><span class="chip lamp">심프레임</span>
+        </div>
+      </div>
+      <div class="terr is-light">
+        <div><div class="kwname">수국 꽃다발</div><div class="kwsub">생화 배송 시장</div></div>
+        <div class="chips">
+          <span class="chip lamp">어반플라워</span><span class="chip lamp">플라워앤트리</span><span class="chip lamp">원모먼트</span><span class="chip lamp">플로라운지</span><span class="chip flower">로랑</span><span class="chip flower">아스파시아</span><span class="chip lamp">생화</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:20px">
+      <p><strong><code>용돈박스</code> 계열 셋이 특히 중요하다.</strong> <code>focus-keyword-review</code> 가 <em>"용돈박스·용돈케이크 광고그룹 신설"</em> 을 이번 주 할 일 #3으로 올려뒀는데, 세 화면 모두 <strong>르파티에·르씨엘·애정담아·갓샵 같은 파티용품 브랜드가 차지하고 꽃 브랜드가 하나도 없다.</strong> 앞서 본 <code>돈케이크</code>·<code>용돈케이크</code> 와 같은 지형이다.</p>
+      <p style="margin-top:10px">신설을 접자는 게 아니다 — 테차에 실제로 용돈박스 상품이 있고 육성 라인이다. 다만 <strong>이 자리들은 CTR이 먼저 죽을 수 있는 구조</strong>이므로, 무드등에서 배운 대로 <em>소액으로 켜고 CTR을 먼저 본 뒤</em> 증액을 판단해야 한다.</p>
+      <p style="margin-top:10px"><code>해바라기 액자</code> 는 더 분명하다. 테차 상품명이 "돈들어오는 집들이 개업선물 해바라기 인테리어 액자"인데, 이 검색어의 화면은 <strong>피포페인팅·프레임아트 같은 액자·그림 업계</strong>다. 광고를 걸 자리가 아니다.</p>
+    </div>
+
+    <h3 style="margin-top:40px;margin-bottom:6px">C. 광고가 아니라 매거진으로 갈 자리</h3>
+    <p class="section-note" style="margin-bottom:16px">네 개 모두 <strong>쇼핑 모듈이 아예 뜨지 않는다.</strong> 화면이 블로그·카페·지식iN·인기글로만 채워진다 — 사는 화면이 아니라 <em>알아보는 화면</em>이다.</p>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>키워드</th><th>쇼핑</th><th>블로그</th><th>카페</th><th>지식iN</th><th>인기글</th><th>테차 관련</th></tr></thead>
+        <tbody>
+          <tr><td class="kw">집들이선물</td><td class="num"><strong>0</strong></td><td class="num">5</td><td class="num">3</td><td class="num">1</td><td class="num">2</td><td>기획전 97 개업·집들이</td></tr>
+          <tr><td class="kw">개업선물추천</td><td class="num"><strong>0</strong></td><td class="num">3</td><td class="num">7</td><td class="num">1</td><td class="num">2</td><td>기획전 97 · 해바라기 액자</td></tr>
+          <tr><td class="kw">환갑 선물</td><td class="num"><strong>0</strong></td><td class="num">3</td><td class="num">3</td><td class="num">1</td><td class="num">2</td><td>용돈꽃다발 · 돈꽃다발</td></tr>
+          <tr><td class="kw">승진 축하 선물</td><td class="num"><strong>0</strong></td><td class="num">4</td><td class="num">5</td><td class="num">2</td><td class="num">2</td><td>없음 — 신규 상황</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:20px">
+      <p><strong>여기서 광고와 콘텐츠가 갈린다.</strong> 쇼핑 모듈이 없는 화면에 쇼핑광고를 걸면 붙을 자리가 얕다. 대신 이 넷은 <strong>테차가 이미 굴리고 있는 매거진이 정확히 겨냥할 수 있는 자리</strong>다 — 블로그·카페가 화면을 채우고 있다는 건 정보성 글이 상위에 오를 여지가 있다는 뜻이다.</p>
+      <p style="margin-top:10px">그리고 <code>환갑 선물</code> 이 특히 아프다. 테차는 <strong><code>환갑돈꽃다발</code> 이라는 조합형에 광고를 걸어놓고 화면에는 한 번도 못 나오는데</strong>(순위 35.73 · 노출 168), 정작 사람들이 치는 말은 <code>환갑 선물</code>·<code>엄마 환갑 선물</code>·<code>부모님 환갑 선물</code> 쪽이다. <strong>조합형을 만들어 붙이는 대신 상황어로 옮겨야 한다</strong>는 게 지형도 전체의 결론과 같다.</p>
+    </div>
+
+    <h3 style="margin-top:40px;margin-bottom:14px">정리 — 15개를 어떻게 처리하나</h3>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>처리</th><th>키워드</th><th>근거</th></tr></thead>
+        <tbody>
+          <tr class="band-top">
+            <td class="kw">지금 켠다</td>
+            <td><code>시들지 않는 꽃</code> · <code>시들지 않는 꽃 선물</code></td>
+            <td>이미 자연 2위 / 노출 최다인데 광고그룹이 없다. 브랜드 문구와 일치해 소재도 이미 있다</td>
+          </tr>
+          <tr class="band-top">
+            <td class="kw">소액 시험</td>
+            <td><code>프리저브드 꽃다발</code> · <code>프리저브드 장미</code> · <code>비누꽃바구니</code></td>
+            <td>꽃 브랜드 지형이라 적합도는 맞다. 다만 필터 상위가 아니라 CPC 확인이 먼저</td>
+          </tr>
+          <tr class="band-bad">
+            <td class="kw">멈춘다</td>
+            <td><code>해바라기 액자</code> · <code>수국 꽃다발</code></td>
+            <td>액자 업계 · 생화 업계 화면. 무드등과 같은 적합도 열위 구조</td>
+          </tr>
+          <tr>
+            <td class="kw">소액 + CTR 관찰</td>
+            <td><code>용돈박스</code> · <code>반전용돈박스</code> · <code>칠순 용돈박스</code></td>
+            <td>육성 라인이라 포기하지 않되, 파티용품 지형임을 알고 들어간다</td>
+          </tr>
+          <tr>
+            <td class="kw">매거진으로</td>
+            <td><code>집들이선물</code> · <code>개업선물추천</code> · <code>환갑 선물</code> · <code>승진 축하 선물</code></td>
+            <td>쇼핑 모듈 0. 블로그·카페가 화면을 채운다 — 콘텐츠가 들어갈 자리다</td>
+          </tr>
+          <tr>
+            <td class="kw">보류</td>
+            <td><code>결혼기념일 꽃</code></td>
+            <td>꽃집청년들·신호트리 등 생화 배송 지형</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>돈·현금 선물 축을 끝까지 파본 결과</h2>
+    <p class="section-note"><code>돈꽃다발</code> 은 테차가 CTR 5.92% · ROAS 2,197%로 <strong>가장 잘하는 자리</strong>다. 그 주변 24개를 자동완성으로 훑어 전부 열어봤다. 바로 옆에 빈 자리가 있었고, 반대로 남의 시장도 있었다.</p>
+
+    <div class="callout" style="margin-bottom:28px">
+      <p><strong>가장 아까운 자리부터.</strong> <code>돈다발 꽃</code> 과 <code>꽃 돈다발</code> 의 쇼핑 브랜드 필터에는 <strong>브랜드가 딱 둘뿐이다</strong> — 다람쥐화원, 뷰티풀데코센스. 둘 다 꽃 업계다.</p>
+      <p style="margin-top:10px">테차는 <strong>0회</strong>다. <code>돈꽃다발</code> 로는 ROAS 2,197%를 내면서, <em>단어 순서만 바꾼 사실상 같은 말</em>에는 없다. 게다가 이쪽 광고주는 대구·안양의 <strong>생화 로컬 꽃집</strong>(당일배송·자판기 운영)이라, 전국 배송되는 시들지 않는 상품과는 성격이 다르다.</p>
+    </div>
+
+    <div class="terrains">
+      <div class="terr is-flower">
+        <div><div class="kwname">돈다발 꽃</div><div class="kwsub">브랜드 2곳 · 테차 0회</div></div>
+        <div class="chips">
+          <span class="chip flower">다람쥐화원</span><span class="chip flower">뷰티풀데코센스</span>
+          <span class="chip">광고주: 대구 생화 꽃집 · 쿠팡</span>
+        </div>
+      </div>
+      <div class="terr is-flower">
+        <div><div class="kwname">꽃 돈다발</div><div class="kwsub">브랜드 2곳 · 테차 0회</div></div>
+        <div class="chips">
+          <span class="chip flower">다람쥐화원</span><span class="chip flower">뷰티풀데코센스</span>
+          <span class="chip">광고주: 안양 로컬 꽃집(지도) · CJ온스타일</span>
+        </div>
+      </div>
+      <div class="terr is-mixed">
+        <div><div class="kwname">비누꽃 용돈박스</div><div class="kwsub">혼합 지형 · 테차 0회</div></div>
+        <div class="chips">
+          <span class="chip flower">아스파시아</span><span class="chip flower">뷰티풀데코센스</span><span class="chip flower">라비나</span><span class="chip flower">라봄플라워</span><span class="chip lamp">갓샵</span><span class="chip lamp">파티테마</span>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-size:14px"><code>비누꽃 용돈박스</code> 는 <strong>테차 상품 조합 그 자체</strong>인데(비누꽃 + 용돈박스) 부재다. 꽃 브랜드 넷과 파티용품 둘이 섞인 <em>경계 지형</em>이라, 순수 파티용품 화면인 <code>용돈박스</code> 보다 승산이 낫다.</p>
+
+    <h3 style="margin-top:40px;margin-bottom:6px">돈케이크는 하나가 아니라 남의 시장 둘이다</h3>
+    <p class="section-note" style="margin-bottom:16px">앞서 <code>돈케이크</code>·<code>용돈케이크</code> 를 파티용품 지형으로 봤는데, 더 파보니 <strong>두 갈래로 갈린다.</strong> 어느 쪽도 꽃 시장이 아니다.</p>
+    <div class="terrains">
+      <div class="terr is-light">
+        <div><div class="kwname">칠순 · 환갑 돈케이크</div><div class="kwsub">파티용품 지형</div></div>
+        <div class="chips">
+          <span class="chip lamp">여신케이크토퍼</span><span class="chip lamp">르파티에</span><span class="chip lamp">애니데이파티</span><span class="chip lamp">파티테마</span><span class="chip lamp">센트바스켓</span>
+        </div>
+      </div>
+      <div class="terr is-light">
+        <div><div class="kwname">돈케이크 주문제작</div><div class="kwsub">제과 지형</div></div>
+        <div class="chips" style="align-items:center">
+          <span class="chip">광고주가 <strong>슈가케이크 전문 「슈가원」</strong> 이다 — 건물재현케익 · 인물캐릭터 · 스페셜케이크. <strong>현금이 아니라 진짜 케이크를 주문 제작하는 시장</strong>이다.</span>
+        </div>
+      </div>
+      <div class="terr is-light">
+        <div><div class="kwname">현금케이크 주문제작 · 돈케이크 주문</div><div class="kwsub">브랜드 모듈 없음</div></div>
+        <div class="chips" style="align-items:center">
+          <span class="chip">구매 의도는 최상급이지만 화면이 얕고, 위와 같은 제과 축에 붙는다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn" style="margin-top:20px">
+      <p><strong><code>focus-keyword-review</code> 의 "용돈케이크 그룹 신설" 권고에 대한 답이 이제 분명해졌다.</strong> 이 이름을 검색하는 사람은 <em>파티용품</em>(토퍼·풍선) 아니면 <em>제과</em>(주문제작 케이크)를 찾는다. 테차의 용돈 케이크는 <strong>꽃 + 현금</strong>이라 두 시장 사이에 낀다.</p>
+      <p style="margin-top:10px">→ 그래서 같은 예산이면 <strong><code>돈다발 꽃</code> · <code>꽃 돈다발</code> 쪽이 먼저다.</strong> 이미 이기고 있는 <code>돈꽃다발</code> 과 같은 축이고, 브랜드가 둘뿐이라 CPC도 쌀 가능성이 높다. 돈케이크 축은 <strong>상품이 실제로 등록된 뒤</strong>, 소액으로 나중에 시험해도 늦지 않다.</p>
+    </div>
+
+    <h3 style="margin-top:40px;margin-bottom:14px">함께 확인한 소재 롱테일</h3>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>키워드</th><th>테차</th><th>브랜드 지형</th><th>판정</th></tr></thead>
+        <tbody>
+          <tr class="band-top"><td class="kw">시들지 않는 꽃 생화</td><td class="num">4회</td><td>브랜드 모듈 없음 — 저경쟁</td><td>Brand Story가 정확히 답하는 질문</td></tr>
+          <tr><td class="kw">프리저브드 수국</td><td class="num">2회</td><td>로랑 · 플로라운지 · 로사리움 · 센트바스켓</td><td>꽃 지형 · 소액 시험</td></tr>
+          <tr><td class="kw">미니드라이플라워</td><td class="num">2회</td><td>로랑 · 더봄 · 드라이데코 · 캔들조이</td><td>꽃 지형 · 소액 시험</td></tr>
+          <tr><td class="kw">안개꽃드라이플라워</td><td class="num">0회</td><td>브랜드 모듈 없음</td><td>수요 얕음 · 보류</td></tr>
+          <tr class="band-bad"><td class="kw">돌잔치 답례품</td><td class="num">0회</td><td>송월타올 · 생활공작소 · 스타벅스</td><td>타월·생활용품 시장 · 제외</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:14px;font-size:14px"><code>시들지 않는 꽃 생화</code> 가 눈에 띈다. <strong>"이거 생화인가?"라는 질문 그대로</strong>이고, 테차가 4회 잡히는데 브랜드 모듈이 안 뜰 만큼 경쟁이 얕다. <em>"테차에는 생화가 없습니다"</em> 원고가 이미 이 질문의 답이라 <strong>광고와 매거진 양쪽으로 쓸 수 있는 드문 자리</strong>다.</p>
+
+    <h3 style="margin-top:40px;margin-bottom:6px">매거진 축이 더 넓어졌다</h3>
+    <p class="section-note" style="margin-bottom:16px">아래 일곱 개도 <strong>쇼핑 모듈이 0</strong>이다. 앞의 네 개(집들이선물·개업선물추천·환갑 선물·승진 축하 선물)와 합치면 <strong>매거진이 겨냥할 자리가 11개</strong>가 된다.</p>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>키워드</th><th>테차 매거진 자산</th></tr></thead>
+        <tbody>
+          <tr><td class="kw">병문안 선물 꽃</td><td>발행본 있음 — <em>「병문안 꽃, 동백꽃만은 피해야 하는 이유」</em></td></tr>
+          <tr><td class="kw">시들지 않는 꽃 종류</td><td>브랜드 규칙의 소재 3종(프리저브드·비누꽃·실크플라워)이 그대로 답이다</td></tr>
+          <tr><td class="kw">현금 선물 포장</td><td>용돈꽃다발·용돈박스 라인과 직결</td></tr>
+          <tr><td class="kw">현금 선물 아이디어</td><td>같음</td></tr>
+          <tr><td class="kw">용돈 선물세트</td><td>같음</td></tr>
+          <tr><td class="kw">취업 축하 선물</td><td>없음 — 신규 상황</td></tr>
+          <tr><td class="kw">퇴사 선물</td><td>없음 — 신규 상황</td></tr>
+          <tr><td class="kw">어린이집 선생님 선물</td><td>없음 — 인형꽃다발·비누꽃다발과 맞물림</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:14px;font-size:14px"><code>병문안 선물 꽃</code> 은 <strong>이미 쓴 글이 있는데 그 화면에 테차가 없다.</strong> 매거진 발행본과 검색 화면을 연결하는 작업이 따로 필요하다는 신호다.</p>
+
+    <div class="callout" style="margin-top:24px">
+      <p><strong>3차 발굴을 한 줄로.</strong> 돈·현금 축에서 테차가 들어갈 자리는 <em>케이크</em>가 아니라 <strong>꽃</strong>이다 — <code>돈다발 꽃</code> · <code>꽃 돈다발</code> · <code>비누꽃 용돈박스</code>. 케이크라는 말이 붙는 순간 파티용품이나 제과 업계의 화면으로 넘어간다.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>이 지형도가 기존 계획에 더하는 것</h2>
+    <p class="section-note">기존 문서들의 처방은 대체로 이 지형도로 지지된다. 새로 나오거나 달라진 것만 적는다.</p>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>항목</th><th>지형도가 말하는 것</th><th>기존 계획과의 관계</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="kw">무드등 축 좁히기</td>
+            <td><code>꽃무드등</code> 으로 좁혀도 테차가 아직 화면에 없고, 그 자리 1위는 리비트다</td>
+            <td><strong>보강</strong> — 처방은 맞으나 목표 자리에 임자가 있다는 게 새 정보</td>
+          </tr>
+          <tr>
+            <td class="kw">LED무드등 그룹 정리</td>
+            <td>브랜드 필터가 순수 조명 전문 8곳. <code>무드등</code> 보다 더 멀다</td>
+            <td><strong>확증</strong> — "제품 실체 불일치" 진단이 화면으로 확인됨</td>
+          </tr>
+          <tr>
+            <td class="kw">저입찰 4그룹 상향</td>
+            <td>브랜드 모듈이 안 뜰 만큼 경쟁이 없어 CPC가 싸다. 상향의 근거가 된다</td>
+            <td><strong>지지</strong></td>
+          </tr>
+          <tr>
+            <td class="kw">환갑돈꽃다발</td>
+            <td>광고 중인데 화면에 <strong>한 번도 안 나온다</strong></td>
+            <td><strong>신규</strong> — 입찰가 조정 전에 노출 여부부터 확인</td>
+          </tr>
+          <tr>
+            <td class="kw">용돈케이크 그룹 신설</td>
+            <td>파티용품·떡케이크 지형. 꽃 브랜드 0곳. <code>돈케이크</code> 쪽이 의도에 더 가깝다</td>
+            <td><strong>신규</strong> — 신설은 하되 소액·CTR 우선 관찰</td>
+          </tr>
+          <tr>
+            <td class="kw">용돈박스 그룹 신설</td>
+            <td><code>용돈박스</code>·<code>반전용돈박스</code>·<code>칠순 용돈박스</code> 셋 다 파티용품 브랜드가 채운다</td>
+            <td><strong>신규</strong> — 같은 경고. 무드등과 같은 구조다</td>
+          </tr>
+          <tr>
+            <td class="kw">시들지 않는 꽃</td>
+            <td>브랜드 필터 <strong>2위 · 광고 없이</strong>. 전용 광고그룹이 없다</td>
+            <td><strong>신규</strong> — 58개 중 가장 싸게 얻을 자리</td>
+          </tr>
+          <tr>
+            <td class="kw">돈다발 꽃 · 꽃 돈다발</td>
+            <td>브랜드가 <strong>둘뿐인</strong> 꽃 지형인데 테차 0회. <code>돈꽃다발</code>(ROAS 2,197%)과 같은 축</td>
+            <td><strong>신규</strong> — 돈케이크보다 이쪽이 먼저다</td>
+          </tr>
+          <tr>
+            <td class="kw">돈케이크 축 전반</td>
+            <td>파티용품과 제과, <strong>남의 시장 둘</strong>로 갈린다. 꽃 브랜드 0곳</td>
+            <td><strong>정정</strong> — 신설 우선순위를 뒤로</td>
+          </tr>
+          <tr>
+            <td class="kw">환갑돈꽃다발 조합형</td>
+            <td>조합형은 화면에 안 나오는데, 사람들은 <code>환갑 선물</code> 을 친다</td>
+            <td><strong>신규</strong> — 조합형 대신 상황어로 축을 옮긴다</td>
+          </tr>
+          <tr>
+            <td class="kw">졸업 클러스터</td>
+            <td><code>졸업식꽃다발</code> 브랜드 필터에 테차가 <strong>4위로 이미 있다</strong></td>
+            <td><strong>확인 필요</strong> — 문서는 "통째로 비어 있다"고 봤다. 브랜드 필터 노출과 상품 순위는 다른 지표라 모순인지 단정 못 함</td>
+          </tr>
+          <tr>
+            <td class="kw">프리저브드플라워 손대지 말 것</td>
+            <td>브랜드 필터 <strong>1위</strong>. 자리 잡았다는 판단이 맞다</td>
+            <td><strong>지지</strong> — 스마트스토어 상품명은 그대로 둔다</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:22px">
+      <p><strong>지형도 전체가 한 문장으로 줄면 이렇다.</strong> 테차가 화면에 자리 잡은 곳은 <em>소재 이름</em>(프리저브드플라워 · 드라이플라워 · 시들지 않는 꽃)과 <em>상황</em>(졸업식꽃다발 · 돈꽃다발)이고, 자리가 없는 곳은 전부 <em>물건 이름</em>(무드등 · LED무드등 · 용돈박스 · 해바라기 액자)이다. 광고비의 3분의 2는 뒤쪽으로 간다.</p>
+      <p style="margin-top:10px">후보 39개를 재고 나니 규칙이 한 번 더 확인됐다. <strong>물건 이름으로 검색하면 그 물건을 전문으로 파는 업계의 화면이 뜬다</strong> — 무드등은 조명, 용돈박스와 돈케이크는 파티용품, 돈케이크 주문제작은 제과, 해바라기 액자는 액자, 돌잔치 답례품은 타월, 수국 꽃다발은 생화. 테차는 그 어느 업계도 아니다.</p>
+      <p style="margin-top:10px">반대로 <strong>소재</strong>(시들지 않는 꽃 · 프리저브드 · 드라이플라워)와 <strong>상황</strong>(졸업식 · 돈꽃다발)으로 가면 테차가 이미 서 있다. <em>같은 상품을 어떤 말로 부르느냐가 어느 업계의 화면에 서느냐를 정한다</em> — 이 문서가 58개를 재서 얻은 유일한 규칙이고, 다음 키워드를 고를 때 그대로 쓰면 된다.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>네이버 PC 통합검색 · 비로그인 1회</span>
+    <span>집행 중 19개 + 후보 39개</span>
+    <span>후보는 네이버 자동완성에서 수확</span>
+    <span>2026-09-05</span>
+  </footer>
+
+</div>

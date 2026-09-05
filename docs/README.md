@@ -18,6 +18,7 @@
 | "초안 써줘" 하면 뭘 하나 | `routine-draft.md` — 초안 작성이 그대로 따르는 정본 |
 | 여러 AI가 이 저장소를 어떻게 나눠 쓰나 | `AI-WORKFLOW.md` — 역할 분담, 브랜치 규칙 (루트 `AGENTS.md` 와 한 쌍) |
 | 쇼츠 자막을 어떻게 만드나 | `shorts-caption-system-2026-08.md` — `assets/` 의 스크림·세이프존 PNG와 함께 본다 |
+| 이 키워드에 광고를 켜도 되나 | `serp-terrain-2026-09-05.md` — 화면을 열어 네 갈래로 판정하는 규칙. 켜기 **전에** 적합도를 본다 |
 
 브랜드 톤·품질게이트·색상은 저장소 루트의 `techa-brand-rules.md` 가 정본이다.
 
@@ -34,9 +35,16 @@
 | 브랜드 필드가 왜 비어 있나 | `brand-field-fix-checklist.md` — 상품별 수정 작업지시서 |
 | 손님이 실제로 뭐라고 하나 | `review-analysis-2026-08.md` — 리뷰 6,063건 정밀 분석 |
 | 언제가 성수기인가 | `seasonality-analysis-2026-08.md` |
+| 이 키워드의 검색 화면을 누가 차지하고 있나 | `serp-terrain-2026-09-05.md` — 키워드 58개 실측 원장. 재측정은 `scripts/serp-check.sh` |
+| 그 지형을 그림으로 보려면 | `assets/techa-ad-keyword-terrain-2026-09-05.html` — 위 원장의 시각 정리본(아티팩트 소스) |
+| 카페24 운영몰(`techa.co.kr`) 화면은 어떤 상태인가 | `assets/techa-shop-audit-2026-09-05.html` — 리뉴얼 실행 설계에 없는 보완 12건 |
 
 > `store-diagnosis` 와 `naver-ranking-analysis` 는 **대상이 같고 관점이 다르다.**
 > 광고를 볼 거면 앞, 검색을 볼 거면 뒤.
+>
+> 여기에 `serp-terrain` 이 하나 더 붙는다. 앞의 둘이 **이미 쓴 돈의 결과**(ROAS·순위)를
+> 사후에 본다면, 이건 **돈을 쓰기 전에** 화면을 열어 적합도를 판정한다. 무드등에
+> 90일 4,446,329원을 쓰고 나서야 안 것을, 다음 키워드에는 30초로 미리 안다.
 
 ---
 

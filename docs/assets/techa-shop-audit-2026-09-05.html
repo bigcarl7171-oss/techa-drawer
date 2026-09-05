@@ -1,0 +1,691 @@
+<title>실행 설계 밖의 12건</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#FAF8F4;
+    --surface:#FFFFFF;
+    --sunken:#F1EEE7;
+    --ink:#25221F;
+    --ink-2:#4A453E;
+    --muted:#81766B;
+    --line:#E2DDD2;
+    --line-soft:#EDE9E0;
+    --accent:#4F6B47;
+    --accent-dim:#E9EFE5;
+    --flag:#9C3348;
+    --flag-dim:#F7E8EB;
+    --warn:#9A722C;
+    --warn-dim:#F5EEDE;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#16140F;
+      --surface:#1F1C16;
+      --sunken:#1A1813;
+      --ink:#F2EFE7;
+      --ink-2:#CAC4B8;
+      --muted:#8E8578;
+      --line:#312D25;
+      --line-soft:#26231C;
+      --accent:#9EBC8E;
+      --accent-dim:#212819;
+      --flag:#E4899D;
+      --flag-dim:#2B1A1E;
+      --warn:#D5AC63;
+      --warn-dim:#282017;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#16140F;
+    --surface:#1F1C16;
+    --sunken:#1A1813;
+    --ink:#F2EFE7;
+    --ink-2:#CAC4B8;
+    --muted:#8E8578;
+    --line:#312D25;
+    --line-soft:#26231C;
+    --accent:#9EBC8E;
+    --accent-dim:#212819;
+    --flag:#E4899D;
+    --flag-dim:#2B1A1E;
+    --warn:#D5AC63;
+    --warn-dim:#282017;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--ground);
+    color:var(--ink-2);
+    font-family:"IBM Plex Sans KR",-apple-system,"Malgun Gothic",sans-serif;
+    font-weight:300;
+    font-size:15px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 26px 88px}
+
+  /* ---------- masthead ---------- */
+  .masthead{padding:60px 0 30px;border-bottom:1px solid var(--ink);display:flex;flex-direction:column;gap:15px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  h1{
+    font-family:"Gowun Batang","Nanum Myeongjo",serif;
+    font-weight:700;
+    font-size:clamp(32px,5.2vw,47px);
+    line-height:1.2;
+    letter-spacing:-.01em;
+    color:var(--ink);
+    margin:0;
+    text-wrap:balance;
+  }
+  .standfirst{font-size:16.5px;max-width:62ch;margin:0}
+  .runline{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+
+  section{padding-top:52px}
+  h2{font-family:"Gowun Batang",serif;font-weight:700;font-size:24px;color:var(--ink);margin:0 0 5px;letter-spacing:-.005em}
+  .section-note{font-size:13.5px;color:var(--muted);margin:0 0 24px;max-width:66ch}
+  p{margin:0 0 11px}
+  p:last-child{margin-bottom:0}
+  strong{font-weight:600;color:var(--ink)}
+  em{font-style:normal;color:var(--accent);font-weight:500}
+  code{font-family:"IBM Plex Mono",monospace;font-size:.87em;color:var(--ink);background:var(--sunken);padding:1px 5px;border-radius:3px}
+
+  /* ---------- findings ---------- */
+  .findings{display:flex;flex-direction:column;gap:2px}
+  .find{
+    display:grid;
+    grid-template-columns:152px 1fr;
+    gap:0 22px;
+    padding:20px 22px;
+    background:var(--surface);
+    border-left:3px solid var(--line);
+  }
+  .find.block{border-left-color:var(--flag)}
+  .find.leak{border-left-color:var(--warn)}
+  .find.gain{border-left-color:var(--accent)}
+
+  /* evidence rail — the measured value, same place every row */
+  .rail{display:flex;flex-direction:column;gap:7px;min-width:0}
+  .metric{
+    font-family:"IBM Plex Mono",monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:20px;
+    font-weight:500;
+    color:var(--ink);
+    line-height:1.15;
+    letter-spacing:-.01em;
+  }
+  .metric .u{font-size:12.5px;color:var(--muted);font-weight:400}
+  .metric-note{font-size:11.5px;color:var(--muted);line-height:1.5}
+  .plan{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10px;
+    letter-spacing:.07em;
+    padding:2px 7px;
+    border-radius:2px;
+    align-self:flex-start;
+    white-space:nowrap;
+  }
+  .plan.absent{background:var(--flag-dim);color:var(--flag)}
+  .plan.extend{background:var(--accent-dim);color:var(--accent)}
+
+  .body-col{display:flex;flex-direction:column;gap:9px;min-width:0}
+  h3{font-weight:600;font-size:16px;color:var(--ink);margin:0;line-height:1.45}
+  .body-col p{font-size:14px;margin:0}
+  .fix{
+    display:flex;
+    gap:9px;
+    font-size:13.5px;
+    padding-top:9px;
+    border-top:1px solid var(--line-soft);
+    color:var(--ink-2);
+  }
+  .fix .k{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10.5px;
+    letter-spacing:.08em;
+    color:var(--muted);
+    padding-top:4px;
+    white-space:nowrap;
+  }
+
+  .quote{
+    font-size:13px;
+    color:var(--ink-2);
+    background:var(--sunken);
+    border-radius:3px;
+    padding:9px 13px;
+    line-height:1.65;
+  }
+  .quote .lbl{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10px;
+    letter-spacing:.08em;
+    color:var(--muted);
+    display:block;
+    margin-bottom:3px;
+  }
+  .quote.good{background:var(--accent-dim)}
+
+  /* ---------- weight chart ---------- */
+  .chart{border:1px solid var(--line);background:var(--surface);padding:20px 22px;display:flex;flex-direction:column;gap:13px}
+  .chart-cap{font-size:12.5px;color:var(--muted);margin:0}
+  .bars{display:flex;flex-direction:column;gap:9px}
+  .bar-row{display:grid;grid-template-columns:132px 1fr 66px;gap:0 14px;align-items:center}
+  .bar-label{font-size:12.5px;color:var(--ink-2);line-height:1.35}
+  .bar-track{height:15px;background:var(--sunken);border-radius:2px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:2px}
+  .bar-val{
+    font-family:"IBM Plex Mono",monospace;
+    font-variant-numeric:tabular-nums;
+    font-size:12px;
+    text-align:right;
+    color:var(--ink);
+  }
+
+  /* ---------- order table ---------- */
+  .scroller{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:520px;font-size:13.5px}
+  th,td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  thead th{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);background:var(--sunken);border-bottom:1px solid var(--line);white-space:nowrap;
+  }
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr.self{background:var(--accent-dim)}
+  tbody tr.self td.name{color:var(--accent);font-weight:600}
+  td.fig{
+    font-family:"IBM Plex Mono",monospace;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+    color:var(--ink);
+  }
+  td.fig .weak{color:var(--flag)}
+  td.fig .fine{color:var(--accent)}
+  .verdict{font-size:12.5px;color:var(--muted);line-height:1.5}
+  td.who{font-family:"IBM Plex Mono",monospace;font-size:11.5px;white-space:nowrap}
+  td.who.me{color:var(--accent)}
+  td.who.you{color:var(--warn)}
+  td.name{color:var(--ink);font-weight:500}
+
+  .callout{
+    border-left:3px solid var(--accent);
+    background:var(--accent-dim);
+    padding:16px 20px;
+    font-size:14px;
+    color:var(--ink-2);
+  }
+  .callout strong{color:var(--ink)}
+
+  footer{
+    margin-top:60px;padding-top:20px;border-top:1px solid var(--line);
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:6px 20px;
+  }
+
+  a{color:var(--accent)}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  @media (max-width:700px){
+    .wrap{padding:0 17px 68px}
+    .find{grid-template-columns:1fr;gap:13px;padding:17px 18px}
+    .rail{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+    .metric-note{width:100%}
+    .bar-row{grid-template-columns:104px 1fr 58px;gap:0 10px}
+    .bar-label{font-size:11.5px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">운영몰 점검 · 2026.09.05</div>
+    <h1>실행 설계 밖의 12건</h1>
+    <p class="standfirst"><code>www.techa.co.kr</code> 와 작업본 <code>skin37</code> 을 실측해 <strong>9월 4일 실행 설계에 항목이 없는 것만</strong> 골랐다. 이미 계획된 배너 규격·카테고리 5칸·왜 테차인가·공통영역은 여기서 다시 말하지 않는다. 뒤쪽에 <strong>같은 카페24로 만든 경쟁사 3곳과 잘 굴러가는 몰 1곳</strong>을 똑같은 방법으로 재서 대조했다.</p>
+    <div class="runline">
+      <span>운영몰 HTML 241KB</span>
+      <span>메인 이미지 153장</span>
+      <span>반응형 단일 스킨</span>
+      <span>대조군 카페24 4개 몰</span>
+      <span>변경 0건 · 읽기만</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>화면에서 지금 막고 있는 것</h2>
+    <p class="section-note">실행 설계의 전제 두 번째 — <em>들어온 사람이 이탈하지 않는 것</em> — 을 직접 깨고 있는 다섯 가지. 위에서부터 영향이 크다.</p>
+
+    <div class="findings">
+
+      <div class="find block">
+        <div class="rail">
+          <div class="metric">29–35<span class="u">자</span></div>
+          <div class="metric-note">상품명 실측 길이<br>권장은 12~16자</div>
+          <span class="plan absent">설계에 없음</span>
+        </div>
+        <div class="body-col">
+          <h3>상품명이 스마트스토어용 키워드 나열 그대로다</h3>
+          <div class="quote">
+            <span class="lbl">지금 화면에 뜨는 이름</span>
+            프리저브드 드라이플라워 꽃다발 시들지않는꽃 천일화 수페리어꽃다발<br>
+            연주회 발표회 유치원 졸업식 킨더조이 레보니 인형꽃다발<br>
+            생신 환갑 칠순 특별한날 부모님 깜짝 선물 용돈꽃다발
+          </div>
+          <p>스마트스토어에서는 이름 안의 키워드가 노출을 만들지만, 자사몰은 <strong>이미 들어온 사람이 4열 그리드를 훑는 화면</strong>이다. 이름이 2~3줄로 깨지면서 카드 높이가 들쭉날쭉해지고, 여덟 개를 나란히 놓아도 뭐가 다른지 구분이 안 된다. 실행 설계 05번 "테차 베스트 4열 8개"가 노리는 신뢰가 여기서 새어나간다.</p>
+          <div class="quote good">
+            <span class="lbl">그런데 짧은 이름은 이미 갖고 있다 — alt 텍스트</span>
+            프리저브드 드라이플라워 꽃다발 — 시들지 않는 감성 꽃<br>
+            인테리어 꽃 소품 — 샤넬스타일 센터피스
+          </div>
+          <div class="quote">
+            <span class="lbl">이 길의 끝 — 경쟁사 로사리움의 메인 진열</span>
+            졸업식 꽃다발 드라이플라워 프리저브드플라워 장미 생일 프로포즈 시들지않는꽃 — <strong>35,000원</strong><br>
+            드라이플라워 프리저브드플라워 장미 졸업식 꽃다발 생일 프로포즈 시들지않는꽃 — <strong>40,000원</strong><br>
+            졸업식 꽃다발 드라이플라워 프리저브드플라워 장미 생일 프로포즈 시들지않는꽃 — <strong>50,000원</strong>
+          </div>
+          <p><strong>같은 단어를 순서만 바꿔 쓴 세 상품이 나란히 걸려 있고, 다른 건 가격뿐이다.</strong> 3만 5천 원과 5만 원이 뭐가 다른지 화면에서 알 방법이 없다. 키워드를 이름에 계속 밀어 넣으면 도달하는 자리이고, 테차도 지금 같은 방향으로 가는 중이다.</p>
+          <div class="fix">
+            <span class="k">어떻게</span>
+            <span>카페24는 <strong>상품명과 검색어(검색태그)가 별개 필드</strong>다. 이름은 alt 수준으로 줄이고 빠진 키워드는 전부 검색어로 옮기면 <strong>검색 노출은 하나도 잃지 않는다.</strong> 실행 설계 원칙 04가 이미 "추천 대상·상황은 검색태그"라고 정해뒀다 — 같은 원칙을 상품명에 적용하는 것뿐이다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="find block">
+        <div class="rail">
+          <div class="metric">1,084<span class="u">KB</span></div>
+          <div class="metric-note">목록 썸네일 한 장<br><code>medium</code> 규격인데</div>
+          <span class="plan absent">설계에 없음</span>
+        </div>
+        <div class="body-col">
+          <h3>무거운 건 배너가 아니라 상품 썸네일이다</h3>
+          <p>실행 설계는 배너 자산을 재고 "장당 240~400KB로 적당하다"고 판단했다. 맞는 말인데, <strong>메인에서 가장 무거운 두 장은 배너가 아니라 상품 목록 썸네일</strong>이다. 샤넬스타일 센터피스 1,084KB, 해바라기 액자 997KB — 이 두 장만으로 배너 3장 전부(1.1MB)와 맞먹는다.</p>
+          <p>해바라기 액자는 메인 두 블록에 중복 노출돼 같은 파일을 두 번 부른다. 그리고 <strong>반응형 단일 스킨이라 모바일도 똑같은 1MB 파일을 받는다.</strong></p>
+          <div class="fix">
+            <span class="k">어떻게</span>
+            <span>이 두 상품의 목록 이미지를 <code>900×900 · 200KB 이하</code>로 다시 올린다. 원본 상세컷은 그대로 두고 목록용만 교체하면 된다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="find block">
+        <div class="rail">
+          <div class="metric">121<span class="u">장</span></div>
+          <div class="metric-note">즉시 로드되는 이미지<br>전체 153장 중</div>
+          <span class="plan absent">설계에 없음</span>
+        </div>
+        <div class="body-col">
+          <h3>메인 이미지의 79%가 지연 로딩을 안 쓴다</h3>
+          <p><code>loading="lazy"</code> 가 붙은 건 32장뿐이다. 나머지 121장 — 화면 한참 아래의 상품, 푸터의 결제사 로고, 인스타 그리드까지 — 이 첫 화면과 동시에 내려온다. 실행 설계가 인스타 외부 위젯(692px)을 걷어낸 것과 같은 종류의 문제인데, 훨씬 넓게 퍼져 있다.</p>
+          <div class="fix">
+            <span class="k">어떻게</span>
+            <span>스킨 편집기에서 <strong>첫 화면 밖 이미지에 <code>loading="lazy"</code></strong> 를 넣는다. 히어로 배너 1번만 즉시 로드로 남긴다 — 실행 설계가 배너에 대해 이미 내린 결론과 같은 방식이다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="find block">
+        <div class="rail">
+          <div class="metric">1,000<span class="u">원</span></div>
+          <div class="metric-note">진입 즉시 뜨는<br>회원가입 쿠폰 레이어</div>
+          <span class="plan absent">설계에 없음</span>
+        </div>
+        <div class="body-col">
+          <h3>광고로 들어온 사람이 처음 보는 게 팝업이다</h3>
+          <p>"첫 쇼핑을 지원하는 1,000원 할인 회원가입 쿠폰"이 메인 진입과 동시에 화면을 덮는다. 배너를 1920×600으로 바꾸고 카테고리 5칸을 새로 만들어도, <strong>그 첫인상 위에 팝업이 먼저 얹힌다.</strong> 모바일에서는 덮는 비율이 더 크다.</p>
+          <div class="fix">
+            <span class="k">어떻게</span>
+            <span>지우지 말고 <strong>노출 시점만 뒤로</strong> — 스크롤 30% 이후 또는 5초 지연. 쿠폰은 살리면서 첫 화면은 상품이 차지한다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="find block">
+        <div class="rail">
+          <div class="metric">0<span class="u">곳</span></div>
+          <div class="metric-note">메인에 배송 도착일이<br>언급된 자리</div>
+          <span class="plan extend">설계 보완</span>
+        </div>
+        <div class="body-col">
+          <h3>선물 구매의 최대 변수가 메인에 없다</h3>
+          <p>"언제 도착하나"는 선물 구매에서 가격 다음으로 큰 질문인데 메인 어디에도 답이 없다. 실행 설계는 이 안내를 <strong>상세페이지 공통영역에만</strong> 배치했다 — 상세까지 내려간 사람은 보지만, 메인에서 판단하고 나가는 사람은 못 본다.</p>
+          <p>마침 슬롯 02 띠배너를 "평소엔 비워두고 공지 때만 켠다"고 해뒀다. <strong>그 자리가 비어 있을 이유가 없다.</strong></p>
+          <div class="fix">
+            <span class="k">어떻게</span>
+            <span>띠배너를 상시 배송 안내로 쓴다 — <em>"평일 O시 이전 주문은 당일 발송"</em>. 12~2월에만 지연 안내로 문구를 바꾸면 시즌 대응까지 같은 자리에서 끝난다.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="chart" style="margin-top:26px">
+      <p class="chart-cap">메인 1회 로드에서 실제로 내려오는 무게 — 배너보다 썸네일이 무겁다</p>
+      <div class="bars">
+        <div class="bar-row">
+          <span class="bar-label">센터피스 썸네일</span>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--flag)"></div></div>
+          <span class="bar-val">1,084KB</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">해바라기 액자 썸네일</span>
+          <div class="bar-track"><div class="bar-fill" style="width:92%;background:var(--flag)"></div></div>
+          <span class="bar-val">997KB</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">히어로 배너 1장</span>
+          <div class="bar-track"><div class="bar-fill" style="width:37%;background:var(--muted)"></div></div>
+          <span class="bar-val">402KB</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">권장 상한</span>
+          <div class="bar-track"><div class="bar-fill" style="width:18%;background:var(--accent)"></div></div>
+          <span class="bar-val">200KB</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>검색에서 새고 있는 것</h2>
+    <p class="section-note">자사몰은 브랜드 인지도 0에서 시작한다는 게 실행 설계의 전제다. 그렇다면 검색결과에 뜨는 두 줄이 첫인상 전부다.</p>
+
+    <div class="findings">
+
+      <div class="find leak">
+        <div class="rail">
+          <div class="metric">6<span class="u">개 단어</span></div>
+          <div class="metric-note">meta description이<br>문장이 아니라 나열</div>
+          <span class="plan absent">설계에 없음</span>
+        </div>
+        <div class="body-col">
+          <h3>검색결과 설명문이 키워드 목록이다</h3>
+          <div class="quote">
+            <span class="lbl">현재 — 운영몰과 skin37 동일</span>
+            플라워클래스, 프리저브드 꽃다발, 드라이플라워, 꽃다발, 꽃 소품, 원데이클래스
+          </div>
+          <p>제목은 좋다 — <em>"테차 | 변치 않는 선물 당신의 꽃 가게"</em> 는 그대로 둘 만하다. 문제는 그 아래 두 줄이다. 구글·네이버가 검색결과에 그대로 띄우는 자리인데 <strong>클릭할 이유가 한 줄도 없다.</strong> 키워드는 이미 제목과 본문이 담당하고 있다.</p>
+          <div class="quote good">
+            <span class="lbl">제안 — 브랜드 규칙에 맞춘 문장</span>
+            생화가 아니어서 시들지 않는 꽃 선물을 만듭니다. 프리저브드·비누꽃·실크플라워로 만든 꽃다발과 무드등, 향은 고르실 수 있고 미대 출신 플로리스트가 직접 제작합니다.
+          </div>
+          <div class="fix">
+            <span class="k">어떻게</span>
+            <span><code>상점관리 → 검색엔진 최적화(SEO)</code>. 카테고리 5개 메타는 이미 써뒀으니 메인 것만 교체하면 된다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="find leak">
+        <div class="rail">
+          <div class="metric">h1 × 2</div>
+          <div class="metric-note">skin37 실측<br>운영몰은 h2가 0개</div>
+          <span class="plan absent">설계에 없음</span>
+        </div>
+        <div class="body-col">
+          <h3>섹션 제목이 검색엔진에 제목으로 안 읽힌다</h3>
+          <p>운영몰 메인은 <code>h2</code> 가 하나도 없다. "Techa's Floral Pick", "Flower-Crafted Living" 같은 섹션 제목이 전부 이미지이거나 일반 <code>div</code> 라서, 검색엔진 입장에서 이 페이지는 제목 하나에 본문 덩어리 하나다.</p>
+          <p>작업본 skin37은 <code>h2</code> 가 하나 생겼지만 대신 <strong><code>h1</code> 이 두 개</strong>가 됐다. 페이지당 <code>h1</code> 은 하나여야 한다.</p>
+          <div class="fix">
+            <span class="k">어떻게</span>
+            <span>skin37에서 <code>h1</code> 하나를 <code>h2</code> 로 내리고, 실행 설계가 새로 만드는 섹션(카테고리 5칸·왜 테차인가·오래 두고 보는 꽃) 제목을 <code>h2</code> 로 마크업한다. <strong>어차피 지금 새로 짜는 중이라 추가 비용이 거의 없다.</strong></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>혼자 굴리기 위해 지금 정해둘 것</h2>
+    <p class="section-note">실행 설계의 운영 5원칙은 그대로 좋다. 여기 셋은 그 원칙들의 <em>빠진 짝</em> — 같은 논리를 아직 적용 안 한 자리다.</p>
+
+    <div class="findings">
+
+      <div class="find gain">
+        <div class="rail">
+          <div class="metric">22<span class="u">개 → 1회</span></div>
+          <div class="metric-note">상품명·검색어를<br>엑셀 한 번에</div>
+          <span class="plan extend">원칙 04 확장</span>
+        </div>
+        <div class="body-col">
+          <h3>상품명 정리는 화면에서 하지 않는다</h3>
+          <p>원칙 04가 "상품 등록은 엑셀로"라고 정했다. <strong>수정도 같다.</strong> 상품 22개를 관리자 화면에서 하나씩 열어 이름을 고치면 반나절이 사라지고 중간에 빠뜨린다.</p>
+          <p><code>상품 → 엑셀 관리 → 상품 일괄 수정</code> 에서 내려받으면 <strong>상품명 열과 검색어 열이 같은 시트에 나란히</strong> 있다. 이름에서 덜어낸 키워드를 옆 칸으로 옮기는 작업이라, 첫 번째 건과 정확히 같은 화면에서 끝난다.</p>
+          <div class="fix">
+            <span class="k">순서</span>
+            <span>다운로드 → 두 열만 수정 → 업로드. <strong>업로드 전에 원본 시트를 따로 저장</strong>해두면 되돌릴 수 있다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="find gain">
+        <div class="rail">
+          <div class="metric">4.8<span class="u">점 이상</span></div>
+          <div class="metric-note">쓸 수 있는 숫자<br>건수는 브랜드 규칙상 금지</div>
+          <span class="plan extend">슬롯 07 보강</span>
+        </div>
+        <div class="body-col">
+          <h3>스마트스토어에 쌓인 신뢰를 자사몰로 가져올 수 있다</h3>
+          <p>자사몰 후기는 16건이라 실행 설계도 "후기 0에서 시작"이라고 봤다. 맞다. 다만 <strong>평점은 사정이 다르다</strong> — 브랜드 규칙이 누적 판매량·리뷰 건수는 금지하면서 <em>평균 평점 4.8점 이상</em>은 명시적으로 허용한다.</p>
+          <p>실행 설계 슬롯 07 "왜 테차인가" 3단은 ①시들지 않습니다 ②향은 고르실 수 있습니다 ③미대 출신 플로리스트가 만듭니다 로 짜여 있다. 셋 다 좋은데 <strong>전부 판매자의 말</strong>이다. 평점 한 줄이 붙으면 성격이 다른 근거가 하나 생긴다.</p>
+          <div class="fix">
+            <span class="k">주의</span>
+            <span>건수는 쓰지 않는다. "리뷰 O천 건" 같은 표현은 브랜드 규칙 위반이고, 자사몰 16건과 어긋나 보이는 문제도 생긴다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="find gain">
+        <div class="rail">
+          <div class="metric">900×900</div>
+          <div class="metric-note">상품 이미지 규격<br>이미 통일돼 있다</div>
+          <span class="plan extend">원칙 01 확장</span>
+        </div>
+        <div class="body-col">
+          <h3>규격을 고정하는 원칙을 상품 이미지에도 적용한다</h3>
+          <p>원칙 01은 배너를 <code>1920×600</code> 으로 고정했다. 그런데 1MB짜리 썸네일이 생긴 이유가 바로 <strong>상품 이미지에는 그런 규칙이 없었기 때문</strong>이다. 촬영 원본을 그대로 올리면 카페24가 크기만 줄이고 용량은 그대로 둔다.</p>
+          <p>실행 설계도 확인했듯 상품 이미지는 <strong>이미 900×900 정사각으로 통일</strong>돼 있다. 여기에 용량 상한 한 줄만 더하면 규칙이 완성된다.</p>
+          <div class="fix">
+            <span class="k">규칙</span>
+            <span><code>900×900 · JPG · 200KB 이하</code>. 등록 전에 한 번 압축하는 습관이 나중에 목록 페이지 전체를 지킨다.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>같은 카페24, 다른 결과</h2>
+    <p class="section-note">직접 경쟁사 3곳(로사리움 · 지나로즈 · 오아시스마켓)과, 카테고리는 다르지만 자사몰을 잘 굴리는 오브젝트를 <strong>테차와 똑같은 방법으로 실측</strong>했다. 결론이 뜻밖이었다.</p>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>몰</th><th>HTML</th><th>이미지</th><th>지연 로딩</th><th>제목 태그</th><th>검색 설명문</th></tr>
+        </thead>
+        <tbody>
+          <tr class="self">
+            <td class="name">테차</td>
+            <td class="fig">241KB</td>
+            <td class="fig">153장</td>
+            <td class="fig">32장 <span class="weak">21%</span></td>
+            <td class="fig">h1 1 · h2 0</td>
+            <td class="verdict">키워드 나열</td>
+          </tr>
+          <tr>
+            <td class="name">로사리움</td>
+            <td class="fig">180KB</td>
+            <td class="fig">84장</td>
+            <td class="fig">17장 <span class="weak">20%</span></td>
+            <td class="fig"><span class="weak">h1 0 · h2 0</span></td>
+            <td class="verdict">키워드 나열</td>
+          </tr>
+          <tr>
+            <td class="name">지나로즈</td>
+            <td class="fig">408KB</td>
+            <td class="fig">286장</td>
+            <td class="fig"><span class="weak">0장</span></td>
+            <td class="fig"><span class="weak">h1 0 · h2 0</span></td>
+            <td class="verdict">키워드 나열</td>
+          </tr>
+          <tr>
+            <td class="name">오아시스마켓</td>
+            <td class="fig">265KB</td>
+            <td class="fig">221장</td>
+            <td class="fig">48장 <span class="weak">22%</span></td>
+            <td class="fig"><span class="weak">h1 0 · h2 0</span></td>
+            <td class="verdict">키워드 나열</td>
+          </tr>
+          <tr>
+            <td class="name">오브젝트</td>
+            <td class="fig">667KB</td>
+            <td class="fig">319장</td>
+            <td class="fig"><span class="weak">0장</span></td>
+            <td class="fig">h1 1 · h2 0</td>
+            <td class="verdict">비어 있음</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:22px">
+      <p><strong>기술적으로는 아무도 안 하고 있다.</strong> 다섯 몰 전부 검색 설명문이 키워드 나열이거나 비어 있고, <code>h2</code> 는 한 곳도 쓰지 않는다. 지연 로딩을 20% 넘게 쓰는 곳도 없다. 이건 카페24 기본 스킨을 손대지 않으면 자동으로 이렇게 된다는 뜻이다.</p>
+      <p style="margin-top:10px">뒤집으면 <strong>차별화 비용이 아주 싸다.</strong> 앞의 10건은 경쟁사를 따라잡는 일이 아니라, 아무도 안 한 자리를 먼저 차지하는 일이다. 그리고 테차는 이미 <em>제목 태그와 title 문장에서 이 그룹의 상위</em>에 있다 — <code>h1</code> 이 있는 두 곳 중 하나고, title이 브랜드명 나열이 아니라 문장인 세 곳 중 하나다.</p>
+    </div>
+
+    <p class="section-note" style="margin-top:34px;max-width:66ch">대조에서 <strong>새로 나온 것 둘</strong>. 앞의 10건과 성격이 달라 따로 뒀다.</p>
+
+    <div class="findings">
+
+      <div class="find block">
+        <div class="rail">
+          <div class="metric">영문 5<span class="u">개</span></div>
+          <div class="metric-note">테차 섹션 제목이<br>전부 영문 우선</div>
+          <span class="plan absent">설계에 없음</span>
+        </div>
+        <div class="body-col">
+          <h3>잘 되는 몰은 섹션 제목을 한국어 구어체로 쓴다</h3>
+          <div class="quote">
+            <span class="lbl">테차 · 로사리움 — 카페24 템플릿 관행</span>
+            Techa's Floral Pick · Flower-Crafted Living<br>
+            NEW! ARRIVALS · ON STORE! · BEST! SELLER
+          </div>
+          <div class="quote good">
+            <span class="lbl">오브젝트</span>
+            새로 들어왔어요 ✨ · 금주의 베스트 💖 · B-SIDE object 💫 · 전시 NOW 🌟 · 시간의 결 💬
+          </div>
+          <p>영문 제목은 한 박자 늦게 읽힌다. 스크롤하는 사람은 <em>"Flower-Crafted Living"</em> 을 해석하는 대신 그냥 지나간다. 오브젝트는 같은 자리에 말을 걸어서, <strong>제목만 훑어도 뭘 보는 화면인지 안다.</strong></p>
+          <p>테차는 이걸 바꾸는 비용이 특히 낮다 — 실행 설계가 어차피 슬롯 04·06·07을 새로 만드는 중이고, 매거진에서 쓰는 <strong>말투가 이미 이 톤</strong>이다.</p>
+          <div class="fix">
+            <span class="k">어떻게</span>
+            <span><em>Techa's Floral Pick</em> → "선물하기 좋은 테차 베스트", <em>Flower-Crafted Living</em> → "오래 두고 보는 꽃". 실행 설계가 이미 이 두 이름을 슬롯 05·06의 이름으로 쓰고 있다 — <strong>문서에는 한국어로 써놓고 화면에만 영문이 남아 있는 상태다.</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="find gain">
+        <div class="rail">
+          <div class="metric">5<span class="u">개 브랜드</span></div>
+          <div class="metric-note">오브젝트는 상품마다<br>만든 곳을 함께 띄운다</div>
+          <span class="plan extend">슬롯 07 보강</span>
+        </div>
+        <div class="body-col">
+          <h3>만든 사람을 상품 옆에 붙이면 신뢰가 목록에서 생긴다</h3>
+          <div class="quote good">
+            <span class="lbl">오브젝트 — 상품명 아래 한 줄</span>
+            썬탠 오리너구리 홀더 인형키링 · <strong>나이브가든</strong> · 17,000원<br>
+            가리비 램프 / 분홍가리비 · <strong>스케이프앤드스코프</strong> · 48,000원
+          </div>
+          <p>오브젝트는 편집숍이라 입점 브랜드를 밝히는 건데, 결과적으로 <strong>목록 단계에서 "누가 만들었나"에 답한다.</strong> 테차는 전부 직접 제작이니 이 자리가 오히려 더 강하다 — 실행 설계 슬롯 07의 <em>"미대 출신 플로리스트가 만듭니다"</em> 는 메인 한 곳에서 한 번만 말하는데, 이걸 상품마다 한 줄로 내리면 진열 전체가 근거를 갖는다.</p>
+          <p>공짜는 아니다. 카페24에서 이 줄을 만들려면 <strong>상품 분류나 자체 필드를 목록 템플릿에 노출</strong>해야 한다. 다만 값이 전 상품 동일해서 엑셀 일괄 입력으로 끝난다.</p>
+          <div class="fix">
+            <span class="k">어떻게</span>
+            <span>상품명 아래 <em>"테차 공방 직접 제작"</em> 한 줄. <strong>상품명 정리와 같은 엑셀 시트에서 처리</strong>하면 작업이 한 번으로 합쳐진다.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="section-note" style="margin-top:30px;max-width:66ch">대조에서 나온 <strong>맥락 셋</strong> — 당장 할 일은 아니지만 판단에 영향을 준다.</p>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>관찰</th><th>테차에 뜻하는 것</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="name">로사리움은 자사몰을 접었다</td>
+            <td>메인 상단 공지가 <em>"상품 구매는 스마트스토어에서 진행해주세요. 홈페이지는 협의된 개인결제 상품 외 구매 불가"</em> 다. 직접 경쟁사가 자사몰 경쟁에서 빠져 있다는 뜻이다.</td>
+          </tr>
+          <tr>
+            <td class="name">로사리움 BRAND STORY가<br>템플릿 기본 문구다</td>
+            <td>꽃집인데 <em>"친환경 식재료로 건강한 라이프스타일을 제안합니다"</em> 가 그대로 남아 있다. 이 자리를 비워두면 이렇게 된다 — 인수인계 01번(Brand Story 원고 등록)이 왜 급한지의 근거다. <strong>테차는 원고가 이미 완성돼 있다.</strong></td>
+          </tr>
+          <tr>
+            <td class="name">오브젝트는 오프라인을<br>메인에 올린다</td>
+            <td><em>"전시 NOW 🌟"</em> 섹션으로 매장 전시를 온라인 메인에서 알린다. 테차도 공방·플라워 클래스가 있는데 지금 메인에는 <strong>지도만</strong> 있다. 클래스 일정을 슬롯 09 근처에 붙이면 같은 효과를 낸다.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>실행 설계에 끼워 넣는 자리</h2>
+    <p class="section-note">새 일정을 만들지 않는다. 이미 있는 7단계 안에 넣으면 대부분 추가 작업 없이 처리된다.</p>
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>실행 설계 단계</th><th>여기서 같이 처리할 것</th><th>누가</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">01 배너 슬롯 규격 변경</td>
+            <td>팝업 노출 시점을 스크롤 30% 이후로 · 띠배너에 상시 배송 안내</td>
+            <td class="who me">내가</td>
+          </tr>
+          <tr>
+            <td class="name">02 카테고리 5칸 신설</td>
+            <td>새 섹션 제목을 <code>h2</code> 로 마크업 · skin37의 중복 <code>h1</code> 정리 · <strong>섹션 제목을 영문에서 한국어로</strong></td>
+            <td class="who me">내가</td>
+          </tr>
+          <tr>
+            <td class="name">03 기획전에 상품 담기</td>
+            <td><strong>같은 화면에서 상품명·검색어 엑셀 일괄 수정</strong> — 상품 목록을 어차피 여는 김에. "테차 공방 직접 제작" 열도 같이 채운다</td>
+            <td class="who you">사장님</td>
+          </tr>
+          <tr>
+            <td class="name">05 "왜 테차인가" 3단</td>
+            <td>평점 4.8+ 한 줄 추가 (건수 없이) · 목록에 제작자 한 줄 노출</td>
+            <td class="who me">내가</td>
+          </tr>
+          <tr>
+            <td class="name">06 상세 공통영역</td>
+            <td>센터피스·해바라기 목록 이미지 재업로드 · 이후 등록 규격 200KB 확정</td>
+            <td class="who you">함께</td>
+          </tr>
+          <tr>
+            <td class="name">07 전체 검수</td>
+            <td>메인 SEO 설명문 교체 · 지연 로딩 적용 확인</td>
+            <td class="who me">내가</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:22px">
+      <p><strong>가장 먼저 할 것 하나만 고르면 상품명이다.</strong> 나머지 열한 건은 화면을 다듬는 일이지만, 상품명은 실행 설계가 새로 만드는 <em>모든 진열 슬롯</em>(카테고리 5칸 · 베스트 8개 · 육성 4종 · 기획전 6개)에 동시에 나타난다. 진열을 먼저 짜고 이름을 나중에 고치면 같은 화면을 두 번 검수하게 된다.</p>
+      <p style="margin-top:10px">그리고 로사리움이 그 끝을 이미 보여줬다 — <strong>이름이 같고 가격만 다른 상품 셋이 나란히 걸린 진열.</strong> 실행 설계 06번이 등급 비교 이미지를 넣기로 한 것과 같은 문제를, 목록 단계에서 미리 막는 일이다.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>www.techa.co.kr · skin37 실측</span>
+    <span>대조 4개 몰 · 로사리움 지나로즈 오아시스마켓 오브젝트</span>
+    <span>2026-09-05</span>
+    <span>읽기만 · 변경 0건</span>
+  </footer>
+
+</div>
