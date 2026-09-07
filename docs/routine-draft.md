@@ -71,9 +71,10 @@
 
 기존 규칙 그대로다. `techa-brand-rules.md` §2 품질게이트와 표현 규칙을 전부 적용한다.
 
-- 본문 분량은 **`node scripts/publish-draft.js <slug> --dry-run` 이 세는 기준**으로 1,500~2,800자.
-  (이 값은 공백을 뺀 문자 수다. 하한은 2026-09-03에 1,800에서 내렸다 — 아래 §분량 근거 참고)
-  루틴이 자체적으로 센 숫자는 이 기준과 다르다 — 프론트매터 `char_count` 는 참고값일 뿐이다.
+- 본문 분량은 **`node scripts/publish-draft.js <slug> --dry-run` 이 세는 기준**으로
+  `docs/channel-specs.md` 의 매거진 값(현재 1,500~2,800자, 공백 뺀 문자 수)에 맞춘다.
+  근거·경위는 `docs/channel-specs.md` §근거 및 `docs/archive/blog-seo-history.md` §2.
+  프론트매터 `char_count` 는 참고값일 뿐이다 — 정본은 `--dry-run` 의 `bodyChars`.
 - `status: draft` 로 쓴다. 사람이 검토하고 `ready` 로 바꾼다.
 - ⛔ **테차가 하지 않는 일을 우리 공로로 쓰지 않는다 (2026-09-03 추가).**
   테차는 프리저브드 가공(탈수·탈색·착색)을 하지 않는다. 이미 가공된 소재를 들여와
@@ -87,7 +88,7 @@
 ## S5 — 마무리
 
 1. 초안을 `docs/drafts/<날짜>-<slug>.md` 로 커밋한다.
-2. `docs/drafts/INDEX.md` 에 한 줄 추가한다.
+2. `docs/drafts/INDEX.md` 맨 위에 한 줄 추가한다 (`날짜 | 번호 | 슬러그 | 제목 | 상태`, 상태는 `초안`).
 3. **`NEXT.md` 를 `docs/drafts/orders/<날짜>-<slug>.md` 로 옮기고, `NEXT.md` 는 빈 템플릿으로 되돌린다.**
    이걸 빠뜨리면 다음 날 같은 주문으로 또 쓴다.
 4. push 한다.
@@ -97,4 +98,6 @@
 - ⛔ 주문이 없는데 주제를 지어내는 것
 - ⛔ `angle` 이나 "피할 것" 메모를 무시하는 것
 - ⛔ `refs/` 사진을 보지 않고 프롬프트만으로 이미지 자리를 채우는 것 (사진이 있는데도)
-- ⛔ 발행까지 진행하는 것 — 발행은 `techa-publish` 를 따로 부를 때 하고, `status: ready` 는 사람만 바꾼다
+- ⛔ 초안 작성 요청에 발행까지 이어서 하는 것 — 발행은 "초안 발행해줘"로 `techa-publish` 를
+  따로 부를 때 한다. `status: ready` 전환은 사람 승인이 있어야 한다 (혼자 대화형으로 돌 때는
+  채팅에서 "이대로 발행" 승인을 받고 Claude 가 바꿔도 된다 — `CLAUDE.md` "혼자 돌릴 때" 참고).

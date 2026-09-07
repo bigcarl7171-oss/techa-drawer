@@ -9,6 +9,7 @@
 | `viability-assessment.md` | 애드센스 수익형 사이트를 전제로 2026-07-27 작성. 바로 다음 날 방향이 브랜드 보조사이트로 바뀌어 전제가 폐기됐다 | "신규 도메인은 SEO 성과까지 6~12개월" — `brand-growth-3month-plan.md` 가 이걸 근거로 삼는다 |
 | `monetization-strategy.md` | 애드센스·PV 중심 전략. 2026-07-28 에 보류로 표시됐고 현재 계획은 `brand-growth-3month-plan.md` 다 | 수익 축 정리는 `monetization-alternatives.md` 로 이어졌다 |
 | `keyword-landscape-2026-08.md` | 문서 스스로 "이 문서의 '노출 0' 결론은 신뢰하지 말 것"이라고 적어놨다(2026-08-18 확인) | **실측 리뷰 6,063건** — `techa-brand-rules.md` §후기 표현 규칙이 이 숫자를 출처로 인용한다 |
+| `blog-seo-history.md` | 매거진 발행 규칙의 폐기된 경위(자수 버그·분량 하한 변천·링크백 금지·JS→정적 전환·애드센스 전환·크론 폐지). `blog-seo-guide.md` 를 근거 문서로 줄이면서 떼어냈다 | 각 항목이 지금 규칙의 "왜"를 설명한다. `channel-specs.md` §근거가 §2를 가리킨다 |
 
 ## 다룰 때 규칙
 

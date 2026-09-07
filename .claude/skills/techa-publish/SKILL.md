@@ -31,8 +31,8 @@ description: >
 | `techa-cardnews` | 루트의 `topic-pool.md` |
 | `techa-shorts` | 루트의 `script-guide.md` — `references/stage3-*.md`가 여기 있다 |
 
-`techa-content-studio` 스킬이 형제 저장소에 없으면 `D:\claude-practice\.claude\skills\techa-content-studio\`
-도 확인한다(이 PC의 실제 위치, `CLAUDE.md` 저장소 지도 참조).
+`techa-content-studio` 스킬은 `techa-shorts` 저장소의 `.claude/skills/techa-content-studio/`
+에 있다 (`references/stage3-*.md` 포함). 경로는 PC마다 다르니 위 특징 파일로 찾는다.
 
 ---
 
@@ -106,8 +106,8 @@ node scripts/publish-draft.js <slug> --emoji 🌷 --tag "꽃 고르기" --desc "
 발행본 HTML · `og:image`를 글별 cover로 · `blog/index.html` 카드 · `index.html` 캐러셀(상한 3,
 `transition-delay` 재부여) · 위젯(상한 5) · `sitemap.xml` · 멱등 재실행.
 
-JSON의 `warnings[]`를 확인한다. **본문이 1,800자 미만이면 여기서 멈추고 사용자에게 알린다** —
-매거진 목표는 1,800~2,800자(`stage3-magazine.md`)다. 무단으로 살을 붙이지 않는다.
+JSON의 `warnings[]`를 확인한다. **본문 분량 경고가 뜨면 여기서 멈추고 사용자에게 알린다** —
+매거진 목표는 `docs/channel-specs.md` 기준(현재 1,500~2,800자)이다. 무단으로 살을 붙이지 않는다.
 
 ## S3 — 내부링크 (판단이 필요한 단계)
 
@@ -159,12 +159,13 @@ curl -s -o /dev/null -w '%{http_code}' https://www.techa.kr/blog/<slug>/
 > 판정법: **두 글을 나란히 놓았을 때 "같은 이야기를 다르게 쓴 것"으로 읽히는가.**
 > 다른 주제의 글로 읽히면 다시 쓴다.
 
+> 분량·소제목 수치는 `docs/channel-specs.md` 가 정본이다. 아래는 그 외 차이만 정리한다.
+
 | | 매거진 (방금 발행) | 네이버 블로그 |
 |---|---|---|
 | 화자 | 테차(꽃집 운영자) 자신, 절제된 안내자 톤 | 테차(꽃집 운영자) 자신, 더 짙은 1인칭 |
 | 성격 | 정보형 — 판단 기준 | 경험형 — 고민 → 결정 → 그 이후 (**서술 방식만 그렇다는 뜻. 다루는 소재는 매거진과 같다**) |
-| 분량 | 1,800~2,800자 | **1,500~2,000자** |
-| 소제목 | 4~6 + FAQ | **2~3** + 리스트 최소 1곳. ⛔ 앞에 `###` 를 붙이지 않는다 (아래) |
+| 구조 | 소제목 + FAQ | 소제목 + 리스트 최소 1곳. ⛔ 앞에 `###` 를 붙이지 않는다 (아래) |
 | 제목 | 1개 | **3안, 각 25~30자, 글자수 병기** |
 | 이미지 | 대표 + 본문 2~3 | **3장 이상** (매거진 컷 재사용 가능) |
 | 링크 | canonical | ⛔ **techa.kr 링크백 금지** — "테차" 브랜드명만 언급 |
@@ -195,16 +196,19 @@ curl -s -o /dev/null -w '%{http_code}' https://www.techa.kr/blog/<slug>/
 
 ## S7 — 이력 갱신 (빠뜨리면 같은 주제를 또 추천하게 된다)
 
-1. `techa-cardnews/topic-pool.md` **두 표 다**:
-   - 번호 표 해당 행 `사용함` 열 → `날짜 + 뼈대 유형` (예: `2026-08-24 사례·스토리형`)
-   - "이미 다룬 주제" 표 → 제목 · 채널 · `슬러그`, 발행일, 네이버 재구성 각도 한 줄
-   - 커밋한다 (다른 저장소다)
-2. `docs/drafts/INDEX.md` 해당 행 `draft` 열을 `published`로, 네이버판을 만들었으면 함께 표기
+중복 방지의 정본은 **`techa-cardnews/topic-pool.md` 의 "이미 다룬 주제" 표** 하나다.
+(AI 가 주제를 고르던 STAGE 1 자동선정 + 원고 보드 Artifact 재발행은 2026-09-05 폐지 —
+사람이 주문으로 주제를 정하므로 더 안 쓴다.)
+
+1. `techa-cardnews/topic-pool.md`:
+   - **"이미 다룬 주제" 표** → 제목 · 채널 · `슬러그` · 발행일 · 네이버 재구성 각도 한 줄
+   - `topic_no` 가 있으면 번호 표 그 행 `사용함` 열에 `날짜` 도 적는다 (routine-draft.js S2 가 읽는다)
+   - 커밋·푸시한다 (다른 저장소다)
+2. `docs/drafts/INDEX.md` 해당 행 `상태` 열을 `발행`(네이버판까지면 `발행+네이버`)으로 바꾼다
 3. 초안 frontmatter `status: ready` → `published`
-4. **원고 보드 재발행** — 소스 `techa-content-studio/references/topic-board.html`을 고치고
-   Artifact를 **`url` 파라미터에 기존 주소를 넣어** 재발행한다:
-   `https://claude.ai/code/artifact/d186c5b8-c22a-4f17-af60-693ba18ba6c2`
-   `url` 없이 발행하면 별개 아티팩트가 생겨 사용자가 보던 링크는 안 바뀐다.
+4. **발행 끝난 초안 쌍을 옮긴다**: `docs/drafts/<날짜>-<slug>.md` 와 `-naver.md` 를
+   `docs/drafts/archive/` 로 이동한다. `docs/drafts/` 루트에는 진행 중인 것만 남긴다.
+   (INDEX.md 와 topic-pool 이 이력의 정본이라 초안 파일 자체는 archive 로 내려도 된다.)
 
 ## S8 — 사람 몫만 보고하고 끝낸다
 
@@ -223,10 +227,10 @@ API가 없어 자동화할 수 없는 셋:
 
 - [ ] S0: `status: ready` 초안만 건드렸는가 (없으면 아무것도 안 하고 끝냈는가)
 - [ ] S1: 직접 촬영본을 AI 컷으로 덮어쓰지 않았는가 / 워터마크가 잘렸는가
-- [ ] S2: 본문 1,800자 미만이면 **멈췄는가** (몰래 늘리지 않았는가)
+- [ ] S2: 본문 분량 경고가 떴는데 **멈췄는가** (몰래 늘리지 않았는가)
 - [ ] S3: 블로그 밖 내부링크를 문맥 안에 자연스럽게 넣었는가
 - [ ] S4: ❌ 없이 통과한 뒤에만 커밋했는가
 - [ ] S6: 네이버판이 매거진 문장 복사가 아니라 **새로 쓴 글**인가 / **매거진이 다룬 범위를 다 담았는가**(한 절만 떼어낸 다른 글이 아닌가) / ⛔ techa.kr 링크가 없는가
-- [ ] S7: `topic-pool.md` **두 표 다** 갱신하고 커밋했는가 / 보드를 **기존 URL로** 재발행했는가
+- [ ] S7: `topic-pool.md` "이미 다룬 주제" 표를 갱신·푸시했는가 / 발행 끝난 초안 쌍을 `docs/drafts/archive/` 로 옮겼는가
 - [ ] 브랜드 사실: 누적 판매량·리뷰 건수를 **숫자로 쓰지 않았는가** (평점 4.8+ 만 숫자 허용).
       손님 문의는 허용된 3가지(배송·맞춤 제작·생화 여부) 밖으로 나가지 않았는가

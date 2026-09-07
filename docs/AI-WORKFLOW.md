@@ -15,4 +15,4 @@
 - AI 간 인계에는 branch명, commit SHA, 변경 파일, 테스트 결과를 반드시 남긴다.
 - 이어받는 AI는 채팅 기억이 아니라 Git commit과 저장소 문서를 기준으로 작업한다.
 - Codex 작업 중 Claude가 `main`에 새 매거진을 발행할 수 있으므로 최종 병합 전에 최신 `main` 동기화가 필수다.
-- `.agents/skills`와 `.claude/skills`에는 동일 스킬 사본이 있다. 임의로 한쪽만 수정하지 말고 `skills-lock.json`의 `source`를 기준으로 관리한다.
+- 외부에서 받아온 스킬(`better-ui`, `frontend-design`)은 `.claude/skills/` 아래에 있고 `skills-lock.json`이 출처·해시를 추적한다. 매거진 발행 스킬(`techa-publish`)은 이 저장소가 원본이다.

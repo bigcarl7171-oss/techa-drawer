@@ -2,9 +2,9 @@
 /*
   초안(docs/drafts/YYYY-MM-DD-<slug>.md) → 발행본 + 목록·메인·사이트맵 반영.
 
-  왜 스크립트인가: blog-seo-guide.md "새 글 발행 절차" 1~4번은 판단이 필요 없는데도
-  매번 손으로 했다. 캐러셀 3개·위젯 5개 상한과 transition-delay 재부여처럼 빠뜨리기
-  쉬운 규칙이 섞여 있어서, 규칙 문장을 더 쓰는 대신 코드로 고정한다.
+  왜 스크립트인가: 발행본·목록·메인·사이트맵 반영은 판단이 필요 없는데도 매번 손으로
+  했다. 캐러셀 3개·위젯 5개 상한과 transition-delay 재부여처럼 빠뜨리기 쉬운 규칙이
+  섞여 있어서, 규칙 문장을 더 쓰는 대신 코드로 고정한다. (근거: docs/blog-seo-guide.md)
   판단이 필요한 5~7번(이미지 선택·내부링크·검증)은 techa-publish 스킬이 맡는다.
 
   사용법:
@@ -41,6 +41,18 @@ const emoji = values.emoji || "🌸";
 const tag = values.tag || "테차 매거진";
 const cardDesc = values.desc;
 const ctaText = values.cta;
+
+// 분량 기준은 docs/channel-specs.md 가 단일 출처다 (check-publish.sh 도 여기서 읽는다).
+// 값이 바뀌면 그 파일만 고친다.
+const readSpec = (key, dflt) => {
+  try {
+    const m = fs.readFileSync(path.join(ROOT, "docs", "channel-specs.md"), "utf8")
+      .match(new RegExp("^" + key + "=(\\d+)", "m"));
+    return m ? Number(m[1]) : dflt;
+  } catch { return dflt; }
+};
+const MAG_MIN = readSpec("magazine_min", 1500);
+const MAG_MAX = readSpec("magazine_max", 2800);
 
 // ── 1. 초안
 const d = D.loadDraft(slug);
@@ -170,7 +182,7 @@ console.log(JSON.stringify({
   missingImages: missing.map((im) => im.file),
   written: DRY ? [] : writes.map(([p]) => rel(p)),
   warnings: [
-    bodyChars < 1500 ? `본문 약 ${bodyChars}자 — 매거진 목표는 1,500~2,800자` : null,
+    bodyChars < MAG_MIN ? `본문 약 ${bodyChars}자 — 매거진 목표는 ${MAG_MIN}~${MAG_MAX}자` : null,
     missing.length ? `이미지 파일 없음: ${missing.map((im) => im.file).join(", ")} — prepare-images.js 먼저` : null,
   ].filter(Boolean),
 }, null, 2));

@@ -11,15 +11,20 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
 `techa-drawer`)만 보고 "그런 파일 없다"고 판단하지 말 것.** 2026-08-17에 실제로 그렇게
 오판해서, 이미 있는 주제 풀과 원고 스킬을 못 찾고 열등한 복제본을 새로 만든 사고가 있었다.
 
-| 찾는 것 | 실제 위치 |
+> ⚠️ **경로를 외우지 않는다.** PC마다 드라이브·폴더명이 다르다. 형제 저장소는
+> **특징 파일**로 찾는다 (`check-publish.sh` 의 `find_repo()` 와 같은 방식):
+> `topic-pool.md` 가 있는 폴더 = `techa-cardnews`, `script-guide.md` 가 있는 폴더 = `techa-shorts`.
+> 이 PC(2026-09-07 기준)에서는 셋 다 `C:\ClaudeCode\` 아래에 있다.
+
+| 찾는 것 | 실제 위치 (2026-09-07 이 PC 기준) |
 |---|---|
-| **원고 작성 파이프라인 (원본)** | `D:\claude-practice\.claude\skills\techa-content-studio\SKILL.md` |
-| **주제 후보 + 이미 다룬 주제 이력** | `D:\techa-cardnews\topic-pool.md` |
-| **원고 보드** (주제 고르는 대시보드) | https://claude.ai/code/artifact/d186c5b8-c22a-4f17-af60-693ba18ba6c2<br>소스: `…\techa-content-studio\references\topic-board.html` · 재발행 시 반드시 이 URL로 |
+| **원고 작성 파이프라인 (원본)** | `C:\ClaudeCode\techa-shorts\.claude\skills\techa-content-studio\SKILL.md` |
+| **주제 후보 + 이미 다룬 주제 이력** | `C:\ClaudeCode\techa-cardnews\topic-pool.md` |
 | 시의성 주제 리서치 (추석 등) | `…\techa-content-studio\references\topic-research-2026-08.md` |
-| 카드뉴스 카피 규칙 | `D:\techa-cardnews\card-copy-guide.md` |
+| 카드뉴스 카피 규칙 | `C:\ClaudeCode\techa-cardnews\card-copy-guide.md` |
 | 브랜드 톤·품질게이트·색상 | `techa-brand-rules.md` (이 저장소 = 원본) |
-| 매거진 발행 절차·SEO | `docs/blog-seo-guide.md` (이 저장소 = 원본) |
+| 채널별 분량·구조 규격 | `docs/channel-specs.md` (이 저장소 = 원본, 매거진·네이버·스레드 공통) |
+| 매거진 발행 절차 | `.claude/skills/techa-publish/SKILL.md` (정본) · `docs/blog-seo-guide.md` (근거·이유) |
 
 # 매거진 파이프라인 — 사람이 부를 때만 돈다 (2026-09-05~)
 
@@ -31,11 +36,15 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
 |---|---|---|
 | 1 | **사람** | 로컬 폴더에 레퍼런스 사진을 모으고 `node scripts/new-order.js <폴더> --slug <슬러그> --title "…" --angle "…"` → **커밋·푸시**. 이게 주문이다 |
 | 2 | **사람이 부름** | "초안 써줘" → `docs/drafts/NEXT.md`의 주문을 읽고 `docs/drafts/refs/<슬러그>/` 사진을 보며 초안 작성 → 커밋 → 주문서를 `docs/drafts/orders/`로 옮기고 `NEXT.md`를 비운다 |
-| 3 | **사람** | ①원고 검토·수정 ②`status: ready`로 바꿔 커밋 (사진은 주문 때 이미 넣었다) |
+| 3 | **사람** | 원고 검토·수정 후 `status: ready` (아래 "혼자 돌릴 때" 참고 — 별도 커밋은 선택) |
 | 4 | **사람이 부름** | "초안 발행해줘" → `.claude/skills/techa-publish` 실행 — 빈 이미지 슬롯 생성 → 발행 → 검증 → push(=배포) → 네이버판 원고 → 이력 갱신 |
 
 - 발행은 **하루 한 편**이 기준이다. 2·4단계는 같은 날 몰아서 해도 되고 며칠에 나눠도 된다.
 - `status: ready`가 아니면 발행 스킬은 **아무것도 하지 않는다.**
+- **혼자 대화형으로 다 돌릴 때 (2026-09-07~)**: 2·3·4를 한 세션에 몰아도 된다. Claude가
+  초안을 채팅에 그대로 보여주고 → 사람이 "이대로 발행" 하면 → Claude가 `status: ready`로
+  바꾸고 이어서 발행한다. 3단계의 "사람이 손으로 별도 커밋"은 **폐지된 무인 클라우드 루틴을
+  위한 것**이었다 — 이제는 필수가 아니다. `status` 필드 자체는 안전 인터록으로 남긴다.
 - 사진을 안 넣으면 초안의 영문 프롬프트로 힉스필드가 생성한다. **넣은 사진이 항상 우선한다.**
 - **사진 경로가 세 갈래다.** 우선순위는 `docs/drafts/images/<슬러그>/`(로컬 전용, gitignore) → `docs/drafts/refs/<슬러그>/`(**주문서 사진, 커밋됨**) → AI 생성분.
   초안의 이미지 마커에 `ref: 04.jpg`처럼 적으면 `refs/`의 그 파일을 쓴다.
@@ -45,9 +54,12 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
 
 # 원고 작성 요청
 
-"원고 써줘" "블로그 글 써줘" "매거진에 글 하나" "이번 주 소재 뭐 쓸까" 같은 요청이 오면
-**`techa-content-studio` 스킬이 원본 절차**다(위 표의 경로). 주제 추천은 반드시
-`topic-pool.md`에서 고른다 — 즉흥 생성하지 않는다.
+**매거진·네이버 블로그**는 위 파이프라인(사람이 `NEXT.md` 주문으로 주제를 정한다)이
+유일한 경로다. 주문이 없으면 초안을 쓰지 않는다 (`routine-draft.md` S0). AI가 주제를
+고르던 STAGE 1 자동선정은 2026-09-05에 폐지됐다 — `topic-pool.md`는 이제 **중복 확인용**으로만 본다.
+
+"원고 써줘" 류 요청이 **카드뉴스·쇼츠·스레드**에 대한 것이면 `techa-content-studio`
+스킬이 원본 절차다(위 표의 경로). 이때 주제는 `topic-pool.md`에서 고른다 — 즉흥 생성하지 않는다.
 
 ⚠️ 규칙이 서로 어긋나면 **`techa-content-studio` 쪽이 최신**이다. 이 저장소의
 `blog-seo-guide.md`가 더 오래된 방침을 담고 있던 전례가 있다(네이버 링크백 건).

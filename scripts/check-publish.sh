@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# 매거진 발행 검증 — blog-seo-guide.md "새 글 발행 절차" 1~7번을 기계적으로 확인한다.
+# 매거진 발행 검증 — techa-publish 스킬 S1~S4(발행본·목록·메인·사이트맵·내부링크)를
+# 기계적으로 확인한다. 분량 기준은 docs/channel-specs.md 에서 읽는다.
 #
 # 왜 스크립트인가: 절차 2·3·4번은 파일 위치가 고정돼 매번 지켜졌지만, 7번(내부링크)만
 # "적당한 페이지를 찾아서"라 판단이 필요해 두 번 연속 누락됐다(2026-08-17, 08-18).
@@ -23,7 +24,13 @@ find_repo() {  # $1=특징파일
   return 1
 }
 CARDNEWS="$(find_repo topic-pool.md || true)"
-SHORTS="$(find_repo script-guide.md || true)"
+
+# 분량 기준은 docs/channel-specs.md 가 단일 출처다. 값이 바뀌면 그 파일만 고친다.
+SPECS="docs/channel-specs.md"
+mag_min=$(sed -n 's/^magazine_min=\([0-9]*\).*/\1/p' "$SPECS" 2>/dev/null)
+mag_max=$(sed -n 's/^magazine_max=\([0-9]*\).*/\1/p' "$SPECS" 2>/dev/null)
+[ -z "$mag_min" ] && mag_min=1500
+[ -z "$mag_max" ] && mag_max=2800
 
 # ── 본문 자수 세기
 #
@@ -65,11 +72,9 @@ if [ -f "blog/$SLUG/index.html" ]; then
   imgs=$(grep -c '<img ' "blog/$SLUG/index.html")
   ok "blog/$SLUG/index.html" "본문 약 ${chars}자 · 이미지 ${imgs}장"
   [ -z "$CHARLOC" ] && warn "자수 신뢰도" "UTF-8 로케일이 없어 바이트로 셌다 — 한글은 약 3배로 부풀려진다"
-  # 목표는 stage3-magazine.md 원본과 같은 1,500~2,800자 (2026-09-03 하한 완화).
-  # 이 숫자는 공백을 뺀 문자 수다. 세 곳(여기·publish-draft.js·stage3-magazine.md)이
-  # 같은 값을 써야 [규격] 대조가 통과한다.
-  [ "$chars" -lt 1500 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,500~2,800자"
-  [ "$chars" -gt 2800 ] && warn "본문 분량" "약 ${chars}자 — 목표 1,500~2,800자"
+  # 목표 분량은 docs/channel-specs.md 에서 읽는다 (위 SPECS). 공백을 뺀 문자 수.
+  [ "$chars" -lt "$mag_min" ] && warn "본문 분량" "약 ${chars}자 — 목표 ${mag_min}~${mag_max}자"
+  [ "$chars" -gt "$mag_max" ] && warn "본문 분량" "약 ${chars}자 — 목표 ${mag_min}~${mag_max}자"
   # 참조한 이미지 파일이 실제로 있는지. 없으면 라이브에 깨진 이미지가 그대로 나간다 —
   # 무인 발행이라 사람 눈이 중간에 없다.
   missing=""
@@ -123,24 +128,6 @@ if [ -n "$CARDNEWS" ]; then
     || bad "이미 다룬 주제 표" "$SLUG 기록 없음 — 중복 추천 원인이 된다"
 else
   warn "topic-pool.md" "저장소를 못 찾음 (형제 폴더에 없다)"
-fi
-
-# ── 채널 규격 3중 복제 대조
-echo "[규격] 보드 ↔ stage3 원본"
-if [ -n "$SHORTS" ]; then
-  REF="$SHORTS/.claude/skills/techa-content-studio/references"
-  chk() { # $1=수치  $2=stage3파일  $3=이름
-    local inref inboard
-    inref=$(grep -c -- "$1" "$REF/$2" 2>/dev/null) || inref=0
-    inboard=$(grep -c -- "$1" "$REF/topic-board.html" 2>/dev/null) || inboard=0
-    if [ "$inref" -ge 1 ] && [ "$inboard" -ge 1 ]; then ok "$3" "$1 일치"
-    else bad "$3" "$1 — stage3:$inref board:$inboard 불일치"; fi
-  }
-  chk "1,500~2,800" stage3-magazine.md "매거진 분량"
-  chk "1,500~2,000" stage3-blog.md     "네이버 분량"
-  chk "300~500"     stage3-threads.md  "스레드 분량"
-else
-  warn "stage3 원본" "techa-shorts 저장소를 못 찾음"
 fi
 
 # ── 배포
