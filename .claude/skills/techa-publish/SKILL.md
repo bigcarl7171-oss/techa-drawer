@@ -41,6 +41,8 @@ description: >
 3. **직전 발행본을 archive로 내린다**: `docs/drafts/` 루트에 있는 `*-*.md`(INDEX.md 제외,
    보통 1개 — 지난번 발행 매거진)를 `git mv` 로 `docs/drafts/archive/` 로 옮긴다.
    → 루트에는 항상 **가장 최근 발행본 1개만** 남는다.
+   - `-naver.md` 가 눈에 띄면 그냥 `git rm` 한다. **네이버본은 저장소에 두지 않는다** —
+     같은 주제 매거진이 발행되면 폐기한다 (2026-09-07 확정).
 4. `magazine.md`를 `docs/drafts/<date>-<slug>.md` 로 복사한다 (프론트매터 `status: published`).
    이 파일이 "저장소에 남는 매거진 최종본"이다. 이후 스크립트는 전부 이 파일을 읽는다.
 
