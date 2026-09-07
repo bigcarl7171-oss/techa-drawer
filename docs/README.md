@@ -15,7 +15,7 @@
 | 질문 | 문서 |
 |---|---|
 | 매거진을 발행하려면 | `.claude/skills/techa-publish/SKILL.md` — 정본(S0~S8). `blog-seo-guide.md` 는 스크립트가 무엇을 왜 하는지 근거 |
-| "초안 써줘" 하면 뭘 하나 | `routine-draft.md` — 초안 작성이 그대로 따르는 정본 |
+| "초안 써줘" 하면 뭘 하나 | `routine-draft.md` — 스크래치 폴더에 `magazine.md` + `blog.md` 를 쓴다 (저장소 밖) |
 | 매거진·네이버·스레드 분량·구조 기준 | `channel-specs.md` — 숫자의 단일 출처(스크립트도 여기서 읽는다) |
 | 여러 AI가 이 저장소를 어떻게 나눠 쓰나 | `AI-WORKFLOW.md` — 역할 분담, 브랜치 규칙 (루트 `AGENTS.md` 와 한 쌍) |
 | 쇼츠 자막을 어떻게 만드나 | `shorts-caption-system-2026-08.md` — `assets/` 의 스크림·세이프존 PNG와 함께 본다 |

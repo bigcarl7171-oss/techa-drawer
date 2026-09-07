@@ -7,16 +7,16 @@
     [이미지 자리 N: …]        → img-N.jpg
   (publish-draft.js 와 같은 파서를 쓴다 — scripts/lib/draft.js)
 
-  소스 우선순위:
-    1) --from <dir>  AI 생성분. blog-seo-guide.md 규칙대로 우하단 워터마크를 잘라낸다
-       (좌상단 기준 3:2 크롭). 원본 PNG 는 옮기지 않는다.
-    2) docs/drafts/images/<slug>/  직접 촬영본. 워터마크가 없으니 가운데 기준 3:2 크롭.
-    파일명은 cover.* / 1.* / 2.* … (img-1.* 도 받는다)
+  소스 (파일명은 cover.* / 1.* / 2.* … , img-1.* 도 받는다):
+    --from <dir>          기본은 AI 생성분 취급 — 우하단 워터마크를 잘라낸다(좌상단 기준 3:2 크롭)
+    --from <dir> --photo  직접 촬영본 취급 — 워터마크가 없으니 가운데 기준 3:2 크롭
+    docs/drafts/images/<slug>/  로컬 스크래치(gitignore). 있으면 --from 보다 우선, 가운데 크롭.
 
-  둘 다 없는 슬롯은 missing 으로 보고한다 → 스킬이 그 슬롯만 힉스필드로 생성한다.
+  없는 슬롯은 missing 으로 보고한다 → 스킬이 그 슬롯만 힉스필드로 생성한다.
+  원본 PNG·고해상도 사진은 저장소에 옮기지 않는다.
 
   사용법:
-    node scripts/prepare-images.js <slug> [--from <dir>] [--dry-run]
+    node scripts/prepare-images.js <slug> --from <스크래치폴더> [--photo] [--dry-run]
 */
 "use strict";
 const fs = require("fs");
@@ -28,14 +28,14 @@ const { ROOT, die, rel } = D;
 const argv = process.argv.slice(2);
 const slug = argv.find((a) => !a.startsWith("-"));
 const DRY = argv.includes("--dry-run");
+const PHOTO = argv.includes("--photo");   // --from 을 직접 촬영본으로 취급(가운데 크롭)
 const fromIdx = argv.indexOf("--from");
 const FROM = fromIdx >= 0 ? path.resolve(argv[fromIdx + 1] || "") : null;
-if (!slug) die("사용법: node scripts/prepare-images.js <slug> [--from <dir>]");
+if (!slug) die("사용법: node scripts/prepare-images.js <slug> --from <dir> [--photo]");
 if (FROM && !fs.existsSync(FROM)) die(`--from 폴더가 없다: ${FROM}`);
 
 const d = D.loadDraft(slug);
-const shotDir = path.join(ROOT, "docs", "drafts", "images", slug);
-const refDir  = path.join(ROOT, "docs", "drafts", "refs", slug);   // 주문서에 딸려 온 사진(커밋됨)
+const shotDir = path.join(ROOT, "docs", "drafts", "images", slug);   // 로컬 스크래치(gitignore)
 const outDir = path.join(ROOT, "blog", slug);
 
 // 3:2 크롭 — 치수를 미리 몰라도 되게 ffmpeg 표현식으로 계산한다(ffprobe 불필요).
@@ -66,16 +66,11 @@ const missing = [];
 if (!DRY) fs.mkdirSync(outDir, { recursive: true });
 
 for (const im of d.images) {
-  const ai = findSource(FROM, im);
+  const fromSrc = findSource(FROM, im);
   const shot = findSource(shotDir, im);
-  // 주문서 사진: 초안 마커의 ref: 가 가리키는 파일을 docs/drafts/refs/<slug>/ 에서 찾는다
-  let order = null;
-  if (im.ref) {
-    const cand = path.join(refDir, String(im.ref).trim());
-    if (fs.existsSync(cand)) order = cand;
-  }
-  const src = shot || order || ai;     // 직접 촬영본 > 주문서 사진 > AI 생성분
-  const mode = (shot || order) ? "photo" : "watermark";
+  const src = shot || fromSrc;         // 로컬 스크래치 > --from
+  // shotDir 는 항상 직접 촬영본. --from 은 --photo 면 촬영본, 아니면 AI(워터마크).
+  const mode = shot || PHOTO ? "photo" : "watermark";
   const dest = path.join(outDir, im.file);
 
   if (!src) {
@@ -101,7 +96,7 @@ for (const im of d.images) {
 
 console.log(JSON.stringify({
   slug, dryRun: DRY,
-  sources: { shots: rel(shotDir), refs: fs.existsSync(refDir) ? rel(refDir) : null, generated: FROM ? rel(FROM) : null },
+  sources: { localScratch: rel(shotDir), from: FROM ? rel(FROM) : null, fromMode: PHOTO ? "photo" : "watermark" },
   filled, kept, missing,
   note: missing.length
     ? `빈 슬롯 ${missing.length}개 — prompt 로 생성한 뒤 --from 으로 다시 실행`

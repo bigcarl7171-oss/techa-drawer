@@ -92,10 +92,10 @@ function sectionLine(text, name) {
 
 /*
   이미지 자리 마커
-    [이미지 자리 1: 설명 — alt: 대체텍스트 — ref: 04.jpg — prompt: English generation prompt]
-  `ref:` 는 주문서에 딸려 온 docs/drafts/refs/<slug>/ 안의 파일명이다. 있으면 그 사진을 쓴다.
+    [이미지 자리 1: 설명 — alt: 대체텍스트 — prompt: English generation prompt]
   `— ` 로 끊고 `키: 값` 을 찾는다. alt·prompt 는 없어도 된다(없으면 설명을 alt 로 쓰고,
   prompt 가 없으면 자동 생성 대상에서 빠져 사람이 사진을 넣어야 한다).
+  (옛 `ref:` 키 — docs/drafts/refs/ 폴더 — 는 2026-09-07 폐지됐다. 있어도 무시된다.)
 
   구분자는 em dash 가 규격이지만 en dash·하이픈도 받는다 — 초안을 쓰는 쪽이 글자를
   바꿔 쓰면 alt·prompt 가 통째로 설명에 먹혀 조용히 사라지기 때문이다.
