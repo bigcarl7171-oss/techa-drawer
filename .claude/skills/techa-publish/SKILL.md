@@ -12,7 +12,8 @@ description: >
 # 테차 매거진 발행 (techa-publish)
 
 `routine-draft.md`에 따라 네 PC의 스크래치 폴더(`C:\연습\<slug>_원고\` 등)에 `magazine.md`와
-`blog.md`가 만들어진다. 사람이 `magazine.md`를 검토·수정하고 "발행해줘"로 부르면 이 스킬이
+`blog.md`가 만들어진다. 사람은 `blog.md`를 검토·수정하고(2026-09-08 변경 — 예전엔 `magazine.md`가
+검토 대상이었다), 그 확정본이 `magazine.md`에 반영된 상태에서 "발행해줘"로 부른다. 그러면 이 스킬이
 **거기서부터 끝까지**를 맡는다. 발행은 하루 한 편이 기준이다. 정해진 시각에 도는 클라우드
 루틴은 없다 (2026-09-05 폐지).
 
@@ -126,11 +127,12 @@ curl -s -o /dev/null -w '%{http_code}' https://www.techa.kr/blog/<slug>/
 
 ## S6 — 네이버용 blog.md 점검 (저장소엔 안 넣는다)
 
-`blog.md`는 `routine-draft.md` S5에서 이미 스크래치 폴더에 만들어져 있다.
-**저장소에 커밋하지 않는다.** 여기서는 두 가지만 확인한다:
+`blog.md`는 `routine-draft.md` S5에서 만들어지고 S6에서 사람이 확정한 상태다 (검토는
+`blog.md` 기준 — 2026-09-08 변경). **저장소에 커밋하지 않는다.** 여기서는 두 가지만 확인한다:
 
-- S0~S2에서 `magazine.md`가 **크게 바뀌었으면** `blog.md`도 스크래치에서 맞춰 다시 쓴다
-  (다루는 범위는 매거진과 같게, 형식·문장·1인칭 농도만 다르게 — `stage3-blog.md`).
+- `magazine.md`가 확정 `blog.md`를 반영하고 있는지 (방향은 `blog.md` → `magazine.md`).
+  S0~S2에서 매거진을 손봤다면 그 변경이 `blog.md`와 어긋나지 않는지 본다 — 어긋나면
+  `magazine.md`를 `blog.md`에 맞춘다 (반대 방향 아님).
 - `blog.md`에 techa.kr 링크가 없는지, 마크다운 문법(`###`)이 없는지, 제목 3안이 있는지.
 
 사람이 이 `blog.md`를 네이버 블로그에 붙여넣는다(S8). 붙여넣고 나면 스크래치 폴더째 삭제한다.
