@@ -88,6 +88,22 @@ https://www.techa.kr/sitemap.xml
 
 ---
 
+## 주소는 https://www.techa.kr 하나다
+
+검색엔진에 넣는 주소는 항상 `https://www.techa.kr` 를 쓴다. 나머지 세 가지는
+301 로 여기 모인다.
+
+| 입력 | 결과 |
+|---|---|
+| `http://www.techa.kr/` | 301 → `https://www.techa.kr/` |
+| `http://techa.kr/` | 301 → `https://www.techa.kr/` |
+| `https://techa.kr/` | 301 → `https://www.techa.kr/` |
+
+2026-09-08 이전에는 http 두 개가 리디렉션 없이 200 을 줬다. Cloudflare 존 설정
+**SSL/TLS → Edge Certificates → Always Use HTTPS** 가 꺼져 있어서였다. 이 토글이
+꺼지면 같은 문제가 그대로 돌아오므로, 색인이 이상하면 위 표를 먼저 확인한다.
+
+---
 ## 자동화할 수 없는 이유
 
 구글 Indexing API 는 채용공고·라이브중계 구조화 데이터에만 열려 있어 일반
