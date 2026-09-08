@@ -235,7 +235,7 @@
     el.className = "site-footer";
     el.innerHTML =
       '<div class="wrap">' +
-      '  <a href="/">홈</a><a href="/about/">사이트 소개</a><a href="/contact/">문의하기</a>' +
+      '  <a href="/">홈</a><a href="/ko/">전체 도구</a><a href="/blog/">테차 매거진</a><a href="/about/">사이트 소개</a><a href="/contact/">문의하기</a>' +
       '  <a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a>' +
       '  <div class="disclaimer">본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. © ' +
       new Date().getFullYear() + " 테차 서랍</div>" +

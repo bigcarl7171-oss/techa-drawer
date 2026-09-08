@@ -592,6 +592,10 @@ body.landing { background: #f6f1e7; }
 .home-featured-tools b { display: block; font-size: 16px; }
 .home-featured-tools small { display: block; margin-top: 5px; color: var(--muted); }
 .home-all-tools-title { margin: 38px 0 16px; font-family: "Gowun Batang", serif; font-size: 22px; }
+.home-all-tools-title { margin-bottom: 6px; }
+.home-all-tools-more { margin: 0 0 18px; font-size: 14px; }
+.home-all-tools-more a { color: var(--gold-deep); text-decoration: none; border-bottom: 1px solid transparent; }
+.home-all-tools-more a:hover { border-bottom-color: currentColor; }
 @media (hover: hover) and (pointer: fine) {
   .home-featured-tools a:hover { background: #fbfaf6; text-decoration: none; transform: translateY(-2px); }
   .shell-tool-row:hover { transform: translateY(-2px); }

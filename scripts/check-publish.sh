@@ -130,6 +130,25 @@ else
   warn "topic-pool.md" "저장소를 못 찾음 (형제 폴더에 없다)"
 fi
 
+# ── 도구 허브 (ko/index.html)
+#
+# 허브는 정적 HTML 이고 도구 목록의 원본은 assets/js/site.js 의 APPS 배열이다. 도구를
+# 추가하고 허브를 안 고치면 그 페이지는 다시 고아가 된다 — 색인이 안 잡히던 원인이
+# 정확히 이거였다(2026-09-08). 두 목록이 어긋나면 여기서 잡는다.
+echo "[허브] 도구 목록 동기화"
+if [ -f ko/index.html ] && [ -f assets/js/site.js ]; then
+  apps=$(grep -o 'path: "/ko/[a-z-]*/"' assets/js/site.js | sed 's|.*/ko/||;s|/"||' | sort -u)
+  hub=$(grep -o 'href="/ko/[a-z-]*/"' ko/index.html | sed 's|.*/ko/||;s|/"||' | sort -u)
+  missing=$(comm -23 <(echo "$apps") <(echo "$hub"))
+  if [ -z "$missing" ]; then
+    ok "도구 허브" "$(echo "$hub" | grep -c .)개 전부 링크됨"
+  else
+    bad "도구 허브" "ko/index.html 에 빠진 도구: $(echo $missing) — 추가해야 색인된다"
+  fi
+else
+  warn "도구 허브" "ko/index.html 또는 site.js 를 못 찾음"
+fi
+
 # ── 배포
 echo "[배포] 라이브 확인"
 code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 15 "https://www.techa.kr/blog/$SLUG/" 2>/dev/null || echo 000)
