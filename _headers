@@ -1,0 +1,15 @@
+# Cloudflare Workers 정적 자산 — 응답 헤더
+#
+# HSTS: 한 번 https 로 방문한 브라우저는 이후 http 주소를 쳐도 브라우저가 알아서
+# https 로 바꿔 요청한다. 왕복이 없어져 더 빠르고, 중간자 공격도 막는다.
+#
+# ⚠️ 이것만으로 http→https 가 해결되지 않는다. HSTS 는 "이미 https 로 와 본" 브라우저에만
+# 걸리는 규칙이라, http 로 처음 들어오는 검색로봇에는 아무 효과가 없다. 실제 리디렉션은
+# Cloudflare 존 설정 SSL/TLS → Edge Certificates → Always Use HTTPS 를 켜야 생긴다.
+# (2026-09-08 확인: http://www.techa.kr, http://techa.kr 가 리디렉션 없이 200 을 준다)
+#
+# preload 는 넣지 않았다. 한번 등록하면 브라우저에 하드코딩돼 되돌리기 어렵다.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
