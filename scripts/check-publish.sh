@@ -6,12 +6,22 @@
 # "적당한 페이지를 찾아서"라 판단이 필요해 두 번 연속 누락됐다(2026-08-17, 08-18).
 # 규칙 문장을 더 쓰는 대신, 안 지켜지면 실패하게 만든다.
 #
-# 사용법:  scripts/check-publish.sh <slug>
-#   예)    scripts/check-publish.sh flower-gift-better-than-photo
+# 사용법:  scripts/check-publish.sh <slug> --blog <스크래치폴더/blog.md>
+#          scripts/check-publish.sh <slug> --no-blog      # 네이버판을 안 쓰는 글일 때만
+#   예)    scripts/check-publish.sh flower-gift-better-than-photo --blog "C:/연습/x_원고/blog.md"
 
 set -uo pipefail
 SLUG="${1:-}"
-[ -z "$SLUG" ] && { echo "사용법: $0 <slug>"; exit 2; }
+[ -z "$SLUG" ] && { echo "사용법: $0 <slug> --blog <blog.md> | --no-blog"; exit 2; }
+shift
+BLOG=""; NO_BLOG=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --blog) BLOG="${2:-}"; shift 2 ;;
+    --no-blog) NO_BLOG=1; shift ;;
+    *) echo "알 수 없는 인자: $1"; exit 2 ;;
+  esac
+done
 
 DRAWER="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$DRAWER" || exit 2
@@ -118,6 +128,27 @@ if [ "${#linkers[@]}" -ge 1 ]; then
   ok "블로그 밖 내부링크" "${#linkers[@]}개 — ${linkers[*]}"
 else
   bad "블로그 밖 내부링크" "0개 — 최소 1개 필요 (예: care/, ko/gift-finder/)"
+fi
+
+# ── 중복: 매거진 ↔ 네이버 blog.md 문장 겹침
+#
+# 두 글은 범위는 같고 문장은 달라야 한다. 2026-09-16 사람이 완성해 온 블로그 원고 문장을
+# 매거진에 거의 그대로 옮겨 발행한 사고(겹침 78%)가 있었다. 대조를 건너뛰면 실패로 본다.
+echo "[중복] blog.md 문장 겹침"
+if [ -n "$BLOG" ]; then
+  if [ -f "$BLOG" ]; then
+    out=$(node scripts/check-overlap.js "$SLUG" --blog "$BLOG" 2>&1); rc=$?
+    pct=$(printf '%s' "$out" | grep -o '"containment": "[^"]*"' | grep -o '[0-9.]*%')
+    cps=$(printf '%s' "$out" | grep -o '"copiedSentences": [0-9]*' | grep -o '[0-9]*$')
+    if [ "$rc" = "0" ]; then ok "매거진↔blog.md" "겹침 ${pct} · 옮겨 온 문장 ${cps}개"
+    else bad "매거진↔blog.md" "겹침 ${pct} · 옮겨 온 문장 ${cps}개 — 문장을 새로 써라 (node scripts/check-overlap.js $SLUG --blog …)"; fi
+  else
+    bad "매거진↔blog.md" "blog.md 가 없다: $BLOG"
+  fi
+elif [ "$NO_BLOG" = "1" ]; then
+  warn "매거진↔blog.md" "--no-blog — 네이버판 없이 발행"
+else
+  bad "매거진↔blog.md" "대조 안 함 — --blog <스크래치/blog.md> 를 주거나, 네이버판이 없으면 --no-blog"
 fi
 
 # ── 이력 (topic-pool.md, 다른 저장소)

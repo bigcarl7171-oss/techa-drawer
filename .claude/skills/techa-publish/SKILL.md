@@ -44,7 +44,11 @@ description: >
    → 루트에는 항상 **가장 최근 발행본 1개만** 남는다.
    - `-naver.md` 가 눈에 띄면 그냥 `git rm` 한다. **네이버본은 저장소에 두지 않는다** —
      같은 주제 매거진이 발행되면 폐기한다 (2026-09-07 확정).
-4. `magazine.md`를 `docs/drafts/<date>-<slug>.md` 로 복사한다 (프론트매터 `status: published`).
+4. **먼저 문장 겹침을 잰다**: `node scripts/check-overlap.js --mag "<스크래치>/magazine.md" --blog "<스크래치>/blog.md"`.
+   `pass: false` 면 여기서 멈추고 `magazine.md` 문장을 새로 쓴다(범위·사실은 그대로). 사람이 완성된
+   블로그 원고를 채팅으로 가져왔으면 그걸 스크래치 `blog.md` 로 저장한 뒤 매거진은 새로 써서 잰다 —
+   블로그 문장을 매거진에 옮겨 쓰지 않는다 (2026-09-16 사고, 겹침 78%).
+5. `magazine.md`를 `docs/drafts/<date>-<slug>.md` 로 복사한다 (프론트매터 `status: published`).
    이 파일이 "저장소에 남는 매거진 최종본"이다. 이후 스크립트는 전부 이 파일을 읽는다.
 
 ## S1 — 이미지 채우기
@@ -101,8 +105,11 @@ JSON의 `warnings[]`를 확인한다. **본문 분량 경고가 뜨면 여기서
 ## S4 — 검증 (게이트)
 
 ```
-bash scripts/check-publish.sh <slug>
+bash scripts/check-publish.sh <slug> --blog "<스크래치폴더>/blog.md"
+# 네이버판을 아예 안 쓰는 글만: bash scripts/check-publish.sh <slug> --no-blog
 ```
+
+`--blog` 도 `--no-blog` 도 없으면 ❌ 로 멈춘다. 매거진↔`blog.md` 겹침이 기준을 넘어도 ❌다.
 
 - **❌가 하나라도 있으면 커밋하지 않고 멈춘다.** 뭐가 걸렸는지 그대로 보고한다.
 - ⚠️ 중 "라이브 페이지/sitemap"은 아직 배포 전이라 정상이다. 나머지 ⚠️는 사용자에게 알린다.
@@ -131,6 +138,7 @@ curl -s -o /dev/null -w '%{http_code}' https://www.techa.kr/blog/<slug>/
 `blog.md` 기준 — 2026-09-08 변경). **저장소에 커밋하지 않는다.** 여기서는 두 가지만 확인한다:
 
 - `magazine.md`가 확정 `blog.md`를 반영하고 있는지 (방향은 `blog.md` → `magazine.md`).
+  반영 대상은 **사실·수치·범위**다. 문장은 달라야 한다 — S4 게이트의 겹침 검사가 이걸 잡는다.
   S0~S2에서 매거진을 손봤다면 그 변경이 `blog.md`와 어긋나지 않는지 본다 — 어긋나면
   `magazine.md`를 `blog.md`에 맞춘다 (반대 방향 아님).
 - `blog.md`에 techa.kr 링크가 없는지, 마크다운 문법(`###`)이 없는지, 제목 3안이 있는지.
@@ -164,6 +172,7 @@ API가 없어 자동화할 수 없는 셋:
 
 ## 실행 전 체크리스트
 
+- [ ] S0: `check-overlap.js` 로 매거진↔`blog.md` 문장 겹침이 기준 이하인가 (블로그 문장 복사 금지)
 - [ ] S0: 직전 발행본을 `docs/drafts/archive/` 로 옮겼는가 / 루트에 최종본 1개만 남았는가
 - [ ] S1: 촬영본은 `--photo` 로 돌렸는가 / 워터마크가 잘렸는가 / 원본을 저장소에 안 넣었는가
 - [ ] S2: 본문 분량 경고가 떴는데 **멈췄는가** (몰래 늘리지 않았는가)
