@@ -13,8 +13,12 @@
   후기 원문 인용은 따로 세어 보고만 한다(같은 후기를 양쪽에 인용하는 것 자체는 허용).
 
   사용법:
-    node scripts/check-overlap.js <slug> --blog <blog.md 경로>
-    node scripts/check-overlap.js --mag <magazine.md> --blog <blog.md>   # 저장소 밖 초안끼리
+    node scripts/check-overlap.js <slug> --blog <blog.md 경로>              # 발행본 blog/<slug>/index.html 기준
+    node scripts/check-overlap.js --mag <magazine.md|index.html> --blog <blog.md>   # 발행 전 초안끼리
+
+  <slug> 로 부르면 발행된 HTML 본문(article)을 잰다 — 발행 뒤 손으로 고친 내용까지 포함한
+  실제 공개본이 기준이고, archive 로 내려간 지난 글도 이 방식으로 잴 수 있다.
+  발행본이 아직 없으면 docs/drafts/ 의 초안을 잰다.
   종료 코드: 0 통과 / 1 기준 초과
 */
 "use strict";
@@ -22,8 +26,9 @@ const fs = require("fs");
 const path = require("path");
 const D = require("./lib/draft");
 
-// 기준값 보정(2026-09-16, 지난 발행본 8쌍): 제대로 새로 쓴 쌍은 1~12%였다.
-// 38%(autumn-flower-gift-offseason)·23%(preserved-flower-volume-guide)는 돌이켜 보면 이미 많이 겹친 편이고,
+// 기준값 보정(2026-09-16, 네이버판이 git 에 남아 있는 지난 발행본 11쌍): 제대로 새로 쓴 쌍은 1~12%였다.
+// 넘은 3편 — engineer-and-sculptor-flower-shop 52%, autumn-flower-gift-offseason 36%,
+// preserved-flower-volume-guide 22% — 은 같은 날 매거진 본문을 새로 써서 1~2%로 낮췄다.
 // 사고 편(flower-gift-review-analysis 첫 발행본)은 78%였다.
 const MAX_CONTAINMENT = 0.20;   // 매거진 조각의 20% 넘게 blog.md 에 있으면 실패
 const SENT_COPY = 0.6;          // 한 문장의 60% 넘게 겹치면 '옮겨 온 문장'으로 표시
@@ -35,12 +40,25 @@ const slug = argv.find((a, i) => !a.startsWith("-") && !["--blog", "--mag"].incl
 const blogPath = opt("--blog");
 let magPath = opt("--mag");
 if (!blogPath || (!slug && !magPath)) D.die("사용법: node scripts/check-overlap.js <slug> --blog <blog.md>  |  --mag <magazine.md> --blog <blog.md>");
-if (!magPath) magPath = D.findDraft(slug);
+if (!magPath) {
+  const post = path.join(D.ROOT, "blog", slug, "index.html");
+  magPath = fs.existsSync(post) ? post : D.findDraft(slug);
+}
 for (const p of [magPath, blogPath]) if (!fs.existsSync(p)) D.die(`파일이 없다: ${p}`);
 
 const read = (p) => fs.readFileSync(p, "utf8").replace(/\r\n/g, "\n");
 
 function magazineBody(text) {
+  if (/<article class="article">/.test(text)) {
+    return text
+      .replace(/[\s\S]*<article class="article">/, "")
+      .replace(/<\/article>[\s\S]*/, "")
+      .replace(/<figcaption>[\s\S]*?<\/figcaption>/g, "")
+      .replace(/<\/(p|li|h[1-6])>/g, "\n")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&quot;/g, '"')
+      .replace(/&[a-z#0-9]+;/g, " ");
+  }
   const i = text.search(/^#{1,6}\s*본문\s*$/m);
   return i >= 0 ? text.slice(i).replace(/^.*\n/, "") : text.replace(/^---\n[\s\S]*?\n---\n/, "");
 }
