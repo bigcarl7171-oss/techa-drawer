@@ -8,6 +8,7 @@
 
 | 날짜 | 번호 | 슬러그 | 제목 | 상태 |
 |---|---|---|---|---|
+| 2026-09-18 | none | graduation-bouquet-one-month-later | 졸업식 꽃다발 비누꽃, 한 달 뒤 후기에 적혀 있는 것 | 발행 |
 | 2026-09-16 | 81 | flower-gift-review-analysis | 비누꽃다발·프리저브드 꽃다발 후기에서 가장 많이 나온 말 | 발행 |
 | 2026-09-15 | 12 | yellow-rose-meaning | 노란장미 꽃말 뜻, 질투에서 우정이 되기까지 | 발행 |
 | 2026-09-14 | — | chuseok-money-gift-prepare-early | 추석 용돈 선물, 시들지 않는 꽃이라 미리 받아 두셔도 됩니다 | 발행 |
