@@ -80,13 +80,23 @@ LINES = [
          match=dict(all=["꽃엽서카드"])),
 ]
 
-# 2026-08-04부터 스마트스토어 링크는 xlsx의 "사이트링크" 열(E)에서 직접 읽는다 —
+# 스토어 홈 마케팅링크 — 개별 상품이 아니라 스토어 전체로 보낼 때 쓰는 주소.
+# xlsx 2행("스토어 홈")과 같은 값이며, data/store-links.json 의 store_home 과도 같다.
+STORE_HOME = "https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28"
+
+# 2026-08-04부터 상품 링크는 xlsx의 E열에서 직접 읽는다 —
 # 라인 안 아무 SKU 행에나 하나 채워두면 그 라인의 url이 된다(대표 1개 행이면 충분,
 # 색상·사이즈는 같은 페이지의 옵션이므로 SKU마다 다 채울 필요 없음).
+# 2026-09-18부터 그 E열은 "사이트링크"(스마트스토어 주소)가 아니라 "마케팅링크"다 —
+# 네이버쇼핑 매출연동수수료를 줄이려고 판매자센터에서 발급한 mkt.shopping.naver.com
+# 링크로 전부 교체했다. 상품 주소를 직접 적지 말 것(수수료가 다시 붙는다).
+# 링크 전체 목록은 data/store-links.json 에 상품번호 기준으로 정리돼 있다.
 # URL_MAP은 xlsx에 없는 라인(예: 플라워클래스처럼 EXTRA_LINES에만 있는 것)을 위한
 # 수동 폴백이다 — xlsx 쪽에 값이 있으면 그게 항상 우선한다.
 URL_MAP = {
-    "flower-class": "https://smartstore.naver.com/itecha/products/10537190482",
+    # 플라워클래스는 아직 마케팅링크가 발급되지 않아 스토어 홈 링크로 보낸다.
+    # 판매자센터에서 발급되면 이 값과 data/store-links.json 을 함께 교체할 것.
+    "flower-class": STORE_HOME,
 }
 
 # xlsx에 없지만 실제 운영 중인 상품 (script-guide.md 기준) — 가격 정보만 여기 둔다.
@@ -193,6 +203,8 @@ def main():
     bad_urls = []
     for r in ws.iter_rows(min_row=2, max_row=ws.max_row, max_col=5, values_only=True):
         if not r[0]:
+            continue
+        if str(r[0]).strip() == '스토어 홈':  # 상품 행이 아니라 스토어 홈 마케팅링크를 담아둔 행
             continue
         url = str(r[4]).strip() if len(r) > 4 and r[4] else None
         if url and not URL_RE.match(url):

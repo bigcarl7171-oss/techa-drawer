@@ -11,7 +11,10 @@
     name: "테차 서랍",
     tagline: "필요한 순간 바로 꺼내 쓰는 생활 도구 서랍",
     base: "https://www.techa.kr",
-    shopUrl: "https://smartstore.naver.com/itecha", // TECHA 선물샵 (탄생화·탄생석 등에 선물 CTA 자동 노출)
+    shopUrl: "https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28", // TECHA 선물샵 스토어 홈 (탄생화·탄생석 등에 선물 CTA 자동 노출)
+    // ↑ 스마트스토어 주소가 아니라 판매자센터 발급 "마케팅링크"다 — 네이버쇼핑 매출연동수수료를
+    //   피하려고 2026-09-18에 교체했다. smartstore.naver.com 주소를 다시 넣지 말 것.
+    //   전체 링크 목록: data/store-links.json
     gaId: "G-SEQ155EHQ7", // GA4 측정 ID. 값을 채우면 전 페이지에서 자동으로 애널리틱스가 활성화됨
     coupangPartnersId: "AF354247" // 쿠팡 파트너스 ID. 아직 미사용 — 실제 상품 링크 삽입 시 이 값과 함께 필수 고지 문구를 넣을 것
   };

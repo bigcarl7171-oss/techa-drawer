@@ -94,11 +94,16 @@ QR로 들어온 낯선 방문자(선물 받은 사람)에게 개인정보를 요
 알림받기로 안내한다. `care/index.html`의 저장 블록:
 
 ```html
-<a id="newsSignup" href="https://smartstore.naver.com/itecha" ...>테차 알림받기 →</a>
+<a id="newsSignup" href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" ...>테차 알림받기 →</a>
 ```
 
 네이버 알림받기 버튼에는 직접 딥링크가 없어서, 스토어 홈으로 보내고 안내 문구로
 "좌측 상단의 알림받기를 눌러주세요"라고 알려준다.
+
+2026-09-18부터 이 주소는 스마트스토어 주소가 아니라 판매자센터에서 발급한
+마케팅링크(`mkt.shopping.naver.com`)다 — 도착지는 똑같이 스토어 홈이지만
+네이버쇼핑 매출연동수수료가 붙지 않는다. 사이트 전체의 링크 목록은
+`data/store-links.json` 에 있다.
 
 ### 캠페인 만드는 법 (연 4회, 인프라 없음)
 

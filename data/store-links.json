@@ -1,0 +1,115 @@
+{
+  "_note": "네이버쇼핑 매출연동수수료를 줄이기 위한 스마트스토어 마케팅 링크 모음. 원본은 docs/테차상품가격리스트.xlsx E열(마케팅링크)이고, 이 파일은 scripts/build-products.py 와 정적 HTML 교체 작업의 기준값이다. 링크가 바뀌면 xlsx를 고친 뒤 build-products.py 를 다시 돌리고 이 파일을 갱신한다.",
+  "updatedAt": "2026-09-18",
+  "source": "docs/테차상품가격리스트.xlsx (E열: 마케팅링크)",
+  "store_home": "https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28",
+  "products": {
+    "10537190482": {
+      "line": "flower-class",
+      "name": "플라워클래스 (원데이)",
+      "link": "https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28",
+      "check": true,
+      "note": "마케팅링크 미발급 — 스토어 홈 링크로 폴백. 판매자센터에서 발급되면 이 줄만 교체."
+    },
+    "10663209995": {
+      "line": "superior-rose",
+      "name": "수페리어 장미",
+      "link": "https://mkt.shopping.naver.com/link/68d238ffe3e6b36891764446"
+    },
+    "10968901786": {
+      "line": "rebony-trophy-doll-bouquet",
+      "name": "레보니 트로피포트 인형꽃다발",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf46dfcc83ec117446f"
+    },
+    "12236511010": {
+      "line": "topiary-moodlamp",
+      "name": "토피어리 수국 무드등",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4d271a234a563f235"
+    },
+    "12333689454": {
+      "line": "kinderjoy-doll-bouquet",
+      "name": "킨더조이 레보니 인형꽃다발",
+      "link": "https://mkt.shopping.naver.com/link/68d5e75496f0d6529fde16fd"
+    },
+    "13337020734": {
+      "line": "flower-postcard",
+      "name": "꽃엽서카드",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4907c4216e6afb00c"
+    },
+    "13346419874": {
+      "line": "money-cake",
+      "name": "용돈케이크 머니박스",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241caf"
+    },
+    "13355757045": {
+      "line": "hydrangea-moodlamp",
+      "name": "수국꽃무드등",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4e9427b0d1c00c6ed"
+    },
+    "6202622460": {
+      "line": "rose-hydrangea-bouquet",
+      "name": "장미수국 꽃다발",
+      "link": "https://mkt.shopping.naver.com/link/68d23a99713c156d9f530c33"
+    },
+    "6205690862": {
+      "line": "carnation-rose-bouquet",
+      "name": "카네이션장미 꽃다발",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4eeb8b60d4188eac3"
+    },
+    "6506821191": {
+      "line": "classic-money-box",
+      "name": "클래식투명 용돈박스",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4907c4216e6afb011"
+    },
+    "6563272914": {
+      "line": "single-stem-soap-box",
+      "name": "비누꽃 한송이·두송이 박스",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4d271a234a563f236"
+    },
+    "6622301544": {
+      "line": "premium-window-money-box",
+      "name": "프리미엄창문 용돈박스",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4907c4216e6afb011"
+    },
+    "6957075209": {
+      "line": "sunflower-frame",
+      "name": "해바라기 액자",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4e9427b0d1c00c6ef"
+    },
+    "7090535704": {
+      "line": "glassdome-moodlamp",
+      "name": "유리돔 무드등",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241cb1"
+    },
+    "7513702882": {
+      "line": "hydrangea-bouquet",
+      "name": "수국 꽃다발",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4e8f0b735ed17d84d"
+    },
+    "7563519851": {
+      "line": "sunflower-bouquet",
+      "name": "해바라기 꽃다발",
+      "link": "https://mkt.shopping.naver.com/link/68d23a99fe7739510568c980"
+    },
+    "8424617454": {
+      "line": "cup-moodlamp-single",
+      "name": "프리저브드 꽃 무드등 한송이",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241cb0"
+    },
+    "8528473340": {
+      "line": "rose-money-bouquet",
+      "name": "장미 돈꽃다발",
+      "link": "https://mkt.shopping.naver.com/link/68d23a99021d603e940b6e82"
+    },
+    "9333901539": {
+      "line": "ionantha-moodlamp",
+      "name": "이오난사 스칸디아모스 무드등",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4e8f0b735ed17d84c"
+    },
+    "9614048648": {
+      "line": "centerpiece",
+      "name": "센터피스",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4907c4216e6afb00d"
+    }
+  }
+}

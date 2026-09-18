@@ -235,7 +235,7 @@
       <p class="gf-eyebrow">MORE FROM TECHA</p>
       <h2 id="gf-store-more-title">여기 나온 상품이 전부는 아니에요</h2>
       <p>테차 꽃가게에는 꽃다발, 꽃무드등, 용돈선물, 인테리어 꽃 소품 등 다양한 디자인과 색상, 크기의 상품이 준비되어 있습니다. 추천 결과를 참고하신 뒤 마음에 맞는 선물을 조금 더 천천히 살펴보세요.</p>
-      <a href="https://smartstore.naver.com/itecha" target="_blank" rel="noopener noreferrer">테차의 다양한 꽃 선물 보기 →</a>
+      <a href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" target="_blank" rel="noopener noreferrer">테차의 다양한 꽃 선물 보기 →</a>
     </section>`;
   }
 
