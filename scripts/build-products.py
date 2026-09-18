@@ -94,9 +94,8 @@ STORE_HOME = "https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28"
 # URL_MAP은 xlsx에 없는 라인(예: 플라워클래스처럼 EXTRA_LINES에만 있는 것)을 위한
 # 수동 폴백이다 — xlsx 쪽에 값이 있으면 그게 항상 우선한다.
 URL_MAP = {
-    # 플라워클래스는 아직 마케팅링크가 발급되지 않아 스토어 홈 링크로 보낸다.
-    # 판매자센터에서 발급되면 이 값과 data/store-links.json 을 함께 교체할 것.
-    "flower-class": STORE_HOME,
+    # 플라워클래스는 xlsx에 행이 없어 여기서 링크를 준다 (2026-09-18 마케팅링크 발급 완료).
+    "flower-class": "https://mkt.shopping.naver.com/link/6aacecf40b9e0e1fb38b3403",
 }
 
 # xlsx에 없지만 실제 운영 중인 상품 (script-guide.md 기준) — 가격 정보만 여기 둔다.
