@@ -63,7 +63,7 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
   원본 고해상도는 저장소에 안 넣는다 — 커밋되는 건 `blog/<slug>/*.jpg` 파생본뿐.
 - 스크립트: `scripts/publish-draft.js`(발행본·목록·캐러셀·사이트맵) · `scripts/prepare-images.js`(3:2 크롭·워터마크 제거) · `scripts/check-publish.sh`(게이트)
 - **목록은 손으로 고치지 않는다** — 홈 도구 표·관련 도구·홈 검색 목록은 생성기 3종이
-  찍는다(`build-home-tools.js` · `build-home-curation.js` · `build-related.js` · `build-posts.js` ·
+  찍는다(`build-home-tools.js` · `build-home-curation.js` · `build-tool-hub.js` · `build-related.js` · `build-posts.js` ·
   `build-blog-products.js` · `build-tool-products.js`). `site.js` 나
   `blog/index.html` 을 고쳤으면 해당 생성기를 돌린다. 안 돌리면 게이트가 잡는다.
   (JS로만 그리던 동안 도구 15개가 색인에서 빠져 있었다 — `docs/blog-seo-guide.md` 참고)
