@@ -1,36 +1,171 @@
 {
   "_note": "매거진 글별 관련 상품 매핑. 값은 data/store-links.json의 products.*.line만 사용한다. 새 글 발행 시 1~3개를 반드시 지정한다.",
-  "autumn-flower-gift-offseason": ["sunflower-bouquet", "sunflower-frame", "rose-hydrangea-bouquet"],
-  "black-white-rose-mood-lamp": ["glassdome-moodlamp", "hydrangea-moodlamp", "topiary-moodlamp"],
-  "camellia-hospital-visit-taboo": ["hydrangea-bouquet", "rose-hydrangea-bouquet", "single-stem-soap-box"],
-  "chuseok-money-gift": ["money-cake", "rose-money-bouquet", "classic-money-box"],
-  "chuseok-money-gift-prepare-early": ["money-cake", "rose-money-bouquet", "classic-money-box"],
-  "convenience-store-flower-emergency": ["single-stem-soap-box", "sunflower-bouquet", "rose-hydrangea-bouquet"],
-  "corporate-event-bouquet-timing": ["rose-hydrangea-bouquet", "sunflower-bouquet", "single-stem-soap-box"],
-  "corporate-flower-quote-checklist": ["rose-hydrangea-bouquet", "sunflower-bouquet", "single-stem-soap-box"],
-  "engineer-and-sculptor-flower-shop": ["rose-hydrangea-bouquet", "glassdome-moodlamp", "centerpiece"],
-  "entryway-mood-lamp-placement": ["sunflower-frame", "glassdome-moodlamp", "ionantha-moodlamp"],
-  "event-bouquet-soap-flower": ["sunflower-bouquet", "rebony-trophy-doll-bouquet", "kinderjoy-doll-bouquet"],
-  "flower-gift-better-than-photo": ["rose-hydrangea-bouquet", "superior-rose", "hydrangea-bouquet"],
-  "flower-gift-review-analysis": ["rose-hydrangea-bouquet", "sunflower-bouquet", "glassdome-moodlamp"],
-  "flower-parcel-delivery": ["rose-hydrangea-bouquet", "sunflower-bouquet", "hydrangea-bouquet"],
-  "glass-dome-mood-lamp-review": ["glassdome-moodlamp", "hydrangea-moodlamp", "topiary-moodlamp"],
-  "graduation-bouquet-one-month-later": ["sunflower-bouquet", "rebony-trophy-doll-bouquet", "kinderjoy-doll-bouquet"],
-  "graduation-gift-by-recipient": ["sunflower-bouquet", "rebony-trophy-doll-bouquet", "kinderjoy-doll-bouquet"],
-  "hospital-discharge-gift": ["hydrangea-bouquet", "glassdome-moodlamp", "single-stem-soap-box"],
-  "kids-recital-bouquet-size-guide": ["sunflower-bouquet", "rebony-trophy-doll-bouquet", "kinderjoy-doll-bouquet"],
-  "money-bouquet-customer-stories": ["rose-money-bouquet", "money-cake", "classic-money-box"],
-  "one-room-mood-lighting-placement": ["glassdome-moodlamp", "hydrangea-moodlamp", "cup-moodlamp-single"],
-  "parents-birthday-money-cake": ["money-cake", "rose-money-bouquet", "classic-money-box"],
-  "preserved-flower-real-flower": ["rose-hydrangea-bouquet", "superior-rose", "hydrangea-bouquet"],
-  "preserved-flower-volume-guide": ["rose-hydrangea-bouquet", "superior-rose", "hydrangea-bouquet"],
-  "promotion-congratulation-gift": ["rose-hydrangea-bouquet", "superior-rose", "centerpiece"],
-  "promotion-gift-event-ideas": ["rose-hydrangea-bouquet", "superior-rose", "centerpiece"],
-  "sad-flower-meanings": ["superior-rose", "rose-hydrangea-bouquet"],
-  "safe-delivery-review": ["rose-hydrangea-bouquet", "sunflower-bouquet", "glassdome-moodlamp"],
-  "soap-flower-one-stem": ["single-stem-soap-box", "flower-postcard"],
-  "summer-flower-gift-check": ["hydrangea-bouquet", "glassdome-moodlamp", "sunflower-bouquet"],
-  "summer-fresh-flower-care": ["rose-hydrangea-bouquet", "hydrangea-bouquet", "superior-rose"],
-  "sunflower-frame-housewarming-gift": ["sunflower-frame", "sunflower-bouquet", "centerpiece"],
-  "yellow-rose-meaning": ["sunflower-bouquet", "superior-rose", "rose-hydrangea-bouquet"]
+  "autumn-flower-gift-offseason": [
+    "sunflower-bouquet",
+    "sunflower-frame",
+    "rose-hydrangea-bouquet"
+  ],
+  "black-white-rose-mood-lamp": [
+    "glassdome-moodlamp",
+    "hydrangea-moodlamp",
+    "topiary-moodlamp"
+  ],
+  "camellia-hospital-visit-taboo": [
+    "hydrangea-bouquet",
+    "rose-hydrangea-bouquet",
+    "single-stem-soap-box"
+  ],
+  "chuseok-money-gift": [
+    "money-cake",
+    "rose-money-bouquet",
+    "classic-money-box"
+  ],
+  "chuseok-money-gift-prepare-early": [
+    "money-cake",
+    "rose-money-bouquet",
+    "classic-money-box"
+  ],
+  "convenience-store-flower-emergency": [
+    "single-stem-soap-box",
+    "sunflower-bouquet",
+    "rose-hydrangea-bouquet"
+  ],
+  "corporate-event-bouquet-timing": [
+    "rose-hydrangea-bouquet",
+    "sunflower-bouquet",
+    "single-stem-soap-box"
+  ],
+  "corporate-flower-quote-checklist": [
+    "rose-hydrangea-bouquet",
+    "sunflower-bouquet",
+    "single-stem-soap-box"
+  ],
+  "engineer-and-sculptor-flower-shop": [
+    "rose-hydrangea-bouquet",
+    "glassdome-moodlamp",
+    "centerpiece"
+  ],
+  "entryway-mood-lamp-placement": [
+    "sunflower-frame",
+    "glassdome-moodlamp",
+    "ionantha-moodlamp"
+  ],
+  "event-bouquet-soap-flower": [
+    "sunflower-bouquet",
+    "rebony-trophy-doll-bouquet",
+    "kinderjoy-doll-bouquet"
+  ],
+  "flower-gift-better-than-photo": [
+    "rose-hydrangea-bouquet",
+    "superior-rose",
+    "hydrangea-bouquet"
+  ],
+  "flower-gift-review-analysis": [
+    "rose-hydrangea-bouquet",
+    "sunflower-bouquet",
+    "glassdome-moodlamp"
+  ],
+  "flower-parcel-delivery": [
+    "rose-hydrangea-bouquet",
+    "sunflower-bouquet",
+    "hydrangea-bouquet"
+  ],
+  "glass-dome-mood-lamp-review": [
+    "glassdome-moodlamp",
+    "hydrangea-moodlamp",
+    "topiary-moodlamp"
+  ],
+  "graduation-bouquet-one-month-later": [
+    "sunflower-bouquet",
+    "rebony-trophy-doll-bouquet",
+    "kinderjoy-doll-bouquet"
+  ],
+  "graduation-gift-by-recipient": [
+    "sunflower-bouquet",
+    "rebony-trophy-doll-bouquet",
+    "kinderjoy-doll-bouquet"
+  ],
+  "hospital-discharge-gift": [
+    "hydrangea-bouquet",
+    "glassdome-moodlamp",
+    "single-stem-soap-box"
+  ],
+  "kids-recital-bouquet-size-guide": [
+    "sunflower-bouquet",
+    "rebony-trophy-doll-bouquet",
+    "kinderjoy-doll-bouquet"
+  ],
+  "money-bouquet-customer-stories": [
+    "rose-money-bouquet",
+    "money-cake",
+    "classic-money-box"
+  ],
+  "one-room-mood-lighting-placement": [
+    "glassdome-moodlamp",
+    "hydrangea-moodlamp",
+    "cup-moodlamp-single"
+  ],
+  "parents-birthday-money-cake": [
+    "money-cake",
+    "rose-money-bouquet",
+    "classic-money-box"
+  ],
+  "preserved-flower-real-flower": [
+    "rose-hydrangea-bouquet",
+    "superior-rose",
+    "hydrangea-bouquet"
+  ],
+  "preserved-flower-volume-guide": [
+    "rose-hydrangea-bouquet",
+    "superior-rose",
+    "hydrangea-bouquet"
+  ],
+  "promotion-congratulation-gift": [
+    "rose-hydrangea-bouquet",
+    "superior-rose",
+    "centerpiece"
+  ],
+  "promotion-gift-event-ideas": [
+    "rose-hydrangea-bouquet",
+    "superior-rose",
+    "centerpiece"
+  ],
+  "sad-flower-meanings": [
+    "superior-rose",
+    "rose-hydrangea-bouquet"
+  ],
+  "safe-delivery-review": [
+    "rose-hydrangea-bouquet",
+    "sunflower-bouquet",
+    "glassdome-moodlamp"
+  ],
+  "soap-flower-one-stem": [
+    "single-stem-soap-box",
+    "flower-postcard"
+  ],
+  "summer-flower-gift-check": [
+    "hydrangea-bouquet",
+    "glassdome-moodlamp",
+    "sunflower-bouquet"
+  ],
+  "summer-fresh-flower-care": [
+    "rose-hydrangea-bouquet",
+    "hydrangea-bouquet",
+    "superior-rose"
+  ],
+  "sunflower-frame-housewarming-gift": [
+    "sunflower-frame",
+    "sunflower-bouquet",
+    "centerpiece"
+  ],
+  "wife-birthday-gift": [
+    "hydrangea-moodlamp",
+    "cup-moodlamp-single",
+    "glassdome-moodlamp"
+  ],
+  "yellow-rose-meaning": [
+    "sunflower-bouquet",
+    "superior-rose",
+    "rose-hydrangea-bouquet"
+  ]
 }

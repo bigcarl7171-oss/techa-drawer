@@ -160,7 +160,7 @@ if [ -n "$BLOG" ]; then
     # 사람이 눈으로 잡는 대신 여기서 기계로 막는다. 본문 절(# 본문 ~ # 태그)만 본다.
     body=$(awk '/^# 본문/{f=1;next} /^# 태그/{f=0} f' "$BLOG")
     md=$(printf '%s
-' "$body" | grep -nE '^#{1,6} |^[[:space:]]*[-*+][[:space:]]|**|^[[:space:]]*>' | head -5)
+' "$body" | grep -nE '^#{1,6} |^[[:space:]]*[-*+][[:space:]]|[*][*]|^[[:space:]]*>' | head -5)
     if [ -n "$md" ]; then
       bad "blog.md 마크다운" "본문에 마크다운이 있다 — 붙여넣으면 글자 그대로 찍힌다: $(printf '%s' "$md" | tr '
 ' ' ' | cut -c1-90)"
