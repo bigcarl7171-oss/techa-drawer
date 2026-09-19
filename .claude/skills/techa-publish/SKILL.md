@@ -92,7 +92,12 @@ HTML에 주소를 손으로 넣지 않는다.
 
 ```
 node scripts/build-blog-products.js
+node scripts/build-home-curation.js
 ```
+
+홈의 상황별 콘텐츠와 추천 상품은 `data/home-curation.json`이 원본이다. 월별 구성을 바꿀
+때는 이 JSON을 수정하고 `build-home-curation.js`를 실행한다. 생성 마커 안의 HTML은 직접
+고치지 않는다.
 
 이 스크립트가 처리하는 것 (손대지 말 것):
 발행본 HTML · `og:image`를 글별 cover로 · `blog/index.html` 카드 · `index.html` 캐러셀(상한 3,

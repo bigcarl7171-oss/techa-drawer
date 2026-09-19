@@ -1,0 +1,89 @@
+{
+  "timezone": "Asia/Seoul",
+  "months": {
+    "1": "graduation", "2": "graduation", "3": "spring",
+    "4": "gratitude", "5": "gratitude", "6": "summer",
+    "7": "summer", "8": "summer", "9": "autumn",
+    "10": "autumn", "11": "yearend", "12": "yearend"
+  },
+  "profiles": {
+    "graduation": {
+      "situations": [
+        { "id": "graduation", "icon": "🎓", "title": "졸업·입학 선물", "desc": "받는 분에 따라 달라지는 선택", "href": "/blog/graduation-gift-by-recipient/" },
+        { "id": "recital", "icon": "🎹", "title": "발표회·연주회", "desc": "아이 얼굴을 가리지 않는 크기", "href": "/blog/kids-recital-bouquet-size-guide/" },
+        { "id": "graduation-review", "icon": "💐", "title": "졸업 꽃다발", "desc": "한 달 뒤에도 남는 꽃", "href": "/blog/graduation-bouquet-one-month-later/" },
+        { "id": "promotion", "icon": "🎉", "title": "입학·취업·승진", "desc": "새로운 시작을 축하하는 마음", "href": "/blog/promotion-congratulation-gift/" }
+      ],
+      "products": [
+        { "id": "rebony-trophy-doll-bouquet", "label": "졸업·발표회", "desc": "사진에 남는 날, 주인공을 돋보이게" },
+        { "id": "kinderjoy-doll-bouquet", "label": "유치원·아이 선물", "desc": "꽃과 작은 즐거움을 함께 전할 때" },
+        { "id": "rose-hydrangea-bouquet", "label": "입학·취업·승진", "desc": "새 출발을 오래 기억하게 하는 꽃다발" }
+      ]
+    },
+    "spring": {
+      "situations": [
+        { "id": "promotion", "icon": "🎉", "title": "승진·새 출발", "desc": "새 자리에도 오래 남는 선물", "href": "/blog/promotion-congratulation-gift/" },
+        { "id": "housewarming", "icon": "🌻", "title": "집들이·개업", "desc": "공간에 오래 머무는 꽃", "href": "/blog/sunflower-frame-housewarming-gift/" },
+        { "id": "event", "icon": "💐", "title": "행사 꽃다발", "desc": "전달과 사진까지 생각한 선택", "href": "/blog/event-bouquet-soap-flower/" },
+        { "id": "gift", "icon": "🌿", "title": "봄날의 꽃 선물", "desc": "사진보다 오래 남는 마음", "href": "/blog/flower-gift-better-than-photo/" }
+      ],
+      "products": [
+        { "id": "rose-hydrangea-bouquet", "label": "승진·새 출발", "desc": "받는 순간의 마음을 오래 남기고 싶을 때" },
+        { "id": "sunflower-frame", "label": "집들이·개업", "desc": "밝은 기운을 공간에 오래 두는 선물" },
+        { "id": "superior-rose", "label": "기념일·축하", "desc": "장미의 존재감을 단정하게 전할 때" }
+      ]
+    },
+    "gratitude": {
+      "situations": [
+        { "id": "parents", "icon": "💝", "title": "어버이날·생신", "desc": "마음과 실용성을 함께", "href": "/blog/parents-birthday-money-cake/" },
+        { "id": "money", "icon": "💐", "title": "용돈 꽃 선물", "desc": "직접 전한 마음이 남는 순간", "href": "/blog/money-bouquet-customer-stories/" },
+        { "id": "teacher", "icon": "🌹", "title": "감사의 꽃", "desc": "부담 없이 정중하게 전하기", "href": "/ko/gift-finder/?occasion=%EC%8A%A4%EC%8A%B9%EC%9D%98%EB%82%A0" },
+        { "id": "single", "icon": "🎁", "title": "여럿에게 전하는 꽃", "desc": "작아도 성의 있게 준비하기", "href": "/blog/soap-flower-one-stem/" }
+      ],
+      "products": [
+        { "id": "carnation-money-bouquet", "label": "어버이날·생신", "desc": "카네이션과 용돈을 함께 전할 때" },
+        { "id": "money-cake", "label": "환갑·칠순·생신", "desc": "축하 자리의 중심이 되는 용돈 선물" },
+        { "id": "single-stem-soap-box", "label": "선생님·단체 감사", "desc": "여럿에게 단정하게 마음을 전할 때" }
+      ]
+    },
+    "summer": {
+      "situations": [
+        { "id": "summer", "icon": "☀️", "title": "여름 꽃 선물", "desc": "더운 날 먼저 확인할 기준", "href": "/blog/summer-flower-gift-check/" },
+        { "id": "delivery", "icon": "📦", "title": "꽃다발 택배", "desc": "포장과 배송이 궁금할 때", "href": "/blog/flower-parcel-delivery/" },
+        { "id": "housewarming", "icon": "🌻", "title": "집들이 선물", "desc": "밝은 기운이 오래 머물도록", "href": "/blog/sunflower-frame-housewarming-gift/" },
+        { "id": "moodlamp", "icon": "💡", "title": "꽃 무드등", "desc": "낮에는 꽃, 밤에는 은은한 빛", "href": "/blog/glass-dome-mood-lamp-review/" }
+      ],
+      "products": [
+        { "id": "hydrangea-moodlamp", "label": "집들이·인테리어", "desc": "수국과 빛을 함께 오래 두는 선물" },
+        { "id": "sunflower-frame", "label": "집들이·개업", "desc": "여름의 밝은 분위기를 공간에 더할 때" },
+        { "id": "rose-hydrangea-bouquet", "label": "기념일·행사", "desc": "계절과 관계없이 오래 남는 꽃다발" }
+      ]
+    },
+    "autumn": {
+      "situations": [
+        { "id": "chuseok", "icon": "🌕", "title": "추석 용돈 선물", "desc": "미리 준비해도 시들지 않게", "href": "/blog/chuseok-money-gift-prepare-early/" },
+        { "id": "recital", "icon": "🎹", "title": "발표회·연주회", "desc": "아이 얼굴을 가리지 않는 크기", "href": "/blog/kids-recital-bouquet-size-guide/" },
+        { "id": "promotion", "icon": "🎉", "title": "승진·퇴임", "desc": "새 자리에도 오래 남는 선물", "href": "/blog/promotion-congratulation-gift/" },
+        { "id": "autumn", "icon": "🍂", "title": "가을 선물", "desc": "집들이·개업·안부까지", "href": "/blog/autumn-flower-gift-offseason/" }
+      ],
+      "products": [
+        { "id": "money-cake", "label": "추석·생신·가족 모임", "desc": "축하와 용돈을 한 번에 전하고 싶을 때" },
+        { "id": "rose-money-bouquet", "label": "부모님·용돈 선물", "desc": "현금의 실용성과 꽃의 정성을 함께 전할 때" },
+        { "id": "sunflower-bouquet", "label": "발표회·승진·가을 행사", "desc": "밝은 축하의 마음을 또렷하게 전할 때" }
+      ]
+    },
+    "yearend": {
+      "situations": [
+        { "id": "recital", "icon": "🎹", "title": "발표회·연주회", "desc": "무대가 끝난 뒤 건네는 축하", "href": "/blog/kids-recital-bouquet-size-guide/" },
+        { "id": "promotion", "icon": "🎉", "title": "승진·퇴임·연말", "desc": "한 해의 수고를 오래 기억하도록", "href": "/blog/promotion-gift-event-ideas/" },
+        { "id": "christmas", "icon": "🎄", "title": "크리스마스 선물", "desc": "꽃과 빛이 함께 남는 선물", "href": "/ko/gift-finder/?occasion=%ED%81%AC%EB%A6%AC%EC%8A%A4%EB%A7%88%EC%8A%A4" },
+        { "id": "moodlamp", "icon": "✨", "title": "겨울 꽃 무드등", "desc": "차분한 공간에 따뜻한 빛", "href": "/blog/black-white-rose-mood-lamp/" }
+      ],
+      "products": [
+        { "id": "glassdome-moodlamp", "label": "크리스마스·연말", "desc": "낮에는 꽃, 밤에는 빛으로 남는 선물" },
+        { "id": "rose-hydrangea-bouquet", "label": "승진·퇴임·연말", "desc": "감사의 마음을 단정하게 전할 때" },
+        { "id": "cup-moodlamp-single", "label": "부담 없는 겨울 선물", "desc": "작은 공간에 꽃과 빛을 더할 때" }
+      ]
+    }
+  }
+}
