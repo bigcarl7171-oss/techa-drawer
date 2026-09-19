@@ -1,0 +1,36 @@
+{
+  "_note": "도구 페이지별 상품 연결. 값은 data/store-links.json 의 products.*.line 만 쓴다. scripts/build-tool-products.js 가 읽는다.",
+  "_why": "네이버 웹문서 유입의 본체가 도구 페이지인데 상품 링크가 22개 전부 0건이었다 (docs/naver-webmaster-2026-09-20.md). 다만 노출 크기 순서가 아니라 '선물 의도' 순서로 붙인다 — 사다리타기 하러 온 사람에게 프리저브드를 밀지 않는다.",
+  "_tiers": {
+    "gift": "선물 맥락이 분명한 도구. 상품 3개를 카드로 보여준다.",
+    "brand": "선물과 상관없는 도구. 상품을 밀지 않고 테차가 무엇을 만드는지 한 줄만 둔다."
+  },
+
+  "gift": {
+    "birth-flower": ["hydrangea-bouquet", "cup-moodlamp-single", "rose-hydrangea-bouquet"],
+    "birth-stone": ["glassdome-moodlamp", "hydrangea-moodlamp", "superior-rose"],
+    "dday": ["rose-hydrangea-bouquet", "glassdome-moodlamp", "flower-postcard"],
+    "age-calculator": ["money-cake", "carnation-rose-bouquet", "rose-money-bouquet"],
+    "date-diff": ["superior-rose", "cup-moodlamp-single", "flower-postcard"],
+    "name-match": ["superior-rose", "rose-hydrangea-bouquet", "flower-postcard"],
+    "zodiac-love": ["cup-moodlamp-single", "superior-rose", "glassdome-moodlamp"],
+    "horoscope": ["ionantha-moodlamp", "cup-moodlamp-single", "flower-postcard"],
+    "gift-finder": ["rose-hydrangea-bouquet", "rose-money-bouquet", "glassdome-moodlamp"]
+  },
+
+  "brand": [
+    "bmi",
+    "char-counter",
+    "compound",
+    "dad-joke",
+    "ladder",
+    "loan",
+    "lotto",
+    "margin",
+    "menu-roulette",
+    "percent",
+    "unit-converter",
+    "vat",
+    "workdays"
+  ]
+}
