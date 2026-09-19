@@ -19,7 +19,8 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
 | 찾는 것 | 실제 위치 (2026-09-07 이 PC 기준) |
 |---|---|
 | **원고 작성 파이프라인 (원본)** | `C:\ClaudeCode\techa-shorts\.claude\skills\techa-content-studio\SKILL.md` |
-| **주제 후보 + 이미 다룬 주제 이력** | `C:\ClaudeCode\techa-cardnews\topic-pool.md` |
+| **주제 후보 120개 + 이미 다룬 주제 이력** | `C:\ClaudeCode\techa-cardnews\topic-pool.md` — 게이트가 읽는 정본 |
+| **지금 쓸 주제·우선순위** | 노션 `테차 원고함` (데이터소스 `8eeb105a-bd24-4c02-94f8-0ddbd35b69cd`) — SERP 근거 있는 것만 둔다. 2026-09-19에 "테차 원고 보드" 아티팩트를 은퇴시키고 여기로 옮겼다 |
 | 시의성 주제 리서치 (추석 등) | `…\techa-content-studio\references\topic-research-2026-08.md` |
 | 카드뉴스 카피 규칙 | `C:\ClaudeCode\techa-cardnews\card-copy-guide.md` |
 | 브랜드 톤·품질게이트·색상 | `techa-brand-rules.md` (이 저장소 = 원본) |
