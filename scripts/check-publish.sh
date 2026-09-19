@@ -199,7 +199,7 @@ fi
 # 주소가 없었다 — 홈에 도구 22개 중 7개만, 관련 도구는 0개. 이제 스크립트가 HTML로
 # 구워 넣고, site.js 를 고친 뒤 안 돌리면 여기서 잡는다.
 echo "[정적] 목록이 HTML에 구워졌는가"
-for b in build-home-tools build-related build-posts; do
+for b in build-home-tools build-related build-posts build-blog-products; do
   if [ -f "scripts/$b.js" ]; then
     out=$(node "scripts/$b.js" --check 2>&1) \
       && ok "$b" "$(echo "$out" | tail -1 | sed 's/^[✅ ]*//')" \

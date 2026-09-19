@@ -86,6 +86,14 @@ JSON의 `missing[]`을 본다. 비어 있으면 S2로.
 node scripts/publish-draft.js <slug> --emoji 🌷 --tag "꽃 고르기" --desc "…" [--cta "…"]
 ```
 
+발행본이 만들어지면 `data/blog-product-links.json`에 새 슬러그와 관련 상품 line 1~3개를
+추가한 뒤 상품 블록 생성기를 실행한다. 상품명과 링크는 `data/store-links.json`에서 읽으므로
+HTML에 주소를 손으로 넣지 않는다.
+
+```
+node scripts/build-blog-products.js
+```
+
 이 스크립트가 처리하는 것 (손대지 말 것):
 발행본 HTML · `og:image`를 글별 cover로 · `blog/index.html` 카드 · `index.html` 캐러셀(상한 3,
 `transition-delay` 재부여) · 위젯(상한 5) · `sitemap.xml` · 멱등 재실행.
@@ -228,6 +236,7 @@ API가 없어 자동화할 수 없는 셋:
 - [ ] S1: 촬영본은 `--photo` 로 돌렸는가 / 워터마크가 잘렸는가 / 원본을 저장소에 안 넣었는가
 - [ ] S2: 본문 분량 경고가 떴는데 **멈췄는가** (몰래 늘리지 않았는가)
 - [ ] S3: 내부링크를 **양방향**으로 넣었는가 — 블로그 밖 → 새 글, 그리고 새 글 → 관련 도구
+- [ ] S3: `data/blog-product-links.json`에 관련 상품 1~3개를 지정하고 `build-blog-products.js`를 돌렸는가
 - [ ] S4: ❌ 없이 통과한 뒤에만 커밋했는가
 - [ ] S6: `blog.md` 를 저장소에 커밋하지 **않았는가** / magazine 변경분이 반영됐는가 / techa.kr 링크가 없는가
 - [ ] S7: **노션 `테차 원고함` 행을 갱신했는가** (새로 만들지 말고 기존 행 수정 / 네이버 전이면 `진행 중`)

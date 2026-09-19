@@ -328,6 +328,39 @@ textarea { min-height: 160px; resize: vertical; line-height: 1.6; }
 .related-list a:hover { border-color: var(--gold-deep); text-decoration: none; }
 .related-list a:active { transform: scale(0.96); }
 
+/* ---------- 매거진 글별 관련 상품 (정적 HTML 생성) ---------- */
+.article .blog-products {
+  margin: 42px 0 28px; padding: 30px;
+  border: 1px solid var(--gold-border); border-radius: var(--radius);
+  background: linear-gradient(145deg, var(--gold-soft), var(--white));
+}
+.article .blog-products-kicker {
+  margin: 0 0 8px; color: var(--gold-strong-ink); font-size: 11px;
+  font-weight: 700; letter-spacing: .14em;
+}
+.article .blog-products h2 {
+  margin: 0 0 20px; padding: 0; border: 0;
+  font-family: "Gowun Batang", serif; font-size: 23px; line-height: 1.4;
+}
+.blog-products-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.blog-product-card {
+  min-width: 0; padding: 17px; border: 1px solid var(--line); border-radius: var(--radius-md);
+  background: rgba(255,255,255,.82); color: var(--brown);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+.blog-product-card:hover { text-decoration: none; transform: translateY(-2px); border-color: var(--gold-deep); background: var(--white); }
+.blog-product-card b { display: block; font-size: 15px; line-height: 1.45; }
+.blog-product-card small { display: block; margin-top: 7px; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+.blog-product-card strong { color: var(--gold-strong-ink); font-size: 12.5px; }
+.article .blog-products-note { margin: 15px 0 0; color: var(--muted); font-size: 12px; }
+@media (max-width: 760px) {
+  .article .blog-products { padding: 23px 18px; }
+  .blog-products-grid { grid-template-columns: 1fr; }
+  .blog-product-card { flex-direction: row; align-items: flex-end; }
+  .blog-product-card strong { flex: none; }
+}
+
 /* ---------- 푸터 ---------- */
 .site-footer {
   margin-top: 40px; border-top: 1px solid var(--line);
