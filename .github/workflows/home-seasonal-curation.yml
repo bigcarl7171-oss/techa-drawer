@@ -1,0 +1,46 @@
+name: Home seasonal curation
+
+on:
+  schedule:
+    - cron: "10 15 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-home:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build current curation
+        run: node scripts/build-home-curation.js
+      - name: Validate generated home
+        run: |
+          node scripts/build-home-curation.js --check
+          node scripts/build-home-tools.js --check
+          node scripts/build-posts.js --check
+      - name: Open or update curation pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then
+            echo "No seasonal change"
+            exit 0
+          fi
+          branch="automation/home-seasonal-curation"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add index.html
+          git commit -m "월별 홈 큐레이션 갱신"
+          git push --force-with-lease origin "$branch"
+          if ! gh pr list --head "$branch" --state open --json number --jq 'length > 0' | grep -q true; then
+            gh pr create --base main --head "$branch" --title "월별 홈 큐레이션 갱신" --body "월별 큐레이션 데이터에 따라 홈의 상황별 콘텐츠와 추천 상품을 정적 HTML로 갱신합니다. 자동 병합하지 않으며 검토 후 반영합니다."
+          fi
