@@ -14,6 +14,7 @@
 
 | 질문 | 문서 |
 |---|---|
+| **테차 서랍이 무엇이고 무엇을 위해 있나** | `techa-drawer-definition.md` — 사장님 확정 정의(2026-09-20). 목적 순위·카페24 제외·페이지 종착지 3개·도구 3층·글당 상품 1~3개. **주제와 CTA 판단의 최상위 기준** |
 | 매거진을 발행하려면 | `.claude/skills/techa-publish/SKILL.md` — 정본(S0~S8). `blog-seo-guide.md` 는 스크립트가 무엇을 왜 하는지 근거 |
 | "초안 써줘" 하면 뭘 하나 | `routine-draft.md` — 스크래치 폴더에 `magazine.md` + `blog.md` 를 쓴다 (저장소 밖) |
 | 매거진·네이버·스레드 분량·구조 기준 | `channel-specs.md` — 숫자의 단일 출처(스크립트도 여기서 읽는다) |
