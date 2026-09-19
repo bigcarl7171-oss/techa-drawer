@@ -234,14 +234,19 @@
        있습니다. 참고용으로 활용하고 정확한 조건은 금융기관에 확인하세요.</div>
   </article>
 
-  <div id="related"></div>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/compound/">💹 복리 계산기</a><a href="/ko/vat/">🧾 부가가치세 계산기</a><a href="/ko/percent/">％ 퍼센트 계산기</a></div>
+    <!-- END related -->
+  </div>
 </main>
 
 <footer id="site-footer"></footer>
 
 <script src="/assets/js/site.js"></script>
 <script>
-TECHA.initPage({ title:"대출 이자 계산기", desc:"거치기간·중도상환수수료·DSR까지 계산합니다.", category:"money", slug:"loan", related:["compound","vat","margin"] });
+TECHA.initPage({ title:"대출 이자 계산기", desc:"거치기간·중도상환수수료·DSR까지 계산합니다.", category:"money", slug:"loan", related: ["compound", "vat", "percent"] });
 (function(){
   // ---------- 큰 금액 입력칸에 천 단위 콤마 자동 표시 ----------
   function attachComma(input){

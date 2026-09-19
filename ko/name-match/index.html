@@ -97,14 +97,19 @@
     <div class="note">이름 궁합은 과학적 근거가 없는 <b>재미용 콘텐츠</b>입니다. 결과에 너무 의미를 두지 말고 즐겨 주세요. 실제 인연은 서로를 향한 마음과 노력으로 만들어집니다.</div>
   </article>
 
-  <div id="related"></div>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/zodiac-love/">💘 별자리 궁합</a><a href="/ko/horoscope/">🔮 오늘의 별자리 운세</a><a href="/ko/gift-finder/">🎁 상황별 선물 큐레이션</a></div>
+    <!-- END related -->
+  </div>
 </main>
 
 <footer id="site-footer"></footer>
 
 <script src="/assets/js/site.js"></script>
 <script>
-TECHA.initPage({ title:"이름 궁합 테스트", desc:"두 사람의 이름으로 궁합 점수를 재미로 확인해 보세요.", category:"fortune", slug:"name-match", related:["horoscope","zodiac-love","birth-flower"], share:"#result" });
+TECHA.initPage({ title:"이름 궁합 테스트", desc:"두 사람의 이름으로 궁합 점수를 재미로 확인해 보세요.", category:"fortune", slug:"name-match", related: ["zodiac-love", "horoscope", "gift-finder"], share:"#result" });
 (function(){
   var n1=document.getElementById("n1"), n2=document.getElementById("n2"), result=document.getElementById("result");
 

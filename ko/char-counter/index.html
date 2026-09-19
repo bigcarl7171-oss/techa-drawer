@@ -101,7 +101,12 @@
     <div class="note">입력한 내용은 서버로 전송되지 않고 브라우저 안에서만 계산됩니다. 개인정보가 담긴 글도 안심하고 사용하세요.</div>
   </article>
 
-  <div id="related"></div>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/unit-converter/">📏 단위 변환기</a><a href="/ko/dday/">📅 D-Day 계산기</a><a href="/ko/percent/">％ 퍼센트 계산기</a></div>
+    <!-- END related -->
+  </div>
 </main>
 
 <footer id="site-footer"></footer>
@@ -113,7 +118,7 @@ TECHA.initPage({
   desc: "공백 포함/제외 글자수와 바이트·단어·줄 수를 실시간으로 계산합니다.",
   category: "text",
   slug: "char-counter",
-  related: ["age-calculator", "dday", "lotto"]
+  related: ["unit-converter", "dday", "percent"]
 });
 
 (function () {

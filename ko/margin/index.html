@@ -198,14 +198,19 @@
     <div class="note">실제 정산 방식·수수료율·부가세 적용은 플랫폼과 사업자 유형에 따라 달라질 수 있습니다. 참고용으로 활용하고, 정확한 금액은 각 플랫폼 정산 내역과 세무 전문가를 통해 확인하세요.</div>
   </article>
 
-  <div id="related"></div>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/vat/">🧾 부가가치세 계산기</a><a href="/ko/percent/">％ 퍼센트 계산기</a><a href="/ko/compound/">💹 복리 계산기</a></div>
+    <!-- END related -->
+  </div>
 </main>
 
 <footer id="site-footer"></footer>
 
 <script src="/assets/js/site.js"></script>
 <script>
-TECHA.initPage({ title:"마진율 계산기", desc:"플랫폼 수수료·부가세까지 반영해 정산금액과 마진율을 계산합니다.", category:"money", slug:"margin", related:["vat","loan","compound"] });
+TECHA.initPage({ title:"마진율 계산기", desc:"플랫폼 수수료·부가세까지 반영해 정산금액과 마진율을 계산합니다.", category:"money", slug:"margin", related: ["vat", "percent", "compound"] });
 (function(){
   function attachComma(input){
     input.addEventListener("input", function(){

@@ -236,14 +236,19 @@
        최신 기준을 다시 확인하세요.</div>
   </article>
 
-  <div id="related"></div>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/margin/">📈 마진율 계산기</a><a href="/ko/compound/">💹 복리 계산기</a><a href="/ko/loan/">🏦 대출 이자 계산기</a></div>
+    <!-- END related -->
+  </div>
 </main>
 
 <footer id="site-footer"></footer>
 
 <script src="/assets/js/site.js"></script>
 <script>
-TECHA.initPage({ title:"부가가치세 계산기", desc:"공급가↔합계, 간이과세자 세액, 가산세, 신고기한까지 계산합니다.", category:"money", slug:"vat", related:["margin","loan","compound"] });
+TECHA.initPage({ title:"부가가치세 계산기", desc:"공급가↔합계, 간이과세자 세액, 가산세, 신고기한까지 계산합니다.", category:"money", slug:"vat", related: ["margin", "compound", "loan"] });
 (function(){
   // ---------- 큰 금액 입력칸에 천 단위 콤마 자동 표시 ----------
   function attachComma(input){

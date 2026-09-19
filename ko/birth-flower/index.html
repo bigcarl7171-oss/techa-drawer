@@ -99,14 +99,19 @@
     <p><a href="/blog/summer-fresh-flower-care/">여름철 생화 선물을 준비하신다면, 오래 보는 관리법도 함께 확인해보세요 →</a></p>
   </article>
 
-  <div id="related"></div>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/birth-stone/">💎 월별 탄생석</a><a href="/ko/gift-finder/">🎁 상황별 선물 큐레이션</a><a href="/ko/horoscope/">🔮 오늘의 별자리 운세</a></div>
+    <!-- END related -->
+  </div>
 </main>
 
 <footer id="site-footer"></footer>
 
 <script src="/assets/js/site.js"></script>
 <script>
-TECHA.initPage({ title:"월별 탄생화·꽃말", desc:"태어난 달의 탄생화와 꽃말을 확인합니다.", category:"fortune", slug:"birth-flower", related:["birth-stone","horoscope","name-match"], share:"#result" });
+TECHA.initPage({ title:"월별 탄생화·꽃말", desc:"태어난 달의 탄생화와 꽃말을 확인합니다.", category:"fortune", slug:"birth-flower", related: ["birth-stone", "gift-finder", "horoscope"], share:"#result" });
 (function(){
   var FLOWERS={
     1:{n:"수선화",e:"🌼",m:"자기애, 고결, 신비",

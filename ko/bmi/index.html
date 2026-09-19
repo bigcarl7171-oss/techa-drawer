@@ -137,14 +137,19 @@
     <div class="note">BMI 계산 결과는 참고용 지표입니다. 건강 상태의 정확한 진단과 체중 관리 계획은 의사·전문가와 상담해 결정하세요.</div>
   </article>
 
-  <div id="related"></div>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/unit-converter/">📏 단위 변환기</a><a href="/ko/percent/">％ 퍼센트 계산기</a><a href="/ko/age-calculator/">🎂 만 나이 계산기</a></div>
+    <!-- END related -->
+  </div>
 </main>
 
 <footer id="site-footer"></footer>
 
 <script src="/assets/js/site.js"></script>
 <script>
-TECHA.initPage({ title:"BMI 계산기", desc:"키와 몸무게로 체질량지수와 비만도를 확인합니다.", category:"health", slug:"bmi", related:["compound","vat","percent"] });
+TECHA.initPage({ title:"BMI 계산기", desc:"키와 몸무게로 체질량지수와 비만도를 확인합니다.", category:"health", slug:"bmi", related: ["unit-converter", "percent", "age-calculator"] });
 (function(){
   var h=document.getElementById("h"), w=document.getElementById("w"), result=document.getElementById("result");
   var gauge=document.getElementById("gauge"), gaugeMark=document.getElementById("gaugeMark");

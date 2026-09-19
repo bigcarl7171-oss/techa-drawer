@@ -86,14 +86,19 @@
     <div class="note">별자리 운세는 재미와 기분 전환을 위한 콘텐츠입니다. 중요한 결정은 스스로의 판단과 정보에 근거해 내려 주세요.</div>
   </article>
 
-  <div id="related"></div>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/zodiac-love/">💘 별자리 궁합</a><a href="/ko/name-match/">💞 이름 궁합 테스트</a><a href="/ko/birth-stone/">💎 월별 탄생석</a></div>
+    <!-- END related -->
+  </div>
 </main>
 
 <footer id="site-footer"></footer>
 
 <script src="/assets/js/site.js"></script>
 <script>
-TECHA.initPage({ title:"오늘의 별자리 운세", desc:"생일로 별자리를 찾아 오늘의 운세를 확인합니다.", category:"fortune", slug:"horoscope", related:["zodiac-love","name-match","birth-stone"], share:"#sign" });
+TECHA.initPage({ title:"오늘의 별자리 운세", desc:"생일로 별자리를 찾아 오늘의 운세를 확인합니다.", category:"fortune", slug:"horoscope", related: ["zodiac-love", "name-match", "birth-stone"], share:"#sign" });
 (function(){
   var SIGNS=[
     {n:"물병자리",e:"💧",from:[1,20],to:[2,18]},{n:"물고기자리",e:"🐟",from:[2,19],to:[3,20]},

@@ -81,14 +81,19 @@
     <div class="note">별자리 궁합은 재미용 콘텐츠입니다. 원소가 다르다고 안 맞는 것도, 같다고 늘 잘 맞는 것도 아니에요. 결국 관계는 서로의 이해로 완성됩니다.</div>
   </article>
 
-  <div id="related"></div>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/horoscope/">🔮 오늘의 별자리 운세</a><a href="/ko/name-match/">💞 이름 궁합 테스트</a><a href="/ko/birth-stone/">💎 월별 탄생석</a></div>
+    <!-- END related -->
+  </div>
 </main>
 
 <footer id="site-footer"></footer>
 
 <script src="/assets/js/site.js"></script>
 <script>
-TECHA.initPage({ title:"별자리 궁합", desc:"두 별자리의 궁합 점수와 관계 특징을 확인합니다.", category:"fortune", slug:"zodiac-love", related:["horoscope","name-match","birth-stone"], share:"#result" });
+TECHA.initPage({ title:"별자리 궁합", desc:"두 별자리의 궁합 점수와 관계 특징을 확인합니다.", category:"fortune", slug:"zodiac-love", related: ["horoscope", "name-match", "birth-stone"], share:"#result" });
 (function(){
   // 원소: 0불 1흙 2공기 3물
   var SIGNS=[
