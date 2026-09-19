@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { eolOf, toEol } = require('./lib/site-registry');
+
 const ROOT = path.resolve(__dirname, '..');
 const INDEX = path.join(ROOT, 'index.html');
 const DATA = require(path.join(ROOT, 'data/home-curation.json'));
@@ -71,6 +73,9 @@ function main() {
   const html = fs.readFileSync(INDEX, 'utf8');
   let next = replaceBlock(html, SITUATION_BEGIN, SITUATION_END, built.situations);
   next = replaceBlock(next, PRODUCT_BEGIN, PRODUCT_END, built.products);
+  // 이 저장소의 HTML은 CRLF다. 생성기가 LF를 섞어 넣으면 --check 가 매번 실패해
+  // 게이트가 늑대소년이 된다 (다른 생성기 4종과 같은 처리).
+  next = toEol(next, eolOf(html));
   if (next === html) {
     console.log(`✅ 최신 상태 — ${month}월 ${built.profileId} 홈 큐레이션`);
     return;
