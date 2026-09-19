@@ -1093,7 +1093,7 @@
       },
       "priceMin": null,
       "priceMax": null,
-      "shopUrl": "",
+      "shopUrl": "https://mkt.shopping.naver.com/link/6aacecf40b9e0e1fb38b3403",
       "image1": "/assets/images/gift-finder/flower-class-01.webp",
       "image2": "/assets/images/gift-finder/flower-class-02.webp",
       "photoStatus": "확정",
@@ -1105,7 +1105,7 @@
         "recentRef": 0,
         "score": 0.0
       },
-      "note": "가격·구매 링크는 현재 가격표에 없어 결과 카드에서 '가격/신청 문의'로 처리. 실제 수강생 제작 장면 확보 시 대표사진 교체 권장."
+      "note": "가격이 가격표(xlsx)에 없어 결과 카드에서는 '가격/신청 문의'로 처리. 구매 링크는 2026-09-18 발급된 마케팅링크 — data/store-links.json 의 10537190482. 실제 수강생 제작 장면 확보 시 대표사진 교체 권장."
     }
   ]
 }
