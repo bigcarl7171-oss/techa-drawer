@@ -80,18 +80,70 @@
   };
 
   // ---------- 매거진 글 레지스트리 (홈 검색용) ----------
-  // 새 글 추가 시 이 배열과 blog/index.html의 카드를 함께 추가할 것
+  // 이 배열은 scripts/build-posts.js 가 blog/index.html 의 카드에서 생성한다 — 직접 고치지 말 것.
+  // 예전엔 "새 글 추가 시 이 배열과 카드를 함께 추가할 것"이라는 주석만 있었는데, 발행
+  // 스크립트가 카드만 갱신해서 2026-08-12 이후 25편이 홈 검색에서 통째로 빠져 있었다.
   var POSTS = [
+    { title: "졸업식 꽃다발 비누꽃, 한 달 뒤 후기에 적혀 있는 것", emoji: "🎓",
+      desc: "한 달 사용 후기로 확인한, 행사 뒤까지 생각해 꽃다발 고르는 기준", path: "/blog/graduation-bouquet-one-month-later/", date: "2026-09-18" },
+    { title: "비누꽃다발·프리저브드 꽃다발 후기에서 가장 많이 나온 말", emoji: "💬",
+      desc: "후기에서 많이 나온 표현과 아쉬움으로 남은 말을 비율로 정리했습니다", path: "/blog/flower-gift-review-analysis/", date: "2026-09-16" },
+    { title: "노란장미 꽃말 뜻, 질투에서 우정이 되기까지", emoji: "🌼",
+      desc: "노란 장미 꽃말이 우정과 질투로 갈린 사연과 받는 분별 고르는 법", path: "/blog/yellow-rose-meaning/", date: "2026-09-15" },
+    { title: "추석 용돈 선물, 시들지 않는 꽃이라 미리 받아 두셔도 됩니다", emoji: "🌕",
+      desc: "추석 용돈 선물, 미리 받아 두는 이유와 연휴 전 준비 순서", path: "/blog/chuseok-money-gift-prepare-early/", date: "2026-09-14" },
+    { title: "승진 축하 이벤트, 요즘 사무실에서 하는 여섯 가지", emoji: "🎉",
+      desc: "사무실에서 실제로 쓰는 승진 축하 방식 여섯 가지와, 방식에 맞춰 선물 고르는 순서", path: "/blog/promotion-gift-event-ideas/", date: "2026-09-12" },
+    { title: "블랙앤화이트 장미 무드등, 색을 빼고 만들면서 더 따진 것들", emoji: "🌹",
+      desc: "흑백 장미 무드등을 만든 이유와 소재, 전원·사이즈 고르는 기준", path: "/blog/black-white-rose-mood-lamp/", date: "2026-09-11" },
+    { title: "비누꽃 한두 송이, 작다는 게 이 선물의 이유입니다", emoji: "🌹",
+      desc: "한두 송이가 약소해 보일까 걱정될 때, 받는 쪽 부담까지 넣어 선물 크기를 정하는 법", path: "/blog/soap-flower-one-stem/", date: "2026-09-10" },
+    { title: "승진 축하 선물, 그날 하루가 아니라 새 자리에 남는 것으로", emoji: "🎉",
+      desc: "승진 축하 선물, 화환·꽃다발 대신 바뀐 사무실과 책상에 오래 남는 것을 고르는 기준", path: "/blog/promotion-congratulation-gift/", date: "2026-09-08" },
+    { title: "환갑·칠순 부모님 생신, 현금 선물을 봉투보다 오래 남게 드리는 법", emoji: "🎂",
+      desc: "봉투 대신 용돈케이크로 현금을 전하는 법과, 행사 뒤에도 무드등으로 남는 이유", path: "/blog/parents-birthday-money-cake/", date: "2026-09-07" },
+    { title: "프리저브드 꽃다발이 생화보다 아담해 보이는 이유", emoji: "💐",
+      desc: "프리저브드가 아담해 보이는 이유와 용도별 사이즈 고르는 기준", path: "/blog/preserved-flower-volume-guide/", date: "2026-09-03" },
+    { title: "발표회·집들이·개업, 가을 선물은 경우마다 고르는 법이 달라요", emoji: "🍂",
+      desc: "발표회·집들이·개업·그냥 안부, 경우마다 먼저 볼 것이 달라요", path: "/blog/autumn-flower-gift-offseason/", date: "2026-09-03" },
+    { title: "하드웨어 엔지니어와 조소 전공자가 꽃집을 열었습니다", emoji: "🌿",
+      desc: "전자공학과 조소, 두 사람이 나눠 맡은 자리가 상품에 남긴 것", path: "/blog/engineer-and-sculptor-flower-shop/", date: "2026-09-02" },
+    { title: "아이 발표회 꽃다발, 얼굴 안 가리는 크기 확인해보세요", emoji: "🌸",
+      desc: "발표회 사진에서 아이 얼굴 안 가리게, 꽃다발 폭·무게·색 고르는 기준", path: "/blog/kids-recital-bouquet-size-guide/", date: "2026-09-01" },
+    { title: "텅 비어 있던 현관, 놓는 것 하나 거는 것 하나면 달라져요", emoji: "🚪",
+      desc: "신발장 위와 빈 벽, 두 자리에 뭘 두면 좋은지", path: "/blog/entryway-mood-lamp-placement/", date: "2026-08-29" },
+    { title: "퇴원 축하 선물, 병문안 선물이랑 똑같이 고르면 아쉬운 이유", emoji: "🎉",
+      desc: "병문안 때 피했던 것들이 퇴원 축하 땐 오히려 잘 어울리는 이유예요", path: "/blog/hospital-discharge-gift/", date: "2026-08-27" },
+    { title: "원룸 무드 조명, 이 자리에 놓으면 방 분위기가 달라져요", emoji: "💡",
+      desc: "원룸 무드등, 협탁·책상·창가 중 어디에 어떤 색으로 두면 좋을지 정리했어요", path: "/blog/one-room-mood-lighting-placement/", date: "2026-08-26" },
+    { title: "더운 날 꽃 선물, 망설여진다면 확인해보세요", emoji: "🌻",
+      desc: "더위에도 꽃 선물이 안심되는 이유, 확인 기준 세 가지", path: "/blog/summer-flower-gift-check/", date: "2026-08-25" },
+    { title: "병문안 꽃 고를 때 동백꽃을 피하는 이유", emoji: "🌺",
+      desc: "병문안 꽃 고를 때 피해야 할 꽃과 확인하면 좋을 기준을 정리했어요", path: "/blog/camellia-hospital-visit-taboo/", date: "2026-08-24" },
+    { title: "편의점 꽃다발, 급할 때 사도 될까요", emoji: "🌷",
+      desc: "왜 빨리 시드는지, 그래도 사야 한다면 뭘 확인해야 하는지", path: "/blog/convenience-store-flower-emergency/", date: "2026-08-23" },
+    { title: "회사 행사 꽃, 견적 받기 전에 확인해야 할 5가지", emoji: "🧾",
+      desc: "최소 수량부터 세금계산서 발행·배송 범위까지 — 견적 요청 전 체크리스트", path: "/blog/corporate-flower-quote-checklist/", date: "2026-08-21" },
+    { title: "기업 행사 꽃다발, 당일 아침에 준비하면 늦는 이유", emoji: "🏢",
+      desc: "시상식·워크숍·창립기념일 단체 꽃다발은 당일이 아니라 미리 준비하는 것입니다", path: "/blog/corporate-event-bouquet-timing/", date: "2026-08-20" },
+    { title: "졸업식 꽃다발, 유치원~대학교 아들·딸·조카별 고르는 법", emoji: "🎓",
+      desc: "아이가 직접 드는 자리인지, 사진에 담기는 자리인지 — 대상과 학교급으로 나눠 정리했습니다", path: "/blog/graduation-gift-by-recipient/", date: "2026-08-19" },
+    { title: "사진보다 실물이 낫다는 말을 자주 듣습니다", emoji: "📷",
+      desc: "화면으로 보실 때 걱정하시는 방향과, 직접 보신 분들의 반응은 정반대였습니다", path: "/blog/flower-gift-better-than-photo/", date: "2026-08-18" },
+    { title: "추석 용돈, 봉투 말고 뭘로 드릴까요", emoji: "🧧",
+      desc: "상 위에 놓을지, 불을 켜고 축하할지, 손에 들려드릴지 — 명절 용돈 고르는 세 가지 방식", path: "/blog/chuseok-money-gift/", date: "2026-08-17" },
+    { title: "돈꽃다발 후기를 처음부터 끝까지 읽었습니다", emoji: "💰",
+      desc: "상자를 열던 날, 건네던 순간, 그리고 한참 뒤에도 남아 있는 꽃", path: "/blog/money-bouquet-customer-stories/", date: "2026-08-14" },
     { title: "학예회·발표회 꽃다발, 생화 대신 비누꽃을 고르는 이유", emoji: "💐",
       desc: "미리 사둘 수 있고, 옮기기 편하고, 사진에 아이 얼굴이 나오는 행사 꽃다발", path: "/blog/event-bouquet-soap-flower/", date: "2026-08-12" },
     { title: "집들이 선물, 화분 대신 해바라기 액자를 고르는 이유", emoji: "🌻",
       desc: "물·자리·인테리어, 집들이·개업 선물 고를 때 확인해볼 세 가지", path: "/blog/sunflower-frame-housewarming-gift/", date: "2026-08-11" },
     { title: "유리돔 무드등 고를 때, 사진으로는 알 수 없는 4가지", emoji: "🕯️",
-      desc: "온라인으로 고를 때 사진만으로는 확인하기 어려운 네 가지 기준을 정리했습니다", path: "/blog/glass-dome-mood-lamp-review/", date: "2026-08-10" },
+      desc: "소등 상태·뒷면·전원·시간이 지난 뒤, 사진 밖에서 확인할 것들", path: "/blog/glass-dome-mood-lamp-review/", date: "2026-08-10" },
     { title: "슬픈 꽃말을 가진 꽃들, 알고 나면 더 애틋해지는 이야기", emoji: "🥀",
-      desc: "아네모네, 히아신스, 금잔화, 라일락에 담긴 슬픈 꽃말과 그 사연을 정리했어요", path: "/blog/sad-flower-meanings/", date: "2026-08-08" },
+      desc: "아네모네, 히아신스, 금잔화, 라일락에 담긴 슬픈 꽃말과 그 사연", path: "/blog/sad-flower-meanings/", date: "2026-08-08" },
     { title: "배송이 무사히 도착했다는 그 한 줄이, 왜 저희에겐 가장 큰 안심일까요", emoji: "📦",
-      desc: "\"무사히 도착했고 예쁘다\"는 짧은 리뷰 한 줄에 공방이 유독 기뻐하는 이유를 담았어요", path: "/blog/safe-delivery-review/", date: "2026-08-02" },
+      desc: "\"무사히 도착했고 예쁘다\"는 후기 한 줄에 공방이 유독 기뻐하는 이유", path: "/blog/safe-delivery-review/", date: "2026-08-02" },
     { title: "프리저브드 꽃, 조화 아니야? 사실은 진짜 생화입니다", emoji: "🌹",
       desc: "조화와 뭐가 다른지, 어떻게 시들지 않는지 정리했습니다", path: "/blog/preserved-flower-real-flower/", date: "2026-07-29" },
     { title: "한여름 생화, 유독 빨리 시드는 이유와 오래 보는 법", emoji: "🌸",
@@ -217,9 +269,13 @@
 
   // ---------- 관련 앱(내부 링크) ----------
   // slugs: 표시할 앱 slug 배열 (없으면 같은 카테고리 자동)
+  // 이 블록은 scripts/build-related.js 가 HTML에 미리 구워 넣는다 — 크롤러가 도구
+  // 사이를 오갈 수 있어야 하기 때문이다(JS로만 그리던 동안 도구 15개가 피링크 1개짜리로
+  // 남았고 색인에도 거의 안 잡혔다). 여기서는 비어 있을 때만 폴백으로 그린다.
   function renderRelated(currentSlug, category, slugs) {
     var el = document.getElementById("related");
     if (!el) return;
+    if (el.querySelector(".related-list")) return;
     var list = slugs
       ? slugs.map(function (sg) { return byslug(sg); }).filter(Boolean)
       : APPS.filter(function (a) { return a.cat === category && a.slug !== currentSlug; });

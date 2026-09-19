@@ -32,6 +32,16 @@
 | `scripts/publish-draft.js` | 초안 → 발행본 HTML + `blog/index.html` 카드 + `index.html` 캐러셀/위젯(상한·delay 처리) + `sitemap.xml`. 멱등(재실행 시 갈아끼움) |
 | `scripts/prepare-images.js` | 이미지 슬롯 채우기 — `--from <스크래치폴더>` 에서 읽어 3:2 크롭·워터마크 제거·용량 압축해 `blog/<slug>/` 에. AI 컷은 우하단 워터마크 크롭이 기본, `--photo` 면 촬영본으로 보고 가운데 크롭 |
 | `scripts/check-publish.sh` | 발행 게이트 — 발행본·목록·메인·사이트맵·내부링크·분량(`channel-specs.md` 기준)·이력을 기계적으로 확인. ❌ 있으면 커밋 금지 |
+| `scripts/build-home-tools.js` | 홈의 "전체 도구" 표를 `site.js` APPS에서 정적 HTML로 생성 |
+| `scripts/build-related.js` | 도구 페이지 하단 "관련 도구" 블록을 정적 HTML로 생성 |
+| `scripts/build-posts.js` | 홈 검색용 `POSTS` 배열을 `blog/index.html` 카드에서 생성 |
+
+> 위 생성기 3종은 **왜 있는가** — 홈 도구 표·관련 도구·홈 검색 목록은 원래 `site.js`가
+> 브라우저에서 그렸다. 그래서 HTML 소스에 주소가 없었고, 도구 22개 중 15개가 사이트
+> 안에서 피링크 1개짜리로 남아 구글 색인에 거의 안 잡혔다. 매거진은 며칠 만에 색인되는데
+> 도구는 몇 달째 안 되던 차이가 여기서 왔다 (2026-09-19 진단).
+> 세 목록의 단일 출처는 그대로 `site.js`(도구)와 `blog/index.html`(매거진)이고, 스크립트는
+> 거기서 읽어 마크업만 찍는다. `--check` 로 게이트가 어긋남을 잡는다.
 
 ## 이미지 규칙
 

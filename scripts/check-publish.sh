@@ -125,9 +125,21 @@ echo "[7] 내부링크"
 mapfile -t linkers < <(grep -rl "/blog/$SLUG/" --include='*.html' . 2>/dev/null \
   | grep -v "^./blog/" | grep -v "^./index.html" | sed 's|^\./||')
 if [ "${#linkers[@]}" -ge 1 ]; then
-  ok "블로그 밖 내부링크" "${#linkers[@]}개 — ${linkers[*]}"
+  ok "들어오는 링크(블로그 밖 → 새 글)" "${#linkers[@]}개 — ${linkers[*]}"
 else
-  bad "블로그 밖 내부링크" "0개 — 최소 1개 필요 (예: care/, ko/gift-finder/)"
+  bad "들어오는 링크(블로그 밖 → 새 글)" "0개 — 최소 1개 필요 (예: care/, ko/gift-finder/)"
+fi
+
+# 나가는 링크 — 2026-09-19 추가.
+# 위 검사만 있었더니 링크가 한 방향으로만 흘렀다: 발행할 때마다 도구 페이지가 매거진에
+# 링크를 주기만 하고(도구→매거진 22건) 되받지는 못해(매거진→도구 0건), 도구 22개 중
+# 15개가 사이트 안에서 피링크 1개짜리로 남았다. 그 15개는 구글 색인에도 거의 안 잡혀 있다.
+out_links=$(grep -oE 'href="/(ko/[a-z-]+|care)/' "blog/$SLUG/index.html" 2>/dev/null | sort -u)
+out_n=$(printf '%s' "$out_links" | grep -c . || true)
+if [ "$out_n" -ge 1 ]; then
+  ok "나가는 링크(새 글 → 도구/관리법)" "$out_n개 — $(printf '%s' "$out_links" | sed 's|href="||' | tr '\n' ' ')"
+else
+  bad "나가는 링크(새 글 → 도구/관리법)" "0개 — 본문에서 관련 도구 1곳으로 링크할 것 (예: /ko/birth-flower/, /ko/dday/, /care/)"
 fi
 
 # ── 중복: 매거진 ↔ 네이버 blog.md 문장 겹침
@@ -179,6 +191,23 @@ if [ -f ko/index.html ] && [ -f assets/js/site.js ]; then
 else
   warn "도구 허브" "ko/index.html 또는 site.js 를 못 찾음"
 fi
+
+# ── 정적 링크 (홈 도구 표 · 관련 도구) — 2026-09-19 추가
+#
+# 위 허브 검사와 같은 종류의 사고를 두 곳에서 더 발견했다. 홈의 도구 표와 도구 페이지
+# 하단의 "관련 도구"는 둘 다 site.js 가 브라우저에서 그리고 있어서 HTML 소스에는
+# 주소가 없었다 — 홈에 도구 22개 중 7개만, 관련 도구는 0개. 이제 스크립트가 HTML로
+# 구워 넣고, site.js 를 고친 뒤 안 돌리면 여기서 잡는다.
+echo "[정적] 목록이 HTML에 구워졌는가"
+for b in build-home-tools build-related build-posts; do
+  if [ -f "scripts/$b.js" ]; then
+    out=$(node "scripts/$b.js" --check 2>&1) \
+      && ok "$b" "$(echo "$out" | tail -1 | sed 's/^[✅ ]*//')" \
+      || bad "$b" "$(echo "$out" | tail -1 | sed 's/^[❌ ]*//')"
+  else
+    warn "$b" "스크립트를 못 찾음"
+  fi
+done
 
 # ── 배포
 echo "[배포] 라이브 확인"
