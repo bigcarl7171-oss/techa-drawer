@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/icons/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>음력 양력 변환기: 한국 음력 기준 날짜 계산 | 테차 서랍</title>
+<meta name="description" content="양력을 음력으로, 음력을 양력으로 바꿉니다. 한국천문연구원 음양력 자료 기준이라 윤달과 간지까지 정확합니다. 음력 생일이 올해 언제인지 바로 확인하세요.">
+<link rel="canonical" href="https://www.techa.kr/ko/lunar-converter/">
+<meta property="og:image" content="https://www.techa.kr/assets/og/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.techa.kr/assets/og/og-default.png">
+<link rel="alternate" hreflang="ko" href="https://www.techa.kr/ko/lunar-converter/">
+<link rel="alternate" hreflang="x-default" href="https://www.techa.kr/ko/lunar-converter/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="음력 양력 변환기 | 테차 서랍">
+<meta property="og:description" content="한국 음력 기준 양력·음력 변환. 윤달·간지 포함.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"WebApplication","name":"음력 양력 변환기",
+  "applicationCategory":"UtilitiesApplication","operatingSystem":"Any",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"} }
+</script>
+<style>
+  .mode-tabs { display:flex; gap:8px; margin-bottom:16px; }
+  .mode-tabs button {
+    flex:1; padding:11px 8px; border:1px solid var(--line); border-radius:var(--radius-sm);
+    background:var(--white); color:var(--muted); font-size:14px; font-weight:600; cursor:pointer;
+    transition:border-color 140ms ease, color 140ms ease, background-color 140ms ease;
+  }
+  .mode-tabs button[aria-pressed="true"] { border-color:var(--gold-deep); background:var(--gold-soft); color:var(--gold-strong-ink); }
+  .sub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:10px; margin-top:14px; }
+  .sub-grid .stat { background:var(--sage-soft); border-radius:var(--radius-sm); padding:12px; text-align:center; }
+  .sub-grid .n { font-family:"Gowun Batang",serif; font-size:19px; font-weight:700; color:var(--gold-deep); }
+  .sub-grid .l { font-size:12px; color:var(--muted); }
+  .leap-row { margin-top:12px; }
+  .leap-row.is-off { opacity:.45; }
+</style>
+</head>
+<body>
+<header id="site-header"></header>
+<div id="page-head"></div>
+
+<main class="wrap">
+  <div class="ad-slot"></div>
+
+  <section class="card">
+    <div class="mode-tabs" role="group" aria-label="변환 방향">
+      <button type="button" id="mode-s2l" aria-pressed="true">양력 → 음력</button>
+      <button type="button" id="mode-l2s" aria-pressed="false">음력 → 양력</button>
+    </div>
+
+    <div id="pane-s2l">
+      <label class="field" for="sdate">양력 날짜</label>
+      <input type="date" id="sdate">
+    </div>
+
+    <div id="pane-l2s" hidden>
+      <div class="row">
+        <div><label class="field" for="ly">음력 연도</label><input type="number" id="ly" min="1000" max="2050" placeholder="예: 1975"></div>
+        <div><label class="field" for="lm">월</label><input type="number" id="lm" min="1" max="12" placeholder="1~12"></div>
+        <div><label class="field" for="ld">일</label><input type="number" id="ld" min="1" max="30" placeholder="1~30"></div>
+      </div>
+      <label class="field leap-row is-off" id="leapRow">
+        <input type="checkbox" id="leap" style="width:auto;margin-right:6px;vertical-align:middle">윤달로 계산
+        <span class="hint" id="leapHint">— 그 해에 윤달이 있을 때만 켤 수 있어요</span></label>
+    </div>
+
+    <div class="result empty" id="result" style="margin-top:16px">날짜를 입력해 주세요.</div>
+    <div class="sub-grid" id="subs" style="display:none">
+      <div class="stat"><div class="n" id="s-gapja">-</div><div class="l">간지</div></div>
+      <div class="stat"><div class="n" id="s-dow">-</div><div class="l">요일</div></div>
+      <div class="stat"><div class="n" id="s-zodiac">-</div><div class="l">띠</div></div>
+    </div>
+  </section>
+
+  <div class="ad-slot"></div>
+
+  <article class="article">
+    <h2>음력 양력 변환기 사용법</h2>
+    <p>위에서 방향을 고르고 날짜를 넣으면 바로 변환됩니다. <b>양력 → 음력</b>은 달력 날짜를 음력으로,
+       <b>음력 → 양력</b>은 음력 날짜가 실제 달력의 며칠인지 알려줍니다. 요일과 간지, 띠도 함께 나옵니다.</p>
+    <p>음력 생일을 챙기시는 분이라면 <b>음력 → 양력</b>을 쓰시면 됩니다. 어머니 생신이 음력 8월 10일이라면
+       연도만 올해로 바꿔 넣어 보세요. 해마다 양력 날짜가 열흘 남짓 당겨졌다 밀렸다 합니다.</p>
+
+    <h2>한국 음력을 씁니다</h2>
+    <p>음력 변환은 <b>한국천문연구원(KASI)이 발표하는 음양력 자료</b>를 기준으로 계산합니다.
+       브라우저에 기본으로 들어 있는 중국식 음력을 쓰면 간단하지만, 한국 음력과
+       <b>하루 어긋나는 해</b>가 있습니다. 예를 들어 2028년 설날을 1월 26일로 계산하는데,
+       한국 기준 실제 설날은 1월 27일입니다.</p>
+    <p>이유는 기준 자오선이 다르기 때문입니다. 음력의 초하루는 달이 완전히 어두워지는
+       <b>합삭(合朔) 순간이 속한 날</b>로 정하는데, 한국은 한국 표준시(동경 135도),
+       중국은 동경 120도를 씁니다. 합삭이 자정 무렵에 일어나면 두 나라의 날짜가 하루 갈립니다.
+       자주 있는 일은 아니지만, 하필 그 해가 내 생일이나 명절이면 곤란해집니다.</p>
+    <div class="note">변환 가능한 범위는 양력 1000년 2월 13일 ~ 2050년 12월 31일입니다.</div>
+
+    <h2>윤달은 어떻게 다루나요?</h2>
+    <p>음력은 한 달이 29일 또는 30일이라 열두 달을 채워도 양력보다 열흘 남짓 짧습니다.
+       그대로 두면 계절이 어긋나기 때문에 <b>2~3년에 한 번 같은 달을 한 번 더</b> 넣어 맞춥니다.
+       이 덧붙인 달이 윤달이고, 그 해는 열세 달이 됩니다.</p>
+    <p>그래서 '음력 5월'이 두 번인 해에는 <b>평달 5월</b>과 <b>윤5월</b>이 서로 다른 날입니다.
+       음력 → 양력으로 바꿀 때 윤달 여부를 반드시 골라야 하는 이유입니다.
+       윤달이 없는 해에는 체크가 자동으로 잠깁니다.</p>
+    <h3>가까운 해의 윤달</h3>
+    <div class="scrollx">
+    <table class="compare-table">
+      <thead><tr><th>연도</th><th>윤달</th></tr></thead>
+      <tbody>
+        <tr><td>2025년</td><td>윤6월</td></tr>
+        <tr><td>2026 ~ 2027년</td><td>없음</td></tr>
+        <tr><td>2028년</td><td>윤5월</td></tr>
+        <tr><td>2029 ~ 2030년</td><td>없음</td></tr>
+        <tr><td>2031년</td><td>윤3월</td></tr>
+        <tr><td>2032년</td><td>없음</td></tr>
+        <tr><td>2033년</td><td>윤11월</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>윤달에는 탈이 없다고 해서 예부터 이사나 수의 준비 같은 일을 이때 하는 풍습이 있었습니다.
+       반대로 혼례는 피하는 경우가 많았습니다.</p>
+
+    <h2>음력으로 세는 날들</h2>
+    <p>양력으로 고정된 날과 달리, 아래는 해마다 양력 날짜가 바뀝니다. 선물이나 모임을 준비하신다면
+       그 해의 날짜를 미리 확인해 두시는 편이 좋습니다.</p>
+    <div class="scrollx">
+    <table class="compare-table">
+      <thead><tr><th>날</th><th>음력</th><th>2026년</th><th>2027년</th><th>2028년</th></tr></thead>
+      <tbody>
+        <tr><td>설날</td><td>1월 1일</td><td>2월 17일</td><td>2월 7일</td><td>1월 27일</td></tr>
+        <tr><td>정월대보름</td><td>1월 15일</td><td>3월 3일</td><td>2월 21일</td><td>2월 10일</td></tr>
+        <tr><td>부처님오신날</td><td>4월 8일</td><td>5월 24일</td><td>5월 13일</td><td>5월 2일</td></tr>
+        <tr><td>단오</td><td>5월 5일</td><td>6월 19일</td><td>6월 9일</td><td>5월 28일</td></tr>
+        <tr><td>칠석</td><td>7월 7일</td><td>8월 19일</td><td>8월 8일</td><td>8월 26일</td></tr>
+        <tr><td>추석</td><td>8월 15일</td><td>9월 25일</td><td>9월 15일</td><td>10월 3일</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="note">2028년이 눈에 띄게 어긋나 보이는 것은 그 해 <b>윤5월</b> 때문입니다.
+       윤달보다 앞에 있는 단오(5월 5일)는 5월 28일로 당겨지고, 뒤에 있는 칠석과 추석은
+       한 달쯤 밀립니다. 윤달 하나가 그 뒤의 모든 날을 미루는 셈입니다.</div>
+
+    <h2>간지와 띠는 어떻게 정해지나요?</h2>
+    <p>간지(干支)는 <b>천간 10개</b>(갑·을·병·정·무·기·경·신·임·계)와 <b>지지 12개</b>(자·축·인·묘·진·사·오·미·신·유·술·해)를
+       차례로 짝지은 것입니다. 10과 12의 최소공배수가 60이라 <b>60년마다</b> 같은 조합이 돌아옵니다.
+       예순한 번째 생일을 환갑이라 부르는 것이 여기서 왔습니다.</p>
+    <p>띠는 지지에 붙은 열두 동물입니다. 이 변환기는 <b>음력 기준</b>으로 띠를 표시합니다.
+       그래서 양력 1월이나 2월 초에 태어난 분은 아직 지난해 띠일 수 있습니다.
+       설날 전에 태어났다면 앞 해의 띠라고 보시면 됩니다.</p>
+
+    <h2>자주 묻는 질문 (FAQ)</h2>
+    <h3>Q. 음력 생일이 올해는 언제인가요?</h3>
+    <p><b>음력 → 양력</b>으로 바꾼 뒤 연도만 올해로 넣으시면 됩니다. 음력 날짜(월·일)는 그대로 두세요.
+       음력 생일은 해마다 양력으로 열흘 남짓 당겨졌다가, 윤달이 낀 해에 한 달쯤 밀립니다.</p>
+    <h3>Q. 음력 30일이 없는 달도 있나요?</h3>
+    <p>있습니다. 음력 한 달은 29일(작은달)이거나 30일(큰달)이라, 작은달에는 30일이 아예 없습니다.
+       없는 날짜를 넣으면 변환되지 않는다고 알려드립니다. 음력 그믐을 챙기신다면
+       그 해 그 달이 29일까지인지 30일까지인지 먼저 확인해 보세요.</p>
+    <h3>Q. 왜 해마다 설날과 추석 날짜가 바뀌나요?</h3>
+    <p>설날과 추석은 음력으로 고정된 날(음력 1월 1일, 8월 15일)이기 때문입니다.
+       음력 1년은 354일 안팎이라 양력보다 열흘쯤 짧고, 윤달이 든 해에는 반대로 한 달쯤 밀립니다.
+       그래서 설날이 1월 말이었다가 2월 중순이 되기도 합니다.</p>
+    <h3>Q. 주민등록상 생일이 음력인데 양력으로 바꿔야 해요.</h3>
+    <p>태어난 해의 음력 날짜를 넣어 <b>음력 → 양력</b>으로 바꾸시면 실제 태어난 양력 날짜가 나옵니다.
+       다만 윤달에 태어나셨다면 윤달 체크를 반드시 켜 주세요. 한 달이 통째로 어긋납니다.</p>
+    <h3>Q. 다른 변환기와 결과가 다릅니다.</h3>
+    <p>중국·일본식 음력을 쓰는 서비스와는 하루 차이가 날 수 있습니다. 이 변환기는
+       한국천문연구원 음양력 자료를 기준으로 하며, 위 명절 표의 날짜와 맞는지 대조해 보시면
+       어느 쪽 기준인지 바로 확인됩니다.</p>
+
+    <div class="note">입력한 날짜는 서버로 전송되지 않고 브라우저 안에서만 계산됩니다.</div>
+
+
+    <!-- BEGIN tool-products (생성: scripts/build-tool-products.js — 직접 고치지 말 것) -->
+    <section class="tool-products" aria-labelledby="tool-products-title">
+      <p class="tool-products-kicker">TECHA PICKS</p>
+      <h2 id="tool-products-title">이 도구를 쓰신 김에, 테차의 선물</h2>
+      <div class="tool-products-grid">
+        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/6aacecf4eeb8b60d4188eac3" target="_blank" rel="noopener noreferrer"><span><b>카네이션장미 꽃다발</b><small>부모님께 감사와 축하의 마음을 꽃으로 전할 때</small></span><strong>상품 보기 →</strong></a>
+        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241caf" target="_blank" rel="noopener noreferrer"><span><b>용돈케이크 머니박스</b><small>생신·환갑·칠순에 현금과 축하 장면을 함께 준비할 때</small></span><strong>상품 보기 →</strong></a>
+        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/68d23a99713c156d9f530c33" target="_blank" rel="noopener noreferrer"><span><b>장미수국 꽃다발</b><small>기념일·졸업·승진처럼 받는 순간이 중요한 자리</small></span><strong>상품 보기 →</strong></a>
+      </div>
+      <p class="tool-products-note">색상·크기·최종 가격은 스마트스토어 상품 페이지에서 확인해 주세요.</p>
+    </section>
+    <!-- END tool-products -->
+  </article>
+
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/dday/">📅 D-Day 계산기</a><a href="/ko/age-calculator/">🎂 만 나이 계산기</a><a href="/ko/birth-flower/">🌸 월별 탄생화·꽃말</a></div>
+    <!-- END related -->
+  </div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<script src="/assets/js/korean-lunar.js"></script>
+<script src="/assets/js/site.js"></script>
+<script>
+TECHA.initPage({
+  title: "음력 양력 변환기",
+  desc: "한국천문연구원 기준으로 양력·음력을 서로 바꿉니다. 윤달과 간지도 함께 보여드립니다.",
+  category: "date",
+  slug: "lunar-converter",
+  related: ["dday", "age-calculator", "birth-flower"]
+});
+
+(function () {
+  var K = window.KoreanLunarCalendar;
+  var ZODIAC = { "자":"쥐", "축":"소", "인":"호랑이", "묘":"토끼", "진":"용", "사":"뱀",
+                 "오":"말", "미":"양", "신":"원숭이", "유":"닭", "술":"개", "해":"돼지" };
+  var DOW = ["일", "월", "화", "수", "목", "금", "토"];
+
+  var btnS = document.getElementById("mode-s2l"), btnL = document.getElementById("mode-l2s");
+  var paneS = document.getElementById("pane-s2l"), paneL = document.getElementById("pane-l2s");
+  var sdate = document.getElementById("sdate");
+  var ly = document.getElementById("ly"), lm = document.getElementById("lm"), ld = document.getElementById("ld");
+  var leap = document.getElementById("leap"), leapRow = document.getElementById("leapRow"), leapHint = document.getElementById("leapHint");
+  var result = document.getElementById("result"), subs = document.getElementById("subs");
+  var gapjaEl = document.getElementById("s-gapja"), dowEl = document.getElementById("s-dow"), zodEl = document.getElementById("s-zodiac");
+
+  var mode = "s2l";
+
+  function setMode(next) {
+    mode = next;
+    var isS = mode === "s2l";
+    btnS.setAttribute("aria-pressed", String(isS));
+    btnL.setAttribute("aria-pressed", String(!isS));
+    paneS.hidden = !isS;
+    paneL.hidden = isS;
+    calc();
+  }
+  btnS.addEventListener("click", function () { setMode("s2l"); });
+  btnL.addEventListener("click", function () { setMode("l2s"); });
+
+  function empty(msg) {
+    result.className = "result empty";
+    result.textContent = msg;
+    subs.style.display = "none";
+  }
+
+  // 그 해에 윤달이 있는지, 있다면 몇 월인지
+  function leapMonthOf(year) {
+    for (var m = 1; m <= 12; m++) {
+      var c = new K();
+      if (c.setLunarDate(year, m, 1, true)) return m;
+    }
+    return 0;
+  }
+
+  function syncLeap() {
+    var y = parseInt(ly.value, 10);
+    if (!y) { leapRow.classList.add("is-off"); leap.disabled = true; leap.checked = false;
+      leapHint.textContent = "— 그 해에 윤달이 있을 때만 켤 수 있어요"; return; }
+    var lmo = leapMonthOf(y);
+    if (!lmo) {
+      leapRow.classList.add("is-off"); leap.disabled = true; leap.checked = false;
+      leapHint.textContent = "— " + y + "년에는 윤달이 없습니다";
+    } else {
+      leapRow.classList.remove("is-off"); leap.disabled = false;
+      leapHint.textContent = "— " + y + "년은 윤" + lmo + "월이 있습니다";
+    }
+  }
+
+  function show(sol, lun, gapja) {
+    var d = new Date(sol.year, sol.month - 1, sol.day);
+    var solText = sol.year + "년 " + sol.month + "월 " + sol.day + "일";
+    var lunText = lun.year + "년 " + (lun.intercalation ? "윤" : "") + lun.month + "월 " + lun.day + "일";
+
+    result.className = "result";
+    result.innerHTML = mode === "s2l"
+      ? '<div class="big">음력 ' + lunText + '</div><div class="sub">양력 ' + solText + '</div>'
+      : '<div class="big">양력 ' + solText + '</div><div class="sub">음력 ' + lunText + '</div>';
+
+    gapjaEl.textContent = gapja || "-";
+    dowEl.textContent = DOW[d.getDay()] + "요일";
+    var branch = gapja ? gapja.charAt(1) : "";
+    zodEl.textContent = ZODIAC[branch] ? ZODIAC[branch] + "띠" : "-";
+    subs.style.display = "";
+  }
+
+  function calc() {
+    if (mode === "s2l") {
+      if (!sdate.value) return empty("양력 날짜를 선택해 주세요.");
+      var p = sdate.value.split("-");
+      var c = new K();
+      if (!c.setSolarDate(+p[0], +p[1], +p[2])) return empty("변환할 수 있는 범위를 벗어났습니다 (1000년 2월 13일 ~ 2050년 12월 31일).");
+      show(c.getSolarCalendar(), c.getLunarCalendar(), c.getKoreanGapja().year);
+    } else {
+      var y = parseInt(ly.value, 10), m = parseInt(lm.value, 10), d = parseInt(ld.value, 10);
+      if (!y || !m || !d) return empty("음력 연도·월·일을 모두 입력해 주세요.");
+      var k = new K();
+      if (!k.setLunarDate(y, m, d, leap.checked && !leap.disabled)) {
+        return empty(leap.checked
+          ? "그 해 윤" + m + "월에는 " + d + "일이 없습니다. 날짜를 확인해 주세요."
+          : "음력 " + y + "년 " + m + "월 " + d + "일은 없는 날짜입니다. 작은달은 29일까지입니다.");
+      }
+      show(k.getSolarCalendar(), k.getLunarCalendar(), k.getKoreanGapja().year);
+    }
+  }
+
+  sdate.addEventListener("input", calc);
+  [lm, ld].forEach(function (el) { el.addEventListener("input", calc); });
+  ly.addEventListener("input", function () { syncLeap(); calc(); });
+  leap.addEventListener("change", calc);
+
+  // 오늘 날짜로 시작
+  var t = new Date();
+  sdate.value = t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0");
+  syncLeap();
+  calc();
+})();
+</script>
+</body>
+</html>

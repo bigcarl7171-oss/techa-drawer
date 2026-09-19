@@ -5,19 +5,58 @@
     "gift": "선물 맥락이 분명한 도구. 상품 3개를 카드로 보여준다.",
     "brand": "선물과 상관없는 도구. 상품을 밀지 않고 테차가 무엇을 만드는지 한 줄만 둔다."
   },
-
   "gift": {
-    "birth-flower": ["hydrangea-bouquet", "cup-moodlamp-single", "rose-hydrangea-bouquet"],
-    "birth-stone": ["glassdome-moodlamp", "hydrangea-moodlamp", "superior-rose"],
-    "dday": ["rose-hydrangea-bouquet", "glassdome-moodlamp", "flower-postcard"],
-    "age-calculator": ["money-cake", "carnation-rose-bouquet", "rose-money-bouquet"],
-    "date-diff": ["superior-rose", "cup-moodlamp-single", "flower-postcard"],
-    "name-match": ["superior-rose", "rose-hydrangea-bouquet", "flower-postcard"],
-    "zodiac-love": ["cup-moodlamp-single", "superior-rose", "glassdome-moodlamp"],
-    "horoscope": ["ionantha-moodlamp", "cup-moodlamp-single", "flower-postcard"],
-    "gift-finder": ["rose-hydrangea-bouquet", "rose-money-bouquet", "glassdome-moodlamp"]
+    "birth-flower": [
+      "hydrangea-bouquet",
+      "cup-moodlamp-single",
+      "rose-hydrangea-bouquet"
+    ],
+    "birth-stone": [
+      "glassdome-moodlamp",
+      "hydrangea-moodlamp",
+      "superior-rose"
+    ],
+    "dday": [
+      "rose-hydrangea-bouquet",
+      "glassdome-moodlamp",
+      "flower-postcard"
+    ],
+    "age-calculator": [
+      "money-cake",
+      "carnation-rose-bouquet",
+      "rose-money-bouquet"
+    ],
+    "date-diff": [
+      "superior-rose",
+      "cup-moodlamp-single",
+      "flower-postcard"
+    ],
+    "name-match": [
+      "superior-rose",
+      "rose-hydrangea-bouquet",
+      "flower-postcard"
+    ],
+    "zodiac-love": [
+      "cup-moodlamp-single",
+      "superior-rose",
+      "glassdome-moodlamp"
+    ],
+    "horoscope": [
+      "ionantha-moodlamp",
+      "cup-moodlamp-single",
+      "flower-postcard"
+    ],
+    "gift-finder": [
+      "rose-hydrangea-bouquet",
+      "rose-money-bouquet",
+      "glassdome-moodlamp"
+    ],
+    "lunar-converter": [
+      "carnation-rose-bouquet",
+      "money-cake",
+      "rose-hydrangea-bouquet"
+    ]
   },
-
   "brand": [
     "bmi",
     "char-counter",

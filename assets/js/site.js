@@ -44,6 +44,8 @@
       desc: "날짜 차이·주·개월·년 환산", status: "live", path: "/ko/date-diff/" },
     { slug: "workdays", name: "근무일수 계산기", emoji: "💼", cat: "date",
       desc: "주말·공휴일 제외 근무일 계산", status: "live", path: "/ko/workdays/" },
+    { slug: "lunar-converter", name: "음력 양력 변환기", emoji: "🌙", cat: "date",
+      desc: "한국 음력 기준 날짜 변환·윤달·간지", status: "live", path: "/ko/lunar-converter/" },
     { slug: "bmi", name: "BMI 계산기", emoji: "⚖️", cat: "health",
       desc: "체질량지수·비만도 확인", status: "live", path: "/ko/bmi/" },
     { slug: "loan", name: "대출 이자 계산기", emoji: "🏦", cat: "money",
