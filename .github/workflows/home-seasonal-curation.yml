@@ -1,13 +1,25 @@
 name: Home seasonal curation
 
+# 달이 바뀌면 홈의 상황 콘텐츠 4개와 추천 상품 3개를 자동으로 교체하고
+# main 에 바로 반영한다(= Cloudflare 배포). 검토 PR을 거치지 않는다.
+#
+# 사람 검토 없이 배포하므로 안전장치는 아래 두 가지다.
+#   1. build-home-curation.js 가 없는 상품 id·미등록 마케팅링크를 throw 로 막는다
+#   2. --verify-all 로 12개월치를 미리 전부 빌드해 본다 — 한 달이라도 깨지면 배포하지 않는다
+# data/home-curation.json 을 고쳤다면 `node scripts/build-home-curation.js --verify-all` 로
+# 먼저 확인할 것. check-publish.sh 게이트도 같은 검사를 돈다.
+
 on:
   schedule:
-    - cron: "10 15 * * *"
+    - cron: "10 15 * * *"   # 00:10 KST
   workflow_dispatch:
 
 permissions:
   contents: write
-  pull-requests: write
+
+concurrency:
+  group: home-seasonal-curation
+  cancel-in-progress: false
 
 jobs:
   update-home:
@@ -15,32 +27,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Build current curation
+
+      - name: Verify every month builds
+        run: node scripts/build-home-curation.js --verify-all
+
+      - name: Build current month
         run: node scripts/build-home-curation.js
-      - name: Validate generated home
+
+      - name: Validate generated site
         run: |
           node scripts/build-home-curation.js --check
           node scripts/build-home-tools.js --check
+          node scripts/build-related.js --check
           node scripts/build-posts.js --check
-      - name: Open or update curation pull request
-        env:
-          GH_TOKEN: ${{ github.token }}
+          node scripts/build-blog-products.js --check
+
+      - name: Commit and deploy
         run: |
-          if git diff --quiet; then
-            echo "No seasonal change"
+          if git diff --quiet -- index.html; then
+            echo "이번 달 구성에 변화 없음 — 배포 생략"
             exit 0
           fi
-          branch="automation/home-seasonal-curation"
+          month=$(TZ=Asia/Seoul date +%-m)
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B "$branch"
           git add index.html
-          git commit -m "월별 홈 큐레이션 갱신"
-          git push --force-with-lease origin "$branch"
-          if ! gh pr list --head "$branch" --state open --json number --jq 'length > 0' | grep -q true; then
-            gh pr create --base main --head "$branch" --title "월별 홈 큐레이션 갱신" --body "월별 큐레이션 데이터에 따라 홈의 상황별 콘텐츠와 추천 상품을 정적 HTML로 갱신합니다. 자동 병합하지 않으며 검토 후 반영합니다."
-          fi
+          git commit -m "홈 큐레이션 ${month}월 구성으로 자동 교체"
+          git push origin HEAD:main
+          echo "### 홈 큐레이션 ${month}월 반영 완료" >> "$GITHUB_STEP_SUMMARY"
+          git --no-pager show --stat --oneline HEAD >> "$GITHUB_STEP_SUMMARY"

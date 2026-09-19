@@ -209,6 +209,15 @@ for b in build-home-tools build-home-curation build-related build-posts build-bl
   fi
 done
 
+# 홈 큐레이션은 달이 바뀌면 사람 검토 없이 자동 배포된다. 12월 구성이 깨져 있어도
+# 12월 1일 새벽에야 알게 되므로, 데이터를 고친 시점에 12개월치를 전부 빌드해 본다.
+echo "[정적] 홈 큐레이션 12개월이 전부 빌드되는가"
+if [ -f scripts/build-home-curation.js ]; then
+  out=$(node scripts/build-home-curation.js --verify-all 2>&1) \
+    && ok "큐레이션 12개월" "$(echo "$out" | tail -1 | sed 's/^[✅ ]*//')" \
+    || bad "큐레이션 12개월" "$(echo "$out" | tail -1)"
+fi
+
 # ── 배포
 echo "[배포] 라이브 확인"
 code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 15 "https://www.techa.kr/blog/$SLUG/" 2>/dev/null || echo 000)

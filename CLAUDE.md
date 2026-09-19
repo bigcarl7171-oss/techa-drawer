@@ -57,9 +57,16 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
   원본 고해상도는 저장소에 안 넣는다 — 커밋되는 건 `blog/<slug>/*.jpg` 파생본뿐.
 - 스크립트: `scripts/publish-draft.js`(발행본·목록·캐러셀·사이트맵) · `scripts/prepare-images.js`(3:2 크롭·워터마크 제거) · `scripts/check-publish.sh`(게이트)
 - **목록은 손으로 고치지 않는다** — 홈 도구 표·관련 도구·홈 검색 목록은 생성기 3종이
-  찍는다(`build-home-tools.js` · `build-home-curation.js` · `build-related.js` · `build-posts.js`). `site.js` 나
+  찍는다(`build-home-tools.js` · `build-home-curation.js` · `build-related.js` · `build-posts.js` ·
+  `build-blog-products.js`). `site.js` 나
   `blog/index.html` 을 고쳤으면 해당 생성기를 돌린다. 안 돌리면 게이트가 잡는다.
   (JS로만 그리던 동안 도구 15개가 색인에서 빠져 있었다 — `docs/blog-seo-guide.md` 참고)
+- **홈 계절 큐레이션은 달이 바뀌면 사람 없이 자동 배포된다** (2026-09-20). 매일 00:10 KST에
+  `.github/workflows/home-seasonal-curation.yml` 이 돌고, 달이 바뀌어 구성이 달라지면 `index.html` 을
+  찍어 main 에 바로 푸시한다(=Cloudflare 배포). PR 검토 단계는 없다.
+  원본은 `data/home-curation.json` — 이걸 고쳤으면 **`node scripts/build-home-curation.js --verify-all`** 로
+  12개월치가 전부 빌드되는지 확인한다. 12월 구성이 깨져 있으면 12월 1일 새벽에야 알게 된다.
+  (게이트도 같은 검사를 돈다.)
 - 자동화가 못 하는 것 3가지 — 구글 색인 요청, 네이버 수집 요청, 네이버 블로그 붙여넣기. API가 없다. 실제 클릭 경로는 `docs/search-console-guide.md`.
 
 # 원고 작성 요청

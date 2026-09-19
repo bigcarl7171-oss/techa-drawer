@@ -66,7 +66,20 @@ function build(month) {
   return { profileId, situations, products };
 }
 
+// 12개월치를 전부 빌드해 본다. 달이 바뀌는 순간 자동 반영되므로,
+// 없는 상품 id 나 끊긴 링크는 그때가 아니라 지금 걸려야 한다.
+function verifyAll() {
+  const months = Object.keys(DATA.months).map(Number).sort((a, b) => a - b);
+  if (months.length !== 12) throw new Error(`months 에 12개월이 모두 있어야 합니다 (현재 ${months.length}개).`);
+  for (const m of months) {
+    const built = build(m);
+    console.log(`  ${String(m).padStart(2)}월 ${built.profileId} — 상황 4 · 상품 3 OK`);
+  }
+  console.log('✅ 12개월 큐레이션 전부 빌드 가능');
+}
+
 function main() {
+  if (process.argv.includes('--verify-all')) return verifyAll();
   const check = process.argv.includes('--check');
   const month = targetMonth();
   const built = build(month);
