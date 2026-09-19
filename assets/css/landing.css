@@ -87,6 +87,77 @@ body.landing .site-footer .wrap { max-width: 1320px; }
 @media (prefers-reduced-motion: reduce) {
   .shell-search-results { transition: none; }
 }
+
+/* ===========================================================
+   Brand-commerce renewal — product and B2B conversion sections
+   =========================================================== */
+.home-product-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;
+}
+.home-product-card { color: var(--brown); text-decoration: none; }
+.home-product-card img {
+  width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 11px;
+  background: var(--paper); transition: transform 220ms ease;
+}
+.home-product-card span {
+  display: block; margin-top: 14px; color: var(--gold-deep); font-size: 11px;
+  font-weight: 700; letter-spacing: .04em;
+}
+.home-product-card b {
+  display: block; margin-top: 7px; font-family: "Gowun Batang", serif;
+  font-size: 21px; line-height: 1.4;
+}
+.home-product-card small { display: block; min-height: 44px; margin-top: 6px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.home-product-card strong { display: inline-block; margin-top: 13px; padding-bottom: 3px; border-bottom: 1px solid var(--brown); font-size: 13px; }
+@media (hover: hover) and (pointer: fine) {
+  .home-product-card:hover img { transform: translateY(-3px); }
+}
+
+.home-b2b-section {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 42px; align-items: stretch;
+  margin: 12px 0; padding: 0; border: 1px solid var(--line); background: var(--sage-soft);
+}
+.home-b2b-copy { padding: 48px; }
+.home-b2b-copy h2 {
+  margin: 0; font-family: "Gowun Batang", serif; font-size: clamp(29px, 3vw, 40px);
+  line-height: 1.32; letter-spacing: -.035em;
+}
+.home-b2b-copy > p:not(.home-section-number) { margin: 20px 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.home-b2b-facts { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 26px; }
+.home-b2b-facts span { padding: 7px 11px; border: 1px solid rgba(80,68,53,.18); border-radius: 999px; background: rgba(255,255,255,.5); font-size: 12px; }
+.home-b2b-copy > a { display: inline-block; padding-bottom: 4px; color: var(--brown); border-bottom: 1px solid var(--brown); font-weight: 700; }
+.home-b2b-section > img { width: 100%; height: 100%; min-height: 430px; object-fit: cover; }
+
+.home-tools-secondary { padding-bottom: 48px; }
+.home-tools-secondary .home-featured-tools { grid-template-columns: repeat(4, 1fr); }
+.home-tools-secondary .home-featured-tools a { border-left: 1px solid var(--line); }
+.home-tools-secondary .home-featured-tools a:first-child { border-left: 0; }
+.home-all-tools-disclosure { margin-top: 26px; border-top: 1px solid var(--line); }
+.home-all-tools-disclosure summary {
+  padding: 18px 4px; cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 600;
+}
+.home-all-tools-disclosure[open] summary { color: var(--brown); }
+.home-all-tools-disclosure .home-all-tools-more { margin: 0 4px 18px; }
+
+@media (max-width: 860px) {
+  .home-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-product-card:first-child { grid-column: 1 / -1; }
+  .home-product-card:first-child img { aspect-ratio: 16 / 9; }
+  .home-b2b-section { grid-template-columns: 1fr; gap: 0; }
+  .home-b2b-section > img { min-height: 300px; }
+  .home-tools-secondary .home-featured-tools { grid-template-columns: repeat(2, 1fr); }
+  .home-tools-secondary .home-featured-tools a:nth-child(odd) { border-left: 0; }
+}
+@media (max-width: 640px) {
+  .home-product-grid { grid-template-columns: 1fr; gap: 34px; }
+  .home-product-card:first-child { grid-column: auto; }
+  .home-product-card:first-child img, .home-product-card img { aspect-ratio: 4 / 5; }
+  .home-product-card small { min-height: 0; }
+  .home-b2b-copy { padding: 34px 24px 38px; }
+  .home-b2b-section > img { min-height: 250px; }
+  .home-tools-secondary .home-featured-tools { grid-template-columns: 1fr; }
+  .home-tools-secondary .home-featured-tools a { border-left: 0; }
+}
 .shell-search-count {
   font-size: 12px; color: var(--muted); padding: 8px 10px 4px;
 }

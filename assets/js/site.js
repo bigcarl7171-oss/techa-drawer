@@ -9,7 +9,7 @@
   // 사이트 기본 정보 (배포 시 도메인만 교체)
   var SITE = {
     name: "테차 서랍",
-    tagline: "필요한 순간 바로 꺼내 쓰는 생활 도구 서랍",
+    tagline: "선물 고민을 정리하고 테차의 꽃 선물로 이어주는 브랜드 서랍",
     base: "https://www.techa.kr",
     shopUrl: "https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28", // TECHA 선물샵 스토어 홈 (탄생화·탄생석 등에 선물 CTA 자동 노출)
     // ↑ 스마트스토어 주소가 아니라 판매자센터 발급 "마케팅링크"다 — 네이버쇼핑 매출연동수수료를
@@ -65,7 +65,7 @@
     { slug: "birth-stone", name: "월별 탄생석", emoji: "💎", cat: "fortune",
       desc: "태어난 달의 보석과 의미", status: "live", path: "/ko/birth-stone/" },
     { slug: "gift-finder", name: "상황별 선물 큐레이션", emoji: "🎁", cat: "life",
-      desc: "누구에게·어떤 상황·얼마짜리 고르면 딱 맞는 선물 추천", status: "live", path: "/ko/gift-finder/" }
+      desc: "받는 분·선물하는 날·원하는 느낌으로 테차 꽃 선물 추천", status: "live", path: "/ko/gift-finder/" }
   ];
 
   var CATS = {
@@ -170,7 +170,7 @@
       '      <div class="header-search-results" id="header-search-results"></div>' +
       '    </div>' +
       '  </div>' +
-      '  <nav class="header-nav"><a href="/blog/">테차 매거진</a><a href="/">전체 도구</a></nav>' +
+      '  <nav class="header-nav"><a href="/ko/gift-finder/">선물 추천</a><a href="/blog/">테차 매거진</a><a href="/contact/">기업·단체 주문</a><a class="header-shop-link" href="' + SITE.shopUrl + '" target="_blank" rel="noopener">테차 선물 보기</a></nav>' +
       '</div>';
     initHeaderSearch();
   }

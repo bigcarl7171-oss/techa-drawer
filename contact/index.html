@@ -101,15 +101,8 @@
 
 <main class="wrap">
   <article class="article">
-    <div class="callout btob-bugnote">
-      <p><strong>🛠️ 테차 서랍(계산기·도구 모음) 이용 중 오류·제안이 있다면</strong>
-         계산 결과 오류나 새 도구 제안은 <a id="mail-top" href="#">이메일</a>로 보내주세요. 어느 도구에서,
-         어떤 입력값으로 발생했는지 함께 알려주시면 확인이 빠릅니다.</p>
-    </div>
-
-    <p>테차는 단순한 상품 제작을 넘어, 기업과 기관이 필요로 하는 목적에 맞춰 체계적이고 전문적인
-       맞춤형 솔루션을 제안합니다. 아래의 대표적인 협업 분야 외에도 귀사의 비즈니스에 필요한 형태가
-       있다면 편하게 제안해 주시기 바랍니다.</p>
+    <p>테차는 기업·학교·기관의 행사 목적과 수량, 일정에 맞춰 꽃다발과 답례품, 꽃 소품을 제작합니다.
+       필요한 구성과 예산이 아직 정해지지 않았더라도 행사 성격을 알려주시면 가능한 방향부터 함께 정리해 드립니다.</p>
 
     <section class="btob-hero">
       <span class="btob-hero-eyebrow">단체 행사 · 맞춤형 납품</span>
@@ -241,7 +234,6 @@ TECHA.initPage({ title:"B2B 제휴 및 비즈니스 파트너십 안내", desc:"
 (function(){
   var CONTACT_EMAIL = "bigcarl@naver.com";
   var a=document.getElementById("mail");
-  var a2=document.getElementById("mail-top");
   if(CONTACT_EMAIL){
     if(a){
       var subject = encodeURIComponent("[테차] 기업 단체 주문 견적 문의");
@@ -253,7 +245,6 @@ TECHA.initPage({ title:"B2B 제휴 및 비즈니스 파트너십 안내", desc:"
       );
       a.href = "mailto:"+CONTACT_EMAIL+"?subject="+subject+"&body="+body;
     }
-    if(a2){ a2.href="mailto:"+CONTACT_EMAIL; a2.textContent=CONTACT_EMAIL; }
   }
 })();
 </script>
