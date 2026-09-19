@@ -96,6 +96,10 @@ button:focus-visible,
 .logo:hover { text-decoration: none; }
 .header-nav { margin-left: auto; flex: none; }
 .header-nav a { color: var(--muted); font-size: 14px; margin-left: 16px; }
+.header-nav .header-shop-link {
+  padding: 8px 12px; border-radius: 7px; background: var(--brown); color: var(--white);
+  font-weight: 700;
+}
 
 /* ---------- 헤더 검색 (도구 페이지 등 site-header를 쓰는 모든 곳) ----------
    홈페이지는 자체 검색바(.shell-search)를 쓰므로 site-header를 로드하지 않는다 —
