@@ -154,6 +154,26 @@ if [ -n "$BLOG" ]; then
     cps=$(printf '%s' "$out" | grep -o '"copiedSentences": [0-9]*' | grep -o '[0-9]*$')
     if [ "$rc" = "0" ]; then ok "매거진↔blog.md" "겹침 ${pct} · 옮겨 온 문장 ${cps}개"
     else bad "매거진↔blog.md" "겹침 ${pct} · 옮겨 온 문장 ${cps}개 — 문장을 새로 써라 (node scripts/check-overlap.js $SLUG --blog …)"; fi
+
+    # blog.md 본문에 마크다운이 남아 있는지 — 네이버 에디터는 글자 그대로 찍는다.
+    # routine-draft.md 에 규칙이 있는데도 두 편 연속 ## 과 - 목록이 들어갔다 (2026-09-20).
+    # 사람이 눈으로 잡는 대신 여기서 기계로 막는다. 본문 절(# 본문 ~ # 태그)만 본다.
+    body=$(awk '/^# 본문/{f=1;next} /^# 태그/{f=0} f' "$BLOG")
+    md=$(printf '%s
+' "$body" | grep -nE '^#{1,6} |^[[:space:]]*[-*+][[:space:]]|**|^[[:space:]]*>' | head -5)
+    if [ -n "$md" ]; then
+      bad "blog.md 마크다운" "본문에 마크다운이 있다 — 붙여넣으면 글자 그대로 찍힌다: $(printf '%s' "$md" | tr '
+' ' ' | cut -c1-90)"
+    else
+      ok "blog.md 마크다운" "본문에 #·*·- 목록 없음"
+    fi
+
+    # 본문에 자사 링크가 들어가면 네이버에서 손해다 (routine-draft.md).
+    if printf '%s' "$body" | grep -q 'techa.kr'; then
+      bad "blog.md 링크" "본문에 techa.kr 이 있다 — 브랜드명만 언급한다"
+    else
+      ok "blog.md 링크" "본문에 techa.kr 없음"
+    fi
   else
     bad "매거진↔blog.md" "blog.md 가 없다: $BLOG"
   fi
