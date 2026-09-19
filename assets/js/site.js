@@ -162,6 +162,9 @@
     var el = document.getElementById("site-header");
     if (!el) return;
     el.className = "site-header";
+    // scripts/build-chrome.js 가 이미 HTML로 찍어 뒀으면 다시 그리지 않는다.
+    // 크롤러가 보는 것과 사람이 보는 것을 같게 유지하려는 것이다 (2026-09-20).
+    if (el.children.length) { initHeaderSearch(); return; }
     el.innerHTML =
       '<div class="wrap">' +
       '  <a class="logo" href="/">테<b>차</b> 서랍</a>' +
@@ -246,6 +249,7 @@
   function renderPageHead(opts) {
     var el = document.getElementById("page-head");
     if (!el) return;
+    if (el.children.length) return; // build-chrome.js 가 찍어 둔 정적 제목·브레드크럼
     var cat = CATS[opts.category];
     var crumb = '<a href="/">홈</a> › ' +
       (cat ? '<a href="/#cat-' + opts.category + '">' + cat.title + '</a> › ' : '') +
@@ -296,6 +300,13 @@
     var el = document.getElementById("site-footer");
     if (!el) return;
     el.className = "site-footer";
+    // 정적 푸터가 있으면 연도만 채운다.
+    // 연도를 HTML에 박으면 해가 바뀔 때마다 게이트가 울리므로 여기서 넣는다.
+    if (el.children.length) {
+      var y = el.querySelector("#footer-year");
+      if (y) y.textContent = new Date().getFullYear();
+      return;
+    }
     el.innerHTML =
       '<div class="wrap">' +
       '  <a href="/">홈</a><a href="/ko/">전체 도구</a><a href="/blog/">테차 매거진</a><a href="/about/">사이트 소개</a><a href="/contact/">문의하기</a>' +
