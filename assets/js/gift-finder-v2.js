@@ -359,6 +359,40 @@
     activateStep(Math.min(2, index + 1));
   }
 
+  function applyQueryPrefill() {
+    const params = new URLSearchParams(window.location.search);
+    const requestedOccasion = params.get("occasion")?.trim();
+    if (requestedOccasion && !params.get("recipient")?.trim()) {
+      completeStep(0, "선택 안 함");
+    }
+    const fields = [
+      { key:"recipient", param:"recipient", root:"#gf-recipient" },
+      { key:"occasion", param:"occasion", root:"#gf-occasion" },
+      { key:"giftType", param:"giftType", root:"#gf-type" }
+    ];
+
+    fields.forEach(field => {
+      const requested = params.get(field.param)?.trim();
+      if (!requested) return;
+      if (field.key === "giftType" && !state.occasion) return;
+      const chip = $$(`${field.root} .gf-chip`).find(btn => {
+        const label = btn.querySelector("span")?.textContent?.trim();
+        return btn.dataset.value === requested || label === requested;
+      });
+      if (!chip || chip.disabled) return;
+      chip.click();
+
+      if (field.key === "occasion" && chip.classList.contains("gf-chip--extra")) {
+        $("#gf-occasion").classList.add("show-extra");
+        const more = $("#gf-occasion-more");
+        if (more) {
+          more.setAttribute("aria-expanded", "true");
+          more.textContent = "접기 −";
+        }
+      }
+    });
+  }
+
   async function init() {
     const app = $("#gf-app");
     if (!app) return;
@@ -402,6 +436,8 @@
         });
         completeStep(2, "선택 안 함");
       });
+
+      applyQueryPrefill();
 
       $("#gf-submit").addEventListener("click", e => {
         const help = $("#gf-form-help");
