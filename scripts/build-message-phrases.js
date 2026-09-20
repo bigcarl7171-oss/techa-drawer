@@ -27,11 +27,19 @@ const LIST_BEGIN = '<!-- BEGIN message-phrases (생성: scripts/build-message-ph
 const LIST_END = '<!-- END message-phrases -->';
 
 function buildChoices(data) {
+  // 버튼마다 짝이 되는 상대를 함께 찍는다. 화면 스크립트는 이걸 보고 짝이 없는
+  // 버튼을 잠근다 — 눌렀더니 결과가 0개인 조합을 사용자가 만나지 않게 하기 위해서다.
   const occ = data.occasions
-    .map((o) => `<button class="choice-btn" type="button" data-occasion="${esc(o.key)}">${esc(o.label)}</button>`)
+    .map((o) => {
+      const ts = Object.keys(data.tones).filter((t) => o.phrases[t]).join(' ');
+      return `<button class="choice-btn" type="button" data-occasion="${esc(o.key)}" data-tones="${esc(ts)}">${esc(o.label)}</button>`;
+    })
     .join('');
   const tones = Object.entries(data.tones)
-    .map(([k, label]) => `<button class="choice-btn" type="button" data-tone="${esc(k)}">${esc(label)}</button>`)
+    .map(([k, label]) => {
+      const os = data.occasions.filter((o) => o.phrases[k]).map((o) => o.key).join(' ');
+      return `<button class="choice-btn" type="button" data-tone="${esc(k)}" data-occasions="${esc(os)}">${esc(label)}</button>`;
+    })
     .join('');
   return [
     CHOICE_BEGIN,
@@ -68,6 +76,16 @@ function buildList(data) {
   return { markup: out.join('\n'), count: n };
 }
 
+// 페이지 곳곳에 적힌 "문구 NN개" 를 사람이 손으로 맞추면 반드시 틀어진다.
+// 2026-09-20에 실제로 44/88 이 박힌 채 데이터만 늘어난 적이 있다. 생성기가 찍는다.
+// initPage 의 desc 는 build-chrome.js 가 page-head 로 옮겨 적으므로,
+// 이 생성기는 반드시 build-chrome.js 보다 먼저 돌아야 한다(check-publish.sh 순서).
+function syncCounts(html, combos, phrases) {
+  return html
+    .replace(/카드 문구 \d+개/g, `카드 문구 ${phrases}개`)
+    .replace(/상황과 말투 조합 \d+가지, 문구 \d+개/g, `상황과 말투 조합 ${combos}가지, 문구 ${phrases}개`);
+}
+
 function replaceBlock(html, begin, end, markup) {
   const b = html.indexOf(begin);
   const e = html.indexOf(end);
@@ -89,6 +107,22 @@ function main() {
       if (!Array.isArray(o.phrases[t]) || !o.phrases[t].length) errors.push(`${o.key}/${t}: 문구가 비었다`);
     }
   }
+  // _excluded 는 "왜 이 칸이 비어 있는지" 를 적어두는 곳이다. 문구를 채우고 나서도
+  // 여기 남아 있으면 설명과 실제가 어긋나므로 잡는다.
+  for (const key of Object.keys(data._excluded || {})) {
+    const [ok, tk] = key.split('/');
+    const o = data.occasions.find((x) => x.key === ok);
+    if (!o) errors.push(`_excluded 의 '${key}' — 그런 상황이 없다`);
+    else if (o.phrases[tk]) errors.push(`_excluded 의 '${key}' — 문구가 이미 있다. 이 줄을 지우세요`);
+  }
+  // 빠진 칸은 전부 _excluded 에 이유가 적혀 있어야 한다 (화면에서 잠글 근거가 된다)
+  for (const o of data.occasions) {
+    for (const t of Object.keys(data.tones)) {
+      if (!o.phrases[t] && !(data._excluded || {})[`${o.key}/${t}`]) {
+        errors.push(`${o.key}/${t}: 문구도 없고 _excluded 에 이유도 없다`);
+      }
+    }
+  }
   if (errors.length) { errors.forEach((e) => console.error('❌ ' + e)); process.exit(1); }
 
   const html = fs.readFileSync(PAGE, 'utf8');
@@ -102,6 +136,7 @@ function main() {
   next = toEol(next, eol);
 
   const combos = data.occasions.reduce((s, o) => s + Object.keys(o.phrases).length, 0);
+  next = syncCounts(next, combos, list.count);
   if (next === html) {
     console.log(`✅ 최신 상태 — 상황 ${data.occasions.length} · 조합 ${combos} · 문구 ${list.count}개`);
     return;
