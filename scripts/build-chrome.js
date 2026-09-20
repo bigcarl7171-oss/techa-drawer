@@ -55,8 +55,10 @@ function headerMarkup(shopUrl) {
     '    </div>',
     '    <nav class="header-nav">' +
       '<a href="/ko/gift-finder/">선물 추천</a>' +
-      '<a href="/blog/">테차 매거진</a>' +
+      '<a href="/message/">꽃 선물 메시지</a>' +
+      '<a href="/space/">공간 스타일링·구독</a>' +
       '<a href="/contact/">기업·단체 주문</a>' +
+      '<a href="/about/">테차 소개</a>' +
       '<a class="header-shop-link" href="' + esc(shopUrl) + '" target="_blank" rel="noopener">테차 선물 보기</a>' +
       '</nav>',
     '  </div>',
@@ -68,8 +70,9 @@ function footerMarkup() {
   return [
     FOOTER_BEGIN,
     '  <div class="wrap">',
-    '    <a href="/">홈</a><a href="/ko/">전체 도구</a><a href="/blog/">테차 매거진</a>' +
-      '<a href="/care/">꽃 관리법</a><a href="/about/">사이트 소개</a><a href="/contact/">기업·단체 주문</a>',
+    '    <a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a>' +
+      '<a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a>' +
+      '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a>',
     '    <a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a>',
     // 연도는 비워 둔다 — 정적 HTML에 박으면 해가 바뀔 때마다 게이트가 울린다. site.js 가 채운다.
     '    <div class="disclaimer">본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. © <span id="footer-year"></span> 테차 서랍</div>',

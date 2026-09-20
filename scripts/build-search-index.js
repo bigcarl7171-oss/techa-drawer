@@ -86,6 +86,20 @@ function pageFilePath(urlPath) {
   return path.join(ROOT, urlPath.replace(/^\//, ""), "index.html");
 }
 
+function readCorePages() {
+  return [
+    { emoji:"✉️", title:"꽃 선물 메시지", desc:"상황과 말투에 맞는 카드 문구를 골라 복사해 보세요.", path:"/message/", tag:"선물 준비" },
+    { emoji:"🏡", title:"공간 스타일링·구독", desc:"개인 공간부터 사무실·쇼룸까지 꽃의 구성과 배치, 정기 관리를 상담합니다.", path:"/space/", tag:"공간과 꽃" },
+    { emoji:"🏢", title:"기업·단체 주문", desc:"행사 목적과 일정, 예산에 맞춰 꽃다발·답례품·꽃 소품을 직접 제작합니다.", path:"/contact/", tag:"기업·단체" },
+    { emoji:"🌿", title:"테차 소개", desc:"선물부터 공간까지 꽃으로 마음을 잇는 테차의 이야기를 소개합니다.", path:"/about/", tag:"테차 이야기" },
+    { emoji:"🌱", title:"시들지 않는 꽃 관리법", desc:"프리저브드·비누꽃·실크플라워를 오래 예쁘게 두는 방법입니다.", path:"/care/", tag:"꽃 관리" }
+  ].map(function (p) {
+    const file = pageFilePath(p.path);
+    p.body = fs.existsSync(file) ? extractArticleText(fs.readFileSync(file, "utf8")) : "";
+    return p;
+  });
+}
+
 function build() {
   const { APPS, CATS } = readSiteJsData();
   const entries = [];
@@ -103,6 +117,8 @@ function build() {
   readPublishedPosts().forEach(function (p) {
     entries.push({ emoji: p.emoji, title: p.title, desc: p.desc, path: p.path, tag: "매거진", body: p.body });
   });
+
+  readCorePages().forEach(function (p) { entries.push(p); });
 
   const outDir = path.join(ROOT, "assets/data");
   fs.mkdirSync(outDir, { recursive: true });

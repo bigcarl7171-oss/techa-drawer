@@ -71,14 +71,14 @@
   ];
 
   var CATS = {
-    date:    { title: "날짜·시간", emoji: "📆" },
-    calc:    { title: "계산·변환", emoji: "🧮" },
-    money:   { title: "금융·재테크", emoji: "💰" },
-    health:  { title: "건강", emoji: "💪" },
-    fortune: { title: "운세·감성", emoji: "🔮" },
-    text:    { title: "텍스트 도구", emoji: "✍️" },
-    fun:     { title: "재미·추첨", emoji: "🎲" },
-    life:    { title: "생활", emoji: "🏠" }
+    date:    { title: "날짜와 일정을 확인할 때", emoji: "📆" },
+    calc:    { title: "헷갈리는 값을 바로 계산할 때", emoji: "🧮" },
+    money:   { title: "돈과 비용을 계산할 때", emoji: "💰" },
+    health:  { title: "간단한 건강 수치가 궁금할 때", emoji: "💪" },
+    fortune: { title: "가볍게 의미와 재미를 찾을 때", emoji: "🔮" },
+    text:    { title: "글을 확인하고 정리할 때", emoji: "✍️" },
+    fun:     { title: "선택과 순서를 정하기 어려울 때", emoji: "🎲" },
+    life:    { title: "선물을 준비할 때", emoji: "🏠" }
   };
 
   // ---------- 매거진 글 레지스트리 (홈 검색용) ----------
@@ -164,9 +164,8 @@
     var el = document.getElementById("site-header");
     if (!el) return;
     el.className = "site-header";
-    // scripts/build-chrome.js 가 이미 HTML로 찍어 뒀으면 다시 그리지 않는다.
-    // 크롤러가 보는 것과 사람이 보는 것을 같게 유지하려는 것이다 (2026-09-20).
-    if (el.children.length) { initHeaderSearch(); return; }
+    // 정적 HTML이 이전 버전이어도 방문자에게는 항상 최신 공통 메뉴를 보여준다.
+    // build-chrome.js가 정적 마크업을 동기화하고, 이 코드는 배포 중 누락된 페이지를 보완한다.
     el.innerHTML =
       '<div class="wrap">' +
       '  <a class="logo" href="/">테<b>차</b> 서랍</a>' +
@@ -177,7 +176,7 @@
       '      <div class="header-search-results" id="header-search-results"></div>' +
       '    </div>' +
       '  </div>' +
-      '  <nav class="header-nav"><a href="/ko/gift-finder/">선물 추천</a><a href="/blog/">테차 매거진</a><a href="/contact/">기업·단체 주문</a><a class="header-shop-link" href="' + SITE.shopUrl + '" target="_blank" rel="noopener">테차 선물 보기</a></nav>' +
+      '  <nav class="header-nav"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a class="header-shop-link" href="' + SITE.shopUrl + '" target="_blank" rel="noopener">테차 선물 보기</a></nav>' +
       '</div>';
     initHeaderSearch();
   }
@@ -302,16 +301,10 @@
     var el = document.getElementById("site-footer");
     if (!el) return;
     el.className = "site-footer";
-    // 정적 푸터가 있으면 연도만 채운다.
-    // 연도를 HTML에 박으면 해가 바뀔 때마다 게이트가 울리므로 여기서 넣는다.
-    if (el.children.length) {
-      var y = el.querySelector("#footer-year");
-      if (y) y.textContent = new Date().getFullYear();
-      return;
-    }
+    // 정적 HTML이 이전 버전이어도 최신 서비스 링크와 연도를 일관되게 보여준다.
     el.innerHTML =
       '<div class="wrap">' +
-      '  <a href="/">홈</a><a href="/ko/">전체 도구</a><a href="/blog/">테차 매거진</a><a href="/about/">사이트 소개</a><a href="/contact/">문의하기</a>' +
+      '  <a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a>' +
       '  <a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a>' +
       '  <div class="disclaimer">본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. © ' +
       new Date().getFullYear() + " 테차 서랍</div>" +
@@ -434,7 +427,7 @@
         '<a class="btn btn-primary btn-sm" href="' + href + '"' + targetAttr + '>' + label + '</a></div>';
       // 어느 페이지의 CTA가 실제로 스토어/문의로 보내는지 측정
       // 오버라이드 링크는 스토어 이동이 아니므로 shop_click 이 아니라 contact_click 으로 구분한다
-      // (shop_click 은 GA에 "스마트스토어 이동"으로 문서화된 주요 이벤트라 섞으면 안 됨 — docs/techa-kr-funnel.md)
+      // shop_click은 스토어 이동 전용 이벤트이므로 문의 이동과 섞지 않는다.
       var link = el.querySelector("a");
       if (link) link.addEventListener("click", function () {
         track(overrideHref ? "contact_click" : "shop_click", { placement: document.body.dataset.placement || location.pathname });

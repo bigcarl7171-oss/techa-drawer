@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/icons/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>꽃 선물 메시지 문구 찾기 · 테차 서랍</title>
+<meta name="description" content="생일, 졸업, 승진, 개업, 기념일 등 꽃 선물 상황과 원하는 말투를 고르면 카드에 담기 좋은 메시지 문구를 찾아 복사할 수 있습니다.">
+<link rel="canonical" href="https://www.techa.kr/message/">
+<meta property="og:type" content="website"><meta property="og:image" content="https://www.techa.kr/assets/og/og-default.png">
+<meta property="og:title" content="꽃 선물 메시지 문구 찾기 · 테차 서랍">
+<meta property="og:description" content="상황과 말투에 맞는 꽃 선물 카드 문구를 골라보세요.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+  .message-intro { padding:24px; border-radius:var(--radius); background:linear-gradient(145deg,var(--gold-soft),var(--white)); border:1px solid var(--gold-border); margin:0 0 22px; }
+  .message-intro p { margin:0; color:var(--body-text); }
+  .message-step { margin:28px 0; }
+  .message-step h2 { margin-bottom:6px; }
+  .message-step > p { margin-top:0; color:var(--muted); font-size:14px; }
+  .choice-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:9px; }
+  .choice-btn { min-height:48px; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--white); color:var(--brown); font:600 14px inherit; cursor:pointer; }
+  .choice-btn[aria-pressed="true"] { background:var(--brown); color:var(--white); border-color:var(--brown); }
+  .message-results { margin:30px 0; }
+  .message-result { display:grid; grid-template-columns:1fr auto; gap:14px; align-items:center; margin:10px 0; padding:18px; border:1px solid var(--line); border-radius:var(--radius-md); background:var(--white); }
+  .message-result p { margin:0; font-size:15px; color:var(--body-text); }
+  .message-result small { display:block; margin-top:6px; color:var(--muted); }
+  .copy-btn { min-width:76px; min-height:44px; border:1px solid var(--gold-border); border-radius:var(--radius-sm); background:var(--gold-soft); color:var(--brown); font:700 13px inherit; cursor:pointer; }
+  .message-guide { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:18px 0; }
+  .message-guide div { padding:18px; border-radius:var(--radius-md); background:var(--sage-soft); }
+  .message-guide b { display:block; margin-bottom:5px; }
+  .message-guide span { font-size:13.5px; color:var(--body-text); }
+  .related-message { margin:34px 0; padding:24px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .related-message a { display:block; padding:8px 0; font-size:14px; text-decoration:underline; text-underline-offset:3px; }
+  @media(max-width:600px){ .message-result{grid-template-columns:1fr}.copy-btn{width:100%}.message-guide{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<header id="site-header">
+  <!-- BEGIN site-header (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
+  <div class="wrap">
+    <a class="logo" href="/">테<b>차</b> 서랍</a>
+    <div class="header-search">
+      <button type="button" class="header-search-toggle" id="header-search-toggle" aria-label="도구·매거진 검색" aria-expanded="false">🔍</button>
+      <div class="header-search-panel" id="header-search-panel">
+        <input type="text" id="header-search-input" placeholder="도구·매거진 검색..." autocomplete="off">
+        <div class="header-search-results" id="header-search-results"></div>
+      </div>
+    </div>
+    <nav class="header-nav"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a class="header-shop-link" href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" target="_blank" rel="noopener">테차 선물 보기</a></nav>
+  </div>
+  <!-- END site-header -->
+</header>
+<div id="page-head">
+  <!-- BEGIN page-head (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">홈</a> › <span>꽃 선물 메시지</span></div>
+    <div class="page-head"><h1>꽃 선물 메시지</h1><p class="lead">상황과 말투에 맞는 카드 문구를 골라 복사해 보세요.</p></div>
+  </div>
+  <!-- END page-head -->
+</div>
+<main class="wrap">
+  <section class="message-intro">
+    <p>마음은 정했지만 뭐라고 써야 할지 고민될 때가 있어요. 선물하는 상황과 원하는 말투를 고르면 카드에 바로 옮겨 적기 좋은 문구를 보여드려요.</p>
+  </section>
+
+  <section class="message-step" aria-labelledby="occasion-title">
+    <h2 id="occasion-title">1. 어떤 날에 전하나요?</h2>
+    <p>가장 가까운 상황 하나를 골라주세요.</p>
+    <div class="choice-grid" id="occasionChoices"></div>
+  </section>
+
+  <section class="message-step" aria-labelledby="tone-title">
+    <h2 id="tone-title">2. 어떤 말투가 좋을까요?</h2>
+    <p>받는 분과의 관계에 어울리는 느낌을 골라주세요.</p>
+    <div class="choice-grid" id="toneChoices"></div>
+  </section>
+
+  <section class="message-results" aria-labelledby="results-title" aria-live="polite">
+    <h2 id="results-title">카드에 담기 좋은 문구</h2>
+    <div id="messageResults"></div>
+  </section>
+
+  <section class="article">
+    <h2>조금만 바꾸면 더 나다운 문장이 됩니다</h2>
+    <div class="message-guide">
+      <div><b>이름을 넣어보세요</b><span>첫 문장에 받는 분의 이름이나 호칭을 넣으면 훨씬 따뜻해져요.</span></div>
+      <div><b>한 가지 기억을 더하세요</b><span>함께한 순간이나 고마웠던 일을 짧게 덧붙이면 진심이 또렷해져요.</span></div>
+      <div><b>카드는 짧아도 괜찮아요</b><span>꽃이 함께 전해지는 만큼 두세 문장만으로도 마음은 충분히 닿아요.</span></div>
+    </div>
+    <div class="note">문구를 주문에 함께 담고 싶다면 상품 주문 시 요청란을 확인해 주세요. 상품에 따라 메시지카드나 문구 적용 방식이 다를 수 있습니다.</div>
+  </section>
+
+  <nav class="related-message" aria-label="상황별 선물 가이드">
+    <strong>선물하는 장면까지 고민된다면</strong>
+    <a href="/blog/promotion-gift-event-ideas/">승진 축하 이벤트, 사무실에서 자연스럽게 준비하는 법</a>
+    <a href="/blog/graduation-gift-by-recipient/">졸업식 꽃다발, 받는 분에 따라 고르는 기준</a>
+    <a href="/blog/kids-recital-bouquet-size-guide/">발표회 꽃다발, 아이 얼굴을 가리지 않는 크기</a>
+    <a href="/ko/gift-finder/">아직 꽃을 정하지 못했다면 상황별 선물 추천받기 →</a>
+  </nav>
+</main>
+<footer id="site-footer">
+  <!-- BEGIN site-footer (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
+  <div class="wrap">
+    <a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a>
+    <a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a>
+    <div class="disclaimer">본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. © <span id="footer-year"></span> 테차 서랍</div>
+  </div>
+  <!-- END site-footer -->
+</footer>
+<script src="/assets/js/site.js"></script>
+<script>
+TECHA.initPage({ title:"꽃 선물 메시지", desc:"상황과 말투에 맞는 카드 문구를 골라 복사해 보세요.", category:null });
+(function(){
+  var occasions={
+    birthday:"생일·생신", milestone:"환갑·칠순", graduation:"졸업·입학", recital:"발표회·연주회",
+    promotion:"승진·취임", retirement:"퇴임·정년", opening:"개업·이전", wedding:"집들이·결혼",
+    anniversary:"연인·기념일", thanks:"감사·응원", recovery:"병문안·퇴원", business:"기업·단체 행사"
+  };
+  var tones={warm:"따뜻하고 다정하게", concise:"짧고 담백하게", formal:"정중하고 격식 있게", cheerful:"밝고 재치 있게", sincere:"진심을 길게 담아", work:"거래처·직장용"};
+  var base={
+    birthday:["생일을 진심으로 축하해요. 오늘처럼 따뜻하고 행복한 날이 오래 이어지길 바라요.","소중한 생신을 축하드립니다. 늘 건강하시고 웃음 가득한 날들을 보내세요."],
+    milestone:["소중한 예순 번째 생신을 축하드립니다. 앞으로의 날들도 건강과 행복으로 가득하시길 바랍니다.","지나온 날의 깊이만큼 앞으로의 시간도 아름답게 피어나길 바랍니다. 생신을 진심으로 축하드려요."],
+    graduation:["졸업을 진심으로 축하해. 너의 새로운 시작을 마음껏 응원할게!","한 걸음을 멋지게 마친 오늘을 축하합니다. 앞으로 펼쳐질 모든 날을 응원할게요."],
+    recital:["오늘 무대의 가장 빛나는 주인공, 정말 멋졌어!","준비한 시간과 용기가 빛난 멋진 무대였어요. 진심으로 축하해요."],
+    promotion:["승진을 진심으로 축하드립니다. 새로운 자리에서의 멋진 활약을 응원하겠습니다.","기쁜 소식을 함께 축하할 수 있어 좋습니다. 앞으로의 발걸음에도 좋은 일이 가득하시길 바랍니다."],
+    retirement:["그동안의 노고와 헌신에 깊이 감사드립니다. 새로운 시작에 건강과 행복이 함께하시길 바랍니다.","오랜 시간 보여주신 열정과 배려를 기억하겠습니다. 이제 펼쳐질 새로운 날들을 응원합니다."],
+    opening:["새로운 시작을 진심으로 축하드립니다. 웃음과 좋은 인연이 오래 머무는 공간이 되길 바랍니다.","멋진 시작을 축하드려요. 준비하신 모든 일이 활짝 피어나길 바랍니다."],
+    wedding:["두 분의 새로운 시작을 축하합니다. 함께하는 공간에 따뜻한 웃음이 늘 가득하길 바라요.","새로운 보금자리에 행복한 일만 가득하시길 바랍니다. 진심으로 축하드려요."],
+    anniversary:["함께한 모든 날이 고맙고, 앞으로 함께할 날들이 더 기대돼. 사랑해.","우리의 소중한 오늘을 축하해. 오래도록 서로에게 가장 따뜻한 사람이 되어주자."],
+    thanks:["늘 따뜻하게 챙겨주셔서 감사합니다. 감사한 마음을 꽃에 담아 전합니다.","지금까지도 충분히 잘해왔어요. 앞으로의 모든 순간을 진심으로 응원할게요."],
+    recovery:["편안히 쉬시고 하루빨리 건강한 모습으로 만나길 바랍니다.","조급해하지 말고 천천히 회복하세요. 늘 곁에서 응원하고 있을게요."],
+    business:["뜻깊은 행사를 진심으로 축하드립니다. 함께하신 모든 분께 좋은 기억으로 남길 바랍니다.","새로운 도약과 발전을 진심으로 기원합니다. 귀사의 앞날에 좋은 결실이 가득하시길 바랍니다."]
+  };
+  var selectedOccasion="birthday", selectedTone="warm";
+  var occEl=document.getElementById("occasionChoices"), toneEl=document.getElementById("toneChoices"), resultEl=document.getElementById("messageResults");
+  function makeChoices(el,data,current,setter){ el.innerHTML=Object.keys(data).map(function(k){return '<button class="choice-btn" type="button" data-key="'+k+'" aria-pressed="'+(k===current)+'">'+data[k]+'</button>';}).join(""); el.querySelectorAll("button").forEach(function(btn){btn.addEventListener("click",function(){setter(btn.dataset.key);});}); }
+  function render(){
+    makeChoices(occEl,occasions,selectedOccasion,function(k){selectedOccasion=k;render();});
+    makeChoices(toneEl,tones,selectedTone,function(k){selectedTone=k;render();});
+    var list=base[selectedOccasion].slice();
+    if(selectedTone==="concise") list=list.map(function(s){return s.split(". ")[0]+".";});
+    if(selectedTone==="formal"||selectedTone==="work") list=list.map(function(s){return s.replace(/해요\./g,"드립니다.").replace(/바라요\./g,"기원합니다.");});
+    if(selectedTone==="cheerful") list.push("기쁜 오늘, 꽃처럼 환하게 빛나세요. 진심으로 축하해요!");
+    if(selectedTone==="sincere") list=list.map(function(s){return s+" 소중한 마음을 오래 기억하며 언제나 곁에서 응원하겠습니다.";});
+    resultEl.innerHTML=list.map(function(s,i){return '<div class="message-result"><div><p>'+s+'</p><small>'+s.length+'자 · 이름과 기억을 더해 나만의 문장으로 바꿔보세요.</small></div><button class="copy-btn" type="button" data-copy="'+i+'">복사하기</button></div>';}).join("");
+    resultEl.querySelectorAll("button").forEach(function(btn){btn.addEventListener("click",function(){var text=list[Number(btn.dataset.copy)];navigator.clipboard.writeText(text).then(function(){btn.textContent="복사됨";setTimeout(function(){btn.textContent="복사하기";},1400);});});});
+  }
+  render();
+})();
+</script>
+</body>
+</html>

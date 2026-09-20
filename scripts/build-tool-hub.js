@@ -46,8 +46,8 @@ function buildList(apps, cats) {
 function buildIntro(apps) {
   const n = apps.filter(a => a.status !== 'hidden').length;
   return INTRO_BEGIN + '\n' +
-    `    회원가입도 앱 설치도 없이 바로 쓰는 생활 도구 ${n}가지입니다.\n` +
-    '    입력한 값은 서버로 보내지 않고 브라우저 안에서만 계산합니다.\n' +
+    `    날짜 계산부터 단위 변환, 비용 계산과 간단한 추첨까지 일상에 한 번씩 필요한 도구 ${n}가지를 모았습니다.\n` +
+    '    필요할 때 검색하지 않고 바로 사용할 수 있으며, 입력한 값은 브라우저 안에서만 처리합니다.\n' +
     '    ' + INTRO_END;
 }
 
