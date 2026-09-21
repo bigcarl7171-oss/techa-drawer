@@ -8,6 +8,7 @@
 
 | 날짜 | 번호 | 슬러그 | 제목 | 상태 |
 |---|---|---|---|---|
+| 2026-09-21 | none | preserved-flower-pros-cons | 프리저브드 플라워란? 뜻과 장단점, 꽃다발 고르기 전에 | 발행 |
 | 2026-09-20 | none | wife-birthday-gift | 아내 생일 선물이 해마다 어려워지는 이유는 값이 아니었습니다 | 발행 |
 | 2026-09-19 | none | flower-parcel-delivery | 택배로 온 꽃다발이 멀쩡한 이유는 포장이 전부가 아닙니다 | 발행 |
 | 2026-09-18 | none | graduation-bouquet-one-month-later | 졸업식 꽃다발 비누꽃, 한 달 뒤 후기에 적혀 있는 것 | 발행 |
