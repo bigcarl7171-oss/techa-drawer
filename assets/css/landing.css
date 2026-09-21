@@ -92,8 +92,10 @@ body.landing .site-footer .wrap { max-width: 1320px; }
    Brand-commerce renewal — product and B2B conversion sections
    =========================================================== */
 .home-product-grid {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 18px;
 }
+.home-product-card:first-child { grid-column: 1 / -1; }
+.home-product-card:first-child img { aspect-ratio: 16 / 9; }
 .home-product-card { color: var(--brown); text-decoration: none; }
 .home-product-card img {
   width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 11px;
@@ -132,17 +134,10 @@ body.landing .site-footer .wrap { max-width: 1320px; }
 .home-tools-secondary .home-featured-tools { grid-template-columns: repeat(4, 1fr); }
 .home-tools-secondary .home-featured-tools a { border-left: 1px solid var(--line); }
 .home-tools-secondary .home-featured-tools a:first-child { border-left: 0; }
-.home-all-tools-disclosure { margin-top: 26px; border-top: 1px solid var(--line); }
-.home-all-tools-disclosure summary {
-  padding: 18px 4px; cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 600;
-}
-.home-all-tools-disclosure[open] summary { color: var(--brown); }
-.home-all-tools-disclosure .home-all-tools-more { margin: 0 4px 18px; }
+.home-tools-more { margin: 22px 0 0; text-align: right; font-size: 13px; }
+.home-tools-more a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
 
 @media (max-width: 860px) {
-  .home-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .home-product-card:first-child { grid-column: 1 / -1; }
-  .home-product-card:first-child img { aspect-ratio: 16 / 9; }
   .home-b2b-section { grid-template-columns: 1fr; gap: 0; }
   .home-b2b-section > img { min-height: 300px; }
   .home-tools-secondary .home-featured-tools { grid-template-columns: repeat(2, 1fr); }
@@ -276,8 +271,19 @@ body.landing .site-footer .wrap { max-width: 1320px; }
 @media (hover: hover) and (pointer: fine) {
   .shell-brandband-item:hover { transform: translateY(-2px); text-decoration: none; }
 }
+.home-quick-trust {
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  margin:0 0 34px; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.home-quick-trust > div { padding:18px 16px; text-align:center; }
+.home-quick-trust > div + div { border-left:1px solid var(--line); }
+.home-quick-trust b { display:block; font-family:"Gowun Batang",serif; font-size:16px; }
+.home-quick-trust span { display:block; margin-top:4px; color:var(--muted); font-size:11.5px; line-height:1.45; }
 @media (max-width: 720px) {
   .shell-brandband { grid-template-columns: repeat(2, 1fr); }
+  .home-quick-trust { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .home-quick-trust > div:nth-child(3) { border-left:0; border-top:1px solid var(--line); }
+  .home-quick-trust > div:nth-child(4) { border-top:1px solid var(--line); }
 }
 
 /* ---------- 신뢰 문구 3줄 (통계 칩 대체) ---------- */
@@ -644,7 +650,10 @@ body.landing { background: #f6f1e7; }
 .home-message-copy > p:not(.home-section-number),
 .home-space-copy > p:not(.home-section-number) { margin:18px 0 24px; color:var(--muted); font-size:14px; line-height:1.8; }
 .home-message-copy > a,.home-space-cta { display:inline-block; padding-bottom:4px; border-bottom:1px solid var(--brown); font-weight:700; }
-.home-message-preview { padding:32px; background:var(--gold-soft); border:1px solid var(--gold-border); border-radius:12px; }
+.home-message-steps { display:flex; flex-wrap:wrap; gap:7px; margin:-4px 0 26px; }
+.home-message-steps span { padding:8px 11px; border:1px solid var(--gold-border); border-radius:999px; background:var(--white); color:var(--muted); font-size:12px; }
+.home-message-steps b { margin-right:5px; color:var(--gold-deep); font-size:10px; }
+.home-message-preview { padding:36px 32px; background:linear-gradient(145deg,var(--gold-soft),var(--white)); border:1px solid var(--gold-border); border-radius:12px; box-shadow:12px 12px 0 var(--sage-soft); }
 .home-message-preview > span { color:var(--gold-strong-ink); font-size:11px; font-weight:700; letter-spacing:.1em; }
 .home-message-preview blockquote { margin:18px 0; font-family:"Gowun Batang",serif; font-size:22px; line-height:1.65; }
 .home-message-preview small { color:var(--muted); }
@@ -653,10 +662,31 @@ body.landing { background: #f6f1e7; }
 .home-space-section { display:grid; grid-template-columns:.92fr 1.08fr; gap:42px; align-items:center; }
 .home-space-media img { width:100%; height:460px; object-fit:cover; border-radius:12px; display:block; box-shadow:14px 14px 0 var(--sage-soft); }
 .home-space-links { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; }
-.home-space-links a { padding:7px 11px; border:1px solid var(--line); border-radius:999px; font-size:12px; color:var(--muted); }
+.home-space-links a,.home-space-links span { padding:7px 11px; border:1px solid var(--line); border-radius:999px; font-size:12px; color:var(--muted); }
 .home-space-cta { margin-top:2px; }
 .home-trust-review { margin:18px 0 0; font-size:13px; color:var(--muted); }
 .home-trust-review a { text-decoration:underline; text-underline-offset:3px; }
+.home-services-intro { text-align:center; padding-bottom:30px; }
+.home-services-intro h2 { max-width:760px; margin:0 auto; font-family:"Gowun Batang",serif; font-size:clamp(30px,3.3vw,44px); line-height:1.35; letter-spacing:-.035em; }
+.home-services-intro > p:not(.home-section-number) { max-width:680px; margin:20px auto 0; color:var(--muted); line-height:1.8; }
+.home-service-summary { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:24px; }
+.home-service-summary span { padding:8px 13px; border:1px solid var(--gold-border); border-radius:999px; background:var(--gold-soft); font-size:12px; }
+.home-subscription-section { display:grid; grid-template-columns:1.08fr .92fr; gap:42px; align-items:stretch; }
+.home-subscription-copy { padding:42px; border:1px solid var(--line); background:var(--white); }
+.home-subscription-copy h2,.home-about-copy h2 { margin:0; font-family:"Gowun Batang",serif; font-size:clamp(30px,3vw,42px); line-height:1.3; letter-spacing:-.035em; }
+.home-subscription-copy > p:not(.home-section-number) { margin:18px 0 24px; color:var(--muted); font-size:14px; line-height:1.8; }
+.home-subscription-note { display:flex; flex-direction:column; justify-content:center; padding:42px; background:var(--sage-soft); }
+.home-subscription-note small { color:var(--gold-deep); font-weight:700; letter-spacing:.1em; }
+.home-subscription-note strong { margin-top:14px; font-family:"Gowun Batang",serif; font-size:25px; line-height:1.45; }
+.home-subscription-note p { margin:16px 0 0; color:var(--muted); line-height:1.8; }
+.home-delivery-proof { margin:0 0 70px; padding:28px 34px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); text-align:center; }
+.home-delivery-proof h2 { margin:0 0 17px; font-family:"Gowun Batang",serif; font-size:25px; }
+.home-delivery-proof > p { margin:7px 0; color:var(--muted); font-size:13px; line-height:1.7; }
+.home-about-section { display:grid; grid-template-columns:1.25fr .75fr; gap:48px; align-items:center; background:var(--brown); color:var(--paper); padding:58px; }
+.home-about-copy > p:not(.home-section-number) { margin:18px 0 0; color:rgba(255,255,255,.72); line-height:1.85; }
+.home-about-copy > a { display:inline-block; margin-top:26px; padding-bottom:4px; border-bottom:1px solid var(--paper); color:var(--paper); font-weight:700; }
+.home-about-values { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:rgba(255,255,255,.2); }
+.home-about-values span { min-height:92px; display:flex; align-items:center; justify-content:center; background:var(--brown); font-family:"Gowun Batang",serif; font-size:17px; }
 .shell-carousel { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 18px; margin: 0; }
 .shell-mag-card {
   display: block; border: 0; border-top: 1px solid var(--line);
@@ -708,9 +738,11 @@ body.landing { background: #f6f1e7; }
 .shell-tool-desc { font-size: 11.5px; }
 
 .home-trust-section { padding-bottom: 62px; }
-.shell-trust { margin: 24px 0 0; }
+.shell-trust { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); margin:24px 0 0; }
 .shell-trust > div { align-items: flex-start; padding: 18px 24px 18px 0; }
 .shell-trust > div + div { padding-left: 24px; }
+.shell-trust > div:nth-child(3) { padding-left:0; border-left:0; border-top:1px solid var(--line); }
+.shell-trust > div:nth-child(4) { border-top:1px solid var(--line); }
 .shell-trust b { font-family: "Gowun Batang", serif; font-size: 16px; }
 .shell-trust span { display: block; line-height: 1.55; }
 
@@ -722,6 +754,7 @@ body.landing { background: #f6f1e7; }
 .home-closing-copy { display: flex; flex-direction: column; justify-content: center; padding: 48px; }
 .home-closing-copy > p:not(.home-section-number) { margin: 20px 0 26px; color: var(--muted); line-height: 1.75; }
 .home-closing-copy a { align-self: flex-start; color: var(--brown); font-weight: 700; border-bottom: 1px solid var(--brown); padding-bottom: 4px; }
+.home-mobile-cta { display:none; }
 
 @media (max-width: 1080px) {
   .shell-main { padding: 26px 32px 40px; }
@@ -739,7 +772,7 @@ body.landing { background: #f6f1e7; }
   .home-featured-tools a:not(:nth-child(3n + 1)) { border-left: 0; }
   .home-featured-tools a:nth-child(even) { border-left: 1px solid var(--line); }
   .home-tools-section #tool-table { grid-template-columns: 1fr; }
-  .home-message-section,.home-space-section { grid-template-columns:1fr; gap:26px; }
+  .home-message-section,.home-space-section,.home-subscription-section,.home-about-section { grid-template-columns:1fr; gap:26px; }
   .home-space-media { order:2; }
   .home-space-media img { height:340px; }
 }
@@ -775,15 +808,35 @@ body.landing { background: #f6f1e7; }
   .shell-mag-card .shell-mag-title, .shell-mag-card:first-child .shell-mag-title { font-size: 19px; }
   .home-message-preview { padding:24px; }
   .home-message-preview blockquote { font-size:19px; }
+  .home-message-steps { gap:6px; }
+  .home-message-steps span { padding:7px 9px; font-size:11.5px; }
   .home-space-media img { height:300px; box-shadow:9px 9px 0 var(--sage-soft); }
+  .home-services-intro { text-align:left; }
+  .home-service-summary { justify-content:flex-start; }
+  .home-service-description { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:4; overflow:hidden; }
+  .home-subscription-copy,.home-subscription-note { padding:30px 24px; }
+  .home-delivery-proof { margin-bottom:58px; padding:25px 10px; text-align:left; }
+  .home-about-section { padding:38px 24px; }
+  .home-about-values span { min-height:74px; }
   .home-featured-tools { grid-template-columns: 1fr; }
   .home-featured-tools a, .home-featured-tools a:nth-child(even) { border-left: 0; }
   .home-featured-tools a { min-height: 100px; }
   .shell-trust { display: block; }
   .shell-trust > div, .shell-trust > div + div { padding: 18px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .home-tools-more { text-align:left; }
   .home-closing { grid-template-columns: 1fr; }
   .home-closing-media { min-height: 260px; }
   .home-closing-copy { padding: 34px 24px 40px; }
+  body { padding-bottom:72px; }
+  .home-mobile-cta {
+    position:fixed; z-index:100; left:12px; right:12px; bottom:10px;
+    display:grid; grid-template-columns:1.08fr .92fr; gap:8px; padding:8px;
+    border:1px solid var(--line); border-radius:14px; background:rgba(255,253,249,.96);
+    box-shadow:0 10px 30px rgba(55,43,30,.18); backdrop-filter:blur(10px);
+  }
+  .home-mobile-cta a { padding:12px 8px; border-radius:9px; text-align:center; font-size:13px; font-weight:700; }
+  .home-mobile-cta a:first-child { background:var(--brown); color:var(--paper); }
+  .home-mobile-cta a:last-child { border:1px solid var(--line); color:var(--brown); }
   .motion-enabled .reveal.reveal-ready { transform: translateY(9px); }
 }
 @media (max-width: 360px) {

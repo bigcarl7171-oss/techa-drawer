@@ -17,7 +17,9 @@
       "products": [
         { "id": "rebony-trophy-doll-bouquet", "label": "졸업·발표회", "desc": "사진에 남는 날, 주인공을 돋보이게" },
         { "id": "kinderjoy-doll-bouquet", "label": "유치원·아이 선물", "desc": "꽃과 작은 즐거움을 함께 전할 때" },
-        { "id": "rose-hydrangea-bouquet", "label": "입학·취업·승진", "desc": "새 출발을 오래 기억하게 하는 꽃다발" }
+        { "id": "rose-hydrangea-bouquet", "label": "입학·취업·승진", "desc": "새 출발을 오래 기억하게 하는 꽃다발" },
+        { "id": "glassdome-moodlamp", "label": "연인·기념일", "desc": "축하가 끝난 뒤에도 꽃과 빛으로 남는 선물" },
+        { "id": "hydrangea-moodlamp", "label": "오래 두는 공간 선물", "desc": "집과 책상에 수국과 은은한 빛을 더할 때" }
       ]
     },
     "spring": {
@@ -30,7 +32,9 @@
       "products": [
         { "id": "rose-hydrangea-bouquet", "label": "승진·새 출발", "desc": "받는 순간의 마음을 오래 남기고 싶을 때" },
         { "id": "sunflower-frame", "label": "집들이·개업", "desc": "밝은 기운을 공간에 오래 두는 선물" },
-        { "id": "superior-rose", "label": "기념일·축하", "desc": "장미의 존재감을 단정하게 전할 때" }
+        { "id": "superior-rose", "label": "연인·기념일", "desc": "장미의 존재감을 단정하게 전할 때" },
+        { "id": "rose-money-bouquet", "label": "부모님·어른 선물", "desc": "현금의 실용성과 꽃의 정성을 함께 전할 때" },
+        { "id": "hydrangea-moodlamp", "label": "오래 두는 공간 선물", "desc": "집들이와 개업 공간에 꽃과 빛을 더할 때" }
       ]
     },
     "gratitude": {
@@ -43,7 +47,9 @@
       "products": [
         { "id": "carnation-money-bouquet", "label": "어버이날·생신", "desc": "카네이션과 용돈을 함께 전할 때" },
         { "id": "money-cake", "label": "환갑·칠순·생신", "desc": "축하 자리의 중심이 되는 용돈 선물" },
-        { "id": "single-stem-soap-box", "label": "선생님·단체 감사", "desc": "여럿에게 단정하게 마음을 전할 때" }
+        { "id": "single-stem-soap-box", "label": "선생님·단체 감사", "desc": "여럿에게 단정하게 마음을 전할 때" },
+        { "id": "rose-hydrangea-bouquet", "label": "연인·기념일", "desc": "감사와 축하의 마음을 오래 남기고 싶을 때" },
+        { "id": "hydrangea-moodlamp", "label": "오래 두는 공간 선물", "desc": "부모님 댁과 생활 공간에 은은한 빛을 더할 때" }
       ]
     },
     "summer": {
@@ -56,7 +62,9 @@
       "products": [
         { "id": "hydrangea-moodlamp", "label": "집들이·인테리어", "desc": "수국과 빛을 함께 오래 두는 선물" },
         { "id": "sunflower-frame", "label": "집들이·개업", "desc": "여름의 밝은 분위기를 공간에 더할 때" },
-        { "id": "rose-hydrangea-bouquet", "label": "기념일·행사", "desc": "계절과 관계없이 오래 남는 꽃다발" }
+        { "id": "rose-hydrangea-bouquet", "label": "발표회·승진·행사", "desc": "계절과 관계없이 오래 남는 꽃다발" },
+        { "id": "rose-money-bouquet", "label": "부모님·어른 선물", "desc": "용돈과 꽃의 정성을 함께 전하고 싶을 때" },
+        { "id": "glassdome-moodlamp", "label": "연인·기념일", "desc": "꽃과 조명을 함께 오래 간직하는 선물" }
       ]
     },
     "autumn": {
@@ -69,7 +77,9 @@
       "products": [
         { "id": "money-cake", "label": "추석·생신·가족 모임", "desc": "축하와 용돈을 한 번에 전하고 싶을 때" },
         { "id": "rose-money-bouquet", "label": "부모님·용돈 선물", "desc": "현금의 실용성과 꽃의 정성을 함께 전할 때" },
-        { "id": "sunflower-bouquet", "label": "발표회·승진·가을 행사", "desc": "밝은 축하의 마음을 또렷하게 전할 때" }
+        { "id": "sunflower-bouquet", "label": "발표회·승진·졸업", "desc": "밝은 축하의 마음을 또렷하게 전할 때" },
+        { "id": "rose-hydrangea-bouquet", "label": "연인·기념일", "desc": "장미와 수국의 색감을 오래 간직하고 싶을 때" },
+        { "id": "hydrangea-moodlamp", "label": "오래 두는 공간 선물", "desc": "집들이와 개업 공간에 꽃과 빛을 더할 때" }
       ]
     },
     "yearend": {
@@ -82,7 +92,9 @@
       "products": [
         { "id": "glassdome-moodlamp", "label": "크리스마스·연말", "desc": "낮에는 꽃, 밤에는 빛으로 남는 선물" },
         { "id": "rose-hydrangea-bouquet", "label": "승진·퇴임·연말", "desc": "감사의 마음을 단정하게 전할 때" },
-        { "id": "cup-moodlamp-single", "label": "부담 없는 겨울 선물", "desc": "작은 공간에 꽃과 빛을 더할 때" }
+        { "id": "cup-moodlamp-single", "label": "부담 없는 겨울 선물", "desc": "작은 공간에 꽃과 빛을 더할 때" },
+        { "id": "money-cake", "label": "부모님·연말 가족 모임", "desc": "축하와 용돈을 한 자리에서 전하고 싶을 때" },
+        { "id": "hydrangea-moodlamp", "label": "오래 두는 공간 선물", "desc": "차분한 공간에 수국과 따뜻한 빛을 더할 때" }
       ]
     }
   }
