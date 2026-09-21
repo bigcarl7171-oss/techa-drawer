@@ -650,7 +650,10 @@ body.landing { background: #f6f1e7; }
 .home-message-copy > p:not(.home-section-number),
 .home-space-copy > p:not(.home-section-number) { margin:18px 0 24px; color:var(--muted); font-size:14px; line-height:1.8; }
 .home-message-copy > a,.home-space-cta { display:inline-block; padding-bottom:4px; border-bottom:1px solid var(--brown); font-weight:700; }
-.home-message-preview { padding:32px; background:var(--gold-soft); border:1px solid var(--gold-border); border-radius:12px; }
+.home-message-steps { display:flex; flex-wrap:wrap; gap:7px; margin:-4px 0 26px; }
+.home-message-steps span { padding:8px 11px; border:1px solid var(--gold-border); border-radius:999px; background:var(--white); color:var(--muted); font-size:12px; }
+.home-message-steps b { margin-right:5px; color:var(--gold-deep); font-size:10px; }
+.home-message-preview { padding:36px 32px; background:linear-gradient(145deg,var(--gold-soft),var(--white)); border:1px solid var(--gold-border); border-radius:12px; box-shadow:12px 12px 0 var(--sage-soft); }
 .home-message-preview > span { color:var(--gold-strong-ink); font-size:11px; font-weight:700; letter-spacing:.1em; }
 .home-message-preview blockquote { margin:18px 0; font-family:"Gowun Batang",serif; font-size:22px; line-height:1.65; }
 .home-message-preview small { color:var(--muted); }
@@ -805,6 +808,8 @@ body.landing { background: #f6f1e7; }
   .shell-mag-card .shell-mag-title, .shell-mag-card:first-child .shell-mag-title { font-size: 19px; }
   .home-message-preview { padding:24px; }
   .home-message-preview blockquote { font-size:19px; }
+  .home-message-steps { gap:6px; }
+  .home-message-steps span { padding:7px 9px; font-size:11.5px; }
   .home-space-media img { height:300px; box-shadow:9px 9px 0 var(--sage-soft); }
   .home-services-intro { text-align:left; }
   .home-service-summary { justify-content:flex-start; }
