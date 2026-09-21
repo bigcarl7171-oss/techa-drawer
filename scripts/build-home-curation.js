@@ -47,7 +47,7 @@ function validateHref(href) {
 function build(month) {
   const profileId = DATA.months[String(month)];
   const profile = DATA.profiles[profileId];
-  if (!profile || profile.situations.length !== 4 || profile.products.length !== 3) throw new Error(`${month}월 큐레이션 구성이 올바르지 않습니다.`);
+  if (!profile || profile.situations.length !== 4 || profile.products.length !== 5) throw new Error(`${month}월 큐레이션 구성이 올바르지 않습니다.`);
   const catalog = new Map(PRODUCTS.map(p => [p.id, p]));
   const allowedLinks = new Set([STORE.store_home, ...Object.values(STORE.products).map(p => p.link)]);
 
@@ -73,7 +73,7 @@ function verifyAll() {
   if (months.length !== 12) throw new Error(`months 에 12개월이 모두 있어야 합니다 (현재 ${months.length}개).`);
   for (const m of months) {
     const built = build(m);
-    console.log(`  ${String(m).padStart(2)}월 ${built.profileId} — 상황 4 · 상품 3 OK`);
+    console.log(`  ${String(m).padStart(2, '0')}월 ${built.profileId} — 상황 4 · 상품 5 OK`);
   }
   console.log('✅ 12개월 큐레이션 전부 빌드 가능');
 }
