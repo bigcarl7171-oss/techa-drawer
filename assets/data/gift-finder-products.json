@@ -1,6 +1,6 @@
 {
   "version": "2.2",
-  "updatedAt": "2026-09-02",
+  "updatedAt": "2026-09-22",
   "scoring": {
     "occasion": 35,
     "recipient": 25,
@@ -1106,6 +1106,49 @@
         "score": 0.0
       },
       "note": "가격이 가격표(xlsx)에 없어 결과 카드에서는 '가격/신청 문의'로 처리. 구매 링크는 2026-09-18 발급된 마케팅링크 — data/store-links.json 의 10537190482. 실제 수강생 제작 장면 확보 시 대표사진 교체 권장."
+    },
+    {
+      "id": "blackwhite-rose-moodlamp",
+      "name": "블랙앤화이트 장미 무드등",
+      "category": "무드등",
+      "recipients": [
+        "연인",
+        "배우자",
+        "친구"
+      ],
+      "occasions": [
+        "기념일",
+        "생일",
+        "프러포즈",
+        "집들이·개업"
+      ],
+      "giftTypes": [
+        "인테리어형"
+      ],
+      "situation": "받는 분의 방 색이나 취향을 몰라 어떤 색 꽃을 골라야 할지 망설여질 때",
+      "reason": "흰 장미와 검은 장미를 투명 케이스에 담아 어느 공간에나 어울리고, LED를 켜면 은은한 무드등이 돼요. 리본까지 묶어 보내 드려서 포장을 뜯지 않고 그대로 두시면 돼요.",
+      "role": "신상품 · 색을 뺀 인테리어 선물",
+      "tier": "B (신상품)",
+      "strategyBase": 3,
+      "occasionBoosts": {
+        "기념일": 2,
+        "집들이·개업": 2
+      },
+      "priceMin": 48000,
+      "priceMax": 61000,
+      "shopUrl": "https://mkt.shopping.naver.com/link/6aacecf4e8f0b735ed17d84b",
+      "image1": "/assets/images/gift-finder/blackwhite-rose-moodlamp-01.webp",
+      "image2": "/assets/images/gift-finder/blackwhite-rose-moodlamp-02.webp",
+      "photoStatus": "확정",
+      "badges": [
+        "새로 나온 선물"
+      ],
+      "sales": {
+        "totalRef": 0,
+        "recentRef": 0,
+        "score": 0.0
+      },
+      "note": "2026-09-22 등록(상품번호 13766982103). 사진은 260914 챗GPT 이미지 #1(침실 협탁·점등)·#3(식탁에서 건네는 장면). 꽃잎 접사 컷은 실물과 달라 제외, 전용 쇼핑백 컷은 선착순 한정 혜택이라 제외. 판매 기록이 쌓이면 sales·tier 를 갱신할 것."
     }
   ]
 }

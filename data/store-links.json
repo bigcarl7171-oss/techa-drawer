@@ -1,6 +1,6 @@
 {
   "_note": "네이버쇼핑 매출연동수수료를 줄이기 위한 스마트스토어 마케팅 링크 모음. 원본은 docs/테차상품가격리스트.xlsx E열(마케팅링크)이고, 이 파일은 scripts/build-products.py 와 정적 HTML 교체 작업의 기준값이다. 링크가 바뀌면 xlsx를 고친 뒤 build-products.py 를 다시 돌리고 이 파일을 갱신한다.",
-  "updatedAt": "2026-09-18",
+  "updatedAt": "2026-09-22",
   "source": "docs/테차상품가격리스트.xlsx (E열: 마케팅링크)",
   "store_home": "https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28",
   "products": {
@@ -108,6 +108,11 @@
       "line": "centerpiece",
       "name": "센터피스",
       "link": "https://mkt.shopping.naver.com/link/6aacecf4907c4216e6afb00d"
+    },
+    "13766982103": {
+      "line": "blackwhite-rose-moodlamp",
+      "name": "블랙앤화이트 장미 무드등",
+      "link": "https://mkt.shopping.naver.com/link/6aacecf4e8f0b735ed17d84b"
     }
   }
 }

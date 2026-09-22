@@ -78,6 +78,9 @@ LINES = [
          match=dict(all=["수국꽃무드등"])),
     dict(id="flower-postcard", name="꽃엽서카드", cat="소품",
          match=dict(all=["꽃엽서카드"])),
+    # 2026-09-22 신상품 — 비누꽃 흰·검은 장미, 블랙누아르/화이트블랑 × 중대형/대형 × 건전지/USB
+    dict(id="blackwhite-rose-moodlamp", name="블랙앤화이트 장미 무드등", cat="무드등",
+         match=dict(all=["비누꽃블랙앤화이트"])),
 ]
 
 # 스토어 홈 마케팅링크 — 개별 상품이 아니라 스토어 전체로 보낼 때 쓰는 주소.
