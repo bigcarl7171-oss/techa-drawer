@@ -1,7 +1,7 @@
 ---
 name: techa-publish
 description: >
-  테차서랍 매거진 원고를 발행까지 끝낸다. 사람이 스크래치 폴더의 `magazine.md`를
+  테차 꽃공방 매거진 원고를 발행까지 끝낸다. 사람이 스크래치 폴더의 `magazine.md`를
   검토·수정한 뒤 "발행해줘"라고 부르면, 이 스킬이 나머지를 전부 처리한다 — 직전 발행본을
   archive로 내리고 매거진 최종본을 `docs/drafts/`에 넣기, 빈 이미지 슬롯 생성, 발행본 HTML
   생성, 목록·메인·사이트맵 반영, 내부링크 연결, check-publish.sh 검증, 커밋·푸시(=Cloudflare

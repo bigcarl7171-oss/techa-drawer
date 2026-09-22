@@ -8,8 +8,8 @@
 
   // 사이트 기본 정보 (배포 시 도메인만 교체)
   var SITE = {
-    name: "테차 서랍",
-    tagline: "선물 고민을 정리하고 테차의 꽃 선물로 이어주는 브랜드 서랍",
+    name: "테차 꽃공방",
+    tagline: "꽃 선물 · 메시지 · 공간 스타일링 · 기업 주문",
     base: "https://www.techa.kr",
     shopUrl: "https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28", // TECHA 선물샵 스토어 홈 (탄생화·탄생석 등에 선물 CTA 자동 노출)
     // ↑ 스마트스토어 주소가 아니라 판매자센터 발급 "마케팅링크"다 — 네이버쇼핑 매출연동수수료를
@@ -172,7 +172,7 @@
     // build-chrome.js가 정적 마크업을 동기화하고, 이 코드는 배포 중 누락된 페이지를 보완한다.
     el.innerHTML =
       '<div class="wrap">' +
-      '  <a class="logo" href="/">테<b>차</b> 서랍</a>' +
+      '  <a class="logo" href="/">테<b>차</b> 꽃공방</a>' +
       '  <div class="header-search">' +
       '    <button type="button" class="header-search-toggle" id="header-search-toggle" aria-label="도구·매거진 검색" aria-expanded="false">🔍</button>' +
       '    <div class="header-search-panel" id="header-search-panel">' +
@@ -311,7 +311,7 @@
       '  <a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a>' +
       '  <a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a>' +
       '  <div class="disclaimer">본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. © ' +
-      new Date().getFullYear() + " 테차 서랍</div>" +
+      new Date().getFullYear() + " 테차 꽃공방</div>" +
       '</div>';
   }
 
@@ -398,9 +398,9 @@
     btn.style.marginTop = "12px";
     btn.addEventListener("click", function () {
       var resultText = (el.textContent || "").replace(/\s+/g, " ").trim();
-      var title = (document.title.split(":")[0] || "테차 서랍").trim();
+      var title = (document.title.split(":")[0] || "테차 꽃공방").trim();
       var url = location.href;
-      var text = (resultText ? resultText + "\n" : "") + title + " | 테차 서랍";
+      var text = (resultText ? resultText + "\n" : "") + title + " | 테차 꽃공방";
       if (navigator.share) {
         navigator.share({ title: title, text: text, url: url }).catch(function () {});
       } else if (navigator.clipboard) {

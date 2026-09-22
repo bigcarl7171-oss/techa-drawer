@@ -1,5 +1,5 @@
 /* ===========================================================
-   테차 서랍 — 랜딩페이지 전용 스타일 (대시보드형 레퍼런스 구조)
+   테차 꽃공방 — 랜딩페이지 전용 스타일 (대시보드형 레퍼런스 구조)
    style.css의 브랜드 토큰(컬러·라운드·그림자)을 그대로 재사용.
    이 파일은 index.html에서만 로드됨 — 다른 페이지에 영향 없음.
    =========================================================== */
@@ -854,4 +854,25 @@ body.landing { background: #f6f1e7; }
   .motion-enabled.home-intro .shell-hero-media,
   .motion-enabled .reveal.reveal-ready { opacity: 1; transform: none; clip-path: none; transition: none; }
   .shell-brandband-item img, .shell-mag-card img, .home-featured-tools a, .shell-tool-row { transition: none; }
+}
+
+/* ---------- 2026-09-22 테차 꽃공방 — 로고 아래 설명줄 · 한국어 섹션 이름 ---------- */
+/* 로고 바로 아래: 무엇을 하는 곳인지 네 가지를 한 줄로. 항목마다 해당 페이지로 간다 */
+.shell-tagline {
+  margin: 6px 10px 0; text-align: center; line-height: 1.6;
+  font-size: 11.5px; color: var(--muted);
+}
+.shell-tagline a { color: inherit; white-space: nowrap; }
+.shell-tagline { text-wrap: balance; }
+.shell-tagline a:hover { color: var(--brown); text-decoration: underline; }
+/* 영어 대문자용 넓은 자간은 한글에서 띄어 읽힌다 */
+.home-section-number, .shell-hero-kicker { letter-spacing: .04em !important; }
+/* 첫 화면 이름표: PC 는 섹션 이름, 사이드바 설명줄이 숨는 폭에서는 설명줄 */
+.shell-hero-kicker .kicker-narrow { display: none; }
+/* 첫 화면 보조 링크 두 줄(메시지 · 공간 스타일링) */
+.shell-hero-links { display: flex; flex-direction: column; gap: 6px; flex-basis: 100%; }
+@media (max-width: 1080px) {
+  .shell-tagline { display: none; }
+  .shell-hero-kicker .kicker-wide { display: none; }
+  .shell-hero-kicker .kicker-narrow { display: inline; }
 }

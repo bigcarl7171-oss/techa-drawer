@@ -45,7 +45,7 @@ function headerMarkup(shopUrl) {
   return [
     HEADER_BEGIN,
     '  <div class="wrap">',
-    '    <a class="logo" href="/">테<b>차</b> 서랍</a>',
+    '    <a class="logo" href="/">테<b>차</b> 꽃공방</a>',
     '    <div class="header-search">',
     '      <button type="button" class="header-search-toggle" id="header-search-toggle" aria-label="도구·매거진 검색" aria-expanded="false">🔍</button>',
     '      <div class="header-search-panel" id="header-search-panel">',
@@ -75,7 +75,7 @@ function footerMarkup() {
       '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a>',
     '    <a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a>',
     // 연도는 비워 둔다 — 정적 HTML에 박으면 해가 바뀔 때마다 게이트가 울린다. site.js 가 채운다.
-    '    <div class="disclaimer">본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. © <span id="footer-year"></span> 테차 서랍</div>',
+    '    <div class="disclaimer">본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. © <span id="footer-year"></span> 테차 꽃공방</div>',
     '  </div>',
     '  ' + FOOTER_END
   ].join('\n');
