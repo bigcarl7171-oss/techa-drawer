@@ -108,7 +108,10 @@ n=$(grep -c "shell-mag-card[^>]*href=\"/blog/$SLUG/\"" index.html)
 n2=$(grep -c "<a class=\"shell-mag-row\" href=\"/blog/$SLUG/\"" index.html)
 if [ "$SLUG" = "$NEWEST" ]; then
   [ "$n" -ge 1 ]  && ok "index.html 캐러셀" "$n" || bad "index.html 캐러셀" "최신 글인데 없음"
-  [ "$n2" -ge 1 ] && ok "index.html 위젯" "$n2" || bad "index.html 위젯" "최신 글인데 없음"
+  # 오른쪽 위젯은 2026-09-22 메인 개편으로 없어졌다 — 칸이 있을 때만 본다
+  if grep -q 'shell-widget-head">테차 매거진' index.html; then
+    [ "$n2" -ge 1 ] && ok "index.html 위젯" "$n2" || bad "index.html 위젯" "최신 글인데 없음"
+  fi
 else
   ok "index.html 캐러셀/위젯" "캐러셀 $n · 위젯 $n2 (최신 글 아님 — 상한상 정상)"
 fi

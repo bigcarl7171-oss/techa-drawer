@@ -255,6 +255,10 @@ components:
     padding: 24px 0
 ---
 
+> ⛔ **폐기 (2026-09-22)** — 생활 도구 사이트 시절의 분석이다. 파랑·호박색 강조색, 알약 버튼, 3단 대시보드는
+> 꽃공방 브랜드와 맞지 않아 메인 개편의 원인이 됐다. 새 규칙은 **`docs/DESIGN-kkotgongbang.md`**, 색 값은
+> `techa-brand-rules.md` §3 을 따른다. 이 파일은 기록으로만 남긴다.
+
 ## Overview
 
 Techa Tools (테차 툴즈) is a free Korean utility marketplace — calculators, date tools, and small "fun/random" toys (lottery number generator, ladder game, dad-joke draw, menu roulette) — built as **framework-free static HTML/CSS/JS** with no build step, no bundler, and no client-side router. Every page is a self-contained `.html` file that pulls in one shared stylesheet and one shared script for header/footer/related-links wiring. Where Airbnb's system is built to scale across dozens of product teams, Techa's is built to be edited by one person in a text editor, and that constraint shows up everywhere in the visual language: fewer tokens, fewer states, one shadow tier, no dark mode.

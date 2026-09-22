@@ -170,17 +170,20 @@
     el.className = "site-header";
     // 정적 HTML이 이전 버전이어도 방문자에게는 항상 최신 공통 메뉴를 보여준다.
     // build-chrome.js가 정적 마크업을 동기화하고, 이 코드는 배포 중 누락된 페이지를 보완한다.
+    // build-chrome.js 의 headerMarkup 과 같은 마크업 (2026-09-22 메인 개편)
     el.innerHTML =
       '<div class="wrap">' +
-      '  <a class="logo" href="/">테<b>차</b> 꽃공방</a>' +
+      '  <a class="brand-lock" href="/" aria-label="테차 꽃공방 홈"><img src="/assets/icons/techa-logo.png" alt="techa" width="71" height="22"><span>테차 꽃공방</span></a>' +
+      '  <nav class="header-nav" aria-label="주요 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">테차 매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a></nav>' +
       '  <div class="header-search">' +
-      '    <button type="button" class="header-search-toggle" id="header-search-toggle" aria-label="도구·매거진 검색" aria-expanded="false">🔍</button>' +
+      '    <button type="button" class="header-search-toggle" id="header-search-toggle" aria-label="도구·매거진 검색" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>' +
       '    <div class="header-search-panel" id="header-search-panel">' +
       '      <input type="text" id="header-search-input" placeholder="도구·매거진 검색..." autocomplete="off">' +
       '      <div class="header-search-results" id="header-search-results"></div>' +
       '    </div>' +
       '  </div>' +
-      '  <nav class="header-nav"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a class="header-shop-link" href="' + SITE.shopUrl + '" target="_blank" rel="noopener">테차 선물 보기</a></nav>' +
+      '  <a class="header-shop-link" href="' + SITE.shopUrl + '" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a>' +
+      '  <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">테차 매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a href="/care/">꽃 관리법</a></nav></details>' +
       '</div>';
     initHeaderSearch();
   }

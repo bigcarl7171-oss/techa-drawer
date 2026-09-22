@@ -121,7 +121,8 @@ home = dropBlock(home, `href="/blog/${slug}/">`, '<a class="shell-mag-card');
 home = insertAfter(home, '<div class="shell-carousel">', [
   `      <a class="shell-mag-card reveal" href="/blog/${slug}/">`,
   `        <img src="/blog/${slug}/cover.jpg" alt="${esc(cover.alt)}" loading="lazy">`,
-  `        <span class="shell-mag-tag">${emoji} ${esc(tag)}</span>`,
+  // 2026-09-22 메인 개편: 카드 태그에 이모지를 넣지 않는다 (docs/DESIGN-kkotgongbang.md)
+  `        <span class="shell-mag-tag">${esc(tag)}</span>`,
   `        <div class="shell-mag-body">`,
   `          <div class="shell-mag-title">${esc(title)}</div>`,
   `        </div>`,
@@ -132,7 +133,9 @@ home = capBlocks(home, '<a class="shell-mag-card', 3, (block, i) => {
   return block.replace(/^(\s*<a class="shell-mag-card reveal")(?: style="[^"]*")?/, `$1${styled}`);
 });
 
-// 4-3. index.html 위젯 (상한 5)
+// 4-3. index.html 위젯 (상한 5) — 2026-09-22 메인 개편으로 오른쪽 칸이 없어졌다.
+//      칸이 있을 때만 채운다(예전 구조로 되돌렸을 때를 위해 코드는 남긴다).
+if (home.includes('<div class="shell-widget-head">테차 매거진')) {
 home = dropBlock(home, `<a class="shell-mag-row" href="/blog/${slug}/">`);
 home = insertAfter(home, '<div class="shell-widget-head">테차 매거진', [
   `      <a class="shell-mag-row" href="/blog/${slug}/">`,
@@ -141,6 +144,7 @@ home = insertAfter(home, '<div class="shell-widget-head">테차 매거진', [
   `      </a>`,
 ].join("\n"));
 home = capBlocks(home, '<a class="shell-mag-row"', 5);
+}
 
 // 4-4. sitemap.xml
 map = map.split("\n").filter((l) => !l.includes(`/blog/${slug}/</loc>`)).join("\n");
