@@ -55,6 +55,11 @@
     "rebony-trophy-doll-bouquet",
     "kinderjoy-doll-bouquet"
   ],
+  "flower-gift-avoid-flowers": [
+    "rose-hydrangea-bouquet",
+    "hydrangea-bouquet",
+    "single-stem-soap-box"
+  ],
   "flower-gift-better-than-photo": [
     "rose-hydrangea-bouquet",
     "superior-rose",
