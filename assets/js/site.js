@@ -9,7 +9,7 @@
   // 사이트 기본 정보 (배포 시 도메인만 교체)
   var SITE = {
     name: "테차 꽃공방",
-    tagline: "꽃 선물 · 메시지 · 공간 스타일링 · 기업 주문",
+    tagline: "시들지 않는 꽃 선물을 만드는 공방입니다",
     base: "https://www.techa.kr",
     shopUrl: "https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28", // TECHA 선물샵 스토어 홈 (탄생화·탄생석 등에 선물 CTA 자동 노출)
     // ↑ 스마트스토어 주소가 아니라 판매자센터 발급 "마케팅링크"다 — 네이버쇼핑 매출연동수수료를
