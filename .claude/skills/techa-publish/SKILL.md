@@ -93,7 +93,13 @@ HTML에 주소를 손으로 넣지 않는다.
 ```
 node scripts/build-blog-products.js
 node scripts/build-home-curation.js
+node scripts/build-chrome.js     # 공통 머리말·빵부스러기·푸터를 새 글에 굽는다
+node scripts/build-posts.js      # 홈 검색 목록(assets/js/site.js)에 새 글을 넣는다
 ```
+
+> ⚠️ 마지막 두 줄은 2026-09-22 에 추가했다. 이 목록에 없어서 안 돌렸더니 새 글만
+> 빵부스러기("홈 › 테차 매거진 › 제목")가 빠진 채 만들어졌고, `check-publish.sh` 가
+> `build-chrome`·`build-posts` 를 ❌ 로 잡았다. 게이트가 검사하는 빌더는 전부 여기서 돌린다.
 
 홈의 상황별 콘텐츠와 추천 상품은 `data/home-curation.json`이 원본이다. 월별 구성을 바꿀
 때는 이 JSON을 수정하고 `build-home-curation.js`를 실행한다. 생성 마커 안의 HTML은 직접
@@ -143,7 +149,7 @@ bash scripts/check-publish.sh <slug> --blog "<스크래치폴더>/blog.md"
 통과했을 때만:
 
 ```
-git add blog/<slug> blog/index.html index.html sitemap.xml docs/drafts/ <내부링크 건드린 파일>
+git add blog/<slug> blog/index.html index.html sitemap.xml docs/drafts/ data/blog-product-links.json assets/js/site.js <내부링크 건드린 파일>
 git commit -m "매거진 발행: <제목>"
 git push
 ```
