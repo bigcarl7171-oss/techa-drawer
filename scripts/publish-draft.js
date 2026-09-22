@@ -124,7 +124,6 @@ home = insertAfter(home, '<div class="shell-carousel">', [
   `        <span class="shell-mag-tag">${emoji} ${esc(tag)}</span>`,
   `        <div class="shell-mag-body">`,
   `          <div class="shell-mag-title">${esc(title)}</div>`,
-  `          <div class="shell-mag-byline"><span class="shell-mag-avatar">🌿</span> 테차 매거진</div>`,
   `        </div>`,
   `      </a>`,
 ].join("\n"));

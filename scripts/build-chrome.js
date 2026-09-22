@@ -66,7 +66,7 @@ function headerMarkup(shopUrl) {
   ].join('\n');
 }
 
-function footerMarkup() {
+function footerMarkup(isTool) {
   return [
     FOOTER_BEGIN,
     '  <div class="wrap">',
@@ -75,7 +75,9 @@ function footerMarkup() {
       '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a>',
     '    <a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a>',
     // 연도는 비워 둔다 — 정적 HTML에 박으면 해가 바뀔 때마다 게이트가 울린다. site.js 가 채운다.
-    '    <div class="disclaimer">본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. © <span id="footer-year"></span> 테차 꽃공방</div>',
+    // 계산 결과 안내는 도구 페이지(/ko/)에만 둔다 — 꽃공방 메인·매거진에는 맞지 않는 문구다 (2026-09-22)
+    '    <div class="disclaimer">' + (isTool ? '본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. ' : '') +
+      '© <span id="footer-year"></span> 테차 꽃공방</div>',
     '  </div>',
     '  ' + FOOTER_END
   ].join('\n');
@@ -153,7 +155,7 @@ function main() {
     let r = fill(next, 'header', 'site-header', HEADER_BEGIN, HEADER_END, headerMarkup(shopUrl), eol);
     if (r.found) { next = r.html; headers++; }
 
-    r = fill(next, 'footer', 'site-footer', FOOTER_BEGIN, FOOTER_END, footerMarkup(), eol);
+    r = fill(next, 'footer', 'site-footer', FOOTER_BEGIN, FOOTER_END, footerMarkup(rel.startsWith('ko/')), eol);
     if (r.found) { next = r.html; footers++; }
     else errors.push(rel + ': site-footer 를 못 찾음');
 

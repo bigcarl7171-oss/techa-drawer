@@ -874,3 +874,57 @@ body.landing { background: #f6f1e7; }
   .shell-hero-kicker .kicker-wide { display: none; }
   .shell-hero-kicker .kicker-narrow { display: inline; }
 }
+
+/* ---------- 2026-09-22 메인 점검 반영 ---------- */
+/* 첫 제목이 어구 중간에서 끊기지 않게 ("할지"만 한 줄로 떨어지던 것) */
+.nowrap { white-space: nowrap; }
+/* 맨 위: 아이콘만 있던 버튼에 글자 */
+.shell-text-btn {
+  display: inline-flex; align-items: center; height: 38px; padding: 0 14px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--white);
+  color: var(--brown); font-size: 13px; font-weight: 600; white-space: nowrap;
+}
+.shell-text-btn:hover { border-color: var(--gold-deep); text-decoration: none; }
+/* 사진 타일: 누르면 어디로 가는지 이름 + 짧은 설명 */
+.shell-brandband-item span b { display: block; color: var(--brown); font-size: 14px; font-weight: 700; }
+.shell-brandband-item span em { display: block; margin-top: 3px; color: var(--muted); font-size: 12.5px; font-style: normal; font-weight: 400; }
+/* 눌릴 것처럼 생겼던 칩·격자를 실제 링크로 */
+.home-service-summary a {
+  padding: 8px 13px; border: 1px solid var(--gold-border); border-radius: 999px;
+  background: var(--gold-soft); color: var(--brown); font-size: 12px;
+}
+.home-service-summary a:hover { border-color: var(--gold-deep); text-decoration: none; }
+.home-about-values a {
+  min-height: 92px; display: flex; align-items: center; justify-content: center;
+  background: var(--brown); color: var(--paper); font-family: "Gowun Batang", serif; font-size: 17px;
+}
+.home-about-values a:hover { background: #4a3f36; text-decoration: none; }
+/* 오른쪽 칸: 왼쪽 메뉴와 겹치던 목록 대신 스토어 바로가기 */
+.shell-shop-card p { margin: 4px 0 10px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.shell-shop-card ul { margin: 0 0 14px; padding-left: 18px; color: var(--brown); font-size: 13px; line-height: 1.8; }
+.shell-shop-btn {
+  display: block; padding: 11px 12px; border-radius: 999px; text-align: center;
+  background: var(--brown); color: var(--paper); font-size: 13px; font-weight: 700;
+}
+.shell-shop-btn:hover { opacity: .92; text-decoration: none; }
+@media (max-width: 640px) {
+  .shell-topbar-actions .shell-text-btn { display: none; }
+  /* 사진 타일: 휴대폰에서는 네 장을 한 줄로 작게 (1.5화면 → 반 화면) */
+  .shell-brandband { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 12px 8px !important; }
+  .shell-brandband-item img { aspect-ratio: 1 / 1; border-radius: 9px; }
+  .shell-brandband-item span { padding-top: 7px; }
+  .shell-brandband-item span b { font-size: 11.5px; line-height: 1.35; }
+  .shell-brandband-item span em { display: none; }
+  /* 대표 상품: 휴대폰에서 2열, 첫 상품만 넓게 (5화면 → 약 2화면) */
+  .home-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 26px 12px !important; }
+  .home-product-card:first-child { grid-column: 1 / -1 !important; }
+  .home-product-card img { aspect-ratio: 1 / 1 !important; }
+  .home-product-card:first-child img { aspect-ratio: 4 / 3 !important; }
+  .home-product-card b { font-size: 16px; }
+  .home-product-card small { font-size: 12px; }
+  /* 하단 고정 바: 선물 추천 · 메시지 · 스토어 */
+  .home-mobile-cta { grid-template-columns: 1fr 1fr 1fr !important; gap: 6px !important; }
+  .home-mobile-cta a { padding: 12px 4px; font-size: 12.5px; }
+  .home-mobile-cta a:nth-child(2) { border: 1px solid var(--line); color: var(--brown); }
+  .home-mobile-cta a.home-mobile-cta-shop { border: 0; background: var(--gold); color: var(--gold-cta-ink); }
+}
