@@ -25,6 +25,11 @@
     "rose-money-bouquet",
     "classic-money-box"
   ],
+  "company-event-bouquet": [
+    "rose-hydrangea-bouquet",
+    "carnation-rose-bouquet",
+    "sunflower-bouquet"
+  ],
   "convenience-store-flower-emergency": [
     "single-stem-soap-box",
     "sunflower-bouquet",
