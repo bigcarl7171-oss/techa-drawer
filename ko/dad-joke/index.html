@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <title>아재개그 뽑기: 질문 보고 정답 맞히는 아재개그 | 테차 꽃공방</title>
-<meta name="description" content="랜덤으로 아재개그를 뽑아 카드를 뒤집어 정답을 확인하세요. 지역·인물·음식·동물·영어·직장 카테고리별 필터와 아재력 테스트도 있습니다.">
+<meta name="description" content="아재개그 145개를 카드로 뽑아 뒤집어 정답을 확인하세요. 지역·인물·음식·동물·꽃·영어·넌센스·직장 8개 카테고리, 친구에게 문제 내기, 아재력 테스트까지 있습니다.">
 <link rel="canonical" href="https://www.techa.kr/ko/dad-joke/">
 <meta property="og:image" content="https://www.techa.kr/assets/og/og-default.png">
 <meta property="og:image:width" content="1200">
@@ -30,49 +30,121 @@
   "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"} }
 </script>
 <style>
-  .mode-tabs { display:flex; gap:8px; margin-bottom:6px; }
-  .mode-tabs button { flex:1; }
+  .joke-stage { position:relative; }
+  .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 
-  .chip-filter { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px; }
-  .chip-filter button {
-    border:1px solid var(--line); background:var(--white); border-radius:var(--radius-pill);
-    padding:6px 13px; font-size:13px; cursor:pointer; color:var(--brown); font-family:inherit;
-    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, transform 120ms var(--ease-out);
-  }
-  .chip-filter button.active { background:var(--gold-deep); color:var(--white); border-color:var(--gold-deep); }
-  .chip-filter button:active { transform: scale(0.95); }
+  /* 모드 전환 — 세그먼트 */
+  .seg { position:relative; display:grid; grid-template-columns:1fr 1fr; padding:4px; border-radius:12px;
+    background:var(--paper); border:1px solid var(--line); }
+  .seg::before { content:""; position:absolute; top:4px; bottom:4px; left:4px; width:calc(50% - 4px); border-radius:9px;
+    background:var(--white); box-shadow:0 1px 2px rgba(58,50,43,.08), 0 2px 8px rgba(58,50,43,.06);
+    transition:transform 320ms var(--ease-out); }
+  .seg[data-mode="quiz"]::before { transform:translateX(100%); }
+  .seg button { position:relative; z-index:1; border:0; background:none; padding:10px 8px; font:inherit; font-size:14px;
+    font-weight:600; color:var(--muted); cursor:pointer; transition:color 200ms ease; }
+  .seg button[aria-selected="true"] { color:var(--brown); }
 
-  .joke-card { perspective:1000px; margin-top:16px; min-height:170px; transition: transform 120ms var(--ease-out); }
-  .joke-card:active { transform: scale(0.98); }
-  .joke-card .inner {
-    position:relative; width:100%; min-height:170px; transition:transform 450ms var(--ease-in-out);
-    transform-style:preserve-3d; cursor:pointer;
-  }
-  .joke-card.flipped .inner { transform:rotateY(180deg); }
-  .joke-card .face {
-    position:absolute; inset:0; backface-visibility:hidden; border-radius:var(--radius-md);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:20px;
-  }
-  .joke-card .front { background:var(--sage-soft); }
-  .joke-card .back { background:var(--gold-soft); transform:rotateY(180deg); }
-  .joke-card .topic-tag { font-size:12px; color:var(--muted); margin-bottom:8px; }
-  .joke-card .txt { font-family:"Gowun Batang", serif; font-size:19px; font-weight:700; line-height:1.5; }
-  .joke-card .flip-hint { font-size:12px; color:var(--muted); margin-top:12px; }
+  /* 카테고리 칩 — 모바일은 가로 스크롤 */
+  .topics { display:flex; gap:6px; margin:16px -22px 4px; padding:2px 22px 6px; overflow-x:auto; scrollbar-width:none; }
+  .topics::-webkit-scrollbar { display:none; }
+  .topics button { flex:none; border:1px solid var(--line); background:var(--white); border-radius:var(--radius-pill);
+    padding:7px 13px; font:inherit; font-size:13px; color:var(--brown); cursor:pointer; white-space:nowrap;
+    transition:background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 120ms var(--ease-out); }
+  .topics button:active { transform:scale(.95); }
+  .topics button[aria-pressed="true"] { background:var(--brown); border-color:var(--brown); color:var(--paper); }
+  .topics .n { opacity:.55; font-size:11px; margin-left:3px; font-variant-numeric:tabular-nums; }
 
-  .reaction-row { display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
-  .reaction-row button {
-    border:1px solid var(--line); background:var(--white); border-radius:var(--radius-pill);
-    padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit;
-    transition: transform 120ms var(--ease-out), border-color 150ms ease;
-  }
-  .reaction-row button:active { transform: scale(0.95); }
-  .reaction-row button .cnt { color:var(--muted); font-size:12px; margin-left:4px; }
+  /* 카드 덱 */
+  .deck { position:relative; max-width:520px; margin:22px auto 0; }
+  @media (max-width:560px) { .deck { margin:22px 6px 0; } }
+  .deck::before, .deck::after { content:""; position:absolute; inset:0; border-radius:18px; border:1px solid var(--line); }
+  .deck::before { background:var(--sage-soft); transform:rotate(-2.6deg) translateY(6px); }
+  .deck::after { background:var(--gold-soft); transform:rotate(1.8deg) translateY(3px); }
+  .jcard { position:relative; z-index:1; min-height:280px; perspective:1400px; cursor:pointer; outline:none;
+    -webkit-tap-highlight-color:transparent; }
+  .jcard:focus-visible .face { box-shadow:0 0 0 2px var(--brown), var(--shadow-lg); }
+  .jcard .inner { position:relative; min-height:inherit; transform-style:preserve-3d; transition:transform 560ms var(--ease-in-out); }
+  .jcard.flipped .inner { transform:rotateY(180deg); }
+  .jcard .face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:18px;
+    display:flex; flex-direction:column; padding:20px 22px 18px; overflow:hidden; }
+  .jcard .front { background:
+      radial-gradient(rgba(58,50,43,.07) 1px, transparent 1.3px) 0 0 / 16px 16px,
+      linear-gradient(180deg, #fffefb, var(--white));
+    border:1px solid var(--line); box-shadow:var(--shadow-lg); }
+  .jcard .back { transform:rotateY(180deg); color:var(--paper);
+    background:radial-gradient(120% 90% at 18% 0%, #4d4239 0%, #2d2621 72%);
+    box-shadow:0 1px 2px rgba(58,50,43,.2), 0 14px 30px rgba(58,50,43,.25); }
+  .jcard .meta { display:flex; justify-content:space-between; align-items:center; font-size:12px; }
+  .jcard .tag { padding:3px 10px; border-radius:var(--radius-pill); background:var(--gold-soft); color:var(--gold-strong-ink); font-weight:600; }
+  .jcard .back .tag { background:rgba(250,243,234,.12); color:rgba(250,243,234,.8); }
+  .jcard .no { font-variant-numeric:tabular-nums; letter-spacing:.06em; color:var(--muted-soft); }
+  .jcard .back .no { color:rgba(250,243,234,.5); }
+  .jcard .glyph { font-family:"Gowun Batang", serif; font-weight:700; font-size:46px; line-height:1; margin:14px 0 2px; color:var(--gold); }
+  .jcard .back .glyph { color:#EFD9A8; }
+  .jcard .body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:4px 0 10px; }
+  .jcard .q { font-family:"Gowun Batang", serif; font-weight:700; font-size:clamp(21px, 5.6vw, 26px); line-height:1.45; word-break:keep-all; }
+  .jcard .a { font-family:"Gowun Batang", serif; font-weight:700; font-size:clamp(28px, 8vw, 38px); line-height:1.3; color:#EFD9A8; word-break:keep-all; }
+  .jcard .why { margin-top:10px; font-size:13px; color:rgba(250,243,234,.62); }
+  .jcard .foot { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:7px; }
+  .jcard .back .foot { color:rgba(250,243,234,.5); }
+  .jcard .pulse { width:7px; height:7px; border-radius:50%; background:var(--gold); animation:pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity:.35; transform:scale(.8); } 50% { opacity:1; transform:scale(1.15); } }
 
-  .quiz-progress { text-align:center; font-size:13px; color:var(--muted); margin-bottom:8px; }
-  #quizPanel { display:none; }
-  #quizPanel.active { display:block; }
-  #drawPanel.hidden { display:none; }
+  /* 다음 카드 — 넘기고 들어오기 */
+  .jcard.out { animation:card-out 240ms var(--ease-in-out) forwards; }
+  .jcard.in { animation:card-in 380ms var(--ease-out); }
+  @keyframes card-out { to { opacity:0; transform:translateX(-46%) rotate(-9deg); } }
+  @keyframes card-in { from { opacity:0; transform:translateX(26px) rotate(3deg) scale(.97); } }
+  .deck.shiver { animation:shiver 420ms linear 2; }
+  @keyframes shiver { 0%,100% { transform:none; } 20% { transform:translateX(-3px); } 40% { transform:translateX(3px); } 60% { transform:translateX(-2px); } 80% { transform:translateX(2px); } }
+  .deck.frost .jcard .face::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background:linear-gradient(140deg, rgba(214,232,245,.55), rgba(255,255,255,.08) 60%); animation:frost 1.8s ease forwards; }
+  @keyframes frost { 0% { opacity:0; } 25% { opacity:1; } 100% { opacity:0; } }
+
+  /* 반응 */
+  .reacts { display:flex; justify-content:center; gap:8px; margin-top:22px; }
+  .reacts button { flex:1; max-width:132px; justify-content:center; white-space:nowrap; display:inline-flex; align-items:center; gap:5px; border:1px solid var(--line); background:var(--white);
+    border-radius:var(--radius-pill); padding:9px 8px; font:inherit; font-size:13px; cursor:pointer; color:var(--brown);
+    transition:opacity 250ms ease, transform 140ms var(--ease-out), border-color 180ms ease; }
+  .reacts button:disabled { opacity:.4; cursor:default; }
+  .reacts button:not(:disabled):active { transform:scale(.93); }
+  .reacts button.picked { border-color:var(--gold); background:var(--gold-soft); }
+  .reacts .cnt { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+
+  .dj-actions { display:flex; flex-wrap:wrap; gap:8px; max-width:520px; margin:16px auto 0; }
+  .dj-actions .btn-primary { flex:1 1 100%; }
+  .dj-actions #askBtn { flex:1; }
+  @media (min-width:561px) { .dj-actions .btn-primary { flex:1 1 0; } }
+  .icon-btn { width:46px; flex:none; padding:0; }
+  .icon-btn[aria-pressed="true"] { background:var(--gold-soft); border-color:var(--gold-border); }
+  .deck-count { margin-top:10px; text-align:center; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+
+  /* 효과 레이어 */
+  .fx { position:absolute; inset:0; pointer-events:none; overflow:visible; z-index:5; }
+  .fx span { position:absolute; font-size:22px; line-height:1; will-change:transform, opacity; }
+  .fx span.snow { color:#d6e8f5; text-shadow:0 0 6px rgba(214,232,245,.7); }
+
+  /* 아재력 테스트 */
+  [hidden] { display:none !important; }
+  .quiz-intro { text-align:center; padding:26px 8px 6px; }
+  .quiz-intro .ttl { font-family:"Gowun Batang", serif; font-size:26px; font-weight:700; }
+  .quiz-intro p { color:var(--muted); font-size:14px; margin:6px 0 18px; }
+  .quiz-bar { display:grid; grid-template-columns:repeat(10, 1fr); gap:4px; max-width:520px; margin:18px auto 0; }
+  .quiz-bar i { height:4px; border-radius:2px; background:var(--line); transition:background-color 300ms ease; }
+  .quiz-bar i.ok { background:var(--gold); } .quiz-bar i.no { background:#b9b0a4; } .quiz-bar i.now { background:var(--brown); }
+  .quiz-step { margin-top:8px; text-align:center; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .quiz-answer { display:grid; grid-template-columns:1fr 1fr; gap:8px; max-width:520px; margin:22px auto 0; }
+  .quiz-answer .btn:disabled { opacity:.45; cursor:default; transform:none; }
+  .grade { max-width:520px; margin:18px auto 0; text-align:center; padding:28px 18px 24px; border-radius:18px; color:var(--paper);
+    background:radial-gradient(120% 90% at 18% 0%, #4d4239 0%, #2d2621 72%); }
+  .grade .emo { font-size:44px; line-height:1; }
+  .grade .name { font-family:"Gowun Batang", serif; font-weight:700; font-size:30px; color:#EFD9A8; margin-top:10px; }
+  .grade .score { font-size:14px; margin-top:4px; color:rgba(250,243,234,.7); font-variant-numeric:tabular-nums; }
+  .grade .line { font-size:14px; margin-top:12px; color:rgba(250,243,234,.85); }
+  .grade-actions { display:flex; gap:8px; max-width:520px; margin:14px auto 0; }
+  .grade-actions .btn { flex:1; }
+  .grade.in { animation:card-in 420ms var(--ease-out); }
+  #soundBtn .on { display:none; } #soundBtn[aria-pressed="true"] .on { display:inline; } #soundBtn[aria-pressed="true"] .off { display:none; }
 </style>
 </head>
 <body>
@@ -105,96 +177,119 @@
 <main class="wrap">
   <div class="ad-slot"></div>
 
-  <section class="card">
-    <div class="mode-tabs">
-      <button class="btn btn-primary btn-block" id="tabDraw">🥸 뽑기</button>
-      <button class="btn btn-ghost btn-block" id="tabQuiz">📝 아재력 테스트</button>
+  <section class="card joke-stage" id="stage">
+    <div class="seg" id="seg" role="tablist" aria-label="모드" data-mode="draw">
+      <button type="button" role="tab" id="tabDraw" aria-selected="true" aria-controls="drawPanel">개그 뽑기</button>
+      <button type="button" role="tab" id="tabQuiz" aria-selected="false" aria-controls="quizPanel">아재력 테스트</button>
     </div>
 
     <!-- 뽑기 모드 -->
-    <div id="drawPanel">
-      <div class="chip-filter" id="topicFilter">
-        <button class="active" data-topic="all">전체</button>
-      </div>
+    <div id="drawPanel" role="tabpanel" aria-labelledby="tabDraw">
+      <div class="topics" id="topics" aria-label="카테고리"></div>
 
-      <div class="joke-card" id="jokeCard">
-        <div class="inner">
-          <div class="face front">
-            <div class="topic-tag" id="cardTopic"></div>
-            <div class="txt" id="cardQ">불러오는 중…</div>
-            <div class="flip-hint">👆 카드를 눌러 정답 확인</div>
-          </div>
-          <div class="face back">
-            <div class="topic-tag">정답</div>
-            <div class="txt" id="cardA"></div>
+      <div class="deck" id="deck">
+        <div class="jcard" id="jcard" role="button" tabindex="0" aria-label="카드 뒤집어 정답 보기">
+          <div class="inner">
+            <div class="face front">
+              <div class="meta"><span class="tag" id="cTag">전체</span><span class="no" id="cNo"></span></div>
+              <div class="glyph" aria-hidden="true">Q.</div>
+              <div class="body"><div class="q" id="cQ">불러오는 중…</div></div>
+              <div class="foot"><span class="pulse" aria-hidden="true"></span>카드를 누르면 정답이 나옵니다</div>
+            </div>
+            <div class="face back" aria-hidden="true">
+              <div class="meta"><span class="tag" id="cTag2"></span><span class="no" id="cNo2"></span></div>
+              <div class="glyph" aria-hidden="true">A.</div>
+              <div class="body"><div class="a" id="cA"></div><div class="why" id="cWhy"></div></div>
+              <div class="foot">다시 누르면 문제로 돌아갑니다</div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="sr-only" id="live" aria-live="polite"></div>
 
-      <div class="reaction-row" id="reactionRow">
-        <button data-r="haha">😆 빵터짐<span class="cnt" id="cntHaha">0</span></button>
-        <button data-r="pisik">😅 피식<span class="cnt" id="cntPisik">0</span></button>
-        <button data-r="cold">😐 썰렁<span class="cnt" id="cntCold">0</span></button>
+      <div class="reacts" id="reacts">
+        <button type="button" data-r="haha" disabled>😆 빵터짐 <span class="cnt" id="cntHaha">0</span></button>
+        <button type="button" data-r="pisik" disabled>😏 피식 <span class="cnt" id="cntPisik">0</span></button>
+        <button type="button" data-r="cold" disabled>🥶 썰렁 <span class="cnt" id="cntCold">0</span></button>
       </div>
 
-      <div style="margin-top:16px">
-        <button class="btn btn-primary btn-block" id="drawBtn">🎲 다른 개그 뽑기</button>
+      <div class="dj-actions">
+        <button type="button" class="btn btn-primary" id="nextBtn">다음 개그</button>
+        <button type="button" class="btn btn-ghost" id="askBtn">친구에게 문제 내기</button>
+        <button type="button" class="btn btn-ghost icon-btn" id="soundBtn" aria-pressed="false" aria-label="효과음" title="정답 효과음 (바둠-츠)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="on" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="off" d="m17 9 5 6m0-6-5 6"/></svg>
+        </button>
       </div>
+      <div class="deck-count" id="deckCount"></div>
     </div>
 
     <!-- 아재력 테스트 모드 -->
-    <div id="quizPanel">
-      <div id="quizIntro">
-        <p style="text-align:center;color:var(--muted);font-size:14px">
-          랜덤 10문항! 질문 보고 정답을 맞혀보세요. 점수에 따라 등급이 매겨집니다.
-        </p>
-        <button class="btn btn-primary btn-block" id="quizStart">테스트 시작</button>
+    <div id="quizPanel" role="tabpanel" aria-labelledby="tabQuiz" hidden>
+      <div class="quiz-intro" id="quizIntro">
+        <div class="ttl">나의 아재력은?</div>
+        <p>랜덤 10문항 · 1분이면 끝납니다.<br>카드를 뒤집어 보고 알던 개그인지 솔직하게 눌러 주세요.</p>
+        <button type="button" class="btn btn-primary btn-block" id="quizStart">테스트 시작</button>
       </div>
 
-      <div id="quizRun" style="display:none">
-        <div class="quiz-progress" id="quizProgress"></div>
-        <div class="joke-card" id="quizCard">
-          <div class="inner">
-            <div class="face front">
-              <div class="topic-tag" id="quizTopic"></div>
-              <div class="txt" id="quizQ"></div>
-              <div class="flip-hint">👆 카드를 눌러 정답 확인</div>
-            </div>
-            <div class="face back">
-              <div class="topic-tag">정답</div>
-              <div class="txt" id="quizA"></div>
+      <div id="quizRun" hidden>
+        <div class="quiz-bar" id="quizBar" aria-hidden="true"></div>
+        <div class="quiz-step" id="quizStep"></div>
+        <div class="deck">
+          <div class="jcard" id="qcard" role="button" tabindex="0" aria-label="카드 뒤집어 정답 보기">
+            <div class="inner">
+              <div class="face front">
+                <div class="meta"><span class="tag" id="qTag"></span><span class="no" id="qNo"></span></div>
+                <div class="glyph" aria-hidden="true">Q.</div>
+                <div class="body"><div class="q" id="qQ"></div></div>
+                <div class="foot"><span class="pulse" aria-hidden="true"></span>카드를 누르면 정답이 나옵니다</div>
+              </div>
+              <div class="face back" aria-hidden="true">
+                <div class="meta"><span class="tag" id="qTag2"></span><span class="no" id="qNo2"></span></div>
+                <div class="glyph" aria-hidden="true">A.</div>
+                <div class="body"><div class="a" id="qA"></div><div class="why" id="qWhy"></div></div>
+                <div class="foot">알던 개그였나요?</div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="reaction-row" id="quizScoreRow" style="display:none">
-          <button class="btn btn-primary btn-sm" id="quizKnew">😄 알고 있었어요</button>
-          <button class="btn btn-ghost btn-sm" id="quizMissed">😅 몰랐어요</button>
+        <div class="quiz-answer">
+          <button type="button" class="btn btn-primary" id="quizKnew" disabled>알던 개그</button>
+          <button type="button" class="btn btn-ghost" id="quizMissed" disabled>처음 들음</button>
         </div>
       </div>
 
-      <div id="quizResult" style="display:none">
-        <div class="result">
-          <div class="big" id="quizGrade"></div>
-          <div class="sub" id="quizScoreText"></div>
+      <div id="quizResult" hidden>
+        <div class="grade" id="grade">
+          <div class="emo" id="gEmo"></div>
+          <div class="name" id="gName"></div>
+          <div class="score" id="gScore"></div>
+          <div class="line" id="gLine"></div>
         </div>
-        <div class="row" style="margin-top:12px">
-          <button class="btn btn-ghost btn-sm" id="quizCopy">결과 복사</button>
-          <button class="btn btn-ghost btn-sm" id="quizRetry">다시 도전</button>
+        <div class="grade-actions">
+          <button type="button" class="btn btn-primary" id="quizShare">결과 공유</button>
+          <button type="button" class="btn btn-ghost" id="quizRetry">다시 도전</button>
         </div>
       </div>
     </div>
+
+    <div class="fx" id="fx" aria-hidden="true"></div>
   </section>
 
   <div class="ad-slot"></div>
 
   <article class="article">
     <h2>아재개그 뽑기 사용법</h2>
-    <p><b>뽑기</b> 모드에서는 랜덤으로 질문이 담긴 카드가 나옵니다. 카드를 누르면 뒤집히며 정답(펀치라인)이 공개됩니다.
-       지역·인물·음식·동물·영어·넌센스·직장 7개 카테고리 칩으로 원하는 주제만 골라 뽑을 수도 있어요.</p>
+    <p><b>개그 뽑기</b>에서는 질문이 적힌 카드가 한 장씩 나옵니다. 카드를 누르면 뒤집히며 정답(펀치라인)이 나오고,
+       말장난이 한 번에 안 들어오는 개그에는 짧은 풀이가 같이 붙습니다. 지역·인물·음식·동물·꽃·영어·넌센스·직장
+       8개 카테고리 칩으로 원하는 주제만 골라 뽑을 수 있고, 키보드에서는 → 키로 다음 카드로 넘어갑니다.</p>
+    <p>정답을 본 뒤에는 빵터짐·피식·썰렁 중 하나를 눌러 보세요. 반응마다 카드에 작은 효과가 붙습니다.
+       스피커 버튼을 켜면 정답이 나올 때 "바둠-츠" 효과음도 납니다.</p>
+    <p><b>친구에게 문제 내기</b>를 누르면 정답을 뺀 문제와 링크가 공유됩니다. 받은 사람이 링크를 열면 그 문제 카드부터 나오니,
+       정답은 직접 뒤집어 확인하게 됩니다.</p>
     <p><b>아재력 테스트</b> 모드는 랜덤 10문항을 풀어보고 스스로 맞았는지 체크해 점수를 매기는 미니 게임입니다.
        점수에 따라 순수 MZ부터 전설의 아재까지 등급이 나옵니다.</p>
 
-    <h2>7개 카테고리, 뭐가 다른가요?</h2>
+    <h2>8개 카테고리, 뭐가 다른가요?</h2>
     <p>같은 아재개그라도 자리에 따라 먹히는 종류가 다릅니다. 처음 만난 사람에게는 넌센스가 무난하고,
        회식 자리에서는 음식·직장 쪽이 반응이 좋습니다. 아이와 함께라면 동물이 가장 안전합니다.</p>
     <table class="compare-table">
@@ -204,6 +299,7 @@
         <tr><td>인물</td><td>유명인 이름을 활용한 말장난</td><td>또래 모임</td></tr>
         <tr><td>음식</td><td>먹는 것 이름으로 만든 개그</td><td>식사·회식 자리</td></tr>
         <tr><td>동물</td><td>동물 이름과 습성을 비튼 개그</td><td>아이와 함께 있을 때</td></tr>
+        <tr><td>꽃·식물</td><td>꽃 이름을 소리로 비튼 개그</td><td>꽃 선물을 건넬 때, 봄나들이</td></tr>
         <tr><td>영어</td><td>한글과 영어 발음을 겹친 개그</td><td>학생·직장 동료</td></tr>
         <tr><td>넌센스</td><td>논리를 비트는 수수께끼</td><td>처음 만난 자리, 아이스브레이킹</td></tr>
         <tr><td>직장</td><td>회사 생활에서 나오는 공감 개그</td><td>팀 회식·워크숍</td></tr>
@@ -230,8 +326,14 @@
     <h2>자주 묻는 질문 (FAQ)</h2>
     <h3>Q. 반응 버튼(빵터짐/피식/썰렁)을 누르면 어떻게 되나요?</h3>
     <p>내 브라우저에만 저장되는 개인 기록입니다. 다른 사용자와 공유되는 전체 순위는 아니며, 그냥 재미로 눌러보는 용도예요.</p>
-    <h3>Q. 같은 개그가 반복해서 나와요.</h3>
-    <p>주제 필터를 좁게 걸어두면 해당 주제 안에서만 랜덤으로 뽑히기 때문에 반복될 수 있습니다. '전체'로 바꾸면 더 다양하게 나옵니다.</p>
+    <h3>Q. 같은 개그가 반복해서 나오나요?</h3>
+    <p>카드를 한 벌 섞어 두고 순서대로 넘기는 방식이라, 한 바퀴를 다 볼 때까지 같은 개그는 다시 나오지 않습니다.
+       카드 아래에 지금 몇 번째 카드인지 표시됩니다. 카테고리를 바꾸면 그 카테고리 카드만 새로 섞습니다.</p>
+    <h3>Q. 꽃 개그는 왜 따로 있나요?</h3>
+    <p>테차가 꽃을 만드는 곳이라 따로 모았습니다. 국화·백합·매화·진달래처럼 이름에 뜻이 숨어 있는 꽃이 많아서
+       말장난 재료로도 좋습니다. 꽃다발을 건네면서 하나 던지면 분위기가 한결 부드러워집니다.</p>
+    <h3>Q. 효과음이 갑자기 나지 않나요?</h3>
+    <p>효과음은 기본으로 꺼져 있습니다. 스피커 버튼을 눌러 켠 경우에만 정답이 나올 때 소리가 나고, 설정은 이 브라우저에 기억됩니다.</p>
 
     <h3>Q. 아재력 테스트 점수는 어떻게 매겨지나요?</h3>
     <p>랜덤 10문항 중 스스로 맞았다고 체크한 개수로 등급이 정해집니다. 정답을 자동으로 채점하지는 않으니
@@ -280,172 +382,279 @@ TECHA.initPage({
 });
 
 (function () {
-  var TOPICS = { place: "지역", person: "인물", food: "음식", animal: "동물", english: "영어", nonsense: "넌센스", job: "직장" };
-  var DATA = [];
-  var activeTopic = "all";
-  var current = null;
+  var TOPICS = { place: "지역", person: "인물", food: "음식", animal: "동물", flower: "꽃·식물", english: "영어", nonsense: "넌센스", job: "직장" };
+  var $ = function (id) { return document.getElementById(id); };
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DATA = [], topic = "all", deck = [], pos = -1, current = null;
 
-  var jokeCard = document.getElementById("jokeCard");
-  var cardTopic = document.getElementById("cardTopic");
-  var cardQ = document.getElementById("cardQ");
-  var cardA = document.getElementById("cardA");
-  var topicFilter = document.getElementById("topicFilter");
-
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
   function shuffle(arr) {
     var a = arr.slice();
-    for (var i = a.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = a[i]; a[i] = a[j]; a[j] = t;
-    }
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
     return a;
   }
+  function no(j) { return "No. " + String(j.id).padStart(3, "0"); }
 
-  function pool() {
-    return activeTopic === "all" ? DATA : DATA.filter(function (j) { return j.topic === activeTopic; });
+  // ---------- 카드 공통 ----------
+  // ids: { card, tag, tag2, no, no2, q, a, why }
+  function fillCard(ids, j) {
+    $(ids.tag).textContent = $(ids.tag2).textContent = TOPICS[j.topic];
+    $(ids.no).textContent = $(ids.no2).textContent = no(j);
+    $(ids.q).textContent = j.q;
+    $(ids.a).textContent = j.a;
+    $(ids.why).textContent = j.why || "";
+  }
+  function setFlipped(card, on) {
+    card.classList.toggle("flipped", on);
+    card.querySelector(".front").setAttribute("aria-hidden", on);
+    card.querySelector(".back").setAttribute("aria-hidden", !on);
+    card.setAttribute("aria-label", on ? "카드 뒤집어 문제 보기" : "카드 뒤집어 정답 보기");
+  }
+  function bindCard(card, onFlip) {
+    function flip() { var on = !card.classList.contains("flipped"); setFlipped(card, on); onFlip(on); }
+    card.addEventListener("click", flip);
+    card.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); }
+    });
+  }
+  // 카드를 넘기고 새 내용으로 들어오게 한다
+  function swapCard(card, fill) {
+    if (reduce || !card.classList.contains("ready")) { fill(); setFlipped(card, false); card.classList.add("ready"); return; }
+    card.classList.remove("in");
+    card.classList.add("out");
+    setTimeout(function () {
+      card.classList.remove("out");
+      setFlipped(card, false);
+      // 뒤집힌 상태에서 앞면으로 돌아오는 회전이 보이지 않게 잠깐 transition 을 끈다
+      var inner = card.querySelector(".inner"); inner.style.transition = "none";
+      fill();
+      void inner.offsetWidth; inner.style.transition = "";
+      card.classList.add("in");
+    }, 230);
   }
 
-  function draw() {
-    var p = pool();
-    if (!p.length) return;
-    current = p[Math.floor(Math.random() * p.length)];
-    jokeCard.classList.remove("flipped");
-    cardTopic.textContent = TOPICS[current.topic];
-    cardQ.textContent = current.q;
-    cardA.textContent = current.a;
+  // ---------- 효과음: 바둠-츠 (Web Audio 로 합성, 파일 없음) ----------
+  var soundOn = store("techa_dadjoke_sound") === "1", ac = null;
+  function paintSound() { $("soundBtn").setAttribute("aria-pressed", soundOn); }
+  function rimshot() {
+    if (!soundOn) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      var t = ac.currentTime + 0.02;
+      [[t, 190], [t + 0.13, 150]].forEach(function (h) {
+        var o = ac.createOscillator(), g = ac.createGain();
+        o.frequency.setValueAtTime(h[1], h[0]); o.frequency.exponentialRampToValueAtTime(h[1] * 0.55, h[0] + 0.12);
+        g.gain.setValueAtTime(0.0001, h[0]); g.gain.exponentialRampToValueAtTime(0.5, h[0] + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, h[0] + 0.16);
+        o.connect(g).connect(ac.destination); o.start(h[0]); o.stop(h[0] + 0.2);
+      });
+      var len = ac.sampleRate * 0.7, buf = ac.createBuffer(1, len, ac.sampleRate), ch = buf.getChannelData(0);
+      for (var i = 0; i < len; i++) ch[i] = Math.random() * 2 - 1;
+      var n = ac.createBufferSource(), hp = ac.createBiquadFilter(), g2 = ac.createGain(), tc = t + 0.3;
+      n.buffer = buf; hp.type = "highpass"; hp.frequency.value = 6500;
+      g2.gain.setValueAtTime(0.0001, tc); g2.gain.exponentialRampToValueAtTime(0.32, tc + 0.01); g2.gain.exponentialRampToValueAtTime(0.0001, tc + 0.65);
+      n.connect(hp).connect(g2).connect(ac.destination); n.start(tc); n.stop(tc + 0.7);
+    } catch (e) {}
+  }
+  $("soundBtn").addEventListener("click", function () {
+    soundOn = !soundOn; store("techa_dadjoke_sound", soundOn ? "1" : "0"); paintSound();
+    if (soundOn) rimshot();
+  });
+  paintSound();
+
+  // ---------- 효과 입자 ----------
+  var fx = $("fx");
+  function particles(chars, count, from, mode) {
+    if (reduce || !fx.animate) return;
+    var box = fx.getBoundingClientRect(), r = from.getBoundingClientRect();
+    for (var i = 0; i < count; i++) {
+      var s = document.createElement("span");
+      s.textContent = chars[i % chars.length];
+      var x, y, kf, dur;
+      if (mode === "snow") {
+        x = r.left - box.left + Math.random() * r.width; y = r.top - box.top - 10;
+        var drift = (Math.random() - .5) * 60;
+        kf = [{ transform: "translate(0,0) rotate(0)", opacity: 0 }, { opacity: .95, offset: .15 },
+              { transform: "translate(" + drift + "px," + (r.height * (.6 + Math.random() * .4)) + "px) rotate(" + (Math.random() * 180) + "deg)", opacity: 0 }];
+        dur = 1300 + Math.random() * 700; s.className = "snow"; s.style.fontSize = (12 + Math.random() * 10) + "px";
+      } else {
+        x = r.left - box.left + r.width / 2 - 11; y = r.top - box.top;
+        var dx = (Math.random() - .5) * (mode === "big" ? 220 : 90), dy = -(90 + Math.random() * (mode === "big" ? 170 : 70));
+        kf = [{ transform: "translate(0,0) scale(.6)", opacity: 0 }, { opacity: 1, offset: .12 },
+              { transform: "translate(" + dx + "px," + dy + "px) scale(" + (0.9 + Math.random() * .6) + ") rotate(" + ((Math.random() - .5) * 60) + "deg)", opacity: 0 }];
+        dur = 800 + Math.random() * 500;
+      }
+      s.style.left = x + "px"; s.style.top = y + "px";
+      fx.appendChild(s);
+      s.animate(kf, { duration: dur, delay: Math.random() * 160, easing: "cubic-bezier(.16,1,.3,1)", fill: "both" })
+        .onfinish = (function (el) { return function () { el.remove(); }; })(s);
+    }
   }
 
-  jokeCard.addEventListener("click", function () { jokeCard.classList.toggle("flipped"); });
-  document.getElementById("drawBtn").addEventListener("click", draw);
-
-  Object.keys(TOPICS).forEach(function (key) {
-    var b = document.createElement("button");
-    b.textContent = TOPICS[key];
-    b.setAttribute("data-topic", key);
-    topicFilter.appendChild(b);
-  });
-  topicFilter.addEventListener("click", function (e) {
-    var btn = e.target.closest("button[data-topic]");
-    if (!btn) return;
-    activeTopic = btn.getAttribute("data-topic");
-    topicFilter.querySelectorAll("button").forEach(function (b) { b.classList.toggle("active", b === btn); });
-    draw();
-  });
-
-  // ---------- 반응 버튼 (localStorage 개인 기록) ----------
-  var REACT_KEY = "techa_dadjoke_reactions";
-  var reactCounts = JSON.parse(localStorage.getItem(REACT_KEY) || "{}");
-  function paintReactions() {
-    document.getElementById("cntHaha").textContent = reactCounts.haha || 0;
-    document.getElementById("cntPisik").textContent = reactCounts.pisik || 0;
-    document.getElementById("cntCold").textContent = reactCounts.cold || 0;
+  // ---------- 뽑기 ----------
+  var jcard = $("jcard");
+  var drawIds = { tag: "cTag", tag2: "cTag2", no: "cNo", no2: "cNo2", q: "cQ", a: "cA", why: "cWhy" };
+  function pool() { return topic === "all" ? DATA : DATA.filter(function (j) { return j.topic === topic; }); }
+  function newDeck(first) {
+    deck = shuffle(pool()); pos = -1;
+    if (first) { deck = deck.filter(function (j) { return j !== first; }); deck.unshift(first); }
   }
-  document.getElementById("reactionRow").addEventListener("click", function (e) {
-    var btn = e.target.closest("button[data-r]");
-    if (!btn) return;
-    var r = btn.getAttribute("data-r");
-    reactCounts[r] = (reactCounts[r] || 0) + 1;
-    localStorage.setItem(REACT_KEY, JSON.stringify(reactCounts));
-    paintReactions();
+  function show(j) {
+    current = j;
+    swapCard(jcard, function () { fillCard(drawIds, j); });
+    $("live").textContent = "";
+    setReacts(false);
+    $("deckCount").textContent = (pos + 1) + " / " + deck.length + (topic === "all" ? "" : " · " + TOPICS[topic]) + " · 한 바퀴 돌 때까지 겹치지 않습니다";
+  }
+  function next() {
+    if (!DATA.length) return;
+    if (++pos >= deck.length) { var last = current; newDeck(); if (deck.length > 1 && deck[0] === last) deck.push(deck.shift()); pos = 0; }
+    show(deck[pos]);
+  }
+  bindCard(jcard, function (on) {
+    if (!on || !current) return;
+    $("live").textContent = "정답: " + current.a + (current.why ? ". " + current.why : "");
+    setReacts(true);
+    rimshot();
+    if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) {}
   });
-  paintReactions();
+  $("nextBtn").addEventListener("click", next);
+  document.addEventListener("keydown", function (e) {
+    if ($("drawPanel").hidden || e.target.closest("input, textarea, [contenteditable]")) return;
+    if (e.key === "ArrowRight") next();
+  });
 
-  // ---------- 데이터 로드 ----------
+  // 카테고리 칩
+  function paintTopics() {
+    var h = '<button type="button" data-t="all" aria-pressed="' + (topic === "all") + '">전체<span class="n">' + DATA.length + '</span></button>';
+    Object.keys(TOPICS).forEach(function (k) {
+      var n = DATA.filter(function (j) { return j.topic === k; }).length;
+      h += '<button type="button" data-t="' + k + '" aria-pressed="' + (topic === k) + '">' + TOPICS[k] + '<span class="n">' + n + '</span></button>';
+    });
+    $("topics").innerHTML = h;
+  }
+  $("topics").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-t]"); if (!b) return;
+    topic = b.getAttribute("data-t");
+    $("topics").querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+    newDeck(); next();
+  });
+
+  // 반응 — 이 브라우저에만 쌓이는 개인 기록
+  var REACT_KEY = "techa_dadjoke_reactions", counts = {};
+  try { counts = JSON.parse(store(REACT_KEY) || "{}"); } catch (e) {}
+  function paintCounts() {
+    $("cntHaha").textContent = counts.haha || 0; $("cntPisik").textContent = counts.pisik || 0; $("cntCold").textContent = counts.cold || 0;
+  }
+  function setReacts(on) {
+    $("reacts").querySelectorAll("button").forEach(function (b) { b.disabled = !on; b.classList.remove("picked"); });
+  }
+  $("reacts").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-r]"); if (!b || b.disabled) return;
+    var r = b.getAttribute("data-r");
+    counts[r] = (counts[r] || 0) + 1; store(REACT_KEY, JSON.stringify(counts)); paintCounts();
+    $("reacts").querySelectorAll("button").forEach(function (x) { x.disabled = true; });
+    b.classList.add("picked");
+    var d = $("deck");
+    if (r === "haha") particles(["😆", "🤣", "😂", "✨"], 14, b, "big");
+    else if (r === "pisik") particles(["😏", "·"], 4, b, "small");
+    else {
+      particles(["❄", "❅", "❆"], 16, d, "snow");
+      if (!reduce) { d.classList.remove("shiver", "frost"); void d.offsetWidth; d.classList.add("shiver", "frost"); setTimeout(function () { d.classList.remove("shiver", "frost"); }, 1900); }
+    }
+  });
+  paintCounts();
+
+  // 친구에게 문제 내기 — 정답은 빼고 링크로 보낸다. 링크를 열면 그 문제부터 나온다
+  function share(text, url, btn) {
+    if (navigator.share) { navigator.share({ text: text, url: url }).catch(function () {}); return; }
+    if (navigator.clipboard) navigator.clipboard.writeText(text + "\n" + url);
+    var t = btn.textContent; btn.textContent = "링크가 복사됐어요!";
+    setTimeout(function () { btn.textContent = t; }, 1500);
+  }
+  $("askBtn").addEventListener("click", function () {
+    if (!current) return;
+    share("문제! " + current.q + "\n정답은 카드를 눌러 확인 👉", location.origin + location.pathname + "?j=" + current.id, this);
+  });
+
+  // ---------- 모드 전환 ----------
+  function mode(m) {
+    $("seg").setAttribute("data-mode", m);
+    $("tabDraw").setAttribute("aria-selected", m === "draw");
+    $("tabQuiz").setAttribute("aria-selected", m === "quiz");
+    $("drawPanel").hidden = m !== "draw";
+    $("quizPanel").hidden = m !== "quiz";
+  }
+  $("tabDraw").addEventListener("click", function () { mode("draw"); });
+  $("tabQuiz").addEventListener("click", function () { mode("quiz"); });
+
+  // ---------- 아재력 테스트 ----------
+  var qcard = $("qcard"), qItems = [], qIdx = 0, qMarks = [];
+  var quizIds = { tag: "qTag", tag2: "qTag2", no: "qNo", no2: "qNo2", q: "qQ", a: "qA", why: "qWhy" };
+  var GRADES = [
+    [9, "🏆", "전설의 아재", "질문만 들어도 정답이 먼저 튀어나오는 경지입니다."],
+    [7, "😎", "아재 고수", "회식 자리 분위기를 혼자 책임질 수 있습니다."],
+    [4, "🙂", "아재 입문자", "피식은 하지만 아직 먼저 던지지는 않는 단계입니다."],
+    [0, "😇", "순수 MZ", "대부분 처음 듣는 개그였네요. 오늘 하나쯤 써먹어 보세요."]
+  ];
+  function paintBar() {
+    var h = "";
+    for (var i = 0; i < 10; i++) h += '<i class="' + (qMarks[i] === 1 ? "ok" : qMarks[i] === 0 ? "no" : i === qIdx ? "now" : "") + '"></i>';
+    $("quizBar").innerHTML = h;
+    $("quizStep").textContent = (qIdx + 1) + " / " + qItems.length;
+  }
+  function quizStep() {
+    var j = qItems[qIdx];
+    swapCard(qcard, function () { fillCard(quizIds, j); });
+    $("quizKnew").disabled = $("quizMissed").disabled = true;
+    paintBar();
+  }
+  $("quizStart").addEventListener("click", function () {
+    if (!DATA.length) return;
+    qItems = shuffle(DATA).slice(0, 10); qIdx = 0; qMarks = [];
+    qcard.classList.remove("ready");
+    $("quizIntro").hidden = true; $("quizResult").hidden = true; $("quizRun").hidden = false;
+    quizStep();
+  });
+  bindCard(qcard, function (on) {
+    if (!on) return;
+    $("quizKnew").disabled = $("quizMissed").disabled = false;
+    rimshot();
+  });
+  function mark(v) {
+    qMarks[qIdx] = v;
+    if (++qIdx >= qItems.length) return finish();
+    quizStep();
+  }
+  $("quizKnew").addEventListener("click", function () { mark(1); });
+  $("quizMissed").addEventListener("click", function () { mark(0); });
+  var lastGrade = null;
+  function finish() {
+    var score = qMarks.reduce(function (s, v) { return s + v; }, 0);
+    var g = GRADES.filter(function (x) { return score >= x[0]; })[0];
+    lastGrade = { g: g, score: score };
+    $("gEmo").textContent = g[1]; $("gName").textContent = g[2];
+    $("gScore").textContent = score + " / " + qItems.length + " 알던 개그"; $("gLine").textContent = g[3];
+    $("quizRun").hidden = true; $("quizResult").hidden = false;
+    var gr = $("grade"); gr.classList.remove("in"); void gr.offsetWidth; gr.classList.add("in");
+    if (score >= 7) particles(["🎉", "✨", "🥸"], 16, gr, "big");
+  }
+  $("quizRetry").addEventListener("click", function () { $("quizResult").hidden = true; $("quizIntro").hidden = false; });
+  $("quizShare").addEventListener("click", function () {
+    if (!lastGrade) return;
+    share("나의 아재력은 " + lastGrade.g[1] + " " + lastGrade.g[2] + " (" + lastGrade.score + "/10)\n너도 해 봐 👉", location.origin + location.pathname, this);
+  });
+
+  // ---------- 데이터 ----------
   fetch("/assets/data/dad-jokes.json")
     .then(function (r) { return r.json(); })
     .then(function (d) {
       DATA = d;
-      draw();
-      quizData = d;
+      paintTopics();
+      var want = +new URLSearchParams(location.search).get("j");
+      newDeck(d.filter(function (j) { return j.id === want; })[0]);
+      next();
     })
-    .catch(function () {
-      cardQ.textContent = "데이터를 불러오지 못했어요.";
-    });
-
-  // ---------- 모드 전환 ----------
-  var tabDraw = document.getElementById("tabDraw");
-  var tabQuiz = document.getElementById("tabQuiz");
-  var drawPanel = document.getElementById("drawPanel");
-  var quizPanel = document.getElementById("quizPanel");
-  tabDraw.addEventListener("click", function () {
-    tabDraw.className = "btn btn-primary btn-block";
-    tabQuiz.className = "btn btn-ghost btn-block";
-    drawPanel.classList.remove("hidden");
-    quizPanel.classList.remove("active");
-  });
-  tabQuiz.addEventListener("click", function () {
-    tabQuiz.className = "btn btn-primary btn-block";
-    tabDraw.className = "btn btn-ghost btn-block";
-    drawPanel.classList.add("hidden");
-    quizPanel.classList.add("active");
-  });
-
-  // ---------- 아재력 테스트 ----------
-  var quizData = [];
-  var quizItems = [], quizIdx = 0, quizScore = 0;
-  var quizCard = document.getElementById("quizCard");
-  var quizQ = document.getElementById("quizQ");
-  var quizA = document.getElementById("quizA");
-  var quizTopic = document.getElementById("quizTopic");
-  var quizProgress = document.getElementById("quizProgress");
-  var quizScoreRow = document.getElementById("quizScoreRow");
-
-  document.getElementById("quizStart").addEventListener("click", function () {
-    if (!quizData.length) return;
-    quizItems = shuffle(quizData).slice(0, 10);
-    quizIdx = 0; quizScore = 0;
-    document.getElementById("quizIntro").style.display = "none";
-    document.getElementById("quizRun").style.display = "block";
-    document.getElementById("quizResult").style.display = "none";
-    renderQuizStep();
-  });
-
-  function renderQuizStep() {
-    var item = quizItems[quizIdx];
-    quizCard.classList.remove("flipped");
-    quizScoreRow.style.display = "none";
-    quizTopic.textContent = TOPICS[item.topic];
-    quizQ.textContent = item.q;
-    quizA.textContent = item.a;
-    quizProgress.textContent = (quizIdx + 1) + " / " + quizItems.length;
-  }
-
-  quizCard.addEventListener("click", function () {
-    quizCard.classList.toggle("flipped");
-    if (quizCard.classList.contains("flipped")) quizScoreRow.style.display = "flex";
-  });
-
-  function nextQuizStep() {
-    quizIdx++;
-    if (quizIdx >= quizItems.length) { finishQuiz(); return; }
-    renderQuizStep();
-  }
-  document.getElementById("quizKnew").addEventListener("click", function () { quizScore++; nextQuizStep(); });
-  document.getElementById("quizMissed").addEventListener("click", nextQuizStep);
-
-  function finishQuiz() {
-    document.getElementById("quizRun").style.display = "none";
-    document.getElementById("quizResult").style.display = "block";
-    var grade, ratio = quizScore / quizItems.length;
-    if (ratio >= 0.9) grade = "🏆 전설의 아재";
-    else if (ratio >= 0.7) grade = "😎 아재 고수";
-    else if (ratio >= 0.4) grade = "🙂 아재 입문자";
-    else grade = "😇 순수 MZ";
-    document.getElementById("quizGrade").textContent = grade;
-    document.getElementById("quizScoreText").textContent = quizScore + " / " + quizItems.length + "문항 맞힘";
-  }
-
-  document.getElementById("quizRetry").addEventListener("click", function () {
-    document.getElementById("quizResult").style.display = "none";
-    document.getElementById("quizIntro").style.display = "block";
-  });
-  document.getElementById("quizCopy").addEventListener("click", function () {
-    var text = "아재력 테스트 결과: " + document.getElementById("quizGrade").textContent +
-      " (" + document.getElementById("quizScoreText").textContent + ") | 테차 꽃공방 아재개그 뽑기";
-    navigator.clipboard && navigator.clipboard.writeText(text);
-    var b = this, t = b.textContent;
-    b.textContent = "복사됨!";
-    setTimeout(function () { b.textContent = t; }, 1200);
-  });
+    .catch(function () { $("cQ").textContent = "데이터를 불러오지 못했습니다. 새로고침해 주세요."; });
 })();
 </script>
 </body>
