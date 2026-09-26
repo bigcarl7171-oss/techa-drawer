@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <title>아재개그 뽑기: 질문 보고 정답 맞히는 아재개그 | 테차 꽃공방</title>
-<meta name="description" content="아재개그 145개를 카드로 뽑아 뒤집어 정답을 확인하세요. 지역·인물·음식·동물·꽃·영어·넌센스·직장 8개 카테고리, 친구에게 문제 내기, 아재력 테스트까지 있습니다.">
+<meta name="description" content="아재개그 245개를 카드로 뽑아 뒤집어 정답을 확인하세요. 지역·인물·음식·동물·꽃·영어·넌센스·직장 8개 카테고리, 친구에게 문제 내기, 아재력 테스트까지 있습니다.">
 <link rel="canonical" href="https://www.techa.kr/ko/dad-joke/">
 <meta property="og:image" content="https://www.techa.kr/assets/og/og-default.png">
 <meta property="og:image:width" content="1200">
@@ -63,9 +63,10 @@
   .jcard { position:relative; z-index:1; min-height:280px; perspective:1400px; cursor:pointer; outline:none;
     -webkit-tap-highlight-color:transparent; }
   .jcard:focus-visible .face { box-shadow:0 0 0 2px var(--brown), var(--shadow-lg); }
-  .jcard .inner { position:relative; min-height:inherit; transform-style:preserve-3d; transition:transform 560ms var(--ease-in-out); }
+  .jcard .inner { position:relative; display:grid; min-height:inherit; transform-style:preserve-3d; transition:transform 560ms var(--ease-in-out); }
   .jcard.flipped .inner { transform:rotateY(180deg); }
-  .jcard .face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:18px;
+  /* 두 면을 같은 칸에 겹쳐 쌓는다 — 긴 쪽에 맞춰 카드가 늘어난다 */
+  .jcard .face { position:relative; grid-area:1 / 1; min-height:280px; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:18px;
     display:flex; flex-direction:column; padding:20px 22px 18px; overflow:hidden; }
   .jcard .front { background:
       radial-gradient(rgba(58,50,43,.07) 1px, transparent 1.3px) 0 0 / 16px 16px,
@@ -84,6 +85,7 @@
   .jcard .body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:4px 0 10px; }
   .jcard .q { font-family:"Gowun Batang", serif; font-weight:700; font-size:clamp(21px, 5.6vw, 26px); line-height:1.45; word-break:keep-all; }
   .jcard .a { font-family:"Gowun Batang", serif; font-weight:700; font-size:clamp(28px, 8vw, 38px); line-height:1.3; color:#EFD9A8; word-break:keep-all; }
+  .jcard .a.long, .jcard .q.long { font-size:clamp(20px, 5.4vw, 26px); }
   .jcard .why { margin-top:10px; font-size:13px; color:rgba(250,243,234,.62); }
   .jcard .foot { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:7px; }
   .jcard .back .foot { color:rgba(250,243,234,.5); }
@@ -402,6 +404,8 @@ TECHA.initPage({
     $(ids.no).textContent = $(ids.no2).textContent = no(j);
     $(ids.q).textContent = j.q;
     $(ids.a).textContent = j.a;
+    $(ids.q).classList.toggle("long", j.q.length > 40);
+    $(ids.a).classList.toggle("long", j.a.length > 12);
     $(ids.why).textContent = j.why || "";
   }
   function setFlipped(card, on) {
