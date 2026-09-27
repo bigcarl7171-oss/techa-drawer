@@ -187,5 +187,9 @@
     "sunflower-bouquet",
     "superior-rose",
     "rose-hydrangea-bouquet"
+  ],
+  "opening-gift-sunflower-frame": [
+    "sunflower-frame",
+    "sunflower-bouquet"
   ]
 }
