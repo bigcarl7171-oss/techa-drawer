@@ -425,12 +425,43 @@ textarea { min-height: 160px; resize: vertical; line-height: 1.6; }
 }
 
 /* ---------- 푸터 ---------- */
+/* 2026-09-27 개편: 짙은 브라운 바탕에 채널·상담·공방·기업 주문·사업자 정보 (마크업은 build-chrome.js) */
 .site-footer {
-  margin-top: 40px; border-top: 1px solid var(--line);
-  background: var(--white); padding: 24px 0; color: var(--muted); font-size: 13px;
+  --ft-ink: #f3ece4; --ft-sub: #c9bdb1; --ft-line: rgba(255, 253, 249, .14);
+  margin-top: 40px; background: var(--brown); color: var(--ft-sub);
+  padding: 44px 0 40px; font-size: 14px; line-height: 1.7; word-break: keep-all;
 }
-.site-footer a { color: var(--muted); margin-right: 14px; }
-.site-footer .disclaimer { margin-top: 10px; font-size: 12px; color: var(--muted-soft); }
+.site-footer a { color: var(--ft-sub); text-decoration: none; }
+.site-footer a:hover { color: var(--ft-ink); text-decoration: underline; }
+.site-footer p { margin: 0; }
+.sf-brand {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;
+  padding-bottom: 24px; border-bottom: 1px solid var(--ft-line);
+}
+.sf-logo { display: flex; align-items: center; gap: 10px; color: var(--ft-ink); font-size: 17px; font-weight: 700; }
+.sf-logo img { filter: invert(1); }  /* 검은 로고를 짙은 바탕에서 흰색으로 */
+.sf-tagline { margin-top: 6px !important; }
+.sf-sns { display: flex; flex-wrap: wrap; gap: 8px; }
+.site-footer .sf-sns a { padding: 6px 12px; border: 1px solid var(--ft-line); border-radius: var(--radius-pill); font-size: 13px; }
+.site-footer .sf-sns a:hover { border-color: var(--ft-ink); text-decoration: none; }
+.sf-cols {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  padding: 24px 0; border-bottom: 1px solid var(--ft-line);
+}
+.sf-h { color: var(--ft-ink); font-weight: 700; margin-bottom: 6px !important; }
+.site-footer .sf-big { color: var(--ft-ink); font-size: 20px; font-weight: 700; }
+.site-footer .sf-cta { display: inline-block; margin-top: 8px; color: var(--ft-ink); font-weight: 600; }
+.sf-nav { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 20px 0; border-bottom: 1px solid var(--ft-line); }
+.sf-biz { padding-top: 20px; font-size: 12.5px; line-height: 1.9; }
+.sf-biz span + span::before { content: "|"; margin: 0 8px; opacity: .5; }
+.sf-legal { margin-top: 10px !important; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.site-footer .sf-legal a { color: var(--ft-ink); font-weight: 600; }
+.site-footer .disclaimer { margin-top: 8px; font-size: 12px; color: var(--ft-sub); }
+@media (max-width: 760px) {
+  .sf-cols { grid-template-columns: 1fr; gap: 18px; }
+  .sf-biz span { display: block; }
+  .sf-biz span + span::before { content: none; }
+}
 
 /* ---------- 반응형 ---------- */
 @media (max-width: 520px) {

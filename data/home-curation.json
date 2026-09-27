@@ -4,7 +4,7 @@
     "1": "graduation", "2": "graduation", "3": "spring",
     "4": "gratitude", "5": "gratitude", "6": "summer",
     "7": "summer", "8": "summer", "9": "autumn",
-    "10": "autumn", "11": "yearend", "12": "yearend"
+    "10": "october", "11": "yearend", "12": "yearend"
   },
   "profiles": {
     "graduation": {
@@ -80,6 +80,21 @@
         { "id": "sunflower-bouquet", "label": "발표회·승진·졸업", "desc": "밝은 축하의 마음을 또렷하게 전할 때" },
         { "id": "rose-hydrangea-bouquet", "label": "연인·기념일", "desc": "장미와 수국의 색감을 오래 간직하고 싶을 때" },
         { "id": "hydrangea-moodlamp", "label": "오래 두는 공간 선물", "desc": "집들이와 개업 공간에 꽃과 빛을 더할 때" }
+      ]
+    },
+    "october": {
+      "situations": [
+        { "id": "recital", "icon": "🎹", "title": "학예회·발표회", "desc": "아이 얼굴을 가리지 않는 크기", "href": "/blog/kids-recital-bouquet-size-guide/" },
+        { "id": "suneung", "icon": "📚", "title": "수능 응원", "desc": "시험 끝난 날까지 시들지 않게", "href": "/ko/gift-finder/" },
+        { "id": "autumn", "icon": "🍂", "title": "가을 집들이·개업", "desc": "새 공간에 오래 남는 꽃", "href": "/blog/autumn-flower-gift-offseason/" },
+        { "id": "yearend-event", "icon": "🏢", "title": "연말 행사 준비", "desc": "단체 주문은 행사 일주일 전까지", "href": "/blog/company-event-bouquet/" }
+      ],
+      "products": [
+        { "id": "blackwhite-rose-moodlamp", "label": "신상품 · 선착순 혜택", "desc": "흑백 장미에 앰버 빛을 더해 공간에 오래 두고 싶을 때" },
+        { "id": "rose-soap-bouquet", "label": "테차 시그니처", "desc": "어떤 자리에도 부담 없이 마음을 전하고 싶을 때" },
+        { "id": "sunflower-bouquet", "label": "학예회 · 발표회", "desc": "무대를 마친 아이에게 밝은 축하를 건넬 때" },
+        { "id": "rose-hydrangea-bouquet", "label": "가을 기념일 · 연인", "desc": "장미와 수국의 색감을 오래 간직하고 싶을 때" },
+        { "id": "hydrangea-moodlamp", "label": "집들이 · 개업", "desc": "새 공간에 꽃과 빛을 함께 더할 때" }
       ]
     },
     "yearend": {

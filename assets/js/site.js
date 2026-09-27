@@ -314,15 +314,42 @@
     var el = document.getElementById("site-footer");
     if (!el) return;
     el.className = "site-footer";
-    // 정적 HTML이 이전 버전이어도 최신 서비스 링크와 연도를 일관되게 보여준다.
-    el.innerHTML =
-      '<div class="wrap">' +
-      '  <a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a>' +
-      '  <a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a>' +
+    // build-chrome.js 가 찍은 최신 정적 푸터가 있으면 다시 그리지 않고 연도만 채운다.
+    // (2026-09-27 전에는 무조건 옛 푸터로 덮어써서, 정적 푸터의 비어 있는 연도 칸이
+    //  그대로 보이거나 정적으로 고친 내용이 사라질 수 있었다.)
+    if (!el.querySelector(".sf-brand")) el.innerHTML = footerHtml();
+    var y = document.getElementById("footer-year");
+    if (y) y.textContent = new Date().getFullYear();
+  }
+
+  // scripts/build-chrome.js 의 footerMarkup 과 같은 마크업 — 정적 푸터가 없는 페이지를 보완한다.
+  function footerHtml() {
+    var ext = ' target="_blank" rel="noopener"';
+    var kakao = "https://pf.kakao.com/_fxdaks/chat";
+    return '<div class="wrap">' +
+      '<div class="sf-brand"><div><p class="sf-logo"><img src="/assets/icons/techa-logo.png" alt="techa" width="71" height="22"><span>테차 꽃공방</span></p>' +
+      '<p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p></div>' +
+      '<nav class="sf-sns" aria-label="테차 채널">' +
+      '<a href="https://www.instagram.com/techa_flower/"' + ext + '>인스타그램</a>' +
+      '<a href="' + kakao + '"' + ext + '>카카오톡 상담</a>' +
+      '<a href="https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C"' + ext + '>유튜브</a>' +
+      '<a href="https://www.facebook.com/techagongbang/"' + ext + '>페이스북</a>' +
+      '<a href="' + SITE.shopUrl + '"' + ext + '>스마트스토어 <span aria-hidden="true">↗</span></a></nav></div>' +
+      '<div class="sf-cols">' +
+      '<div><p class="sf-h">고객 상담</p><p><a class="sf-big" href="tel:031-817-3147">031-817-3147</a><br>상담 시간 09:00 – 18:00<br><a href="' + kakao + '"' + ext + '>카카오톡으로 문의하기 →</a></p></div>' +
+      '<div><p class="sf-h">공방 방문 · 방문 수령</p><p>경기도 고양시 덕양구 은빛로 53<br>코스미온빌 301호<br>맞춤 제작 상담과 플라워 클래스도 공방에서 함께합니다.</p></div>' +
+      '<div><p class="sf-h">기업·단체 주문</p><p>10개부터 수백 개까지 목적과 예산에 맞춰 제작합니다.<br>행사일 일주일 전까지 문의해 주세요.</p><a class="sf-cta" href="/contact/#contact-form">단체 주문 상담하기 →</a></div>' +
+      '</div>' +
+      '<nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>' +
+      '<div class="sf-biz">' +
+      '<p><span>상호 테차(TECHA)</span><span>대표 임광진</span><span>사업자등록번호 196-01-02121</span></p>' +
+      '<p><span>통신판매업 신고 제2025-고양덕양구-1847호</span><span>개인정보보호책임자 김은진</span></p>' +
+      '<p><span>경기도 고양시 덕양구 은빛로 53 코스미온빌 301호</span><span><a href="mailto:bigcarl@naver.com">bigcarl@naver.com</a></span></p>' +
+      '<p class="sf-legal"><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a></p></div>' +
       // 계산 결과 안내는 도구 페이지(/ko/)에만 — scripts/build-chrome.js 와 같은 조건 (2026-09-22)
-      '  <div class="disclaimer">' +
+      '<div class="disclaimer">' +
       (location.pathname.indexOf('/ko/') === 0 ? '본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. ' : '') +
-      '© ' + new Date().getFullYear() + " 테차 꽃공방</div>" +
+      '© <span id="footer-year"></span> 테차 꽃공방</div>' +
       '</div>';
   }
 

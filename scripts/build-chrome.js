@@ -62,14 +62,39 @@ function headerMarkup(shopUrl) {
   ].join('\n');
 }
 
-function footerMarkup(isTool) {
+// 2026-09-27 푸터 개편: 채널·상담·공방·기업 주문·사업자 정보를 정적으로 둔다.
+// 사업자 정보(전자상거래법 표시 의무)의 출처는 사장님이 준 techa-main-october.html 이다.
+// site.js 의 footerHtml() 이 같은 마크업을 갖고 있다 — 한쪽을 고치면 다른 쪽도 고친다.
+function footerMarkup(isTool, shopUrl) {
   return [
     FOOTER_BEGIN,
     '  <div class="wrap">',
-    '    <a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a>' +
+    '    <div class="sf-brand">',
+    '      <div><p class="sf-logo"><img src="/assets/icons/techa-logo.png" alt="techa" width="71" height="22"><span>테차 꽃공방</span></p>' +
+      '<p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p></div>',
+    '      <nav class="sf-sns" aria-label="테차 채널">' +
+      '<a href="https://www.instagram.com/techa_flower/" target="_blank" rel="noopener">인스타그램</a>' +
+      '<a href="https://pf.kakao.com/_fxdaks/chat" target="_blank" rel="noopener">카카오톡 상담</a>' +
+      '<a href="https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C" target="_blank" rel="noopener">유튜브</a>' +
+      '<a href="https://www.facebook.com/techagongbang/" target="_blank" rel="noopener">페이스북</a>' +
+      '<a href="' + esc(shopUrl) + '" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a></nav>',
+    '    </div>',
+    '    <div class="sf-cols">',
+    '      <div><p class="sf-h">고객 상담</p><p><a class="sf-big" href="tel:031-817-3147">031-817-3147</a><br>상담 시간 09:00 – 18:00<br>' +
+      '<a href="https://pf.kakao.com/_fxdaks/chat" target="_blank" rel="noopener">카카오톡으로 문의하기 →</a></p></div>',
+    '      <div><p class="sf-h">공방 방문 · 방문 수령</p><p>경기도 고양시 덕양구 은빛로 53<br>코스미온빌 301호<br>맞춤 제작 상담과 플라워 클래스도 공방에서 함께합니다.</p></div>',
+    '      <div><p class="sf-h">기업·단체 주문</p><p>10개부터 수백 개까지 목적과 예산에 맞춰 제작합니다.<br>행사일 일주일 전까지 문의해 주세요.</p>' +
+      '<a class="sf-cta" href="/contact/#contact-form">단체 주문 상담하기 →</a></div>',
+    '    </div>',
+    '    <nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a>' +
       '<a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a>' +
-      '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a>',
-    '    <a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a>',
+      '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>',
+    '    <div class="sf-biz">',
+    '      <p><span>상호 테차(TECHA)</span><span>대표 임광진</span><span>사업자등록번호 196-01-02121</span></p>',
+    '      <p><span>통신판매업 신고 제2025-고양덕양구-1847호</span><span>개인정보보호책임자 김은진</span></p>',
+    '      <p><span>경기도 고양시 덕양구 은빛로 53 코스미온빌 301호</span><span><a href="mailto:bigcarl@naver.com">bigcarl@naver.com</a></span></p>',
+    '      <p class="sf-legal"><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a></p>',
+    '    </div>',
     // 연도는 비워 둔다 — 정적 HTML에 박으면 해가 바뀔 때마다 게이트가 울린다. site.js 가 채운다.
     // 계산 결과 안내는 도구 페이지(/ko/)에만 둔다 — 꽃공방 메인·매거진에는 맞지 않는 문구다 (2026-09-22)
     '    <div class="disclaimer">' + (isTool ? '본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. ' : '') +
@@ -151,7 +176,7 @@ function main() {
     let r = fill(next, 'header', 'site-header', HEADER_BEGIN, HEADER_END, headerMarkup(shopUrl), eol);
     if (r.found) { next = r.html; headers++; }
 
-    r = fill(next, 'footer', 'site-footer', FOOTER_BEGIN, FOOTER_END, footerMarkup(rel.startsWith('ko/')), eol);
+    r = fill(next, 'footer', 'site-footer', FOOTER_BEGIN, FOOTER_END, footerMarkup(rel.startsWith('ko/'), shopUrl), eol);
     if (r.found) { next = r.html; footers++; }
     else errors.push(rel + ': site-footer 를 못 찾음');
 
