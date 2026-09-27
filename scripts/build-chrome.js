@@ -91,7 +91,7 @@ function footerMarkup(isTool, shopUrl) {
       '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>',
     '    <div class="sf-biz">',
     '      <p><span>상호 테차(TECHA)</span><span>대표 임광진</span><span>사업자등록번호 196-01-02121</span></p>',
-    '      <p><span>통신판매업 신고 제2025-고양덕양구-1847호</span><span>개인정보보호책임자 김은진</span></p>',
+    '      <p><span>통신판매업 제2025-고양덕양구-1847호</span><span>개인정보보호책임자 김은진</span></p>',
     '      <p><span>경기도 고양시 덕양구 은빛로 53 코스미온빌 301호</span><span><a href="mailto:bigcarl@naver.com">bigcarl@naver.com</a></span></p>',
     '      <p class="sf-legal"><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a></p>',
     '    </div>',
