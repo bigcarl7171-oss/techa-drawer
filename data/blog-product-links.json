@@ -191,5 +191,10 @@
   "opening-gift-sunflower-frame": [
     "sunflower-frame",
     "sunflower-bouquet"
+  ],
+  "pollen-allergy-flower-gift": [
+    "sunflower-bouquet",
+    "sunflower-frame",
+    "glassdome-moodlamp"
   ]
 }
