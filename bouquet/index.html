@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/icons/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>꽃다발 고르기 · 프리저브드·수국·해바라기 | 테차 꽃공방</title>
+<meta name="description" content="프리저브드 장미수국, 수국, 수페리어 장미, 해바라기, 발표회용 인형꽃다발까지 테차의 현재 꽃다발 상품을 한곳에서 비교하고 스마트스토어로 연결합니다.">
+<link rel="canonical" href="https://www.techa.kr/bouquet/">
+<meta property="og:image" content="https://www.techa.kr/assets/og/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.techa.kr/assets/og/og-default.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="꽃다발 고르기 · 테차 꽃공방">
+<meta property="og:description" content="시들지 않는 꽃다발부터 발표회용 꽃다발까지, 현재 테차 상품을 목적에 맞게 골라보세요.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+  .bouquet-hero{padding:32px 28px;margin:0 0 30px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,var(--gold-soft),var(--sage-soft));}
+  .bouquet-hero small{font-weight:700;letter-spacing:.12em;color:var(--gold-strong-ink);}
+  .bouquet-hero h2{font-size:clamp(25px,5vw,38px);line-height:1.4;margin:10px 0 12px;}
+  .bouquet-hero p{max-width:720px;margin:0;color:var(--body-text);}
+  .bouquet-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0 32px;}
+  .bouquet-card{display:flex;flex-direction:column;gap:8px;min-height:190px;padding:22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--white);box-shadow:var(--shadow);}
+  .bouquet-card .tag{font-size:11.5px;font-weight:800;letter-spacing:.08em;color:var(--gold-strong-ink);}
+  .bouquet-card h3{margin:0;font-size:20px;}
+  .bouquet-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.65;}
+  .bouquet-card a{margin-top:auto;font-weight:700;color:var(--gold-strong-ink);}
+  .bouquet-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 30px;}
+  .bouquet-guide div{padding:18px;border-radius:var(--radius-md);background:var(--sage-soft);}
+  .bouquet-guide b{display:block;margin-bottom:5px;}
+  .bouquet-note{padding:22px;border-left:4px solid var(--gold-deep);background:var(--gold-soft);border-radius:0 var(--radius-md) var(--radius-md) 0;margin:26px 0;}
+  .bouquet-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+  @media(max-width:700px){.bouquet-grid,.bouquet-guide{grid-template-columns:1fr}.bouquet-hero{padding:26px 20px}}
+</style>
+</head>
+<body>
+<header id="site-header">
+  <!-- BEGIN site-header (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
+  <div class="wrap">
+    <a class="brand-lock" href="/" aria-label="테차 꽃공방 홈"><img src="/assets/icons/techa-logo.png" alt="techa" width="71" height="22"><span>테차 꽃공방</span></a>
+    <nav class="header-nav" aria-label="주요 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">테차 매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a></nav>
+    <div class="header-search">
+      <button type="button" class="header-search-toggle" id="header-search-toggle" aria-label="도구·매거진 검색" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <div class="header-search-panel" id="header-search-panel">
+        <input type="text" id="header-search-input" placeholder="도구·매거진 검색..." autocomplete="off">
+        <div class="header-search-results" id="header-search-results"></div>
+      </div>
+    </div>
+    <a class="header-shop-link" href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a>
+    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">테차 매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a href="/care/">꽃 관리법</a></nav></details>
+  </div>
+  <!-- END site-header -->
+</header>
+<div id="page-head">
+  <!-- BEGIN page-head (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">홈</a> › <span>꽃다발 고르기</span></div>
+    <div class="page-head"><h1>꽃다발 고르기</h1><p class="lead">현재 테차의 꽃다발을 목적과 소재에 맞춰 살펴보세요.</p></div>
+  </div>
+  <!-- END page-head -->
+</div>
+
+<main class="wrap">
+  <article class="article">
+    <section class="bouquet-hero">
+      <small>TECHA BOUQUET GUIDE</small>
+      <h2>예전 상품을 찾으셨다면,<br>지금 판매 중인 꽃다발부터 보세요</h2>
+      <p>테차의 꽃다발 구성은 시간이 지나며 정리되고 바뀌었습니다. 예전 상품명 하나에 여러 종류가 묶여 있던 경우도 있어, 현재는 꽃의 소재와 선물하는 장면에 맞춰 각각의 상품으로 나누어 안내합니다.</p>
+    </section>
+
+    <h2>현재 많이 찾는 꽃다발</h2>
+    <div class="bouquet-grid">
+      <section class="bouquet-card">
+        <span class="tag">PRESERVED · ROSE &amp; HYDRANGEA</span>
+        <h3>장미수국 꽃다발</h3>
+        <p>장미와 수국을 함께 구성한 프리저브드 꽃다발입니다. 기념일·승진·퇴임처럼 오래 남기는 선물을 찾을 때 먼저 볼 수 있습니다.</p>
+        <a href="https://mkt.shopping.naver.com/link/68d23a99713c156d9f530c33" target="_blank" rel="noopener">현재 상품 보기 →</a>
+      </section>
+      <section class="bouquet-card">
+        <span class="tag">PRESERVED · ROSE</span>
+        <h3>수페리어 장미</h3>
+        <p>장미의 존재감을 중심으로 구성한 프리저브드 상품입니다. 장미 위주의 단정한 꽃 선물을 찾을 때 비교해 보세요.</p>
+        <a href="https://mkt.shopping.naver.com/link/68d238ffe3e6b36891764446" target="_blank" rel="noopener">현재 상품 보기 →</a>
+      </section>
+      <section class="bouquet-card">
+        <span class="tag">PRESERVED · HYDRANGEA</span>
+        <h3>수국 꽃다발</h3>
+        <p>수국의 부드러운 볼륨과 색감을 중심으로 만든 프리저브드 꽃다발입니다. 차분하고 풍성한 인상을 원할 때 어울립니다.</p>
+        <a href="https://mkt.shopping.naver.com/link/6aacecf4e8f0b735ed17d84d" target="_blank" rel="noopener">현재 상품 보기 →</a>
+      </section>
+      <section class="bouquet-card">
+        <span class="tag">SOAP FLOWER · SUNFLOWER</span>
+        <h3>해바라기 꽃다발</h3>
+        <p>밝은 축하 분위기를 전하기 좋은 해바라기 꽃다발입니다. 발표회·졸업·승진처럼 또렷한 축하가 필요한 자리에 많이 활용합니다.</p>
+        <a href="https://mkt.shopping.naver.com/link/68d23a99fe7739510568c980" target="_blank" rel="noopener">현재 상품 보기 →</a>
+      </section>
+      <section class="bouquet-card">
+        <span class="tag">KIDS · RECITAL</span>
+        <h3>레보니 인형꽃다발</h3>
+        <p>학예회·연주회·졸업식처럼 아이가 주인공인 날을 위한 인형꽃다발입니다. 사진에 남는 장면을 생각해 고를 수 있습니다.</p>
+        <a href="https://mkt.shopping.naver.com/link/6aacecf46dfcc83ec117446f" target="_blank" rel="noopener">현재 상품 보기 →</a>
+      </section>
+      <section class="bouquet-card">
+        <span class="tag">KIDS · KINDERJOY</span>
+        <h3>킨더조이 레보니 인형꽃다발</h3>
+        <p>꽃과 작은 즐거움을 함께 전하는 어린이용 꽃다발입니다. 유치원·어린이 발표회 선물을 찾을 때 비교해 보세요.</p>
+        <a href="https://mkt.shopping.naver.com/link/68d5e75496f0d6529fde16fd" target="_blank" rel="noopener">현재 상품 보기 →</a>
+      </section>
+    </div>
+
+    <h2>무엇을 기준으로 고를까요?</h2>
+    <div class="bouquet-guide">
+      <div><b>오래 두는 꽃</b><span>프리저브드 장미·수국처럼 실제 생화를 보존 처리한 꽃을 중심으로 봅니다.</span></div>
+      <div><b>밝고 부담 없는 축하</b><span>해바라기나 비누꽃처럼 선명한 색감과 관리 편의성을 함께 봅니다.</span></div>
+      <div><b>아이 행사</b><span>꽃다발 크기와 사진에서 얼굴을 가리지 않는 구성을 함께 확인합니다.</span></div>
+    </div>
+
+    <section class="bouquet-note">
+      <h2>예전에 보셨던 상품이 그대로 없을 수도 있습니다</h2>
+      <p>과거 techa.co.kr의 일부 상품은 한 페이지 안에 여러 꽃 종류와 옵션이 묶여 있었습니다. 현재 상품과 정확히 같은 구성이 아닐 수 있으므로, 이름만 보고 임의로 한 상품에 연결하기보다 현재 판매 상품을 비교해 선택하실 수 있도록 이 페이지에서 안내합니다.</p>
+      <div class="bouquet-actions">
+        <a class="btn btn-primary" href="/ko/gift-finder/">상황별 꽃 선물 추천 받기</a>
+        <a class="btn btn-ghost" href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" target="_blank" rel="noopener">스마트스토어 전체 보기</a>
+      </div>
+    </section>
+
+    <h2>여러 개가 필요한 행사라면</h2>
+    <p>시상식·퇴임식·졸업식·기업 행사처럼 수량이 필요한 경우에는 상품을 하나씩 고르기보다 행사 일정과 수량을 먼저 알려주시면 제작 가능한 구성을 안내합니다.</p>
+    <p><a href="/contact/">기업·단체 주문 안내 보기 →</a></p>
+
+    <h2>꽃의 소재가 궁금하다면</h2>
+    <p><a href="/blog/preserved-flower-pros-cons/">프리저브드 플라워의 뜻과 장단점 보기 →</a></p>
+  </article>
+</main>
+
+<footer id="site-footer">
+  <!-- BEGIN site-footer (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
+  <div class="wrap">
+    <div class="sf-brand">
+      <div><p class="sf-logo"><img src="/assets/icons/techa-logo.png" alt="techa" width="71" height="22"><span>테차 꽃공방</span></p><p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p></div>
+      <nav class="sf-sns" aria-label="테차 채널"><a href="https://www.instagram.com/techa_flower/" target="_blank" rel="noopener">인스타그램</a><a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡 상담</a><a href="https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C" target="_blank" rel="noopener">유튜브</a><a href="https://www.facebook.com/techagongbang/" target="_blank" rel="noopener">페이스북</a><a href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a></nav>
+    </div>
+    <div class="sf-cols">
+      <div><p class="sf-h">고객 상담</p><p><a class="sf-big" href="tel:031-817-3147">031-817-3147</a><br>상담 시간 09:00 – 18:00<br><a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡으로 문의하기 →</a></p></div>
+      <div><p class="sf-h">공방 방문 · 방문 수령</p><p>경기도 고양시 덕양구 은빛로 53<br>코스미온빌 301호<br>맞춤 제작 상담과 플라워 클래스도 공방에서 함께합니다.</p></div>
+      <div><p class="sf-h">기업·단체 주문</p><p>10개부터 수백 개까지 목적과 예산에 맞춰 제작합니다.<br>행사일 일주일 전까지 문의해 주세요.</p><a class="sf-cta" href="/contact/#contact-form">단체 주문 상담하기 →</a></div>
+    </div>
+    <nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>
+    <div class="sf-biz">
+      <p><span>상호 테차(TECHA)</span><span>대표 임광진</span><span>사업자등록번호 196-01-02121</span></p>
+      <p><span>통신판매업 제2025-고양덕양구-1847호</span><span>개인정보보호책임자 김은진</span></p>
+      <p><span>경기도 고양시 덕양구 은빛로 53 코스미온빌 301호</span><span><a href="mailto:bigcarl@naver.com">bigcarl@naver.com</a></span></p>
+      <p class="sf-legal"><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a></p>
+    </div>
+    <div class="disclaimer">© <span id="footer-year"></span> 테차 꽃공방</div>
+  </div>
+  <!-- END site-footer -->
+</footer>
+
+<script src="/assets/js/site.js"></script>
+<script>TECHA.initPage({ title:"꽃다발 고르기", desc:"현재 테차의 꽃다발을 목적과 소재에 맞춰 살펴보세요.", category:null });</script>
+</body>
+</html>
