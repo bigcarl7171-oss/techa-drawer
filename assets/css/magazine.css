@@ -56,7 +56,7 @@
 .magazine-cta h2 { margin: 0; font-family: "Gowun Batang", serif; font-size: 27px; font-weight: 400; line-height: 1.45; }
 .magazine-cta a { display: inline-flex; padding: 13px 18px; border: 1px solid var(--mag-ink); color: var(--mag-ink); font-weight: 700; text-decoration: none; }
 @media (max-width: 820px) {
-  .magazine-hero { grid-template-columns: 1fr; gap: 22px; padding: 48px 0 34px; }
+  .magazine-hero { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 48px 0 34px; }
   .magazine-page .post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .magazine-page .post-card.is-featured { grid-column: 1 / -1; grid-row: auto; }
 }

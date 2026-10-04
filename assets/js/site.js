@@ -225,13 +225,23 @@
       return { emoji: p.emoji, title: p.title, desc: p.desc, path: p.path, tag: "매거진" };
     }));
 
-    fetch("/assets/data/search-index.json").then(function (r) {
-      return r.ok ? r.json() : [];
-    }).then(function (data) {
-      if (data.length) index = data;
-    }).catch(function () { /* 생성 인덱스가 없어도 기존 APPS·POSTS 검색은 계속 동작 */ });
+    // 본문 인덱스(약 390KB)는 검색창을 처음 열 때 받는다. 예전엔 모든 페이지가
+    // 열리자마자 받아서, 검색을 안 쓰는 방문자도 매번 받았다 (2026-10-04)
+    var indexRequested = false;
+    function loadIndex() {
+      if (indexRequested) return;
+      indexRequested = true;
+      fetch("/assets/data/search-index.json").then(function (r) {
+        return r.ok ? r.json() : [];
+      }).then(function (data) {
+        if (!data.length) return;
+        index = data;
+        render(input.value.trim().toLowerCase().replace(/\s+/g, ""));
+      }).catch(function () { /* 생성 인덱스가 없어도 기존 APPS·POSTS 검색은 계속 동작 */ });
+    }
 
     function open() {
+      loadIndex();
       panel.classList.add("is-open");
       toggle.setAttribute("aria-expanded", "true");
       input.focus();
@@ -242,9 +252,14 @@
     }
     function render(q) {
       if (!q) { results.innerHTML = ""; return; }
-      var matches = index.filter(function (item) {
-        return (item.title + " " + item.desc).toLowerCase().replace(/\s+/g, "").indexOf(q) > -1;
+      // 제목·설명에서 찾은 것을 먼저, 본문(body, 생성 인덱스에만 있음)에서 찾은 것을 뒤에 둔다
+      function has(text) { return (text || "").toLowerCase().replace(/\s+/g, "").indexOf(q) > -1; }
+      var head = [], inBody = [];
+      index.forEach(function (item) {
+        if (has(item.title + " " + item.desc)) head.push(item);
+        else if (has(item.body)) inBody.push(item);
       });
+      var matches = head.concat(inBody);
       if (!matches.length) {
         results.innerHTML = '<div class="header-search-empty">해당하는 결과가 없어요</div>';
         return;
@@ -263,6 +278,7 @@
     toggle.addEventListener("click", function () {
       panel.classList.contains("is-open") ? close() : open();
     });
+    input.addEventListener("focus", loadIndex);
     input.addEventListener("input", function (e) {
       render(e.target.value.trim().toLowerCase().replace(/\s+/g, ""));
     });

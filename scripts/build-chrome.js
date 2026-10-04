@@ -168,7 +168,7 @@ function footerMarkup(isTool, shopUrl) {
   ].join('\n');
 }
 
-function pageHeadMarkup(opts, cats, isBlogPost) {
+function pageHeadMarkup(opts, cats, isBlogPost, ownH1) {
   const cat = opts.category && cats[opts.category];
   let crumb = '<a href="/">홈</a> › ';
   // 매거진 글에는 목록으로 돌아가는 단을 둔다. JS 판에는 없던 것인데,
@@ -181,11 +181,13 @@ function pageHeadMarkup(opts, cats, isBlogPost) {
     HEAD_BEGIN,
     '  <div class="wrap">',
     '    <div class="breadcrumb">' + crumb + '</div>',
-    '    <div class="page-head"><h1>' + esc(opts.title) + '</h1>' +
+    // 본문에 자기 <h1> 이 있는 쪽(매거진 목록·선물 가이드)은 제목을 찍지 않는다.
+    // 예전엔 찍고 CSS 로 숨겨서 h1 이 2개(하나는 숨김)였다 — 2026-10-04 점검
+    ownH1 ? null : '    <div class="page-head"><h1>' + esc(opts.title) + '</h1>' +
       (opts.desc ? '<p class="lead">' + esc(opts.desc) + '</p>' : '') + '</div>',
     '  </div>',
     '  ' + HEAD_END
-  ].join('\n');
+  ].filter((l) => l !== null).join('\n');
 }
 
 // 두 번째 실행부터는 BEGIN/END 주석 사이만 갈아끼운다.
@@ -256,7 +258,10 @@ function main() {
         errors.push(rel + ': page-head 는 있는데 initPage 의 title 을 못 읽음');
       } else {
         const isBlogPost = rel.startsWith('blog/') && rel !== 'blog/index.html';
-        r = fill(next, 'div', 'page-head', HEAD_BEGIN, HEAD_END, pageHeadMarkup(opts, CATS, isBlogPost), eol);
+        const b = next.indexOf(HEAD_BEGIN), e = b === -1 ? -1 : next.indexOf(HEAD_END, b);
+        const outside = e === -1 ? next : next.slice(0, b) + next.slice(e + HEAD_END.length);
+        const ownH1 = /<h1[\s>]/i.test(outside);
+        r = fill(next, 'div', 'page-head', HEAD_BEGIN, HEAD_END, pageHeadMarkup(opts, CATS, isBlogPost, ownH1), eol);
         if (r.found) { next = r.html; heads++; }
       }
     }
