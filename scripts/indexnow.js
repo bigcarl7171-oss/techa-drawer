@@ -24,7 +24,7 @@ const ROOT = path.join(__dirname, '..');
 
 function sitemapUrls() {
   const out = [];
-  for (const f of ['sitemap.xml', 'sitemap-tools.xml']) {
+  for (const f of ['sitemap.xml']) {
     const p = path.join(ROOT, f);
     if (!fs.existsSync(p)) continue;
     for (const m of fs.readFileSync(p, 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)) out.push(m[1].trim());
