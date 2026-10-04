@@ -11,7 +11,9 @@
  * 반드시 배포가 끝난 뒤(라이브 200) 보낸다 — 엔진이 키 파일과 페이지를 바로 확인하러 온다.
  *
  * 사용:
- *   node scripts/indexnow.js /blog/<slug>/ [/other/ ...]   주소 몇 개
+ *   node scripts/indexnow.js blog/<slug>/ about/ [...]       주소 몇 개 (홈은 'home')
+ *     ⚠️ 앞에 / 를 붙이지 않는다. 윈도우 Git Bash 가 /about/ 을 C:/Program Files/Git/about/ 로
+ *     바꿔 넘긴다(2026-10-04 실제로 422 가 났다). 전체 주소(https://www.techa.kr/...)는 괜찮다.
  *   node scripts/indexnow.js --sitemap                      사이트맵 전체 (처음 한 번, 대규모 개편 뒤)
  *   --dry 를 붙이면 보내지 않고 목록만 출력
  */
@@ -32,6 +34,12 @@ function sitemapUrls() {
   return [...new Set(out)];
 }
 
+function toUrl(a) {
+  if (a.startsWith('http')) return a;
+  if (a === 'home') return 'https://' + HOST + '/';
+  return 'https://' + HOST + '/' + a.replace(/^\/+/, '');
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const dry = args.includes('--dry');
@@ -41,9 +49,14 @@ async function main() {
   }
   const urls = args.includes('--sitemap')
     ? sitemapUrls()
-    : args.filter((a) => !a.startsWith('--')).map((a) => (a.startsWith('http') ? a : 'https://' + HOST + a));
+    : args.filter((a) => !a.startsWith('--')).map(toUrl);
+  const bad = urls.filter((u) => !u.startsWith('https://' + HOST + '/') || u.includes(':/', 'https://'.length));
+  if (bad.length) {
+    console.error('❌ techa.kr 주소가 아님 (Git Bash 경로 변환?): ' + bad.join(', '));
+    process.exit(1);
+  }
   if (!urls.length) {
-    console.error('사용: node scripts/indexnow.js /blog/<slug>/ | --sitemap [--dry]');
+    console.error('사용: node scripts/indexnow.js blog/<slug>/ | home | --sitemap [--dry]');
     process.exit(1);
   }
   if (dry) { urls.forEach((u) => console.log(u)); console.log(`(dry) ${urls.length}개`); return; }
