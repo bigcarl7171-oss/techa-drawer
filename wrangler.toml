@@ -1,6 +1,13 @@
 name = "techa-automation"
 compatibility_date = "2026-07-24"
 
+# workers.dev 주소는 끈다 (2026-10-04). 켜 두면 같은 사이트가 techa-automation.bigcarl7171.workers.dev
+# 로도 열려 검색엔진에 중복 페이지로 잡힌다. 실제 주소는 https://www.techa.kr 하나다.
+# 설정을 비워 두면 기본값(true)이라 대시보드에서 꺼도 다음 배포 때 다시 켜진다.
+# 미리보기 주소(*-techa-automation…workers.dev)는 배포 확인용이라 유지한다.
+workers_dev = false
+preview_urls = true
+
 # 정적 사이트(별도 프레임워크 빌드 없음) — 저장소 루트를 그대로 자산으로 서비스
 [assets]
 directory = "."
