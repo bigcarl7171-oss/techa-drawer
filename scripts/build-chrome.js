@@ -47,7 +47,8 @@ const BUSINESS = {
   // 다른 이름으로 두지 않고, 사업자등록 상호는 legalName, 모브랜드는 parentOrganization 으로 둔다.
   alternateName: ['TECHA Flower', '테차 꽃공방(TECHA)'],
   legalName: '테차(TECHA)',
-  parentOrganization: { '@type': 'Organization', name: 'TECHA', alternateName: '테차' },
+  // @id 는 차 플랫폼(techa-tea-platform lib/seo.ts)의 Organization 과 같은 값이어야 두 사이트가 한 브랜드로 묶인다
+  parentOrganization: { '@type': 'Organization', '@id': 'https://techa.co.kr/#organization', name: 'TECHA', alternateName: '테차', url: 'https://techa.co.kr/' },
   description: '경기도 고양시 덕양구의 꽃공방. 프리저브드 플라워·비누꽃 무드등·글라스돔 같은 시들지 않는 꽃 선물과 기업·학교·기관 단체 납품, 플라워 클래스를 운영합니다.',
   url: 'https://www.techa.kr/',
   logo: 'https://www.techa.kr/assets/icons/icon-512.png',
@@ -152,7 +153,9 @@ function footerMarkup(isTool, shopUrl) {
     '    </div>',
     '    <nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a>' +
       '<a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a>' +
-      '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>',
+      '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a>' +
+      // techa.co.kr 이 차 플랫폼으로 전환된 뒤의 교차 링크 (BRAND_ARCHITECTURE §4 — 가벼운 링크 하나만)
+      '<a href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA의 차 이야기 <span aria-hidden="true">↗</span></a></nav>',
     '    <div class="sf-biz">',
     '      <p><span>상호 테차(TECHA)</span><span>대표 임광진</span><span>사업자등록번호 196-01-02121</span></p>',
     '      <p><span>통신판매업 제2025-고양덕양구-1847호</span><span>개인정보보호책임자 김은진</span></p>',
