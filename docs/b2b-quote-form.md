@@ -44,7 +44,7 @@ Logs 에도 `send_email <코드>` 로 남는다.
 
 | 코드 | 원인 | 할 일 |
 |---|---|---|
-| `E_SENDER_DOMAIN_NOT_AVAILABLE` · `E_SENDER_NOT_VERIFIED` | techa.kr 이 Email Sending 에 등록 안 됨 | 위 "머지하기 전에 할 일" 1번 |
+| `E_SENDER_DOMAIN_NOT_CONFIGURED` · `E_SENDER_DOMAIN_NOT_AVAILABLE` · `E_SENDER_NOT_VERIFIED` | techa.kr 이 Email Sending 에 등록 안 됨 (2026-10-04 미리보기에서 실제로 `…NOT_CONFIGURED` 확인) | 위 "머지하기 전에 할 일" 1번 |
 | `E_RECIPIENT_NOT_ALLOWED` · `E_RECIPIENT_SUPPRESSED` | 받는 주소 인증 안 됨 / 반송 이력 | 위 2번, 또는 Email Sending 설정에서 suppression 확인 |
 | `E_RATE_LIMIT_EXCEEDED` · `E_DAILY_LIMIT_EXCEEDED` | 발송 한도 | 잠시 뒤 재시도. 반복되면 스팸 유입 의심 |
 | `http_404` · `http_405` · `http_501` | 접수 API 가 없는 배포(Worker 코드 없이 정적 파일만 올라간 경우) | 배포 로그 확인 |
