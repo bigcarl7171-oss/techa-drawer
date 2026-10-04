@@ -119,6 +119,8 @@ ChatGPT 웹검색은 Bing 색인 비중이 크다. 여기가 비어 있으면 AI
 - **웹마스터 도구 등록은 사람이 한 번 한다.** bing.com/webmasters → 구글 계정 로그인 →
   "Google Search Console 에서 가져오기" → www.techa.kr 선택. 사이트맵(`sitemap.xml`,
   `sitemap-tools.xml`)도 함께 넘어온다. 안 넘어왔으면 사이트맵 메뉴에서 직접 제출.
+- 2026-10-04 정리: workers.dev 주소는 꺼졌다(`wrangler.toml` `workers_dev = false`). 서치콘솔의 workers.dev 속성은 삭제했고, 남은 속성은 도메인 속성 `techa.kr` 하나다.
+  같은 날 `techa.kr` 속성의 **설정 → AI controls → Google 검색 생성형 AI** 가 "포함"인 것을 확인했다. 이게 꺼지면 AI 개요·Gemini 답변에 사이트 내용이 안 쓰인다.
 - 확인: 등록 2~3일 뒤 **URL 검사**에 `https://www.techa.kr/` 를 넣어 "Bing 에 색인됨" 인지 본다.
 
 ---
