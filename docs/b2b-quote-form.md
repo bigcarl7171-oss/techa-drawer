@@ -27,6 +27,9 @@
 
 ## ⚠️ main 에 머지하기 전에 할 일 (사장님, Cloudflare 대시보드에서 1번만) — 무료
 
+> ✅ **2026-10-04 완료.** techa.kr Email Routing 활성화(MX·SPF·DKIM 추가, 기존 MX 없었음),
+> 받는 주소 bigcarl@naver.com 인증. 다시 할 필요 없다 — 아래는 기록·재설정용.
+
 **Email Sending(유료)이 아니라 Email Routing(무료)으로 한다.** Email Sending 화면은 "Workers Paid
 플랜에서만"이라고 막혀 있다(2026-10-04 확인). 하지만 Cloudflare 요금 문서에 따르면 **계정에서 인증한
 받는 주소로 보내는 메일은 모든 플랜에서 무료이고, Email Routing만 설정해도 된다.** 이 폼은
