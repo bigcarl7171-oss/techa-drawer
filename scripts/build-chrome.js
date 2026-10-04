@@ -42,7 +42,12 @@ const BUSINESS = {
   '@type': 'Florist',
   '@id': 'https://www.techa.kr/#business',
   name: '테차 꽃공방',
-  alternateName: ['TECHA', '테차', '테차 꽃공방(TECHA)'],
+  // TECHA 는 꽃(테차 꽃공방)과 차(TECHA Tea, techa.co.kr)를 묶는 모브랜드다 (2026-10-04,
+  // docs/TECHA_MASTER_HANDOFF_CLAUDE_2026-09-30.md §1). 그래서 'TECHA'·'테차' 단독을 꽃공방의
+  // 다른 이름으로 두지 않고, 사업자등록 상호는 legalName, 모브랜드는 parentOrganization 으로 둔다.
+  alternateName: ['TECHA FLOWER', '테차 꽃공방(TECHA)'],
+  legalName: '테차(TECHA)',
+  parentOrganization: { '@type': 'Organization', name: 'TECHA', alternateName: '테차' },
   description: '경기도 고양시 덕양구의 꽃공방. 프리저브드 플라워·비누꽃 무드등·글라스돔 같은 시들지 않는 꽃 선물과 기업·학교·기관 단체 납품, 플라워 클래스를 운영합니다.',
   url: 'https://www.techa.kr/',
   logo: 'https://www.techa.kr/assets/icons/icon-512.png',
