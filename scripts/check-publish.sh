@@ -245,6 +245,12 @@ fi
 echo "[배포] 라이브 확인"
 code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 15 "https://www.techa.kr/blog/$SLUG/" 2>/dev/null || echo 000)
 [ "$code" = "200" ] && ok "라이브 페이지" "$code" || warn "라이브 페이지" "$code — 아직 배포 전일 수 있다"
+# IndexNow(Bing·네이버 등) 핑은 라이브일 때만 보낸다 — 배포 전에 보내면 엔진이 404 를 본다 (2026-10-04)
+if [ "$code" = "200" ] && [ -f scripts/indexnow.js ]; then
+  out=$(node scripts/indexnow.js "/blog/$SLUG/" /blog/ / 2>&1) \
+    && ok "IndexNow" "$(echo "$out" | tail -1 | sed 's/^[✅ ]*//')" \
+    || warn "IndexNow" "$(echo "$out" | tail -1)"
+fi
 curl -s --max-time 15 https://www.techa.kr/sitemap.xml 2>/dev/null | grep -q "/blog/$SLUG/" \
   && ok "라이브 sitemap" "포함됨" || warn "라이브 sitemap" "아직 미반영"
 

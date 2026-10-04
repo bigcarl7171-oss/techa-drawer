@@ -28,6 +28,65 @@ const HEAD_BEGIN = '<!-- BEGIN page-head (생성: scripts/build-chrome.js — �
 const HEAD_END = '<!-- END page-head -->';
 const FOOTER_BEGIN = '<!-- BEGIN site-footer (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->';
 const FOOTER_END = '<!-- END site-footer -->';
+const BIZ_BEGIN = '<!-- BEGIN business-schema (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->';
+const BIZ_END = '<!-- END business-schema -->';
+
+// 2026-10-04 AI 검색 대응: 업체 정보를 기계가 읽는 형태로 둔다.
+// 그전엔 홈에 WebSite 스키마만 있고 about·contact 엔 스키마가 없어서, 검색엔진·AI가
+// "고양 덕양구의 꽃공방"이라는 사실을 본문 텍스트에서 추측해야 했다.
+// 값의 출처는 아래 footerMarkup() 의 사업자·연락처 정보다 — 한쪽을 고치면 다른 쪽도 고친다.
+// 영업시간은 확정 전이라 넣지 않았다(푸터의 09:00–18:00 은 상담 시간이다).
+const BIZ_PAGES = ['index.html', 'about/index.html', 'contact/index.html'];
+const BUSINESS = {
+  '@context': 'https://schema.org',
+  '@type': 'Florist',
+  '@id': 'https://www.techa.kr/#business',
+  name: '테차 꽃공방',
+  alternateName: ['TECHA', '테차', '테차 꽃공방(TECHA)'],
+  description: '경기도 고양시 덕양구의 꽃공방. 프리저브드 플라워·비누꽃 무드등·글라스돔 같은 시들지 않는 꽃 선물과 기업·학교·기관 단체 납품, 플라워 클래스를 운영합니다.',
+  url: 'https://www.techa.kr/',
+  logo: 'https://www.techa.kr/assets/icons/icon-512.png',
+  image: 'https://www.techa.kr/assets/banners/florist-bouquet.jpg',
+  telephone: '+82-31-817-3147',
+  email: 'bigcarl@naver.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '은빛로 53 코스미온빌 301호',
+    addressLocality: '고양시 덕양구',
+    addressRegion: '경기도',
+    addressCountry: 'KR'
+  },
+  areaServed: [{ '@type': 'City', name: '고양시' }, { '@type': 'Country', name: '대한민국' }],
+  knowsAbout: ['프리저브드 플라워', '비누꽃', '꽃 무드등', '글라스돔 꽃', '단체 꽃다발 납품', '플라워 클래스'],
+  sameAs: [
+    'https://www.instagram.com/techa_flower/',
+    'https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C',
+    'https://www.facebook.com/techagongbang/'
+  ]
+};
+
+function businessMarkup() {
+  return [
+    BIZ_BEGIN,
+    '<script type="application/ld+json">',
+    JSON.stringify(BUSINESS, null, 2),
+    '</script>',
+    BIZ_END
+  ].join('\n');
+}
+
+// 첫 실행에는 </head> 바로 앞에 넣고, 그다음부터는 주석 사이만 갈아끼운다.
+function fillBusiness(html, eol) {
+  const b = html.indexOf(BIZ_BEGIN);
+  if (b !== -1) {
+    const e = html.indexOf(BIZ_END, b);
+    if (e === -1) return { html, found: false };
+    return { html: html.slice(0, b) + toEol(businessMarkup(), eol) + html.slice(e + BIZ_END.length), found: true };
+  }
+  const h = html.indexOf('</head>');
+  if (h === -1) return { html, found: false };
+  return { html: html.slice(0, h) + toEol(businessMarkup() + '\n', eol) + html.slice(h), found: true };
+}
 
 // initPage({ ... }) 에서 제목·설명·카테고리를 읽는다 (build-related.js 와 같은 방식).
 function readPageOpts(html) {
@@ -165,7 +224,7 @@ function main() {
   const pages = listPages();
   const changed = [];
   const errors = [];
-  let headers = 0, heads = 0, footers = 0;
+  let headers = 0, heads = 0, footers = 0, bizs = 0;
 
   for (const file of pages) {
     const rel = path.relative(ROOT, file).split(path.sep).join('/');
@@ -179,6 +238,12 @@ function main() {
     r = fill(next, 'footer', 'site-footer', FOOTER_BEGIN, FOOTER_END, footerMarkup(rel.startsWith('ko/'), shopUrl), eol);
     if (r.found) { next = r.html; footers++; }
     else errors.push(rel + ': site-footer 를 못 찾음');
+
+    if (BIZ_PAGES.includes(rel)) {
+      r = fillBusiness(next, eol);
+      if (r.found) { next = r.html; bizs++; }
+      else errors.push(rel + ': </head> 를 못 찾아 업체 스키마를 못 넣음');
+    }
 
     if (/<div\s+id="page-head"[^>]*>/.test(next)) {
       const opts = readPageOpts(next);
@@ -206,8 +271,8 @@ function main() {
     process.exit(1);
   }
   console.log(changed.length
-    ? `✅ ${changed.length}쪽 갱신 — 헤더 ${headers} · 제목 ${heads} · 푸터 ${footers} 를 정적 HTML로 생성`
-    : `✅ 최신 상태 — ${pages.length}쪽 (헤더 ${headers} · 제목 ${heads} · 푸터 ${footers})`);
+    ? `✅ ${changed.length}쪽 갱신 — 헤더 ${headers} · 제목 ${heads} · 푸터 ${footers} · 업체 스키마 ${bizs} 를 정적 HTML로 생성`
+    : `✅ 최신 상태 — ${pages.length}쪽 (헤더 ${headers} · 제목 ${heads} · 푸터 ${footers} · 업체 스키마 ${bizs})`);
 }
 
 main();

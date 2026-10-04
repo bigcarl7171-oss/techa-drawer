@@ -1,4 +1,4 @@
-# 색인 요청 절차 (구글·네이버)
+# 색인 요청 절차 (구글·네이버·Bing)
 
 CLAUDE.md 에 "구글 색인 요청·네이버 수집 요청은 API 가 없어 자동화 못 한다"고만
 적혀 있어 실제 경로가 없었다. 손으로 해야 하는 일이라 순서를 여기 남긴다.
@@ -106,6 +106,20 @@ https://www.techa.kr/sitemap.xml
 2026-09-08 이전에는 http 두 개가 리디렉션 없이 200 을 줬다. Cloudflare 존 설정
 **SSL/TLS → Edge Certificates → Always Use HTTPS** 가 꺼져 있어서였다. 이 토글이
 꺼지면 같은 문제가 그대로 돌아오므로, 색인이 이상하면 위 표를 먼저 확인한다.
+
+---
+## Bing — 웹마스터 도구 + IndexNow (2026-10-04 추가)
+
+ChatGPT 웹검색은 Bing 색인 비중이 크다. 여기가 비어 있으면 AI 답변에 테차가 나올 입구가 없다.
+
+- **IndexNow 는 자동이다.** 키 파일은 루트의 `a29906a1f328835b6d3a7784f646be5e.txt`,
+  전송은 `scripts/indexnow.js`. `check-publish.sh` 가 라이브 200 을 확인한 뒤 새 글·`/blog/`·홈을 보낸다.
+  대규모 개편 뒤에는 `node scripts/indexnow.js --sitemap` 으로 전체를 한 번 보낸다.
+  Bing·네이버·Yandex 가 받는다. 구글은 안 받는다(구글은 위 서치콘솔 그대로).
+- **웹마스터 도구 등록은 사람이 한 번 한다.** bing.com/webmasters → 구글 계정 로그인 →
+  "Google Search Console 에서 가져오기" → www.techa.kr 선택. 사이트맵(`sitemap.xml`,
+  `sitemap-tools.xml`)도 함께 넘어온다. 안 넘어왔으면 사이트맵 메뉴에서 직접 제출.
+- 확인: 등록 2~3일 뒤 **URL 검사**에 `https://www.techa.kr/` 를 넣어 "Bing 에 색인됨" 인지 본다.
 
 ---
 ## 자동화할 수 없는 이유
