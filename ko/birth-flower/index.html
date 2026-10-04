@@ -29,6 +29,48 @@
   "applicationCategory":"LifestyleApplication","operatingSystem":"Any",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"} }
 </script>
+<!-- BEGIN faq-schema (생성: scripts/build-faq-schema.js — 직접 고치지 말 것) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "자료마다 탄생화가 다르게 나오는데 어느 게 맞나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "모두 맞다고 보시면 됩니다. 탄생화는 국제 표준이 정해져 있지 않아서, 나라와 자료에 따라 다른 꽃을 씁니다. 위 비교표처럼 국내에 널리 알려진 목록과 미국식 목록이 갈리는 달이 많습니다. 선물로 쓰실 때는 받는 분이 알고 있을 쪽을 고르시거나, 두 꽃 모두 소개해 주시면 됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "음력 생일이면 어느 달로 봐야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "보통은 실제로 생일을 챙기는 달을 기준으로 합니다. 음력으로 생일을 쇠신다면 음력 달, 양력으로 챙기신다면 양력 달로 보시면 됩니다. 탄생화는 규정이 아니라 의미를 담는 관습이라 어느 쪽을 골라도 틀리지 않습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "탄생화가 제철이 아니면 어떻게 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "가장 흔한 고민입니다. 4월 벚꽃이나 8월 해바라기처럼 계절을 타는 꽃은 생일에 생화로 구하기 어려울 때가 많습니다. 이럴 때는 계절을 타지 않는 프리저브드 플라워나 비누꽃으로 같은 꽃을 준비하거나, 그 꽃의 색을 살린 다른 구성으로 대신하는 방법이 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "꽃말이 안 좋은 꽃은 피해야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "같은 꽃도 자료와 시대에 따라 꽃말이 갈립니다. 노란 장미가 대표적으로, 예전에는 질투로 읽혔지만 지금은 우정으로 더 많이 씁니다. 받는 분이 꽃말을 신경 쓰는 편이 아니라면 크게 걱정하지 않으셔도 되고, 마음이 쓰이신다면 카드에 어떤 뜻으로 골랐는지 한 줄 적어 두시면 오해가 생기지 않습니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END faq-schema -->
 </head>
 <body>
 <header id="site-header">
@@ -65,6 +107,8 @@
     <select id="month"></select>
     <div class="result empty" id="result" style="margin-top:16px">태어난 달을 선택하세요.</div>
     <div id="flower-detail"></div>
+    <p class="hint" style="margin:18px 0 0">달마다 꽃말의 유래와 선물 고르는 법을 따로 정리해 두었어요.</p>
+    <nav class="bf-months" aria-label="월별 탄생화 자세히 보기"><a class="bf-month" href="/ko/birth-flower/1/">1월</a><a class="bf-month" href="/ko/birth-flower/2/">2월</a><a class="bf-month" href="/ko/birth-flower/3/">3월</a><a class="bf-month" href="/ko/birth-flower/4/">4월</a><a class="bf-month" href="/ko/birth-flower/5/">5월</a><a class="bf-month" href="/ko/birth-flower/6/">6월</a><a class="bf-month" href="/ko/birth-flower/7/">7월</a><a class="bf-month" href="/ko/birth-flower/8/">8월</a><a class="bf-month" href="/ko/birth-flower/9/">9월</a><a class="bf-month" href="/ko/birth-flower/10/">10월</a><a class="bf-month" href="/ko/birth-flower/11/">11월</a><a class="bf-month" href="/ko/birth-flower/12/">12월</a></nav>
 
     <!-- BEGIN tool-products (생성: scripts/build-tool-products.js — 직접 고치지 말 것) -->
     <section class="tool-products" aria-labelledby="tool-products-title">
@@ -118,18 +162,18 @@
     <table class="compare-table">
       <thead><tr><th>월</th><th>위 목록(국내에 널리 알려짐)</th><th>미국식 탄생화</th></tr></thead>
       <tbody>
-        <tr><td>1월</td><td>수선화</td><td>카네이션</td></tr>
-        <tr><td>2월</td><td>프리지어</td><td>바이올렛(제비꽃)</td></tr>
-        <tr><td>3월</td><td>튤립</td><td>수선화</td></tr>
-        <tr><td>4월</td><td>벚꽃</td><td>데이지, 스위트피</td></tr>
-        <tr><td>5월</td><td>카네이션</td><td>은방울꽃(릴리 오브 더 밸리)</td></tr>
-        <tr><td>6월</td><td>장미</td><td>장미</td></tr>
-        <tr><td>7월</td><td>백합</td><td>라크스퍼</td></tr>
-        <tr><td>8월</td><td>해바라기</td><td>글라디올러스</td></tr>
-        <tr><td>9월</td><td>코스모스</td><td>아스터(과꽃)</td></tr>
-        <tr><td>10월</td><td>국화</td><td>메리골드, 코스모스</td></tr>
-        <tr><td>11월</td><td>카라</td><td>국화</td></tr>
-        <tr><td>12월</td><td>포인세티아</td><td>수선화, 호랑가시나무</td></tr>
+        <tr><td>1월</td><td><a href="/ko/birth-flower/1/">수선화</a></td><td>카네이션</td></tr>
+        <tr><td>2월</td><td><a href="/ko/birth-flower/2/">프리지어</a></td><td>바이올렛(제비꽃)</td></tr>
+        <tr><td>3월</td><td><a href="/ko/birth-flower/3/">튤립</a></td><td>수선화</td></tr>
+        <tr><td>4월</td><td><a href="/ko/birth-flower/4/">벚꽃</a></td><td>데이지, 스위트피</td></tr>
+        <tr><td>5월</td><td><a href="/ko/birth-flower/5/">카네이션</a></td><td>은방울꽃(릴리 오브 더 밸리)</td></tr>
+        <tr><td>6월</td><td><a href="/ko/birth-flower/6/">장미</a></td><td>장미</td></tr>
+        <tr><td>7월</td><td><a href="/ko/birth-flower/7/">백합</a></td><td>라크스퍼</td></tr>
+        <tr><td>8월</td><td><a href="/ko/birth-flower/8/">해바라기</a></td><td>글라디올러스</td></tr>
+        <tr><td>9월</td><td><a href="/ko/birth-flower/9/">코스모스</a></td><td>아스터(과꽃)</td></tr>
+        <tr><td>10월</td><td><a href="/ko/birth-flower/10/">국화</a></td><td>메리골드, 코스모스</td></tr>
+        <tr><td>11월</td><td><a href="/ko/birth-flower/11/">카라</a></td><td>국화</td></tr>
+        <tr><td>12월</td><td><a href="/ko/birth-flower/12/">포인세티아</a></td><td>수선화, 호랑가시나무</td></tr>
       </tbody>
     </table>
     <h2>자주 묻는 질문 (FAQ)</h2>

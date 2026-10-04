@@ -225,3 +225,22 @@ body.home {
 @media (prefers-reduced-motion: reduce) {
   .h-btn, .home-product-card img { transition: none; }
 }
+
+/* 구매 후기 (scripts/build-reviews.js) — 인용은 원문 그대로, 별점 그래픽은 쓰지 않는다 */
+.h-reviews-stat { margin: 0; text-align: right; color: var(--ink-2); font-size: 14px; line-height: 1.6; }
+.h-reviews-stat b { font-family: var(--serif); font-size: 28px; color: var(--ink); }
+.h-reviews-stat small { color: var(--muted); font-size: 12.5px; }
+.h-review-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.h-review { margin: 0; padding: 22px 22px 18px; background: var(--paper-2); border-radius: 4px; display: grid; gap: 14px; align-content: space-between; }
+.h-review blockquote { margin: 0; font-family: var(--serif); font-size: 16.5px; line-height: 1.7; color: var(--ink); }
+.h-review blockquote::before { content: "“"; display: block; color: var(--gold-deep); font-size: 30px; line-height: 1; margin-bottom: 4px; }
+.h-review figcaption { color: var(--muted); font-size: 12.5px; }
+.h-reviews-note { margin: 18px 0 0; color: var(--muted); font-size: 13px; }
+@media (max-width: 860px) {
+  .h-review-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .h-reviews .h-head { display: block; }
+  .h-reviews-stat { text-align: left; margin-top: 12px; }
+  .h-review-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+}

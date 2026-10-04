@@ -168,7 +168,7 @@ function footerMarkup(isTool, shopUrl) {
   ].join('\n');
 }
 
-function pageHeadMarkup(opts, cats, isBlogPost, ownH1) {
+function pageHeadMarkup(opts, cats, isBlogPost, ownH1, rel) {
   const cat = opts.category && cats[opts.category];
   let crumb = '<a href="/">홈</a> › ';
   // 매거진 글에는 목록으로 돌아가는 단을 둔다. JS 판에는 없던 것인데,
@@ -186,6 +186,16 @@ function pageHeadMarkup(opts, cats, isBlogPost, ownH1) {
     ownH1 ? null : '    <div class="page-head"><h1>' + esc(opts.title) + '</h1>' +
       (opts.desc ? '<p class="lead">' + esc(opts.desc) + '</p>' : '') + '</div>',
     '  </div>',
+    // 매거진 글은 화면의 브레드크럼을 BreadcrumbList 로도 남긴다 (2026-10-04).
+    // 같은 데이터에서 찍어야 화면과 스키마가 안 갈린다.
+    isBlogPost ? '  <script type="application/ld+json">' + JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '홈', item: 'https://www.techa.kr/' },
+        { '@type': 'ListItem', position: 2, name: '테차 매거진', item: 'https://www.techa.kr/blog/' },
+        { '@type': 'ListItem', position: 3, name: opts.title, item: 'https://www.techa.kr/' + rel.replace(/index\.html$/, '') },
+      ],
+    }).replace(/</g, '\\u003c') + '</script>' : null,
     '  ' + HEAD_END
   ].filter((l) => l !== null).join('\n');
 }
@@ -261,7 +271,7 @@ function main() {
         const b = next.indexOf(HEAD_BEGIN), e = b === -1 ? -1 : next.indexOf(HEAD_END, b);
         const outside = e === -1 ? next : next.slice(0, b) + next.slice(e + HEAD_END.length);
         const ownH1 = /<h1[\s>]/i.test(outside);
-        r = fill(next, 'div', 'page-head', HEAD_BEGIN, HEAD_END, pageHeadMarkup(opts, CATS, isBlogPost, ownH1), eol);
+        r = fill(next, 'div', 'page-head', HEAD_BEGIN, HEAD_END, pageHeadMarkup(opts, CATS, isBlogPost, ownH1, rel), eol);
         if (r.found) { next = r.html; heads++; }
       }
     }

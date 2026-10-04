@@ -22,79 +22,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
 <link rel="stylesheet" href="/assets/css/style.css">
-<style>
-  .callout {
-    border: 1.5px solid var(--gold-deep); background: var(--sage-soft);
-    border-radius: var(--radius-md); padding: 18px 22px; margin: 0 0 28px;
-    box-shadow: 0 3px 14px rgba(168,184,154,.14);
-  }
-  .callout p { margin: 0; font-size: 14.5px; color: var(--ink, var(--brown)); line-height: 1.6; }
-  .callout a { font-weight: 700; }
-  .btob-bugnote strong { display: block; margin-bottom: 6px; font-size: 16px; }
-
-  .btob-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 14px 0 24px; }
-  .btob-item {
-    background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md);
-    padding: 18px 20px; box-shadow: var(--shadow);
-  }
-  .btob-item .btob-icon { font-size: 20px; margin-bottom: 6px; display: block; }
-  .btob-item b { display: block; font-size: 15.5px; margin-bottom: 6px; }
-  .btob-item p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.55; }
-
-  .btob-facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
-  .btob-fact {
-    background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: var(--radius-pill);
-    padding: 8px 16px; font-size: 13.5px; color: var(--gold-strong-ink); font-weight: 600;
-  }
-  .btob-form-note { font-size: 13.5px; color: var(--body-text); }
-  .btob-form-note ul { padding-left: 18px; margin: 8px 0 0; }
-
-  /* ---- 단체 행사·맞춤형 납품 강조 섹션 ---- */
-  .btob-hero {
-    margin: 8px 0 34px; padding: 28px 24px;
-    background: linear-gradient(160deg, var(--sage-soft) 0%, var(--gold-soft) 130%);
-    border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-lg);
-  }
-  .btob-hero-eyebrow {
-    display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--gold-strong-ink);
-    background: var(--white); border: 1px solid var(--gold-border); border-radius: var(--radius-pill);
-    padding: 4px 12px; margin-bottom: 12px;
-  }
-  .article h2.btob-hero-title {
-    font-family: "Gowun Batang", serif; font-weight: 700; line-height: 1.45;
-    font-size: clamp(20px, 4.6vw, 27px); margin: 0 0 8px; padding-bottom: 0; border-bottom: none; color: var(--brown);
-  }
-  .btob-hero-title em { font-style: normal; color: var(--gold-strong-ink); }
-  .btob-hero-sub { font-size: 14.5px; color: var(--body-text); margin: 0 0 24px; }
-
-  .btob-hero-facts {
-    list-style: none; padding: 0; margin: 0 0 26px;
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 9px 22px;
-  }
-  .btob-hero-facts li { position: relative; padding-left: 14px; font-size: 13.5px; color: var(--body-text); line-height: 1.55; }
-  .btob-hero-facts li::before {
-    content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold-deep);
-  }
-  .btob-hero-facts b { color: var(--brown); font-weight: 700; }
-  .btob-hero-cta { text-decoration: none; }
-  .btob-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .btob-process { counter-reset: process; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 14px 0 28px; }
-  .btob-process-item { counter-increment: process; border-top: 2px solid var(--gold-border); padding: 16px 4px 0; }
-  .btob-process-item::before { content: "0" counter(process); display: block; margin-bottom: 8px; color: var(--gold-strong-ink); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
-  .btob-process-item b { display: block; margin-bottom: 5px; color: var(--brown); }
-  .btob-process-item p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.6; }
-  .btob-proof { margin: 14px 0 26px; padding: 18px 20px; border-left: 3px solid var(--gold-deep); background: var(--gold-soft); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
-  .btob-proof strong { display: block; margin-bottom: 5px; color: var(--brown); }
-  .btob-proof p { margin: 0; font-size: 14px; line-height: 1.65; }
-  .btob-quality { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:14px 0 28px; }
-  .btob-quality div { padding:16px; border:1px solid var(--line); border-radius:var(--radius-md); background:var(--white); font-size:13.5px; }
-  .btob-quality b { display:block; margin-bottom:4px; color:var(--brown); }
-  .btob-copy { margin:14px 0; }
-  .btob-faq details { border-bottom:1px solid var(--line); padding:12px 0; }
-  .btob-faq summary { min-height:44px; display:flex; align-items:center; font-weight:700; cursor:pointer; }
-  .btob-faq p { margin:4px 0 10px; }
-  @media(max-width:640px){.btob-quality{grid-template-columns:1fr}}
-</style>
+<link rel="stylesheet" href="/assets/css/b2b.css">
 <!-- BEGIN business-schema (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
 <script type="application/ld+json">
 {
@@ -151,6 +79,64 @@
 }
 </script>
 <!-- END business-schema -->
+<!-- BEGIN faq-schema (생성: scripts/build-faq-schema.js — 직접 고치지 말 것) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "어떤 상품을 주문할지 정하지 않았는데 문의해도 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네. 행사 종류, 날짜, 수량, 예산을 알려주시면 테차가 어울리는 상품을 추천해 드립니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "몇 개부터 주문할 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "10개부터 수백 개까지 주문하실 수 있습니다. 수량이 많을수록 일찍 문의해 주시면 일정을 맞추기 쉽습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "회사 색상에 맞춰 만들 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네. 로고나 색상 코드를 보내주시면 테차가 비슷한 색의 꽃과 포장지를 골라 샘플로 보여드립니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "견적서와 세금계산서를 받을 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네. 상담할 때 사업자등록번호와 받으실 이메일을 알려주세요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "메시지 카드에 행사 문구를 넣을 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네. 행사 이름, 받는 분 이름, 전하고 싶은 문장을 카드에 넣어 드립니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "제작 기간은 얼마나 걸리나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "50개 기준으로 1~3일이 걸립니다. 배송 기간까지 생각해 행사 날짜보다 최소 일주일 전에 문의해 주세요."
+      }
+    }
+  ]
+}
+</script>
+<!-- END faq-schema -->
 </head>
 <body>
 <header id="site-header">
@@ -208,6 +194,12 @@
     </table>
     </div>
     <p style="font-size:13.5px;color:var(--muted)">플라워 클래스는 상시 운영하지 않습니다. 희망 날짜보다 최소 일주일 전에 문의해 주세요.</p>
+    <div class="btob-facts" aria-label="용도별 안내">
+      <a class="btob-fact" href="/contact/event/">행사·시상 꽃다발 →</a>
+      <a class="btob-fact" href="/contact/employee-gift/">직원·고객 감사 선물 →</a>
+      <a class="btob-fact" href="/contact/vip-gift/">거래처·VIP 선물 →</a>
+      <a class="btob-fact" href="/contact/flower-class/">플라워 클래스 출강 →</a>
+    </div>
 
     <h2>테차에 맡기면 이렇게 준비됩니다</h2>
     <div class="btob-grid">
@@ -247,9 +239,41 @@
       <span class="btob-fact">색상·포장·카드 문구 상담</span>
     </div>
 
-    <h2 id="contact-form" style="scroll-margin-top: 80px;">문의하실 때 알려주세요</h2>
+    <h2 id="contact-form" style="scroll-margin-top: 80px;">견적 문의하기</h2>
+    <p>모두 정하지 않으셨어도 됩니다. 정해진 내용만 적어 주시면, 나머지는 상담하면서 함께 정합니다.</p>
+    <!-- BEGIN quote-form (생성: scripts/build-quote-form.js — 직접 고치지 말 것) -->
+<form class="quote-form" method="post" action="/api/quote" novalidate>
+  <div class="qf-grid">
+    <label class="qf-field"><span>회사·기관 이름 <b>필수</b></span><input name="company" required maxlength="100" autocomplete="organization"></label>
+    <label class="qf-field"><span>담당자 이름 <b>필수</b></span><input name="name" required maxlength="50" autocomplete="name"></label>
+    <label class="qf-field"><span>연락처</span><input name="phone" type="tel" maxlength="30" autocomplete="tel" placeholder="010-0000-0000"></label>
+    <label class="qf-field"><span>이메일</span><input name="email" type="email" maxlength="120" autocomplete="email"></label>
+    <label class="qf-field"><span>용도</span><select name="purpose"><option value="">고르지 않음</option><option>행사·시상</option><option>직원 선물</option><option>VIP·거래처</option><option>플라워 클래스</option><option>기타</option></select></label>
+    <label class="qf-field"><span>행사 날짜</span><input name="date" type="date"></label>
+    <label class="qf-field"><span>수량</span><input name="quantity" type="number" min="1" max="999999" inputmode="numeric" placeholder="예: 30"></label>
+    <label class="qf-field"><span>예산</span><input name="budget" maxlength="100" placeholder="총액 또는 1개당 금액"></label>
+    <label class="qf-field"><span>배송지 개수</span><input name="destinations" type="number" min="1" max="9999" inputmode="numeric" placeholder="예: 1"></label>
+    <label class="qf-field"><span>원하는 색상</span><input name="color" maxlength="100" placeholder="회사 색상, 행사 분위기 등"></label>
+  </div>
+  <p class="qf-hint">연락처와 이메일 중 하나는 꼭 적어 주세요. 나머지는 정해진 것만 적으셔도 됩니다.</p>
+  <div class="qf-checks">
+    <label><input type="checkbox" name="card" value="on"> 메시지 카드가 필요합니다</label>
+    <label><input type="checkbox" name="invoice" value="on"> 견적서·세금계산서가 필요합니다</label>
+  </div>
+  <label class="qf-field qf-wide"><span>요청 사항</span><textarea name="message" rows="4" maxlength="1500" placeholder="행사 종류, 받는 분, 원하는 상품 등 편하게 적어 주세요"></textarea></label>
+  <div class="qf-hp" aria-hidden="true"><label>비워 두세요 <input name="website" tabindex="-1" autocomplete="off"></label></div>
+  <input type="hidden" name="elapsed_ms" value="">
+  <input type="hidden" name="page" value="">
+  <div class="qf-agree">
+    <label><input type="checkbox" name="agree" value="on" required> <b>개인정보 수집·이용에 동의합니다 (필수)</b></label>
+    <p>수집 항목: 회사·기관 이름, 담당자 이름, 연락처, 이메일, 문의 내용 · 목적: 견적 안내와 상담 · 보관: 문의일로부터 1년 뒤 파기. 동의하지 않으셔도 이메일이나 네이버 톡톡으로 문의하실 수 있습니다. 자세한 내용은 <a href="/privacy/#quote">개인정보처리방침</a>에 있습니다.</p>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block qf-submit">견적 문의 보내기</button>
+  <p class="qf-status" role="status" aria-live="polite"></p>
+</form>
+<!-- END quote-form -->
     <div class="btob-form-note">
-      <p>모두 정하지 않으셨어도 됩니다. 정해진 내용만 알려주시면, 나머지는 상담하면서 함께 정합니다.</p>
+      <p>이메일이나 네이버 톡톡이 편하시면 아래 내용을 알려 주세요.</p>
       <ul>
         <li>회사·기관 이름, 담당자 이름과 연락처</li>
         <li>행사 종류 (예: 시상식, 졸업식, 감사 선물)</li>
@@ -262,7 +286,7 @@
     </div>
     <button type="button" id="copyChecklist" class="btn btn-ghost btob-copy">문의 내용 복사하기</button>
     <div class="row btob-contact-actions">
-      <a id="mail" href="#" class="btn btn-primary btn-block">이메일로 문의하기</a>
+      <a id="mail" href="#" class="btn btn-ghost btn-block">이메일로 문의하기</a>
       <a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener" class="btn btn-ghost btn-block">네이버 톡톡으로 문의하기</a>
     </div>
     <p class="hint">50개 기준 제작에 1~3일이 걸립니다. 배송 기간까지 생각해 행사 날짜보다 최소 일주일 전에 문의해 주세요.</p>
@@ -305,6 +329,7 @@
 </footer>
 
 <script src="/assets/js/site.js"></script>
+<script src="/assets/js/quote-form.js" defer></script>
 <script>
 TECHA.initPage({ title:"기업·학교·기관 단체 꽃 선물", desc:"행사용 꽃다발과 답례품을 수량과 날짜에 맞춰 직접 제작합니다.", category:null });
 var CHECKLIST = [

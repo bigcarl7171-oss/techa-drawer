@@ -1,0 +1,72 @@
+/* 기업·단체 주문 페이지 공통 — /contact/ 와 용도별 페이지(/contact/*/) */
+.callout {
+  border: 1.5px solid var(--gold-deep); background: var(--sage-soft);
+  border-radius: var(--radius-md); padding: 18px 22px; margin: 0 0 28px;
+  box-shadow: 0 3px 14px rgba(168,184,154,.14);
+}
+.callout p { margin: 0; font-size: 14.5px; color: var(--ink, var(--brown)); line-height: 1.6; }
+.callout a { font-weight: 700; }
+.btob-bugnote strong { display: block; margin-bottom: 6px; font-size: 16px; }
+
+.btob-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 14px 0 24px; }
+.btob-item {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md);
+  padding: 18px 20px; box-shadow: var(--shadow);
+}
+.btob-item .btob-icon { font-size: 20px; margin-bottom: 6px; display: block; }
+.btob-item b { display: block; font-size: 15.5px; margin-bottom: 6px; }
+.btob-item p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+.btob-facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+.btob-fact {
+  background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: var(--radius-pill);
+  padding: 8px 16px; font-size: 13.5px; color: var(--gold-strong-ink); font-weight: 600;
+}
+.btob-form-note { font-size: 13.5px; color: var(--body-text); }
+.btob-form-note ul { padding-left: 18px; margin: 8px 0 0; }
+
+/* ---- 단체 행사·맞춤형 납품 강조 섹션 ---- */
+.btob-hero {
+  margin: 8px 0 34px; padding: 28px 24px;
+  background: linear-gradient(160deg, var(--sage-soft) 0%, var(--gold-soft) 130%);
+  border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-lg);
+}
+.btob-hero-eyebrow {
+  display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--gold-strong-ink);
+  background: var(--white); border: 1px solid var(--gold-border); border-radius: var(--radius-pill);
+  padding: 4px 12px; margin-bottom: 12px;
+}
+.article h2.btob-hero-title {
+  font-family: "Gowun Batang", serif; font-weight: 700; line-height: 1.45;
+  font-size: clamp(20px, 4.6vw, 27px); margin: 0 0 8px; padding-bottom: 0; border-bottom: none; color: var(--brown);
+}
+.btob-hero-title em { font-style: normal; color: var(--gold-strong-ink); }
+.btob-hero-sub { font-size: 14.5px; color: var(--body-text); margin: 0 0 24px; }
+
+.btob-hero-facts {
+  list-style: none; padding: 0; margin: 0 0 26px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 9px 22px;
+}
+.btob-hero-facts li { position: relative; padding-left: 14px; font-size: 13.5px; color: var(--body-text); line-height: 1.55; }
+.btob-hero-facts li::before {
+  content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold-deep);
+}
+.btob-hero-facts b { color: var(--brown); font-weight: 700; }
+.btob-hero-cta { text-decoration: none; }
+.btob-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btob-process { counter-reset: process; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 14px 0 28px; }
+.btob-process-item { counter-increment: process; border-top: 2px solid var(--gold-border); padding: 16px 4px 0; }
+.btob-process-item::before { content: "0" counter(process); display: block; margin-bottom: 8px; color: var(--gold-strong-ink); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+.btob-process-item b { display: block; margin-bottom: 5px; color: var(--brown); }
+.btob-process-item p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+.btob-proof { margin: 14px 0 26px; padding: 18px 20px; border-left: 3px solid var(--gold-deep); background: var(--gold-soft); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+.btob-proof strong { display: block; margin-bottom: 5px; color: var(--brown); }
+.btob-proof p { margin: 0; font-size: 14px; line-height: 1.65; }
+.btob-quality { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:14px 0 28px; }
+.btob-quality div { padding:16px; border:1px solid var(--line); border-radius:var(--radius-md); background:var(--white); font-size:13.5px; }
+.btob-quality b { display:block; margin-bottom:4px; color:var(--brown); }
+.btob-copy { margin:14px 0; }
+.btob-faq details { border-bottom:1px solid var(--line); padding:12px 0; }
+.btob-faq summary { min-height:44px; display:flex; align-items:center; font-weight:700; cursor:pointer; }
+.btob-faq p { margin:4px 0 10px; }
+@media(max-width:640px){.btob-quality{grid-template-columns:1fr}}

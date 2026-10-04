@@ -469,3 +469,42 @@ textarea { min-height: 160px; resize: vertical; line-height: 1.6; }
   .result .big { font-size: 28px; }
   .hero h1 { font-size: 27px; }
 }
+
+/* ---------- B2B 견적 폼 (scripts/build-quote-form.js 가 찍는 마크업) ---------- */
+.quote-form {
+  margin: 18px 0 10px; padding: 22px; background: var(--white);
+  border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow);
+}
+.qf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+.qf-field { display: grid; gap: 6px; font-size: 14px; color: var(--brown); }
+.qf-field > span { font-weight: 600; }
+.qf-field b { margin-left: 4px; color: var(--gold-deep); font-size: 12px; font-weight: 700; }
+.qf-field input, .qf-field select, .qf-field textarea { padding: 10px 12px; font-size: 15px; }
+.qf-field textarea { min-height: 110px; }
+.qf-wide { margin-top: 14px; }
+.qf-hint { margin: 10px 0 0; font-size: 13px; color: var(--muted); }
+.qf-checks { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 0; font-size: 14px; }
+.qf-checks label, .qf-agree label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.qf-checks input, .qf-agree input { width: 18px; height: 18px; margin: 0; accent-color: var(--gold-deep); }
+.qf-agree { margin: 18px 0 14px; padding: 14px 16px; background: var(--paper); border-radius: var(--radius-sm); }
+.qf-agree p { margin: 8px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+.qf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.qf-submit[disabled] { opacity: .6; cursor: progress; }
+.qf-status { min-height: 1.4em; margin: 12px 0 0; font-size: 14.5px; line-height: 1.6; }
+.qf-status.is-ok { color: #4f6345; font-weight: 600; }
+.qf-status.is-error { color: #9b3d2e; }
+@media (max-width: 560px) {
+  .quote-form { padding: 18px 16px; }
+  .qf-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- 월별 탄생화 (scripts/build-birth-flower-months.js) ---------- */
+.bf-lead { margin: 14px 0 0; text-align: center; color: var(--body-text); font-size: 15px; }
+.bf-months { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin: 10px 0 14px; }
+.bf-month {
+  display: block; padding: 9px 0; text-align: center; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); background: var(--white); color: var(--brown); font-size: 14px;
+}
+a.bf-month:hover { border-color: var(--gold-deep); text-decoration: none; }
+.bf-month.is-current { background: var(--gold-soft); border-color: var(--gold-border); font-weight: 700; }
+@media (max-width: 420px) { .bf-months { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

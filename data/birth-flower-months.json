@@ -1,0 +1,18 @@
+{
+  "_note": "월별 탄생화 페이지(/ko/birth-flower/1/ ~ /12/)에 붙이는 상품. 값은 data/store-links.json 의 products.*.line 만 쓴다. scripts/build-birth-flower-months.js 가 읽는다.",
+  "_why": "탄생화 검색 1페이지는 블로그·나무위키 표가 차지한다(2026-10-04 점검). 표 하나로는 이길 수 없으니 달마다 정적 페이지를 두고, 그 달 꽃의 색·분위기에 맞는 상품을 붙인다. 고르는 기준은 도구 페이지 FLOWERS 의 c(추천 문구)를 따른다.",
+  "months": {
+    "1": [["hydrangea-bouquet", "수선화처럼 단정한 톤의 프리저브드 꽃다발"], ["cup-moodlamp-single", "겨울 생일 책상 위에 두는 한 송이 꽃 조명"], ["flower-postcard", "꽃말을 적어 함께 건네는 카드"]],
+    "2": [["single-stem-soap-box", "프리지어처럼 은은한 향의 비누꽃 한두 송이"], ["rose-hydrangea-bouquet", "새 출발을 축하하는 자리의 꽃다발"], ["flower-postcard", "새 학기·새 출발 인사를 적는 카드"]],
+    "3": [["superior-rose", "튤립의 붉은 고백처럼, 레드 장미 한 송이"], ["rose-hydrangea-bouquet", "봄 고백·기념일에 건네는 꽃다발"], ["glassdome-moodlamp", "오래 두고 보는 유리돔 꽃 조명"]],
+    "4": [["hydrangea-bouquet", "벚꽃의 연분홍을 닮은 수국 꽃다발"], ["hydrangea-moodlamp", "연한 색으로 방을 밝히는 수국 꽃 무드등"], ["single-stem-soap-box", "가볍게 건네는 비누꽃 한두 송이"]],
+    "5": [["carnation-rose-bouquet", "5월 탄생화 카네이션을 시들지 않게"], ["money-cake", "감사 인사에 용돈을 함께 담는 케이크"], ["rose-money-bouquet", "부모님·은사님께 드리는 장미 돈꽃다발"]],
+    "6": [["superior-rose", "6월 탄생화 장미, 시들지 않는 한 송이"], ["rose-hydrangea-bouquet", "장미가 들어간 프리저브드 꽃다발"], ["glassdome-moodlamp", "장미를 유리돔에 담은 꽃 조명"]],
+    "7": [["hydrangea-bouquet", "백합의 순백을 닮은 화이트 톤 꽃다발"], ["topiary-moodlamp", "한결같은 마음을 오래 두는 수국 무드등"], ["cup-moodlamp-single", "작은 공간에 두는 한 송이 꽃 조명"]],
+    "8": [["sunflower-frame", "8월 탄생화 해바라기를 담은 액자"], ["sunflower-bouquet", "밝은 노랑의 해바라기 꽃다발"], ["flower-postcard", "꽃말을 적어 함께 건네는 카드"]],
+    "9": [["hydrangea-bouquet", "코스모스의 청초한 분위기, 핑크 톤 꽃다발"], ["rose-hydrangea-bouquet", "가을 생일·기념일 꽃다발"], ["single-stem-soap-box", "가볍게 건네는 비누꽃 한두 송이"]],
+    "10": [["cup-moodlamp-single", "국화의 단단한 품격처럼, 오래 두는 꽃 무드등"], ["glassdome-moodlamp", "유리돔에 담아 오래 보는 꽃 조명"], ["hydrangea-bouquet", "취향을 크게 타지 않는 프리저브드 꽃다발"]],
+    "11": [["cup-moodlamp-single", "카라의 단아함처럼, 화이트 톤 꽃 무드등"], ["hydrangea-moodlamp", "늦가을 방을 밝히는 수국 꽃 무드등"], ["hydrangea-bouquet", "단정한 톤의 프리저브드 꽃다발"]],
+    "12": [["glassdome-moodlamp", "포인세티아의 붉은 축복, 연말을 밝히는 꽃 조명"], ["superior-rose", "붉은 장미 한 송이로 전하는 연말 인사"], ["rose-hydrangea-bouquet", "연말 생일·기념일 꽃다발"]]
+  }
+}

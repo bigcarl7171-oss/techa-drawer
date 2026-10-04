@@ -65,7 +65,8 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
 - **목록은 손으로 고치지 않는다** — 홈 도구 표·관련 도구·홈 검색 목록은 생성기 3종이
   찍는다(`build-home-tools.js` · `build-home-curation.js` · `build-tool-hub.js` · `build-related.js` · `build-posts.js` ·
   `build-blog-products.js` · `build-tool-products.js` · `build-chrome.js` ·
-  `build-message-phrases.js`). `site.js` 나
+  `build-message-phrases.js` · `build-quote-form.js` · `build-birth-flower-months.js` ·
+  `build-faq-schema.js` · `build-reviews.js`). `site.js` 나
   `blog/index.html` 을 고쳤으면 해당 생성기를 돌린다. 안 돌리면 게이트가 잡는다.
   (JS로만 그리던 동안 도구 15개가 색인에서 빠져 있었다 — `docs/blog-seo-guide.md` 참고)
   **헤더·브레드크럼/h1·푸터도 `build-chrome.js` 가 찍는다 (2026-09-20).** 그전엔 65쪽 중
@@ -78,6 +79,10 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
   원본은 `data/home-curation.json` — 이걸 고쳤으면 **`node scripts/build-home-curation.js --verify-all`** 로
   12개월치가 전부 빌드되는지 확인한다. 12월 구성이 깨져 있으면 12월 1일 새벽에야 알게 된다.
   (게이트도 같은 검사를 돈다.)
+- **B2B 견적 폼은 bigcarl@naver.com 으로 메일이 온다 (2026-10-04).** `/contact/` 와 용도별 4쪽의 폼 →
+  `worker/index.js`(`/api/quote`) → Cloudflare Email Service. 받는 주소는 `wrangler.toml` 바인딩에 고정.
+  홈 후기 문구는 `data/reviews.json`(원문 그대로, 평점은 "4.8 / 5 이상", 건수는 쓰지 않는다).
+  설정·절차: `docs/b2b-quote-form.md`
 - 자동화가 못 하는 것 3가지 — 구글 색인 요청, 네이버 수집 요청, 네이버 블로그 붙여넣기. API가 없다. 실제 클릭 경로는 `docs/search-console-guide.md`.
 
 # 원고 작성 요청

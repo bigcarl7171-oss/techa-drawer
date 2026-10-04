@@ -8,10 +8,27 @@ compatibility_date = "2026-07-24"
 workers_dev = false
 preview_urls = true
 
+# B2B 견적 폼 접수(/api/quote → bigcarl@naver.com 메일)만 Worker 코드가 받는다 (2026-10-04).
+# 나머지는 전부 정적 자산이고 Worker 를 거치지 않는다(run_worker_first 가 /api/* 만).
+# 메일 발송 전에 할 일(techa.kr 을 Email Service 에 등록, 받는 주소 인증): docs/b2b-quote-form.md
+main = "worker/index.js"
+
+[vars]
+QUOTE_FROM = "quote@techa.kr"
+# 아래 destination_address 와 같은 값이어야 한다 (바인딩이 이 주소 말고는 막는다)
+QUOTE_TO = "bigcarl@naver.com"
+
+# 받는 주소를 하나로 고정한다 — 이 Worker 는 다른 주소로 메일을 보낼 수 없다
+[[send_email]]
+name = "QUOTE_MAIL"
+destination_address = "bigcarl@naver.com"
+
 # 정적 사이트(별도 프레임워크 빌드 없음) — 저장소 루트를 그대로 자산으로 서비스
 [assets]
 directory = "."
+binding = "ASSETS"
 not_found_handling = "404-page"
+run_worker_first = ["/api/*"]
 
 # Cloudflare Workers Builds가 git push마다 배포 전에 실행.
 # 도구/매거진 본문이 바뀌어도 검색 인덱스(assets/data/search-index.json)가
