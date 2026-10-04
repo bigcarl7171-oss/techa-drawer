@@ -508,3 +508,4 @@ textarea { min-height: 160px; resize: vertical; line-height: 1.6; }
 a.bf-month:hover { border-color: var(--gold-deep); text-decoration: none; }
 .bf-month.is-current { background: var(--gold-soft); border-color: var(--gold-border); font-weight: 700; }
 @media (max-width: 420px) { .bf-months { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.qf-code { color: var(--muted); font-size: 12px; }

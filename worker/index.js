@@ -38,8 +38,9 @@ async function handleQuote(request, env) {
   const ctype = request.headers.get('content-type') || '';
   const isJson = ctype.includes('application/json');
   // JS 없이 보낸 폼은 결과를 페이지로 돌려준다
-  const reply = (ok, error, status) => isJson
-    ? json(ok ? { ok: true } : { ok: false, error }, status)
+  // code: 실패 원인(Cloudflare 오류 코드 등). 폼 화면에 그대로 보여서 원인을 바로 알 수 있게 한다
+  const reply = (ok, error, status, code) => isJson
+    ? json(ok ? { ok: true } : { ok: false, error, ...(code ? { code } : {}) }, status)
     : Response.redirect(new URL('/contact/?' + (ok ? 'sent=1' : 'error=' + error) + '#contact-form', request.url).toString(), 303);
 
   const origin = request.headers.get('origin');
@@ -76,7 +77,7 @@ async function handleQuote(request, env) {
     });
   } catch (e) {
     console.error('send_email', e && e.code, e && e.message);
-    return reply(false, 'upstream', 502);
+    return reply(false, 'upstream', 502, (e && e.code) || 'send_failed');
   }
   return reply(true);
 }

@@ -37,6 +37,20 @@
 1번을 안 한 채로 배포되면 사이트는 정상이고, 폼만 "지금 접수가 잠시 안 돼요"와 함께
 **적은 내용이 그대로 담긴 이메일 보내기 링크**와 네이버 톡톡을 안내한다 — 문의를 잃지는 않는다.
 
+## "지금 접수가 잠시 안 돼요"가 뜰 때
+
+문구 끝의 **(오류 코드: …)** 를 보면 원인이 나온다. Cloudflare 대시보드 Workers → techa-automation →
+Logs 에도 `send_email <코드>` 로 남는다.
+
+| 코드 | 원인 | 할 일 |
+|---|---|---|
+| `E_SENDER_DOMAIN_NOT_AVAILABLE` · `E_SENDER_NOT_VERIFIED` | techa.kr 이 Email Sending 에 등록 안 됨 | 위 "머지하기 전에 할 일" 1번 |
+| `E_RECIPIENT_NOT_ALLOWED` · `E_RECIPIENT_SUPPRESSED` | 받는 주소 인증 안 됨 / 반송 이력 | 위 2번, 또는 Email Sending 설정에서 suppression 확인 |
+| `E_RATE_LIMIT_EXCEEDED` · `E_DAILY_LIMIT_EXCEEDED` | 발송 한도 | 잠시 뒤 재시도. 반복되면 스팸 유입 의심 |
+| `http_404` · `http_405` · `http_501` | 접수 API 가 없는 배포(Worker 코드 없이 정적 파일만 올라간 경우) | 배포 로그 확인 |
+| `origin` | 허용 목록 밖 주소에서 보냄 | `worker/index.js` 의 `ALLOWED_ORIGINS` |
+| `Failedtofetch` | 방문자 쪽 네트워크 끊김 | — |
+
 ## 스팸·안전장치
 
 - **받는 주소 고정**: 바인딩에 `destination_address = "bigcarl@naver.com"` — 코드가 다른 주소로는 못 보낸다.

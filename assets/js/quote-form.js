@@ -68,7 +68,8 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       }).then(function (r) {
-        return r.json().catch(function () { return { ok: false, error: "upstream" }; });
+        // JSON 이 아니면(예: 접수 API 가 없는 배포) 상태 코드를 원인으로 남긴다
+        return r.json().catch(function () { return { ok: false, error: "upstream", code: "http_" + r.status }; });
       }).then(function (res) {
         if (res.ok) {
           form.reset();
@@ -77,10 +78,12 @@
           return;
         }
         if (MESSAGES[res.error]) { say(MESSAGES[res.error], "error"); return; }
-        throw new Error(res.error || "upstream");
-      }).catch(function () {
+        throw new Error(res.code || res.error || "upstream");
+      }).catch(function (err) {
+        var code = String((err && err.message) || "network").replace(/[^A-Za-z0-9_\-]/g, "").slice(0, 40) || "network";
         say('지금 접수가 잠시 안 돼요. 적어 주신 내용 그대로 <a href="' + mailFallback(form) +
-          '">이메일로 보내기</a>나 <a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡</a>으로 문의해 주세요.', "error");
+          '">이메일로 보내기</a>나 <a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡</a>으로 문의해 주세요.' +
+          ' <small class="qf-code">(오류 코드: ' + code + ')</small>', "error");
       }).then(function () { button.disabled = false; });
     });
   }

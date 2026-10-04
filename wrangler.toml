@@ -23,6 +23,11 @@ QUOTE_TO = "bigcarl@naver.com"
 name = "QUOTE_MAIL"
 destination_address = "bigcarl@naver.com"
 
+# Worker 로그를 대시보드(Workers → techa-automation → Logs)에 남긴다.
+# 견적 메일 발송이 실패하면 'send_email <오류 코드>' 가 여기 찍힌다 (2026-10-04)
+[observability]
+enabled = true
+
 # 정적 사이트(별도 프레임워크 빌드 없음) — 저장소 루트를 그대로 자산으로 서비스
 [assets]
 directory = "."
