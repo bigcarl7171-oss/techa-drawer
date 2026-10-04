@@ -10,7 +10,7 @@ preview_urls = true
 
 # B2B 견적 폼 접수(/api/quote → bigcarl@naver.com 메일)만 Worker 코드가 받는다 (2026-10-04).
 # 나머지는 전부 정적 자산이고 Worker 를 거치지 않는다(run_worker_first 가 /api/* 만).
-# 메일 발송 전에 할 일(techa.kr 을 Email Service 에 등록, 받는 주소 인증): docs/b2b-quote-form.md
+# 메일 발송 전에 할 일(techa.kr 에 Email Routing 켜기, 받는 주소 인증 — 무료): docs/b2b-quote-form.md
 main = "worker/index.js"
 
 [vars]

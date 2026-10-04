@@ -25,16 +25,23 @@
 | `assets/js/quote-form.js` | 브라우저에서 보내기·안내 문구. JS 가 없어도 폼은 그대로 동작한다 |
 | `privacy/index.html#quote` | 수집 항목·목적·보관 기간·국외 이전 고지 |
 
-## ⚠️ main 에 머지하기 전에 할 일 (사장님, Cloudflare 대시보드에서 1번만)
+## ⚠️ main 에 머지하기 전에 할 일 (사장님, Cloudflare 대시보드에서 1번만) — 무료
 
-1. **Compute → Email Service → Email Sending → Onboard Domain** → `techa.kr` 선택 → **Done**
-   - Cloudflare 가 `cf-bounce.techa.kr`(MX·SPF·DKIM)과 `_dmarc.techa.kr`(DMARC) 레코드를 자동으로 넣는다.
-   - **루트 도메인의 MX 는 건드리지 않는다.** techa.kr 로 받는 메일이 있다면 그대로 유지된다.
-   - 이미 `_dmarc.techa.kr` 레코드가 있으면 충돌 안내가 뜬다. 그때는 손대지 말고 알려 주세요.
-2. 받는 주소 인증을 요구하면 `bigcarl@naver.com` 으로 온 확인 메일의 링크를 누른다.
-3. 머지 후 배포가 끝나면 `/contact/` 폼으로 시험 문의를 1건 보내서 메일이 오는지 확인한다.
+**Email Sending(유료)이 아니라 Email Routing(무료)으로 한다.** Email Sending 화면은 "Workers Paid
+플랜에서만"이라고 막혀 있다(2026-10-04 확인). 하지만 Cloudflare 요금 문서에 따르면 **계정에서 인증한
+받는 주소로 보내는 메일은 모든 플랜에서 무료이고, Email Routing만 설정해도 된다.** 이 폼은
+bigcarl@naver.com 한 곳으로만 보내니 여기에 해당한다. 코드는 그대로다.
 
-1번을 안 한 채로 배포되면 사이트는 정상이고, 폼만 "지금 접수가 잠시 안 돼요"와 함께
+0. **먼저 확인**: Domains → techa.kr → DNS → Records 에 **이름이 `techa.kr`(또는 `@`)인 MX 레코드**가 있는지 본다.
+   - 없으면 → 1번으로. (techa.kr 주소로 메일을 받고 있지 않다는 뜻)
+   - 있으면 → **멈추고 알려 주세요.** Email Routing 이 그 MX 를 바꿔서, 지금 받는 메일이 끊길 수 있다.
+1. **Compute → Email Service → Email Routing → Onboard Domain** → `techa.kr` → **Done**
+   - 루트 도메인에 MX·SPF·DKIM 레코드가 자동으로 들어간다.
+2. **Email Routing → Destination addresses(받는 주소) → 추가** → `bigcarl@naver.com`
+   - 네이버 메일로 온 확인 메일에서 **Verify email address** 를 누른다. 이게 빠지면 `E_RECIPIENT_NOT_ALLOWED`.
+3. 5~15분 뒤(DNS 반영) 미리보기 주소에서 폼을 다시 보내 메일이 오는지 확인한다.
+
+설정을 안 한 채로 배포되면 사이트는 정상이고, 폼만 "지금 접수가 잠시 안 돼요"와 함께
 **적은 내용이 그대로 담긴 이메일 보내기 링크**와 네이버 톡톡을 안내한다 — 문의를 잃지는 않는다.
 
 ## "지금 접수가 잠시 안 돼요"가 뜰 때
@@ -44,7 +51,7 @@ Logs 에도 `send_email <코드>` 로 남는다.
 
 | 코드 | 원인 | 할 일 |
 |---|---|---|
-| `E_SENDER_DOMAIN_NOT_CONFIGURED` · `E_SENDER_DOMAIN_NOT_AVAILABLE` · `E_SENDER_NOT_VERIFIED` | techa.kr 이 Email Sending 에 등록 안 됨 (2026-10-04 미리보기에서 실제로 `…NOT_CONFIGURED` 확인) | 위 "머지하기 전에 할 일" 1번 |
+| `E_SENDER_DOMAIN_NOT_CONFIGURED` · `E_SENDER_DOMAIN_NOT_AVAILABLE` · `E_SENDER_NOT_VERIFIED` | techa.kr 에 Email Routing 이 안 켜짐 (2026-10-04 미리보기에서 실제로 `…NOT_CONFIGURED` 확인) | 위 "머지하기 전에 할 일" 1번 |
 | `E_RECIPIENT_NOT_ALLOWED` · `E_RECIPIENT_SUPPRESSED` | 받는 주소 인증 안 됨 / 반송 이력 | 위 2번, 또는 Email Sending 설정에서 suppression 확인 |
 | `E_RATE_LIMIT_EXCEEDED` · `E_DAILY_LIMIT_EXCEEDED` | 발송 한도 | 잠시 뒤 재시도. 반복되면 스팸 유입 의심 |
 | `http_404` · `http_405` · `http_501` | 접수 API 가 없는 배포(Worker 코드 없이 정적 파일만 올라간 경우) | 배포 로그 확인 |

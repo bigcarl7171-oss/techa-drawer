@@ -10,8 +10,8 @@
  *
  * 받는 주소는 wrangler.toml 의 send_email 바인딩(QUOTE_MAIL)에 destination_address 로
  * 고정돼 있다 — 이 코드가 다른 주소로는 보낼 수 없다(폼이 스팸 발송기가 되지 않게).
- * 보내는 주소 QUOTE_FROM(quote@techa.kr)은 techa.kr 이 Cloudflare Email Service 에
- * 등록돼 있어야 쓸 수 있다. 등록 전이거나 발송이 실패하면 502/503 을 돌려주고,
+ * 보내는 주소 QUOTE_FROM(quote@techa.kr)은 techa.kr 에 Email Routing 이 켜져 있어야 쓸 수 있다.
+ * 인증한 받는 주소로만 보내므로 무료 플랜으로 된다(Email Sending 유료 플랜은 필요 없다). 등록 전이거나 발송이 실패하면 502/503 을 돌려주고,
  * 폼은 적은 내용 그대로 이메일·톡톡으로 보내도록 안내한다 — 문의를 잃지 않게.
  * 2026-10-04 처음엔 노션 DB 로 쌓았다가, 같은 날 사장님 지시로 메일로 바꿨다.
  *
