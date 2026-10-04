@@ -20,7 +20,7 @@ description: 테차(TECHA) 블로그 → 세로 쇼츠/릴스 영상 일괄 제�
 - **원본 묶음**: 편별 폴더(`NN-slug/원본사진/cover.jpg, img-N.jpg`)와 `공통/`(폰트 Gowun Batang·Pretendard·Noto Serif KR, 로고, 효과음). 11편 원본 = `D:\techa-shorts\src\techa-11편-원본`.
   다른 클로드 대화(클라우드)에서 만든 영상이면 그 대화에 원본(사진·렌더 코드·콘티)을 zip으로 달라고 한다(30MB 한도라 조각으로 온다) — 완성 mp4엔 자막이 박혀 있어 고칠 수 없다.
 - **구글 TTS 키**: `d:\techa-automation\.env` 의 `GOOGLE_TTS_API_KEY` (Google Cloud 프로젝트 `techa-tts`, Cloud Text-to-Speech API로만 제한, 애플리케이션 제한 없음). 값은 출력하지 않는다. 무료 체험 2026-10-04 시작 90일(₩407,626 크레딧) — 끝나면 콘솔에서 '업그레이드'해야 계속 된다. Chirp 3 HD는 월 100만 자 무료 구간.
-  Gemini TTS(말투를 글로 지시)는 Agent Platform API를 켜야 해서 안 쓴다 — Chirp 3 HD `markup` 쉼 태그로 충분했다.
+  **음성 엔진은 Chirp 3 HD로 확정(2026-10-05 사장님 결정).** Gemini TTS는 같은 목소리 이름에 말투를 글로 지시할 수 있지만, Agent Platform API를 따로 켜야 하고 쉼 위치가 정확하지 않아 자막 동기화가 어렵다. 감정 표현을 더 원하면 한 편만 샘플로 비교한 뒤 정한다.
 - Python 3.12 + `numpy scipy pillow opencv-python onnxruntime huggingface_hub`, ffmpeg/ffprobe.
 - 거리 추정 모델(무료): `onnx-community/depth-anything-v2-small` → `D:/techa-shorts/models` (없으면 `huggingface_hub.hf_hub_download`).
 - PC 사양 메모: AMD 내장 그래픽·램 14GB → 로컬 영상 생성 AI 불가, 렌더는 2편 동시까지.
