@@ -12,3 +12,8 @@ wrangler.toml
 card*.png
 techa_dashboard.html
 dashboard_template.html
+# 비밀 키 — 로컬 wrangler deploy 때 공개 자산으로 올라가지 않게
+.env
+.dev.vars
+# Claude 스킬(코드·원고 데이터) — 사이트 자산이 아니다
+.claude
