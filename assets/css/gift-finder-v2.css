@@ -9,14 +9,16 @@
   --gf-line: rgba(74, 64, 54, .16);
   --gf-white: #fff;
 }
-.gift-finder-page-body #page-head .page-head { display:none; }
-.gift-finder-page { max-width:1120px; }
+/* 머리말 h1 은 숨기지 않는다(검색·AI가 읽는 페이지 이름) — 라벨처럼 작게 보이고, 큰 문장은 도구 제목(h2)이 맡는다. 2026-10-05 */
+.gift-finder-page-body #page-head .page-head h1 { font-size:13px; font-weight:700; letter-spacing:.08em; color:#9E8551; -webkit-text-fill-color:#9E8551; margin:8px 0 0; }
+.gift-finder-page-body #page-head .page-head p.lead { font-size:14px; margin:6px 0 0; }
+.gift-finder-page, .gift-finder-page-body #page-head .wrap { max-width:1120px; }
 .gift-finder-page > .article, .gift-finder-page > #related { max-width:724px; margin-left:auto; margin-right:auto; }
 .gf-wrap { max-width: 1080px; margin: 0 auto; padding: 24px 0 80px; color: var(--gf-ink); }
 .gf-intro { max-width: 720px; margin: 30px 0 34px; }
 .gf-eyebrow { margin: 0 0 10px; font-size: 12px; letter-spacing: .14em; color: var(--gf-sage); font-weight: 700; }
-.gf-intro h1, .gf-result-intro h2 { margin: 0 0 14px; line-height: 1.16; font-weight: 700; letter-spacing: -.035em; }
-.gf-intro h1 { font-size: clamp(32px, 6vw, 56px); }
+.gf-intro h1, .gf-intro .gf-title, .gf-result-intro h2 { margin: 0 0 14px; line-height: 1.16; font-weight: 700; letter-spacing: -.035em; }
+.gf-intro h1, .gf-intro .gf-title { font-size: clamp(32px, 6vw, 56px); }
 .gf-intro p, .gf-result-intro p { color: var(--gf-muted); line-height: 1.7; margin: 0; }
 .gf-assurance { display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:18px; color:var(--gf-muted); font-size:13px; }
 .gf-assurance span::before { content:"✓"; margin-right:5px; color:var(--gf-sage); font-weight:800; }
@@ -131,3 +133,40 @@
 
 .gf-chip--extra { display:none; }
 .gf-chips.show-extra .gf-chip--extra { display:inline-flex; }
+
+/* ---------- 2026-10-05 메뉴 페이지 개편: 결과 미리보기 · 핵심 세 가지 · 상황별 읽을거리 ---------- */
+.gf-preview { margin-top:40px; padding-top:30px; border-top:1px solid var(--gf-line); }
+.gf-results:not([hidden]) ~ .gf-preview { display:none; }
+.gf-preview h2 { margin:0 0 18px; font-family:"Gowun Batang",serif; font-size:clamp(20px,2.4vw,26px); line-height:1.4; }
+.gf-preview-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.gf-preview-grid figure { margin:0; }
+.gf-preview-grid img { width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; border-radius:2px; display:block; }
+.gf-preview-grid figcaption { margin-top:8px; font-size:14px; color:var(--gf-ink); }
+.gf-preview-grid figcaption b { display:block; margin-bottom:2px; color:#9E8551; font-size:12px; letter-spacing:.04em; }
+.gf-preview-note { margin:14px 0 0; color:var(--gf-muted); font-size:13.5px; }
+.nowrap { white-space:nowrap; }
+.gift-finder-page .article h2 { border-bottom:0; padding-bottom:0; margin-top:44px; font-family:"Gowun Batang",serif; font-size:22px; }
+.gf-tips { display:grid; border-top:1px solid var(--gf-ink); }
+.gf-tips > div { padding:18px 0; border-bottom:1px solid var(--gf-line); }
+.gf-tips b { display:block; margin-bottom:6px; font-family:"Gowun Batang",serif; font-size:17px; }
+.gf-tips p { margin:0; line-height:1.75; }
+.gf-faq { border-top:1px solid var(--gf-ink); }
+.gf-faq details { border-bottom:1px solid var(--gf-line); }
+.gf-faq summary { cursor:pointer; list-style:none; display:flex; justify-content:space-between; gap:16px; padding:16px 0; font-weight:600; }
+.gf-faq summary::-webkit-details-marker { display:none; }
+.gf-faq summary::after { content:"+"; color:#9E8551; font-size:20px; line-height:1; }
+.gf-faq details[open] summary::after { content:"−"; }
+.gf-faq details p { margin:0; padding:0 0 16px; }
+.gf-aside { margin-top:16px; font-size:14px; color:var(--gf-muted); }
+.gf-reads { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 24px; border-top:1px solid var(--gf-ink); }
+.gf-read { display:grid; grid-template-columns:92px minmax(0,1fr); gap:14px; align-items:center; padding:12px 0; border-bottom:1px solid var(--gf-line); color:var(--gf-ink); text-decoration:none; }
+.gf-read img { width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; border-radius:2px; display:block; margin:0; box-shadow:none; }
+.gf-read small { display:block; color:var(--gf-muted); font-size:12.5px; margin-bottom:3px; }
+.gf-read b { font-size:14.5px; line-height:1.45; }
+.gf-read:hover { text-decoration:none; }
+.gf-read:hover b { text-decoration:underline; text-decoration-color:#9E8551; text-underline-offset:4px; }
+@media (max-width: 640px) {
+  .gf-reads { grid-template-columns:1fr; }
+  .gf-preview-grid { gap:8px; }
+  .gf-preview-grid figcaption { font-size:12.5px; }
+}

@@ -5,14 +5,17 @@
   --mag-paper: #f8f5ee;
   color: var(--mag-ink);
 }
-.magazine-page .page-head { display: none; }
+/* 머리말 h1 은 숨기지 않는다(검색·AI가 읽는 페이지 이름) — 라벨처럼 작게. 큰 문장은 첫 화면 h2. 2026-10-05 */
+.magazine-page .page-head h1 { font-size: 13px; font-weight: 700; letter-spacing: .08em; color: #9E8551; -webkit-text-fill-color: #9E8551; margin: 8px 0 0; }
+.magazine-page .page-head p.lead { font-size: 14px; margin: 6px 0 0; }
+.magazine-page #page-head .wrap { max-width: 1180px; }
 .magazine-main { max-width: 1180px; padding-top: 30px; }
 .magazine-hero {
   display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(250px, .6fr);
   gap: 50px; align-items: end; padding: 68px 0 44px; border-bottom: 1px solid var(--mag-line);
 }
 .magazine-kicker { margin: 0 0 18px; color: var(--gold-deep); font-size: 12px; font-weight: 700; letter-spacing: .18em; }
-.magazine-hero h1 { margin: 0; font-family: "Gowun Batang", serif; font-size: clamp(42px, 6vw, 72px); font-weight: 400; line-height: 1.13; letter-spacing: -.045em; }
+.magazine-hero h1, .magazine-hero .magazine-title { margin: 0; font-family: "Gowun Batang", serif; font-size: clamp(42px, 6vw, 72px); font-weight: 400; line-height: 1.13; letter-spacing: -.045em; }
 .magazine-hero-copy { margin: 0 0 5px; color: var(--mag-muted); font-size: 16px; line-height: 1.85; }
 .magazine-topics { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; }
 .magazine-topic {
@@ -63,7 +66,7 @@
 @media (max-width: 560px) {
   .magazine-main { padding-top: 12px; }
   .magazine-hero { padding-top: 34px; }
-  .magazine-hero h1 { font-size: 42px; }
+  .magazine-hero h1, .magazine-hero .magazine-title { font-size: 42px; }
   .magazine-hero-copy { font-size: 15px; }
   .magazine-topics { flex-wrap: nowrap; margin-right: -18px; padding-right: 18px; overflow-x: auto; scrollbar-width: none; }
   .magazine-topic { flex: none; }

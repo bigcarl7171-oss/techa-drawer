@@ -1,0 +1,169 @@
+/* =========================================================================
+   테차 꽃 공방 — 서비스 페이지 공용 (공방 소개·공간 스타일링·기업·단체 주문)
+   2026-10-05 메뉴 페이지 개편. 760px 문서 틀 대신 메인과 같은 1180px 에디토리얼 틀을 쓴다.
+   규칙의 정본은 docs/DESIGN-kkotgongbang.md — 라벨은 한국어, 선과 여백으로 나누고,
+   모서리 2px, 이모지 대신 1.6px 선 그림(SVG).
+   ========================================================================= */
+body.svc {
+  --ink: var(--brown);
+  --ink-2: #5B5147;
+  --paper-2: #F3EADC;
+  --serif: "Gowun Batang", "Nanum Myeongjo", serif;
+  --gutter: 24px;
+}
+body.svc #page-head .wrap, body.svc .svc-main { max-width: 1180px; padding-inline: var(--gutter); }
+/* 머리말 h1 은 페이지 이름(라벨처럼 작게), 큰 문장은 첫 화면 h2 가 맡는다.
+   한 줄 설명(lead)은 숨기지 않는다 — 검색·AI가 읽는 페이지 요약이다 (2026-10-05). */
+body.svc .page-head { padding: 4px 0 0; }
+body.svc .page-head h1 { font-family: var(--sans, inherit); font-size: 13px; font-weight: 700; letter-spacing: .08em; color: var(--gold-deep); margin: 8px 0 0; -webkit-text-fill-color: var(--gold-deep); }
+body.svc .page-head p.lead { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+.svc-main { margin: 0 auto; color: var(--ink); }
+.svc-main h2, .svc-main h3 { font-family: var(--serif); font-weight: 700; color: var(--ink); margin: 0; text-wrap: balance; }
+.svc-main p { margin: 0; color: var(--ink-2); line-height: 1.8; }
+.svc-main a:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 3px; }
+.nowrap { white-space: nowrap; }
+
+/* 버튼 — 진한 것 하나, 선 하나 */
+.svc-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.svc-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border: 1px solid var(--ink); border-radius: 2px; font-size: 15px; font-weight: 600; text-decoration: none; transition: background .2s ease, color .2s ease; }
+.svc-btn-dark { background: var(--ink); color: var(--paper); }
+.svc-btn-dark:hover { background: #26201C; color: var(--paper); text-decoration: none; }
+.svc-btn-line { background: transparent; color: var(--ink); }
+.svc-btn-line:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+.svc-link { color: var(--ink); font-size: 14px; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.svc-link:hover { border-bottom-color: var(--gold-deep); text-decoration: none; }
+
+/* 첫 화면: 글 + 사진 */
+.svc-hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(28px, 5vw, 72px); align-items: center; padding: 20px 0 64px; }
+.svc-hero-copy { display: grid; gap: 20px; justify-items: start; }
+.svc-hero h2 { font-size: clamp(30px, 3.8vw, 48px); line-height: 1.25; letter-spacing: -.01em; }
+.svc-hero-copy > p { font-size: 16px; max-width: 40ch; }
+.svc-hero-media { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 2px; background: var(--paper-2); }
+.svc-hero-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.svc-facts { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 4px 0 0; padding: 0; list-style: none; font-size: 13.5px; color: var(--muted); }
+.svc-facts li::before { content: ""; display: inline-block; width: 5px; height: 5px; margin-right: 8px; border-radius: 50%; background: var(--gold-deep); vertical-align: middle; }
+
+/* 섹션 */
+.svc-sec { padding: 64px 0; border-top: 1px solid var(--line); }
+.svc-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 32px; }
+.svc-head h2 { font-size: clamp(24px, 2.6vw, 34px); line-height: 1.32; max-width: 24ch; }
+.svc-head p { max-width: 46ch; margin-top: 12px; }
+.svc-label { margin: 0 0 12px !important; color: var(--gold-deep) !important; font-size: 12.5px; font-weight: 700; letter-spacing: .08em; }
+
+/* 순서 — 선 그림 + 번호 */
+.svc-steps { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; counter-reset: step; border-top: 1px solid var(--ink); }
+.svc-steps li { counter-increment: step; display: grid; gap: 10px; align-content: start; padding: 26px 20px 28px; border-left: 1px solid var(--line); }
+.svc-steps li:first-child { border-left: 0; padding-left: 0; }
+.svc-steps svg { width: 72px; height: 72px; color: var(--ink); }
+.svc-steps b { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 18px; }
+.svc-steps b::before { content: counter(step); display: inline-grid; place-items: center; width: 22px; height: 22px; border: 1px solid var(--gold-deep); border-radius: 50%; color: var(--gold-deep); font-family: var(--sans, inherit); font-size: 12px; font-weight: 700; }
+.svc-steps p { font-size: 14.5px; line-height: 1.7; }
+
+/* 사진 카드 */
+.svc-cards { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: 28px; }
+.svc-card { display: grid; gap: 10px; align-content: start; color: var(--ink); text-decoration: none; }
+.svc-card img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 2px; background: var(--paper-2); margin-bottom: 6px; }
+.svc-card b { font-family: var(--serif); font-size: 19px; line-height: 1.4; }
+.svc-card p { font-size: 14.5px; line-height: 1.7; }
+.svc-card small { color: var(--muted); font-size: 13px; line-height: 1.6; }
+a.svc-card:hover { text-decoration: none; }
+a.svc-card:hover b { text-decoration: underline; text-decoration-color: var(--gold-deep); text-underline-offset: 5px; }
+
+/* 사진 반 + 글 반 */
+.svc-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.svc-split-media { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 2px; background: var(--paper-2); }
+.svc-split-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.svc-split-copy { display: grid; gap: 16px; justify-items: start; }
+.svc-split-copy h2 { font-size: clamp(24px, 2.6vw, 34px); line-height: 1.32; }
+
+/* 짧은 약속 목록 — 위 선, 칸 사이 세로선 */
+.svc-points { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.svc-points > div { display: grid; gap: 6px; align-content: start; padding: 22px 20px 24px; border-left: 1px solid var(--line); }
+.svc-points > div:first-child { border-left: 0; padding-left: 0; }
+.svc-points b { font-family: var(--serif); font-size: 18px; }
+.svc-points p { font-size: 14.5px; line-height: 1.7; }
+
+/* 정보 표 (주소·시간 등) */
+.svc-info { margin: 0; border-top: 1px solid var(--ink); }
+.svc-info > div { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.svc-info dt { font-weight: 700; color: var(--ink); }
+.svc-info dd { margin: 0; color: var(--ink-2); }
+
+/* 사진 모음 */
+.svc-gallery { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: 12px; margin: 0; }
+.svc-gallery figure { margin: 0; }
+.svc-gallery img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 2px; display: block; background: var(--paper-2); }
+.svc-gallery figcaption { margin-top: 8px; color: var(--muted); font-size: 13px; }
+
+/* 자주 묻는 질문 */
+.svc-faq { border-top: 1px solid var(--ink); }
+.svc-faq details { border-bottom: 1px solid var(--line); }
+.svc-faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; font-weight: 600; color: var(--ink); }
+.svc-faq summary::-webkit-details-marker { display: none; }
+.svc-faq summary::after { content: "+"; color: var(--gold-deep); font-size: 20px; line-height: 1; }
+.svc-faq details[open] summary::after { content: "−"; }
+.svc-faq details p { padding: 0 0 18px; max-width: 64ch; }
+
+/* 마무리 띠 */
+.svc-cta { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: center; margin: 24px 0 72px; padding: clamp(28px, 4vw, 48px); background: var(--paper-2); }
+.svc-cta h2 { font-size: clamp(22px, 2.4vw, 30px); line-height: 1.35; }
+.svc-cta p { margin-top: 10px; }
+
+/* 꼬리 링크 (다른 페이지로) */
+.svc-more { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 28px; font-size: 14px; }
+
+@media (max-width: 860px) {
+  .svc-hero, .svc-split { grid-template-columns: 1fr; }
+  .svc-hero-media { order: -1; }
+  .svc-steps, .svc-points { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-steps li:nth-child(odd), .svc-points > div:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .svc-steps li:nth-child(n + 3), .svc-points > div:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  .svc-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-cta { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  body.svc { --gutter: 18px; }
+  .svc-hero { padding: 12px 0 40px; gap: 22px; }
+  .svc-sec { padding: 40px 0; }
+  .svc-head { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 22px; }
+  .svc-steps li { padding: 20px 12px 22px; }
+  .svc-steps svg { width: 56px; height: 56px; }
+  .svc-points, .svc-cards { grid-template-columns: 1fr; }
+  .svc-points > div { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); }
+  .svc-points > div:first-child { border-top: 0; }
+  .svc-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-info > div { grid-template-columns: 1fr; gap: 2px; }
+  .svc-actions .svc-btn { flex: 1 1 auto; justify-content: center; }
+  .svc-cta { margin-bottom: 48px; }
+}
+@media (prefers-reduced-motion: reduce) { .svc-btn { transition: none; } }
+
+/* 작은 보조 요소 */
+.svc-source { margin-top: 18px !important; color: var(--muted) !important; font-size: 12.5px; }
+.svc-split-top { align-items: start; }
+.svc-split-top .svc-info { margin-top: 30px; }
+.svc-proof { margin-top: 6px !important; color: var(--muted) !important; font-size: 13px; line-height: 1.7; }
+/* 6칸 약속 목록 — 3열 두 줄 */
+.svc-points-grid { --n: 3; }
+.svc-points-grid > div:nth-child(3n + 1) { border-left: 0; padding-left: 0; }
+.svc-points-grid > div:nth-child(n + 4) { border-top: 1px solid var(--line); }
+/* 문의 체크리스트 */
+.svc-check { margin: 4px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); width: 100%; }
+.svc-check li { padding: 11px 0 11px 26px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 15px; position: relative; }
+.svc-check li::before { content: ""; position: absolute; left: 2px; top: 16px; width: 12px; height: 12px; border: 1px solid var(--gold-deep); border-radius: 2px; }
+.svc-contact-box { padding: clamp(24px, 3vw, 36px); background: var(--paper-2); align-self: start; }
+.svc-contact-box .svc-btn { width: 100%; justify-content: center; }
+.svc-note { font-size: 13.5px !important; color: var(--muted) !important; }
+.svc-note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 860px) {
+  .svc-points-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-points-grid > div { border-left: 1px solid var(--line); padding-left: 20px; border-top: 0; }
+  .svc-points-grid > div:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .svc-points-grid > div:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  .svc-steps[style*="--n:5"] li:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .svc-points-grid { grid-template-columns: 1fr; }
+  .svc-points-grid > div { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); }
+  .svc-points-grid > div:first-child { border-top: 0; }
+}

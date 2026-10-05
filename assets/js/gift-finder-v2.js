@@ -232,7 +232,7 @@
 
   function storeMoreMarkup() {
     return `<section class="gf-store-more" aria-labelledby="gf-store-more-title">
-      <p class="gf-eyebrow">MORE FROM TECHA</p>
+      <p class="gf-eyebrow">스토어에서 더 보기</p>
       <h2 id="gf-store-more-title">여기 나온 상품이 전부는 아니에요</h2>
       <p>테차 꽃가게에는 꽃다발, 꽃무드등, 용돈선물, 인테리어 꽃 소품 등 다양한 디자인과 색상, 크기의 상품이 준비되어 있습니다. 추천 결과를 참고하신 뒤 마음에 맞는 선물을 조금 더 천천히 살펴보세요.</p>
       <a href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" target="_blank" rel="noopener noreferrer">테차의 다양한 꽃 선물 보기 →</a>
@@ -243,7 +243,7 @@
     const root = $("#gf-results");
     const scored = data.products.filter(isEligible).map(scoreProduct).sort((a,b) => b.score - a.score);
     if (!scored.length) {
-      root.innerHTML = `<div class="gf-result-intro"><p class="gf-eyebrow">TECHA GIFT CURATION</p><h2>조건에 맞는 상품을 찾지 못했어요</h2><p>조건을 조금 넓혀 다시 살펴보거나, 테차 꽃가게에서 다양한 상품을 확인해 주세요.</p></div>${storeMoreMarkup()}<button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>`;
+      root.innerHTML = `<div class="gf-result-intro"><p class="gf-eyebrow">테차가 고른 선물</p><h2>조건에 맞는 상품을 찾지 못했어요</h2><p>조건을 조금 넓혀 다시 살펴보거나, 테차 꽃가게에서 다양한 상품을 확인해 주세요.</p></div>${storeMoreMarkup()}<button type="button" class="gf-reset" id="gf-reset">조건 다시 고르기</button>`;
       root.hidden = false;
       $("#gf-reset")?.addEventListener("click", () => window.location.reload());
       return;
@@ -253,7 +253,7 @@
     const selections = Object.values(state.labels).filter(Boolean);
     root.innerHTML = `
       <div class="gf-result-intro">
-        <p class="gf-eyebrow">TECHA GIFT CURATION</p>
+        <p class="gf-eyebrow">테차가 고른 선물</p>
         <h2>이런 선물부터<br>살펴보세요</h2>
         <p>선택하신 상황을 바탕으로 잘 어울리는 상품을 골라봤어요. 선물을 고르기 위한 참고로 가볍게 살펴봐 주세요.</p>
         <div class="gf-selection" aria-label="선택한 조건">${selections.map(x => `<span>${escapeHtml(x)}</span>`).join("")}</div>
