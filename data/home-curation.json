@@ -3,10 +3,42 @@
   "months": {
     "1": "graduation", "2": "graduation", "3": "spring", "4": "gratitude", "5": "gratitude", "6": "summer", "7": "summer", "8": "summer", "9": "october", "10": "october", "11": "november", "12": "yearend"
   },
+  "productImages": {
+    "rose-soap-bouquet": { "src": "/assets/images/home/rose-soap-bouquet.jpg", "alt": "흰 커튼 앞에 놓인 보라색 장미 비누꽃다발" },
+    "rose-hydrangea-bouquet": { "src": "/assets/images/home/rose-hydrangea-bouquet.jpg", "alt": "공방 선반 위에 놓인 파란 장미와 수국 꽃다발" },
+    "sunflower-bouquet": { "src": "/assets/images/home/sunflower-bouquet.jpg", "alt": "나무 테이블 위에 세워 둔 해바라기 꽃다발" },
+    "hydrangea-moodlamp": { "src": "/assets/images/home/hydrangea-moodlamp-shelf.jpg", "alt": "공방 진열대에서 불을 켠 투명 상자 꽃 무드등" },
+    "blackwhite-rose-moodlamp": { "src": "/assets/images/home/blackwhite-moodlamp.jpg", "alt": "흰 장미와 검은 장미를 담고 불을 켠 원통형 무드등" },
+    "kinderjoy-doll-bouquet": { "src": "/assets/images/home/doll-bouquet-yellow.jpg", "alt": "노란 장미와 토끼 인형, 킨더조이를 함께 담은 인형꽃다발" },
+    "glassdome-moodlamp": { "src": "/assets/images/home/glassdome-rose.jpg", "alt": "빨간 장미를 담고 불을 켠 유리돔 무드등" },
+    "rose-money-bouquet": { "src": "/assets/images/home/money-bouquet-yellow.jpg", "alt": "흰·노란 장미 사이에 지폐를 꽂은 돈꽃다발" }
+  },
+  "situationImages": {
+    "corporate": { "src": "/assets/images/home/bulk-bouquets-1.jpg", "alt": "" },
+    "event": { "src": "/assets/images/home/bulk-bouquets-1.jpg", "alt": "" },
+    "yearend-event": { "src": "/assets/images/home/bulk-bouquets-1.jpg", "alt": "" },
+    "recital": { "src": "/assets/images/home/doll-bouquet-pink.jpg", "alt": "" },
+    "graduation": { "src": "/assets/images/home/hydrangea-cream.jpg", "alt": "" },
+    "graduation-review": { "src": "/assets/images/home/hydrangea-blue.jpg", "alt": "" },
+    "promotion": { "src": "/assets/images/home/red-rose-bouquet.jpg", "alt": "" },
+    "housewarming": { "src": "/assets/images/home/moodlamp-box-shelf.jpg", "alt": "" },
+    "autumn": { "src": "/assets/images/home/moodlamp-box-shelf.jpg", "alt": "" },
+    "gift": { "src": "/assets/images/home/pinkpeach-bouquet.jpg", "alt": "" },
+    "suneung": { "src": "/assets/images/home/pinkpeach-bouquet.jpg", "alt": "" },
+    "parents": { "src": "/assets/images/home/money-bouquet-received.jpg", "alt": "" },
+    "money": { "src": "/assets/images/home/money-bouquet-yellow.jpg", "alt": "" },
+    "chuseok": { "src": "/assets/images/home/money-bouquet-pink.jpg", "alt": "" },
+    "teacher": { "src": "/assets/images/home/hydrangea-pink.jpg", "alt": "" },
+    "single": { "src": "/assets/images/home/gift-bags-heart.jpg", "alt": "" },
+    "summer": { "src": "/assets/images/home/hydrangea-blue.jpg", "alt": "" },
+    "delivery": { "src": "/blog/safe-delivery-review/techa-box.jpg", "alt": "" },
+    "moodlamp": { "src": "/assets/images/home/glassdome-hydrangea.jpg", "alt": "" },
+    "christmas": { "src": "/assets/images/home/glassdome-rose.jpg", "alt": "" }
+  },
   "profiles": {
     "graduation": {
       "situations": [
-        { "id": "graduation", "icon": "🎓", "title": "졸업·입학 선물", "desc": "받는 분에 따라 달라지는 선택", "href": "/blog/graduation-gift-by-recipient/", "image": "/assets/images/gift-finder/kinderjoy-doll-bouquet-01.webp" },
+        { "id": "graduation", "icon": "🎓", "title": "졸업·입학 선물", "desc": "받는 분에 따라 달라지는 선택", "href": "/blog/graduation-gift-by-recipient/" },
         { "id": "recital", "icon": "🎹", "title": "발표회·연주회", "desc": "아이 얼굴을 가리지 않는 크기", "href": "/blog/kids-recital-bouquet-size-guide/" },
         { "id": "graduation-review", "icon": "💐", "title": "졸업 꽃다발", "desc": "한 달 뒤에도 남는 꽃", "href": "/blog/graduation-bouquet-one-month-later/" },
         { "id": "promotion", "icon": "🎉", "title": "입학·취업·승진", "desc": "새로운 시작을 축하하는 마음", "href": "/blog/promotion-congratulation-gift/" }
@@ -24,7 +56,7 @@
         { "id": "promotion", "icon": "🎉", "title": "승진·새 출발", "desc": "새 자리에도 오래 남는 선물", "href": "/blog/promotion-congratulation-gift/" },
         { "id": "housewarming", "icon": "🌻", "title": "집들이·개업", "desc": "공간에 오래 머무는 꽃", "href": "/blog/sunflower-frame-housewarming-gift/" },
         { "id": "event", "icon": "💐", "title": "행사 꽃다발", "desc": "전달과 사진까지 생각한 선택", "href": "/blog/event-bouquet-soap-flower/" },
-        { "id": "gift", "icon": "🌿", "title": "봄날의 꽃 선물", "desc": "사진보다 오래 남는 마음", "href": "/blog/flower-gift-better-than-photo/", "image": "/assets/images/gift-finder/superior-rose-02.webp" }
+        { "id": "gift", "icon": "🌿", "title": "봄날의 꽃 선물", "desc": "사진보다 오래 남는 마음", "href": "/blog/flower-gift-better-than-photo/" }
       ],
       "products": [
         { "id": "rose-hydrangea-bouquet", "label": "승진·새 출발", "desc": "받는 순간의 마음을 오래 남기고 싶을 때" },
@@ -38,7 +70,7 @@
       "situations": [
         { "id": "parents", "icon": "💝", "title": "어버이날·생신", "desc": "마음과 실용성을 함께", "href": "/blog/parents-birthday-money-cake/" },
         { "id": "money", "icon": "💐", "title": "용돈 꽃 선물", "desc": "직접 전한 마음이 남는 순간", "href": "/blog/money-bouquet-customer-stories/" },
-        { "id": "teacher", "icon": "🌹", "title": "감사의 꽃", "desc": "부담 없이 정중하게 전하기", "href": "/ko/gift-finder/?occasion=%EC%8A%A4%EC%8A%B9%EC%9D%98%EB%82%A0", "image": "/assets/images/gift-finder/carnation-rose-bouquet-02.webp" },
+        { "id": "teacher", "icon": "🌹", "title": "감사의 꽃", "desc": "부담 없이 정중하게 전하기", "href": "/ko/gift-finder/?occasion=%EC%8A%A4%EC%8A%B9%EC%9D%98%EB%82%A0" },
         { "id": "single", "icon": "🎁", "title": "여럿에게 전하는 꽃", "desc": "작아도 성의 있게 준비하기", "href": "/blog/soap-flower-one-stem/" }
       ],
       "products": [
@@ -66,7 +98,7 @@
     },
     "autumn": {
       "situations": [
-        { "id": "chuseok", "icon": "🌕", "title": "추석 용돈 선물", "desc": "미리 준비해도 시들지 않게", "href": "/blog/chuseok-money-gift-prepare-early/", "image": "/blog/chuseok-money-gift/cover.jpg" },
+        { "id": "chuseok", "icon": "🌕", "title": "추석 용돈 선물", "desc": "미리 준비해도 시들지 않게", "href": "/blog/chuseok-money-gift-prepare-early/" },
         { "id": "recital", "icon": "🎹", "title": "발표회·연주회", "desc": "아이 얼굴을 가리지 않는 크기", "href": "/blog/kids-recital-bouquet-size-guide/" },
         { "id": "promotion", "icon": "🎉", "title": "승진·퇴임", "desc": "새 자리에도 오래 남는 선물", "href": "/blog/promotion-congratulation-gift/" },
         { "id": "autumn", "icon": "🍂", "title": "가을 선물", "desc": "집들이·개업·안부까지", "href": "/blog/autumn-flower-gift-offseason/" }
@@ -81,25 +113,25 @@
     },
     "october": {
       "situations": [
-        { "id": "corporate", "icon": "🏢", "title": "기업 행사 꽃다발", "desc": "시상식·퇴임식 색과 카드 문구", "href": "/blog/company-event-bouquet/", "image": "/assets/images/gift-finder/sunflower-bouquet-02.webp" },
+        { "id": "corporate", "icon": "🏢", "title": "기업 행사 꽃다발", "desc": "시상식·퇴임식 색과 카드 문구", "href": "/blog/company-event-bouquet/" },
         { "id": "recital", "icon": "🎹", "title": "학예회·발표회", "desc": "아이 얼굴을 가리지 않는 크기", "href": "/blog/kids-recital-bouquet-size-guide/" },
         { "id": "autumn", "icon": "🍂", "title": "가을 집들이·개업", "desc": "새 공간에 오래 남는 꽃", "href": "/blog/autumn-flower-gift-offseason/" },
-        { "id": "suneung", "icon": "📚", "title": "수능 응원", "desc": "시험 끝난 날까지 시들지 않게", "href": "/ko/gift-finder/", "image": "/assets/images/gift-finder/pinkpeach-bouquet-01.webp" }
+        { "id": "suneung", "icon": "📚", "title": "수능 응원", "desc": "시험 끝난 날까지 시들지 않게", "href": "/ko/gift-finder/" }
       ],
       "products": [
         { "id": "rose-soap-bouquet", "label": "기업 행사 · 시상식", "desc": "시상식·송년회에서 여러 분께 같은 꽃을 건넬 때" },
-        { "id": "rose-hydrangea-bouquet", "label": "감사 · 퇴임 선물", "desc": "오래 일한 분께 감사의 마음을 오래 남기고 싶을 때", "image": "/assets/images/gift-finder/rose-hydrangea-bouquet-02.webp", "imageAlt": "행사장에서 장미수국 꽃다발을 들고 웃는 정장 차림의 남성" },
-        { "id": "sunflower-bouquet", "label": "학예회 · 발표회", "desc": "무대를 마친 아이에게 밝은 축하를 건넬 때", "image": "/assets/images/gift-finder/sunflower-bouquet-01.webp", "imageAlt": "꽃집에서 해바라기 꽃다발을 건네받는 손님" },
+        { "id": "rose-hydrangea-bouquet", "label": "감사 · 퇴임 선물", "desc": "오래 일한 분께 감사의 마음을 오래 남기고 싶을 때" },
+        { "id": "sunflower-bouquet", "label": "학예회 · 발표회", "desc": "무대를 마친 아이에게 밝은 축하를 건넬 때" },
         { "id": "hydrangea-moodlamp", "label": "집들이 · 개업", "desc": "새 공간에 꽃과 빛을 함께 더할 때" },
-        { "id": "blackwhite-rose-moodlamp", "label": "꽃과 빛 · 인테리어 선물", "desc": "흑백 장미에 앰버 빛을 더해 공간에 오래 두고 싶을 때", "image": "/assets/images/gift-finder/blackwhite-rose-moodlamp-02.webp", "imageAlt": "저녁 식탁 위에 불을 켠 블랙앤화이트 장미 무드등을 내려놓는 손" }
+        { "id": "blackwhite-rose-moodlamp", "label": "꽃과 빛 · 인테리어 선물", "desc": "흑백 장미에 앰버 빛을 더해 공간에 오래 두고 싶을 때" }
       ]
     },
     "november": {
       "situations": [
         { "id": "recital", "icon": "🎹", "title": "학예회·발표회 꽃다발", "desc": "아이 얼굴을 가리지 않는 크기", "href": "/blog/kids-recital-bouquet-size-guide/" },
-        { "id": "suneung", "icon": "📚", "title": "수능 끝난 날", "desc": "시험을 마친 수험생에게 건네는 꽃", "href": "/ko/gift-finder/", "image": "/assets/images/gift-finder/pinkpeach-bouquet-01.webp" },
+        { "id": "suneung", "icon": "📚", "title": "수능 끝난 날", "desc": "시험을 마친 수험생에게 건네는 꽃", "href": "/ko/gift-finder/" },
         { "id": "yearend-event", "icon": "🏢", "title": "연말 행사 준비", "desc": "단체 주문은 행사 일주일 전까지", "href": "/blog/corporate-event-bouquet-timing/" },
-        { "id": "promotion", "icon": "🎉", "title": "승진·퇴임·연말", "desc": "한 해의 수고를 오래 기억하도록", "href": "/blog/promotion-gift-event-ideas/", "image": "/blog/promotion-congratulation-gift/cover.jpg" }
+        { "id": "promotion", "icon": "🎉", "title": "승진·퇴임·연말", "desc": "한 해의 수고를 오래 기억하도록", "href": "/blog/promotion-gift-event-ideas/" }
       ],
       "products": [
         { "id": "kinderjoy-doll-bouquet", "label": "학예회 · 발표회", "desc": "무대를 마친 아이에게 꽃과 작은 즐거움을 함께 전할 때" },
@@ -112,8 +144,8 @@
     "yearend": {
       "situations": [
         { "id": "recital", "icon": "🎹", "title": "발표회·연주회", "desc": "무대가 끝난 뒤 건네는 축하", "href": "/blog/kids-recital-bouquet-size-guide/" },
-        { "id": "promotion", "icon": "🎉", "title": "승진·퇴임·연말", "desc": "한 해의 수고를 오래 기억하도록", "href": "/blog/promotion-gift-event-ideas/", "image": "/blog/promotion-congratulation-gift/cover.jpg" },
-        { "id": "christmas", "icon": "🎄", "title": "크리스마스 선물", "desc": "꽃과 빛이 함께 남는 선물", "href": "/ko/gift-finder/?occasion=%ED%81%AC%EB%A6%AC%EC%8A%A4%EB%A7%88%EC%8A%A4", "image": "/assets/images/gift-finder/glassdome-moodlamp-01.webp" },
+        { "id": "promotion", "icon": "🎉", "title": "승진·퇴임·연말", "desc": "한 해의 수고를 오래 기억하도록", "href": "/blog/promotion-gift-event-ideas/" },
+        { "id": "christmas", "icon": "🎄", "title": "크리스마스 선물", "desc": "꽃과 빛이 함께 남는 선물", "href": "/ko/gift-finder/?occasion=%ED%81%AC%EB%A6%AC%EC%8A%A4%EB%A7%88%EC%8A%A4" },
         { "id": "moodlamp", "icon": "✨", "title": "겨울 꽃 무드등", "desc": "차분한 공간에 따뜻한 빛", "href": "/blog/black-white-rose-mood-lamp/" }
       ],
       "products": [

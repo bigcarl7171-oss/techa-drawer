@@ -49,7 +49,10 @@ function validateHref(href) {
 // 카드 글자가 내용을 말하므로 사진은 장식(alt="")이다.
 function situationImage(item) {
   const blog = item.href.match(/^\/blog\/([a-z0-9-]+)\/$/);
-  const image = item.image || (blog ? `/blog/${blog[1]}/cover.jpg` : '');
+  // 순서: 그 달 항목에 직접 적은 image → 상황 id 별 실사(situationImages) → 연결된 매거진 글 커버
+  // 2026-10-05: 생성 이미지가 너무 많다는 지적으로 공방 실사를 situationImages 에 모았다.
+  const shared = (DATA.situationImages || {})[item.id];
+  const image = item.image || (shared && shared.src) || (blog ? `/blog/${blog[1]}/cover.jpg` : '');
   if (!image) throw new Error(`상황 카드 사진이 없습니다 (매거진 글이 아니면 image 를 적으세요): ${item.id}`);
   if (!image.startsWith('/') || image.includes('..') || !fs.existsSync(path.join(ROOT, image))) throw new Error(`상황 카드 사진 파일이 없습니다: ${image}`);
   return image;
@@ -72,9 +75,12 @@ function build(month) {
     const p = catalog.get(item.id);
     if (!p) throw new Error(`상품 데이터에 없는 ID: ${item.id}`);
     if (!allowedLinks.has(p.shopUrl)) throw new Error(`store-links.json에 없는 상품 링크: ${item.id}`);
-    const image = item.image || p.image1;
+    // 순서: 그 달 항목에 직접 적은 image → 상품 id 별 실사(productImages) → 선물 추천 상품 사진
+    const real = (DATA.productImages || {})[item.id];
+    const image = item.image || (real && real.src) || p.image1;
+    const alt = item.imageAlt || (!item.image && real && real.alt) || `테차 ${p.name}`;
     if (!image.startsWith('/') || image.includes('..') || !fs.existsSync(path.join(ROOT, image))) throw new Error(`상품 이미지가 없습니다: ${image}`);
-    return `        <a class="home-product-card" href="${esc(p.shopUrl)}" target="_blank" rel="noopener">\n          <img src="${esc(image)}" alt="${esc(item.imageAlt || `테차 ${p.name}`)}" loading="lazy">\n          <span>${esc(item.label)}</span><b>${esc(p.name)}</b><small>${esc(item.desc)}</small><strong>상품 보러가기 →</strong>\n        </a>`;
+    return `        <a class="home-product-card" href="${esc(p.shopUrl)}" target="_blank" rel="noopener">\n          <img src="${esc(image)}" alt="${esc(alt)}" loading="lazy">\n          <span>${esc(item.label)}</span><b>${esc(p.name)}</b><small>${esc(item.desc)}</small><strong>상품 보러가기 →</strong>\n        </a>`;
   }).join('\n');
   return { profileId, situations, products };
 }
