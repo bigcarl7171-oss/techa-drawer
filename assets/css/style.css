@@ -92,11 +92,12 @@ button:focus-visible,
   display: flex; align-items: center; gap: 28px;
   min-height: 84px; max-width: 1180px; padding-inline: 24px;
 }
-/* 로고 A안 (2026-10-05): 워드마크 위·"꽃 공방" 아래, 둘 다 왼쪽 정렬 — 워드마크의 t, 꽃 공방, 본문 제목이 같은 왼쪽 줄에서 시작한다.
+/* 로고 D안 (2026-10-05): 로고 덩어리는 왼쪽 줄(워드마크의 t = 본문 제목 시작선), "꽃 공방"만 워드마크 아래 가운데.
+   A안(꽃 공방도 왼쪽 정렬)은 짧은 글자가 te 밑으로 쏠려 보였다.
    가운데 정렬 세로형은 메뉴 줄과 높이 중심이 어긋나 겉돌아 보였다. */
-.brand-lock { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 6px; flex: none; margin-right: 28px; color: var(--brown); }
+.brand-lock { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; flex: none; margin-right: 28px; color: var(--brown); }
 .brand-lock img { display: block; width: 96px; height: auto; }
-.brand-lock .brand-descriptor { padding-left: 2px; font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif; font-size: 11.5px; font-weight: 600; line-height: 1; letter-spacing: .32em; color: var(--brown); }
+.brand-lock .brand-descriptor { text-indent: .32em; font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif; font-size: 11.5px; font-weight: 600; line-height: 1; letter-spacing: .32em; color: var(--brown); }
 .brand-lock:hover { text-decoration: none; }
 .logo { font-family: "Gowun Batang", serif; font-size: 20px; font-weight: 700; color: var(--brown); flex: none; }
 .logo b { color: var(--gold-deep); }
@@ -440,9 +441,9 @@ textarea { min-height: 160px; resize: vertical; line-height: 1.6; }
   display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;
   padding-bottom: 24px; border-bottom: 1px solid var(--ft-line);
 }
-.sf-logo { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 6px; color: var(--ft-ink); line-height: 1; }
+.sf-logo { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; color: var(--ft-ink); line-height: 1; }
 .sf-logo img { display: block; width: 96px; height: auto; filter: brightness(0) invert(1); }
-.sf-logo .brand-descriptor { padding-left: 2px; font-size: 11.5px; font-weight: 600; letter-spacing: .32em; }  /* 검은 로고를 짙은 바탕에서 흰색으로 */
+.sf-logo .brand-descriptor { text-indent: .32em; font-size: 11.5px; font-weight: 600; letter-spacing: .32em; }  /* 검은 로고를 짙은 바탕에서 흰색으로 */
 .sf-tagline { margin-top: 6px !important; }
 .sf-sns { display: flex; flex-wrap: wrap; gap: 8px; }
 .site-footer .sf-sns a { padding: 6px 12px; border: 1px solid var(--ft-line); border-radius: var(--radius-pill); font-size: 13px; }
@@ -476,7 +477,7 @@ textarea { min-height: 160px; resize: vertical; line-height: 1.6; }
 /* TECHA brand family: retain the original mark and keep the descriptor visually centred. */
 .sf-brand-family { margin-top: 14px !important; max-width: 38ch; font-size: 13px; }
 .sf-brand-family a { display: inline-block; margin-left: 6px; border-bottom: 1px solid var(--ft-line); }
-@media (max-width: 640px) { .brand-lock { gap: 5px; margin-right: 0; } .brand-lock img { width: 84px; } .brand-lock .brand-descriptor { font-size: 10.5px; letter-spacing: .28em; } .site-header .wrap { padding-inline: 18px; } }
+@media (max-width: 640px) { .brand-lock { gap: 5px; margin-right: 0; } .brand-lock img { width: 84px; } .brand-lock .brand-descriptor { font-size: 10.5px; letter-spacing: .28em; text-indent: .28em; } .site-header .wrap { padding-inline: 18px; } }
 /* 푸터를 머리말과 같은 1180px 틀에 — 760px 이라 위 본문과 왼쪽 줄이 어긋났다 (2026-10-05) */
 #site-footer .wrap { max-width: 1180px; padding-inline: 24px; }
 @media (max-width: 640px) { #site-footer .wrap { padding-inline: 18px; } }
