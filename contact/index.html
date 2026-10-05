@@ -217,24 +217,57 @@
   </section>
 
   <section class="svc-sec" aria-labelledby="contact-form">
-    <div class="svc-split svc-split-top">
-      <div class="svc-split-copy">
-        <p class="svc-label">문의하기</p>
-        <h2 id="contact-form" style="scroll-margin-top:80px">정해진 것만 <span class="nowrap">알려주셔도 됩니다</span></h2>
-        <p>아래 항목 중 아는 것만 적어 보내주세요. 나머지는 상담하면서 함께 정합니다.</p>
+    <div class="svc-head">
+      <div><p class="svc-label">견적 문의</p><h2 id="contact-form" style="scroll-margin-top:80px">정해진 것만 <span class="nowrap">적어 보내주셔도 됩니다</span></h2>
+      <p>회사 이름과 담당자, 연락처만 있으면 문의가 접수됩니다. 나머지는 상담하면서 함께 정해요.</p></div>
+    </div>
+    <div class="svc-quote">
+      <div class="svc-quote-form">
+<!-- BEGIN quote-form (생성: scripts/build-quote-form.js — 직접 고치지 말 것) -->
+<form class="quote-form" method="post" action="/api/quote" novalidate>
+  <div class="qf-grid">
+    <label class="qf-field"><span>회사·기관 이름 <b>필수</b></span><input name="company" required maxlength="100" autocomplete="organization"></label>
+    <label class="qf-field"><span>담당자 이름 <b>필수</b></span><input name="name" required maxlength="50" autocomplete="name"></label>
+    <label class="qf-field"><span>연락처</span><input name="phone" type="tel" maxlength="30" autocomplete="tel" placeholder="010-0000-0000"></label>
+    <label class="qf-field"><span>이메일</span><input name="email" type="email" maxlength="120" autocomplete="email"></label>
+    <label class="qf-field"><span>용도</span><select name="purpose"><option value="">고르지 않음</option><option>행사·시상</option><option>직원 선물</option><option>VIP·거래처</option><option>플라워 클래스</option><option>기타</option></select></label>
+    <label class="qf-field"><span>행사 날짜</span><input name="date" type="date"></label>
+    <label class="qf-field"><span>수량</span><input name="quantity" type="number" min="1" max="999999" inputmode="numeric" placeholder="예: 30"></label>
+    <label class="qf-field"><span>예산</span><input name="budget" maxlength="100" placeholder="총액 또는 1개당 금액"></label>
+    <label class="qf-field"><span>배송지 개수</span><input name="destinations" type="number" min="1" max="9999" inputmode="numeric" placeholder="예: 1"></label>
+    <label class="qf-field"><span>원하는 색상</span><input name="color" maxlength="100" placeholder="회사 색상, 행사 분위기 등"></label>
+  </div>
+  <p class="qf-hint">연락처와 이메일 중 하나는 꼭 적어 주세요. 나머지는 정해진 것만 적으셔도 됩니다.</p>
+  <div class="qf-checks">
+    <label><input type="checkbox" name="card" value="on"> 메시지 카드가 필요합니다</label>
+    <label><input type="checkbox" name="invoice" value="on"> 견적서·세금계산서가 필요합니다</label>
+  </div>
+  <label class="qf-field qf-wide"><span>요청 사항</span><textarea name="message" rows="4" maxlength="1500" placeholder="행사 종류, 받는 분, 원하는 상품 등 편하게 적어 주세요"></textarea></label>
+  <div class="qf-hp" aria-hidden="true"><label>비워 두세요 <input name="website" tabindex="-1" autocomplete="off"></label></div>
+  <input type="hidden" name="elapsed_ms" value="">
+  <input type="hidden" name="page" value="">
+  <div class="qf-agree">
+    <label><input type="checkbox" name="agree" value="on" required> <b>개인정보 수집·이용에 동의합니다 (필수)</b></label>
+    <p>수집 항목: 회사·기관 이름, 담당자 이름, 연락처, 이메일, 문의 내용 · 목적: 견적 안내와 상담 · 보관: 문의일로부터 1년 뒤 파기. 동의하지 않으셔도 이메일이나 네이버 톡톡으로 문의하실 수 있습니다. 자세한 내용은 <a href="/privacy/#quote">개인정보처리방침</a>에 있습니다.</p>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block qf-submit">견적 문의 보내기</button>
+  <p class="qf-status" role="status" aria-live="polite"></p>
+</form>
+<!-- END quote-form -->
+      </div>
+      <div class="svc-split-copy svc-contact-box">
+        <p class="svc-label">이메일·톡톡이 편하시면</p>
+        <p>아래 내용 중 아는 것만 알려주세요.</p>
         <ul class="svc-check">
           <li>회사·기관 이름, 담당자 이름과 연락처</li>
-          <li>행사 종류 (예: 시상식, 졸업식, 감사 선물)</li>
-          <li>행사 날짜 (정해지지 않았으면 대략적인 시기)</li>
+          <li>행사 종류와 날짜 (대략적인 시기도 괜찮아요)</li>
           <li>필요한 수량 ("30개 정도"도 괜찮습니다)</li>
           <li>예산 (총액 또는 1개당 금액)</li>
           <li>배송지 개수와 원하는 색상</li>
           <li>메시지 카드, 견적서·세금계산서 필요 여부</li>
         </ul>
-      </div>
-      <div class="svc-split-copy svc-contact-box">
         <button type="button" id="copyChecklist" class="svc-btn svc-btn-line">문의 내용 복사하기</button>
-        <a id="mail" href="#" class="svc-btn svc-btn-dark">이메일로 문의하기</a>
+        <a id="mail" href="#" class="svc-btn svc-btn-line">이메일로 문의하기</a>
         <a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener" class="svc-btn svc-btn-line">네이버 톡톡으로 문의하기 <span aria-hidden="true">↗</span></a>
         <p class="svc-note">견적 전에 확인할 내용은 <a href="/blog/corporate-flower-quote-checklist/">견적 요청 전 체크리스트</a>에, 시상식·퇴임식 꽃다발의 색과 카드 문구는 <a href="/blog/company-event-bouquet/">회사 행사 꽃다발 고르는 법</a>에 정리해 두었습니다.</p>
       </div>
@@ -279,6 +312,7 @@
 </footer>
 
 <script src="/assets/js/site.js"></script>
+<script src="/assets/js/quote-form.js" defer></script>
 <script>
 TECHA.initPage({ title:"기업·학교·기관 단체 꽃 선물", desc:"행사용 꽃다발과 답례품을 수량과 날짜에 맞춰 직접 제작합니다.", category:null });
 var CHECKLIST = [

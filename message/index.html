@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap">
 <link rel="stylesheet" href="/assets/css/style.css">
 <style>
   /* 2026-09-22 개편 — docs/DESIGN-kkotgongbang.md: 상자·그림자 대신 선과 여백, 모서리 2px, 진한 버튼은 화면에 하나 */
@@ -79,7 +80,17 @@
   .msg-card { position:relative; margin:-36px 18px 0; padding:22px 22px 18px; background:#FFFDF9; border:1px solid var(--line); border-top:2px solid #C9A961; }
   .msg-card-label { margin:0 0 10px; font-size:12px; font-weight:700; letter-spacing:.08em; color:#9E8551; }
   .msg-card-text { margin:0; min-height:3.2em; font-family:"Gowun Batang",serif; font-size:20px; line-height:1.6; color:var(--brown); word-break:keep-all; }
-  .msg-card-hint { margin:12px 0 0; font-size:12px; color:var(--muted); }
+  .msg-card-hint { margin:12px 0 0; font-size:12px; color:var(--muted); line-height:1.6; }
+  .msg-kind { display:grid; grid-template-columns:1fr 1fr; gap:4px; margin:0 0 10px; }
+  .msg-kind-btn { padding:9px 6px; border:1px solid var(--line); border-radius:2px; background:transparent; color:var(--brown); font:600 13px/1.2 inherit; cursor:pointer; }
+  .msg-kind-btn[aria-pressed="true"] { background:var(--brown); border-color:var(--brown); color:#FAF3EA; }
+  .msg-card-paper { position:relative; }
+  .msg-card-bow, .msg-card-ring { display:none; }
+  .msg-card.is-bouquet .msg-card-paper { display:flex; flex-direction:column; margin:0 auto; max-width:200px; aspect-ratio:4/5; padding:12px; background:#C9A26F; }
+  .msg-card.is-bouquet .msg-card-paper::before { content:""; position:absolute; inset:12px; background:#FFFEFB; }
+  .msg-card.is-bouquet .msg-card-bow { display:block; position:relative; width:72%; margin:4px auto 0; }
+  .msg-card.is-bouquet .msg-card-text { position:relative; flex:1; display:flex; align-items:center; justify-content:center; padding:4px 14px 30px; min-height:0; text-align:center; font-family:"Nanum Pen Script","Gowun Batang",cursive; font-size:27px; line-height:1.25; color:#2E2A27; }
+  .msg-card.is-bouquet .msg-card-ring { display:block; position:absolute; left:50%; bottom:6px; width:22px; height:22px; margin-left:-11px; border:2px solid #B8973F; border-radius:50%; }
   .msg-item { cursor:pointer; }
   .msg-item.is-preview p { text-decoration:underline; text-decoration-color:#C9A961; text-underline-offset:5px; }
   @media(max-width:900px){
@@ -88,6 +99,8 @@
     .msg-preview-photo { aspect-ratio:1/1; }
     .msg-card { margin:0; padding:14px 16px; }
     .msg-card-text { font-size:17px; min-height:0; }
+    .msg-kind { grid-column:1 / -1; }
+    .msg-card.is-bouquet .msg-card-text { font-size:22px; min-height:0; padding-bottom:24px; }
     .msg-card-hint { display:none; }
   }
 </style>
@@ -445,11 +458,19 @@
   </section>
   </div>
   <aside class="msg-preview" aria-label="카드 미리보기">
-    <figure class="msg-preview-photo"><img src="/assets/images/gift-finder/flower-postcard-01.webp" alt="말린 꽃을 붙인 카드가 책상 위에 펼쳐져 있는 모습" width="1000" height="1000" loading="lazy"></figure>
-    <div class="msg-card">
-      <p class="msg-card-label">카드에는 이렇게 들어가요</p>
-      <p class="msg-card-text" id="msgCardText">내가 사랑하는 그대에게</p>
-      <p class="msg-card-hint">문구를 누르면 카드에 적어 보여드려요</p>
+    <div class="msg-kind" role="group" aria-label="카드 종류">
+      <button type="button" class="msg-kind-btn" data-kind="bouquet" aria-pressed="true">꽃다발 메시지 카드</button>
+      <button type="button" class="msg-kind-btn" data-kind="postcard" aria-pressed="false">꽃 엽서</button>
+    </div>
+    <figure class="msg-preview-photo"><img id="msgCardPhoto" src="/assets/images/message/bouquet-message-card.jpg" alt="크래프트지에 흰 종이를 덧대고 노끈 리본을 묶은 테차 메시지 카드 두 장이 금색 픽에 꽂혀 있는 모습" width="490" height="500" loading="lazy"></figure>
+    <div class="msg-card is-bouquet" id="msgCard">
+      <p class="msg-card-label" id="msgCardLabel">꽃다발에 꽂는 카드에는 이렇게 들어가요</p>
+      <div class="msg-card-paper">
+        <svg class="msg-card-bow" viewBox="0 0 120 34" aria-hidden="true"><g fill="none" stroke="#B89366" stroke-width="2.6" stroke-linecap="round"><path d="M60 17c-10-12-34-16-38-6s18 12 38 6c20 6 42 4 38-6s-28-6-38 6"/><path d="M60 17c-8 4-14 10-18 16M60 17c8 4 14 10 18 16"/><path d="M2 14c18 2 38 3 58 3s40-1 58-3"/></g><circle cx="60" cy="17" r="4" fill="#B89366"/></svg>
+        <p class="msg-card-text" id="msgCardText">내가 사랑하는 그대에게</p>
+        <span class="msg-card-ring" aria-hidden="true"></span>
+      </div>
+      <p class="msg-card-hint">문구를 누르면 카드에 적어 보여드려요. 꽃다발 카드는 픽에 고정돼 꽃다발에 꽂고 뺄 수 있어요.</p>
     </div>
   </aside>
   </div>
@@ -648,6 +669,31 @@ TECHA.initPage({ title:"꽃 선물 메시지", desc:"테차가 꽃과 함께 보
     if (el) el.addEventListener("click", function () { setTimeout(first, 0); });
   });
   first();
+
+  // 카드 종류 — 꽃다발 메시지 카드(기본) / 꽃 엽서
+  var KINDS = {
+    bouquet: { src: "/assets/images/message/bouquet-message-card.jpg", w: 490, h: 500,
+      alt: "크래프트지에 흰 종이를 덧대고 노끈 리본을 묶은 테차 메시지 카드 두 장이 금색 픽에 꽂혀 있는 모습",
+      label: "꽃다발에 꽂는 카드에는 이렇게 들어가요" },
+    postcard: { src: "/assets/images/gift-finder/flower-postcard-01.webp", w: 1000, h: 1000,
+      alt: "말린 꽃을 붙인 카드가 책상 위에 펼쳐져 있는 모습",
+      label: "꽃 엽서에는 이렇게 들어가요" }
+  };
+  var photo = document.getElementById("msgCardPhoto");
+  var box = document.getElementById("msgCard");
+  var label = document.getElementById("msgCardLabel");
+  [].slice.call(document.querySelectorAll(".msg-kind-btn")).forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var k = KINDS[btn.dataset.kind];
+      if (!k) return;
+      photo.src = k.src; photo.alt = k.alt; photo.width = k.w; photo.height = k.h;
+      label.textContent = k.label;
+      box.classList.toggle("is-bouquet", btn.dataset.kind === "bouquet");
+      [].slice.call(document.querySelectorAll(".msg-kind-btn")).forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+    });
+  });
 })();
 </script>
 </body>

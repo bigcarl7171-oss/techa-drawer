@@ -167,3 +167,34 @@ a.svc-card:hover b { text-decoration: underline; text-decoration-color: var(--go
   .svc-points-grid > div { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); }
   .svc-points-grid > div:first-child { border-top: 0; }
 }
+
+/* ---------- 기업 견적 양식 (마크업은 scripts/build-quote-form.js, 보내기는 assets/js/quote-form.js → /api/quote) ---------- */
+.svc-quote { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
+.svc .quote-form { margin: 0; padding: 0; background: transparent; border: 0; border-top: 1px solid var(--ink); border-radius: 0; box-shadow: none; padding-top: 22px; }
+.svc .qf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 18px; }
+.svc .qf-field { display: grid; gap: 6px; font-size: 14px; color: var(--ink); }
+.svc .qf-field > span { font-weight: 600; }
+.svc .qf-field b { margin-left: 4px; color: var(--gold-deep); font-size: 12px; font-weight: 700; }
+.svc .qf-field input, .svc .qf-field select, .svc .qf-field textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 2px; background: #FFFDF9; color: var(--ink); font: inherit; font-size: 15px; }
+.svc .qf-field input:focus, .svc .qf-field select:focus, .svc .qf-field textarea:focus { outline: 0; border-color: var(--ink); }
+.svc .qf-field textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+.svc .qf-wide { margin-top: 16px; }
+.svc .qf-hint { margin: 10px 0 0; font-size: 13px; color: var(--muted); }
+.svc .qf-checks { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 14px 0 0; font-size: 14px; }
+.svc .qf-checks label, .svc .qf-agree label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.svc .qf-checks input, .svc .qf-agree input { width: 18px; height: 18px; margin: 0; accent-color: var(--ink); }
+.svc .qf-agree { margin: 18px 0 14px; padding: 14px 16px; background: var(--paper-2); }
+.svc .qf-agree p { margin: 8px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+.svc .qf-agree a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.svc .qf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.svc .qf-submit { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 52px; border: 1px solid var(--ink); border-radius: 2px; background: var(--ink); color: var(--paper); font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: none; }
+.svc .qf-submit:hover { background: #26201C; transform: none; }
+.svc .qf-submit[disabled] { opacity: .6; cursor: progress; }
+.svc .qf-status { min-height: 1.4em; margin: 12px 0 0; font-size: 14.5px; line-height: 1.6; }
+.svc .qf-status.is-ok { color: #4f6345; font-weight: 600; }
+.svc .qf-status.is-error { color: #9b3d2e; }
+.svc .qf-code { color: var(--muted); font-size: 12px; }
+@media (max-width: 860px) { .svc-quote { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .svc .qf-grid { grid-template-columns: minmax(0, 1fr); } }
+.svc .qf-photo { margin: 12px 0 0; padding: 12px 14px; border-left: 2px solid var(--gold-deep); background: #FFFDF9; font-size: 13.5px; line-height: 1.6; color: var(--ink-2); }
+.svc .qf-photo a, .svc .qf-status a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
