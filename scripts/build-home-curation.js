@@ -44,6 +44,17 @@ function validateHref(href) {
   if (!href.startsWith('https://mkt.shopping.naver.com/link/')) throw new Error(`허용되지 않은 외부 링크: ${href}`);
 }
 
+// 상황 카드 사진 — 따로 정하지 않으면 연결된 매거진 글의 커버를 쓴다.
+// 커버에 글자가 박혔거나 사람이 안 보이는 등 카드로 어색할 때만 image 를 적는다 (2026-10-05).
+// 카드 글자가 내용을 말하므로 사진은 장식(alt="")이다.
+function situationImage(item) {
+  const blog = item.href.match(/^\/blog\/([a-z0-9-]+)\/$/);
+  const image = item.image || (blog ? `/blog/${blog[1]}/cover.jpg` : '');
+  if (!image) throw new Error(`상황 카드 사진이 없습니다 (매거진 글이 아니면 image 를 적으세요): ${item.id}`);
+  if (!image.startsWith('/') || image.includes('..') || !fs.existsSync(path.join(ROOT, image))) throw new Error(`상황 카드 사진 파일이 없습니다: ${image}`);
+  return image;
+}
+
 function build(month) {
   const profileId = DATA.months[String(month)];
   const profile = DATA.profiles[profileId];
@@ -53,7 +64,8 @@ function build(month) {
 
   const situations = profile.situations.map(item => {
     validateHref(item.href);
-    return `      <a class="shell-situation" href="${esc(item.href)}" data-situation="${esc(item.id)}">\n        <span class="shell-situation-icon" aria-hidden="true">${esc(item.icon)}</span>\n        <b>${esc(item.title)}</b><span>${esc(item.desc)}</span>\n      </a>`;
+    const image = situationImage(item);
+    return `      <a class="shell-situation" href="${esc(item.href)}" data-situation="${esc(item.id)}">\n        <img src="${esc(image)}" alt="" loading="lazy">\n        <span class="shell-situation-icon" aria-hidden="true">${esc(item.icon)}</span>\n        <b>${esc(item.title)}</b><span>${esc(item.desc)}</span>\n      </a>`;
   }).join('\n');
 
   const products = profile.products.map(item => {

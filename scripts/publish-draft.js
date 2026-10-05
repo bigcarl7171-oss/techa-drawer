@@ -116,22 +116,8 @@ list = insertAfter(list, '<div class="grid post-grid">', [
   `      </a>`,
 ].join("\n"));
 
-// 4-2. index.html 캐러셀 (상한 3, transition-delay 재부여)
-home = dropBlock(home, `href="/blog/${slug}/">`, '<a class="shell-mag-card');
-home = insertAfter(home, '<div class="shell-carousel">', [
-  `      <a class="shell-mag-card reveal" href="/blog/${slug}/">`,
-  `        <img src="/blog/${slug}/cover.jpg" alt="${esc(cover.alt)}" loading="lazy">`,
-  // 2026-09-22 메인 개편: 카드 태그에 이모지를 넣지 않는다 (docs/DESIGN-kkotgongbang.md)
-  `        <span class="shell-mag-tag">${esc(tag)}</span>`,
-  `        <div class="shell-mag-body">`,
-  `          <div class="shell-mag-title">${esc(title)}</div>`,
-  `        </div>`,
-  `      </a>`,
-].join("\n"));
-home = capBlocks(home, '<a class="shell-mag-card', 3, (block, i) => {
-  const styled = i === 0 ? "" : ` style="transition-delay:.${String(i * 6).padStart(2, "0")}s"`;
-  return block.replace(/^(\s*<a class="shell-mag-card reveal")(?: style="[^"]*")?/, `$1${styled}`);
-});
+// 4-2. index.html 매거진 칸은 쓰기가 끝난 뒤 build-home-magazine.js 가 blog/index.html 을
+//      읽어 다시 찍는다 (2026-10-05 메인 개편 — 대표 글 1 + 최근 4편, 날짜 표시).
 
 // 4-3. index.html 위젯 (상한 5) — 2026-09-22 메인 개편으로 오른쪽 칸이 없어졌다.
 //      칸이 있을 때만 채운다(예전 구조로 되돌렸을 때를 위해 코드는 남긴다).
@@ -163,6 +149,7 @@ const writes = [[postPath, page], [listPath, list], [homePath, home], [mapPath, 
 if (!DRY) {
   fs.mkdirSync(outDir, { recursive: true });
   for (const [p, c] of writes) writeText(p, c);
+  require("child_process").execFileSync(process.execPath, [path.join(__dirname, "build-home-magazine.js")], { stdio: "inherit" });
 }
 
 // 본문 분량: check-publish.sh 의 body_chars() 와 똑같은 기준으로 센다 —

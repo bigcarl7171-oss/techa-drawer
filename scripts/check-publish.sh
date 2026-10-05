@@ -102,25 +102,25 @@ fi
 # ── 2~4. 고정 위치 반영
 echo "[2~4] 목록·메인·사이트맵"
 n=$(grep -c "/blog/$SLUG/" blog/index.html); [ "$n" -ge 1 ] && ok "blog/index.html 카드" "$n" || bad "blog/index.html 카드" "없음"
-# 캐러셀(3)·위젯(5)은 상한이 있어 최신 글만 올라간다. 최신 글일 때만 필수로 본다.
+# 홈 매거진(5)·위젯(5)은 상한이 있어 최신 글만 올라간다. 최신 글일 때만 필수로 본다.
 NEWEST=$(grep -o '/blog/[a-z0-9-]*/' blog/index.html | head -1 | sed 's|/blog/||;s|/||')
-n=$(grep -c "shell-mag-card[^>]*href=\"/blog/$SLUG/\"" index.html)
+n=$(grep -c "<a class=\"hm-feature\" href=\"/blog/$SLUG/\"" index.html)
 n2=$(grep -c "<a class=\"shell-mag-row\" href=\"/blog/$SLUG/\"" index.html)
 if [ "$SLUG" = "$NEWEST" ]; then
-  [ "$n" -ge 1 ]  && ok "index.html 캐러셀" "$n" || bad "index.html 캐러셀" "최신 글인데 없음"
+  [ "$n" -ge 1 ]  && ok "index.html 매거진 대표 글" "$n" || bad "index.html 매거진 대표 글" "최신 글인데 없음 — node scripts/build-home-magazine.js"
   # 오른쪽 위젯은 2026-09-22 메인 개편으로 없어졌다 — 칸이 있을 때만 본다
   if grep -q 'shell-widget-head">테차 매거진' index.html; then
     [ "$n2" -ge 1 ] && ok "index.html 위젯" "$n2" || bad "index.html 위젯" "최신 글인데 없음"
   fi
 else
-  ok "index.html 캐러셀/위젯" "캐러셀 $n · 위젯 $n2 (최신 글 아님 — 상한상 정상)"
+  ok "index.html 매거진/위젯" "대표 $n · 위젯 $n2 (최신 글 아님 — 상한상 정상)"
 fi
 n=$(grep -c "/blog/$SLUG/" sitemap.xml); [ "$n" -ge 1 ] && ok "sitemap.xml" "$n" || bad "sitemap.xml" "없음"
 
-# 상한 (4개 이상이면 그리드가 깨진다)
-c=$(grep -c '<a class="shell-mag-card' index.html)
+# 상한 — 홈 매거진은 생성기가 대표 1 + 목록 4 로 찍는다
+c=$(grep -c '<a class="hm-feature"' index.html)
 r=$(grep -c '<a class="shell-mag-row"' index.html)
-[ "$c" -le 3 ] && ok "캐러셀 상한" "$c / 3" || bad "캐러셀 상한" "$c 개 — 3개까지만"
+[ "$c" -eq 1 ] && ok "매거진 대표 글" "$c / 1" || bad "매거진 대표 글" "$c 개 — 1개여야 한다"
 [ "$r" -le 5 ] && ok "위젯 상한" "$r / 5" || bad "위젯 상한" "$r 개 — 5개까지만"
 
 # ── 7. 내부링크 (여기가 반복 누락 지점)
@@ -222,7 +222,7 @@ fi
 # 주소가 없었다 — 홈에 도구 22개 중 7개만, 관련 도구는 0개. 이제 스크립트가 HTML로
 # 구워 넣고, site.js 를 고친 뒤 안 돌리면 여기서 잡는다.
 echo "[정적] 목록이 HTML에 구워졌는가"
-for b in build-home-tools build-home-curation build-tool-hub build-message-phrases build-chrome build-related build-posts build-blog-products build-tool-products; do
+for b in build-home-tools build-home-curation build-home-magazine build-tool-hub build-message-phrases build-chrome build-related build-posts build-blog-products build-tool-products; do
   if [ -f "scripts/$b.js" ]; then
     out=$(node "scripts/$b.js" --check 2>&1) \
       && ok "$b" "$(echo "$out" | tail -1 | sed 's/^[✅ ]*//')" \
