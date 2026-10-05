@@ -264,5 +264,14 @@ body.home { --gold-deep: #516451; --gold: #748573; --paper-2: #F1EEE7; }
 .h-promises > div { border-top-color: var(--line); }
 .h-story-links a { color: var(--ink); border-bottom-color: var(--line); }
 .h-closing { margin-bottom: 64px; }
+.h-brand-bridge { max-width: 1132px; margin: 56px auto 0; padding: 44px 48px; display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(36px,6vw,76px); background: #E9EEE7; border-top: 1px solid #CBD5CA; border-bottom: 1px solid #CBD5CA; }
+.h-brand-bridge-copy .h-label { margin: 0 0 12px; color: var(--gold-deep); }
+.home-main .h-brand-bridge h2 { margin: 0; font-size: clamp(28px,3.2vw,42px); line-height: 1.4; }
+.h-brand-bridge-body { display: grid; gap: 12px; align-content: center; }
+.h-brand-bridge-body p { margin: 0; color: var(--ink-2); line-height: 1.85; }
+.h-brand-bridge-body a { width: fit-content; margin-top: 8px; color: var(--ink); font-size: 14px; font-weight: 700; border-bottom: 1px solid #9BAA99; padding-bottom: 2px; }
+.h-brand-bridge-body a:hover { text-decoration: none; border-bottom-color: var(--gold-deep); }
+@media(max-width:860px) { .h-brand-bridge { margin-inline: 24px; padding: 36px 32px; grid-template-columns: 1fr; gap: 24px; } }
+@media(max-width:640px) { .h-brand-bridge { margin: 36px 18px 0; padding: 30px 22px; } .home-main .h-brand-bridge h2 { font-size: 28px; } }
 @media(max-width:860px) { .h-story { margin-inline: 24px; } .h-story-media { min-height: 280px; max-height: 360px; } }
 @media(max-width:640px) { .h-hero { padding-block: 24px 32px; } .h-story { margin-inline: 18px; } .h-story-copy { padding: 28px 22px; } .h-closing { margin-bottom: 40px; } }
