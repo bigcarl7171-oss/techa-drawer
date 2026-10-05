@@ -112,6 +112,7 @@ function headerMarkup(shopUrl) {
     // 2026-09-22 메인 개편: 영문 로고 위 · 한글 이름 아래 한 덩어리, 메뉴 5개, 검색, 스토어, 휴대폰 메뉴 (docs/DESIGN-kkotgongbang.md)
     '    <a class="brand-lock" href="/" aria-label="TECHA 꽃 공방 홈"><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="287" height="90"><span class="brand-descriptor">꽃 공방</span></a>',
     '    <nav class="header-nav" aria-label="주요 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a></nav>',
+    '    <a class="header-tea-link" href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA Tea <span aria-hidden="true">↗</span></a>',
     '    <div class="header-search">',
     '      <button type="button" class="header-search-toggle" id="header-search-toggle" aria-label="도구·매거진 검색" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>',
     '      <div class="header-search-panel" id="header-search-panel">',
@@ -120,7 +121,7 @@ function headerMarkup(shopUrl) {
     '      </div>',
     '    </div>',
     '    <a class="header-shop-link" href="' + esc(shopUrl) + '" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a>',
-    '    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a></nav></details>',
+    '    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a><a class="header-menu-tea" href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA Tea <span aria-hidden="true">↗</span></a></nav></details>',
     '  </div>',
     '  ' + HEADER_END
   ].join('\n');
