@@ -13,28 +13,15 @@
     "glassdome-moodlamp": { "src": "/assets/images/home/glassdome-rose.jpg", "alt": "빨간 장미를 담고 불을 켠 유리돔 무드등" },
     "rose-money-bouquet": { "src": "/assets/images/home/money-bouquet-yellow.jpg", "alt": "흰·노란 장미 사이에 지폐를 꽂은 돈꽃다발" }
   },
-  "situationImages": {
-    "corporate": { "src": "/assets/images/home/bulk-bouquets-1.jpg", "alt": "" },
-    "event": { "src": "/assets/images/home/bulk-bouquets-1.jpg", "alt": "" },
-    "yearend-event": { "src": "/assets/images/home/bulk-bouquets-1.jpg", "alt": "" },
-    "recital": { "src": "/assets/images/home/doll-bouquet-pink.jpg", "alt": "" },
-    "graduation": { "src": "/assets/images/home/hydrangea-cream.jpg", "alt": "" },
-    "graduation-review": { "src": "/assets/images/home/hydrangea-blue.jpg", "alt": "" },
-    "promotion": { "src": "/assets/images/home/red-rose-bouquet.jpg", "alt": "" },
-    "housewarming": { "src": "/assets/images/home/moodlamp-box-shelf.jpg", "alt": "" },
-    "autumn": { "src": "/assets/images/home/moodlamp-box-shelf.jpg", "alt": "" },
-    "gift": { "src": "/assets/images/home/pinkpeach-bouquet.jpg", "alt": "" },
-    "suneung": { "src": "/assets/images/home/pinkpeach-bouquet.jpg", "alt": "" },
-    "parents": { "src": "/assets/images/home/money-bouquet-received.jpg", "alt": "" },
-    "money": { "src": "/assets/images/home/money-bouquet-yellow.jpg", "alt": "" },
-    "chuseok": { "src": "/assets/images/home/money-bouquet-pink.jpg", "alt": "" },
-    "teacher": { "src": "/assets/images/home/hydrangea-pink.jpg", "alt": "" },
-    "single": { "src": "/assets/images/home/gift-bags-heart.jpg", "alt": "" },
-    "summer": { "src": "/assets/images/home/hydrangea-blue.jpg", "alt": "" },
-    "delivery": { "src": "/blog/safe-delivery-review/techa-box.jpg", "alt": "" },
-    "moodlamp": { "src": "/assets/images/home/glassdome-hydrangea.jpg", "alt": "" },
-    "christmas": { "src": "/assets/images/home/glassdome-rose.jpg", "alt": "" }
-  },
+  "evergreen": [
+    { "id": "parents", "title": "부모님 생신", "desc": "용돈과 꽃을 함께", "href": "/ko/gift-finder/?recipient=%EB%B6%80%EB%AA%A8%EB%8B%98&occasion=%EC%83%9D%EC%8B%A0%C2%B7%ED%99%98%EA%B0%91" },
+    { "id": "anniversary", "title": "연인·기념일", "desc": "꽃과 빛이 오래 남는 선물", "href": "/ko/gift-finder/?recipient=%EC%97%B0%EC%9D%B8&occasion=%EA%B8%B0%EB%85%90%EC%9D%BC" },
+    { "id": "promotion", "title": "승진·취업", "desc": "새 자리에 남는 꽃", "href": "/blog/promotion-congratulation-gift/" },
+    { "id": "recovery", "title": "병문안·퇴원", "desc": "향과 크기부터 확인", "href": "/ko/gift-finder/?occasion=%EB%B3%91%EB%AC%B8%EC%95%88" },
+    { "id": "housewarming", "title": "집들이·개업", "desc": "새 공간에 오래 남는 꽃", "href": "/blog/sunflower-frame-housewarming-gift/" },
+    { "id": "thanks", "title": "감사 선물", "desc": "부담 없이 정중하게", "href": "/ko/gift-finder/?occasion=%EC%86%8C%EC%86%8C%ED%95%9C%20%EA%B0%90%EC%82%AC" },
+    { "id": "graduation", "title": "졸업·입학", "desc": "받는 분에 따라 달라지는 선택", "href": "/blog/graduation-gift-by-recipient/" }
+  ],
   "profiles": {
     "graduation": {
       "situations": [

@@ -19,6 +19,8 @@ const BLOG_INDEX = path.join(ROOT, 'blog', 'index.html');
 const BEGIN = '<!-- BEGIN home-magazine (생성: scripts/build-home-magazine.js — 직접 고치지 말 것) -->';
 const END = '<!-- END home-magazine -->';
 const COUNT = 5;
+const TICKER_BEGIN = '<!-- BEGIN home-magazine-ticker (생성: scripts/build-home-magazine.js — 직접 고치지 말 것) -->';
+const TICKER_END = '<!-- END home-magazine-ticker -->';
 
 const CARD = /<a class="app-card post-card" href="\/blog\/([a-z0-9-]+)\/">\s*<div class="emoji">[^<]*<\/div>\s*<div class="name">([\s\S]*?)<\/div>\s*<div class="desc">([\s\S]*?)<\/div>\s*<div class="post-date">([^<]*)<\/div>/g;
 
@@ -89,6 +91,20 @@ function main() {
   if (b === -1 || e === -1 || e < b) throw new Error('index.html 에 home-magazine 생성 마커가 없습니다.');
   const posts = readPosts();
   let next = html.slice(0, b) + `${BEGIN}\n${render(posts)}\n    ${END}` + html.slice(e + END.length);
+  // 첫 화면 바로 밑 한 줄 띠 — 매일 바뀌는 매거진이 스크롤 없이 보이게 (2026-10-05 메인 v2)
+  const tb = next.indexOf(TICKER_BEGIN), te = next.indexOf(TICKER_END);
+  if (tb !== -1 && te > tb) {
+    const p = posts[0];
+    const ticker = [
+      `  <a class="v2-ticker" href="/blog/${p.slug}/">`,
+      `    <span class="v2-ticker-tag">매거진 <span class="hm-new" data-date="${p.date}" hidden>NEW</span></span>`,
+      `    <time datetime="${p.date}">${korDate(p.date)}</time>`,
+      `    <b>${esc(p.title)}</b>`,
+      `    <span class="v2-ticker-go" aria-hidden="true">읽기 →</span>`,
+      `  </a>`,
+    ].join('\n');
+    next = next.slice(0, tb) + `${TICKER_BEGIN}\n${ticker}\n  ${TICKER_END}` + next.slice(te + TICKER_END.length);
+  }
   next = toEol(next, eolOf(html));
   if (next === html) {
     console.log(`✅ 최신 상태 — 홈 매거진 (${posts[0].date} ${posts[0].slug})`);
