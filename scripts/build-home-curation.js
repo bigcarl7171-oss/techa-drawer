@@ -60,8 +60,9 @@ function build(month) {
     const p = catalog.get(item.id);
     if (!p) throw new Error(`상품 데이터에 없는 ID: ${item.id}`);
     if (!allowedLinks.has(p.shopUrl)) throw new Error(`store-links.json에 없는 상품 링크: ${item.id}`);
-    if (!fs.existsSync(path.join(ROOT, p.image1))) throw new Error(`상품 이미지가 없습니다: ${p.image1}`);
-    return `        <a class="home-product-card" href="${esc(p.shopUrl)}" target="_blank" rel="noopener">\n          <img src="${esc(p.image1)}" alt="테차 ${esc(p.name)}" loading="lazy">\n          <span>${esc(item.label)}</span><b>${esc(p.name)}</b><small>${esc(item.desc)}</small><strong>상품 보러가기 →</strong>\n        </a>`;
+    const image = item.image || p.image1;
+    if (!image.startsWith('/') || image.includes('..') || !fs.existsSync(path.join(ROOT, image))) throw new Error(`상품 이미지가 없습니다: ${image}`);
+    return `        <a class="home-product-card" href="${esc(p.shopUrl)}" target="_blank" rel="noopener">\n          <img src="${esc(image)}" alt="${esc(item.imageAlt || `테차 ${p.name}`)}" loading="lazy">\n          <span>${esc(item.label)}</span><b>${esc(p.name)}</b><small>${esc(item.desc)}</small><strong>상품 보러가기 →</strong>\n        </a>`;
   }).join('\n');
   return { profileId, situations, products };
 }

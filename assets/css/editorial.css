@@ -1,0 +1,21 @@
+/* Shared flower service pages. Load after page-specific CSS; tools retain their functional UI. */
+body.brand-editorial { --gold-deep:#516451; --gold:#748573; --gold-strong-ink:#516451; --gold-soft:#F1EEE7; --sage-soft:#EEF0E9; --gold-border:#D4D9CE; --radius:2px; --radius-md:2px; --radius-sm:2px; --shadow:none; --shadow-lg:none; background:var(--paper); }
+.brand-editorial .page-head-wrap { background:transparent; box-shadow:none; }
+.brand-editorial .page-head h1, .brand-editorial main h2, .brand-editorial main h3 { font-family:"Gowun Batang",serif; color:var(--brown); background:none; -webkit-text-fill-color:var(--brown); }
+.brand-editorial .about-hero, .brand-editorial .btob-hero { background:var(--white); border:0; border-bottom:1px solid var(--line); padding:32px 0; }
+.brand-editorial .about-card, .brand-editorial .about-primary a, .brand-editorial .about-links a, .brand-editorial .service-card, .brand-editorial .btob-item, .brand-editorial .btob-quality div { background:transparent; box-shadow:none; border:0; border-top:1px solid var(--line); padding:22px 0; }
+.brand-editorial .about-people .about-card:first-child b, .brand-editorial .about-people .about-card:first-child p { color:var(--brown); }
+.brand-editorial .about-primary, .brand-editorial .about-values, .brand-editorial .about-people, .brand-editorial .service-grid, .brand-editorial .btob-grid { gap:24px; }
+.brand-editorial .about-review, .brand-editorial .btob-proof, .brand-editorial .callout { border:0; border-left:2px solid var(--gold-deep); background:var(--gold-soft); border-radius:0; box-shadow:none; }
+.brand-editorial .about-standard div, .brand-editorial .btob-fact { background:transparent; border:1px solid var(--line); border-radius:2px; }
+.brand-editorial .btn-primary { background:var(--brown); color:var(--paper); border:1px solid var(--brown); box-shadow:none; }
+.brand-editorial .btn-primary:hover { background:#26201C; color:var(--paper); }
+.brand-editorial .btn-ghost { background:transparent; border-color:var(--brown); color:var(--brown); box-shadow:none; }
+.brand-editorial .btn:hover { transform:none; }
+.brand-editorial .btob-icon { display:none; }
+.brand-editorial .space-hero { grid-template-columns:1fr; background:transparent; border:0; box-shadow:none; }
+.brand-editorial .space-hero-copy { padding:16px 0 28px; max-width:660px; }
+.brand-editorial .space-hero img { width:100%; height:auto; min-height:0; object-fit:contain; display:block; }
+.about-family { padding:28px 0; margin-top:32px; border-top:1px solid var(--line); }
+.about-family p { color:var(--body-text); }
+@media(max-width:640px) { .brand-editorial .about-hero, .brand-editorial .btob-hero { padding:22px 0; } }

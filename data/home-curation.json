@@ -87,11 +87,11 @@
         { "id": "suneung", "icon": "📚", "title": "수능 응원", "desc": "시험 끝난 날까지 시들지 않게", "href": "/ko/gift-finder/" }
       ],
       "products": [
-        { "id": "rose-soap-bouquet", "label": "기업 행사 · 시상식", "desc": "시상식·송년회에서 여러 분께 같은 꽃을 건넬 때" },
-        { "id": "rose-hydrangea-bouquet", "label": "기업 행사 · 퇴임식", "desc": "오래 일한 분께 감사의 마음을 오래 남기고 싶을 때" },
-        { "id": "sunflower-bouquet", "label": "학예회 · 발표회", "desc": "무대를 마친 아이에게 밝은 축하를 건넬 때" },
+        { "id": "rose-soap-bouquet", "label": "기업 행사 · 시상식", "desc": "시상식·송년회에서 여러 분께 같은 꽃을 건넬 때", "image": "/contact/delivery-batch-01.jpg", "imageAlt": "행사용으로 제작한 노란 장미 꽃다발 여러 개" },
+        { "id": "rose-hydrangea-bouquet", "label": "감사 · 퇴임 선물", "desc": "오래 일한 분께 감사의 마음을 오래 남기고 싶을 때", "image": "/contact/color-line-blue.jpg", "imageAlt": "책상 위에 놓인 파란 장미와 수국 꽃다발" },
+        { "id": "sunflower-bouquet", "label": "학예회 · 발표회", "desc": "무대를 마친 아이에게 밝은 축하를 건넬 때", "image": "/blog/preserved-flower-volume-guide/img-2.jpg", "imageAlt": "풍성하게 포장한 해바라기 꽃다발" },
         { "id": "hydrangea-moodlamp", "label": "집들이 · 개업", "desc": "새 공간에 꽃과 빛을 함께 더할 때" },
-        { "id": "blackwhite-rose-moodlamp", "label": "신상품 · 선착순 혜택", "desc": "흑백 장미에 앰버 빛을 더해 공간에 오래 두고 싶을 때" }
+        { "id": "blackwhite-rose-moodlamp", "label": "꽃과 빛 · 인테리어 선물", "desc": "흑백 장미에 앰버 빛을 더해 공간에 오래 두고 싶을 때" }
       ]
     },
     "november": {

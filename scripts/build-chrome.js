@@ -45,13 +45,13 @@ const BUSINESS = {
   // TECHA 는 꽃(테차 꽃공방)과 차(TECHA Tea, techa.co.kr)를 묶는 모브랜드다 (2026-10-04,
   // docs/TECHA_MASTER_HANDOFF_CLAUDE_2026-09-30.md §1). 그래서 'TECHA'·'테차' 단독을 꽃공방의
   // 다른 이름으로 두지 않고, 사업자등록 상호는 legalName, 모브랜드는 parentOrganization 으로 둔다.
-  alternateName: ['TECHA Flower', '테차 꽃공방(TECHA)'],
+  alternateName: ['TECHA 꽃 공방', '테차 꽃공방(TECHA)'],
   legalName: '테차(TECHA)',
   parentOrganization: { '@type': 'Organization', name: 'TECHA', alternateName: '테차' },
   description: '경기도 고양시 덕양구의 꽃공방. 프리저브드 플라워·비누꽃 무드등·글라스돔 같은 시들지 않는 꽃 선물과 기업·학교·기관 단체 납품, 플라워 클래스를 운영합니다.',
   url: 'https://www.techa.kr/',
   logo: 'https://www.techa.kr/assets/icons/icon-512.png',
-  image: 'https://www.techa.kr/assets/banners/florist-bouquet.jpg',
+  image: 'https://www.techa.kr/blog/preserved-flower-volume-guide/cover.jpg',
   telephone: '+82-31-817-3147',
   email: 'bigcarl@naver.com',
   address: {
@@ -110,8 +110,8 @@ function headerMarkup(shopUrl) {
     HEADER_BEGIN,
     '  <div class="wrap">',
     // 2026-09-22 메인 개편: 영문 로고 위 · 한글 이름 아래 한 덩어리, 메뉴 5개, 검색, 스토어, 휴대폰 메뉴 (docs/DESIGN-kkotgongbang.md)
-    '    <a class="brand-lock" href="/" aria-label="테차 꽃공방 홈"><img src="/assets/icons/techa-logo.png" alt="techa" width="71" height="22"><span>테차 꽃공방</span></a>',
-    '    <nav class="header-nav" aria-label="주요 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">테차 매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a></nav>',
+    '    <a class="brand-lock" href="/" aria-label="TECHA 꽃 공방 홈"><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="287" height="90"><span class="brand-descriptor">꽃 공방</span></a>',
+    '    <nav class="header-nav" aria-label="주요 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a></nav>',
     '    <div class="header-search">',
     '      <button type="button" class="header-search-toggle" id="header-search-toggle" aria-label="도구·매거진 검색" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>',
     '      <div class="header-search-panel" id="header-search-panel">',
@@ -120,7 +120,7 @@ function headerMarkup(shopUrl) {
     '      </div>',
     '    </div>',
     '    <a class="header-shop-link" href="' + esc(shopUrl) + '" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a>',
-    '    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">테차 매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a><a href="/care/">꽃 관리법</a></nav></details>',
+    '    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a></nav></details>',
     '  </div>',
     '  ' + HEADER_END
   ].join('\n');
@@ -134,8 +134,8 @@ function footerMarkup(isTool, shopUrl) {
     FOOTER_BEGIN,
     '  <div class="wrap">',
     '    <div class="sf-brand">',
-    '      <div><p class="sf-logo"><img src="/assets/icons/techa-logo.png" alt="techa" width="71" height="22"><span>테차 꽃공방</span></p>' +
-      '<p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p></div>',
+    '      <div><p class="sf-logo"><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="287" height="90"><span class="brand-descriptor">꽃 공방</span></p>' +
+      '<p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p><p class="sf-brand-family">TECHA는 차와 꽃을 함께 다루는 브랜드입니다. <a href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA Tea ↗</a></p></div>',
     '      <nav class="sf-sns" aria-label="테차 채널">' +
       '<a href="https://www.instagram.com/techa_flower/" target="_blank" rel="noopener">인스타그램</a>' +
       '<a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡 상담</a>' +
@@ -151,7 +151,7 @@ function footerMarkup(isTool, shopUrl) {
       '<a class="sf-cta" href="/contact/#contact-form">단체 주문 상담하기 →</a></div>',
     '    </div>',
     '    <nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a>' +
-      '<a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">테차 소개</a>' +
+      '<a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a>' +
       '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>',
     '    <div class="sf-biz">',
     '      <p><span>상호 테차(TECHA)</span><span>대표 임광진</span><span>사업자등록번호 196-01-02121</span></p>',
