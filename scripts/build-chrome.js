@@ -45,9 +45,9 @@ const BUSINESS = {
   // TECHA 는 꽃(테차 꽃공방)과 차(TECHA Tea, techa.co.kr)를 묶는 모브랜드다 (2026-10-04,
   // docs/TECHA_MASTER_HANDOFF_CLAUDE_2026-09-30.md §1). 그래서 'TECHA'·'테차' 단독을 꽃공방의
   // 다른 이름으로 두지 않고, 사업자등록 상호는 legalName, 모브랜드는 parentOrganization 으로 둔다.
-  alternateName: ['TECHA 꽃 공방', '테차 꽃공방(TECHA)'],
+  alternateName: ['테차꽃공방', 'TECHA 꽃 공방', '테차 꽃공방(TECHA)', 'TECHA Flower', 'techaflower'],
   legalName: '테차(TECHA)',
-  parentOrganization: { '@type': 'Organization', name: 'TECHA', alternateName: '테차' },
+  parentOrganization: { '@id': 'https://www.techa.kr/#organization' },
   description: '경기도 고양시 덕양구의 꽃공방. 프리저브드 플라워·비누꽃 무드등·글라스돔 같은 시들지 않는 꽃 선물과 기업·학교·기관 단체 납품, 플라워 클래스를 운영합니다.',
   url: 'https://www.techa.kr/',
   logo: 'https://www.techa.kr/assets/icons/icon-512.png',
@@ -66,15 +66,36 @@ const BUSINESS = {
   sameAs: [
     'https://www.instagram.com/techa_flower/',
     'https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C',
-    'https://www.facebook.com/techagongbang/'
+    'https://www.facebook.com/techagongbang/',
+    'https://m.place.naver.com/place/1694681698/home'
+  ]
+};
+
+// 2026-10-06 사장님 결정: 차 사이트가 자랄 때까지는 "테차 = 꽃공방"으로 먼저 알린다.
+// 그래서 모브랜드 TECHA 의 본거지(@id)를 techa.kr 에 두고, '테차'·'techa' 단독 이름은 여기에만 준다.
+// techa.co.kr 은 'TECHA Tea'(테차티)로만 부르고 parentOrganization 으로 이 @id 를 가리킨다.
+// 차 사이트가 커지면 그때 이 구조를 다시 정한다.
+const ORGANIZATION = {
+  '@type': 'Organization',
+  '@id': 'https://www.techa.kr/#organization',
+  name: 'TECHA',
+  alternateName: ['테차', 'techa', '테차 꽃공방', '테차꽃공방', 'TECHA Flower', 'techaflower'],
+  description: '경기도 고양시 덕양구에서 프리저브드플라워와 비누꽃 선물을 만드는 꽃공방 브랜드. 차 지식·생활문화 공간 TECHA Tea를 함께 운영합니다.',
+  url: 'https://www.techa.kr/',
+  logo: 'https://www.techa.kr/assets/icons/icon-512.png',
+  sameAs: BUSINESS.sameAs,
+  subOrganization: [
+    { '@id': 'https://www.techa.kr/#business' },
+    { '@type': 'Organization', '@id': 'https://techa.co.kr/#organization', name: 'TECHA Tea', alternateName: '테차티', url: 'https://techa.co.kr/' }
   ]
 };
 
 function businessMarkup() {
+  const { '@context': ctx, ...business } = BUSINESS;
   return [
     BIZ_BEGIN,
     '<script type="application/ld+json">',
-    JSON.stringify(BUSINESS, null, 2),
+    JSON.stringify({ '@context': ctx, '@graph': [ORGANIZATION, business] }, null, 2),
     '</script>',
     BIZ_END
   ].join('\n');
@@ -135,7 +156,7 @@ function footerMarkup(isTool, shopUrl) {
     '  <div class="wrap">',
     '    <div class="sf-brand">',
     '      <div><p class="sf-logo"><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="287" height="90"><span class="brand-descriptor">꽃 공방</span></p>' +
-      '<p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p><p class="sf-brand-family">TECHA는 차와 꽃을 함께 다루는 브랜드입니다. <a href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA Tea ↗</a></p></div>',
+      '<p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p><p class="sf-brand-family">테차(TECHA)는 고양시 덕양구에서 시들지 않는 꽃 선물을 만드는 꽃공방 브랜드입니다. 차 이야기는 <a href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA Tea ↗</a>에서 나눕니다.</p></div>',
     '      <nav class="sf-sns" aria-label="테차 채널">' +
       '<a href="https://www.instagram.com/techa_flower/" target="_blank" rel="noopener">인스타그램</a>' +
       '<a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡 상담</a>' +

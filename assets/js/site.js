@@ -346,7 +346,7 @@
     var talk = "https://talk.naver.com/W4GQDO";
     return '<div class="wrap">' +
       '<div class="sf-brand"><div><p class="sf-logo"><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="287" height="90"><span class="brand-descriptor">꽃 공방</span></p>' +
-      '<p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p><p class="sf-brand-family">TECHA는 차와 꽃을 함께 다루는 브랜드입니다. <a href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA Tea ↗</a></p></div>' +
+      '<p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p><p class="sf-brand-family">테차(TECHA)는 고양시 덕양구에서 시들지 않는 꽃 선물을 만드는 꽃공방 브랜드입니다. 차 이야기는 <a href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA Tea ↗</a>에서 나눕니다.</p></div>' +
       '<nav class="sf-sns" aria-label="테차 채널">' +
       '<a href="https://www.instagram.com/techa_flower/"' + ext + '>인스타그램</a>' +
       '<a href="' + talk + '"' + ext + '>네이버 톡톡 상담</a>' +
