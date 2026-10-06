@@ -1011,7 +1011,7 @@ Canonical:
 - 내부 admin/초안 noindex
 - 런타임 오류 0건 확인
 
-단, **실제 도메인 techa.co.kr cutover는 아직 하지 않는다.**
+**2026-10-06 현재 techa.co.kr은 TECHA Tea Production으로 전환 완료됐다.** Canonical은 non-www `https://techa.co.kr`이며 `www.techa.co.kr`은 대표 주소로 리다이렉트한다.
 
 ---
 
@@ -1209,7 +1209,7 @@ Repository:
 
 - 차를 꽃보다 우선하는 “새 메인사업”으로 임의 승격하지 말 것.
 - 꽃을 단순 레거시 사업으로 취급하지 말 것.
-- techa.co.kr 실제 DNS cutover를 성급히 하지 말 것.
+- techa.co.kr은 이미 TECHA Tea Production으로 전환됐다. 앞으로 DNS·canonical·www 리다이렉트 구조를 임의로 되돌리거나 변경하지 말 것.
 - Cafe24 주문 고객을 404로 버리지 말 것.
 - 구 꽃상품 URL을 techa.kr 꽃상품으로 임의 301 매핑하지 말 것.
 - `/bouquet/` 같은 임시 이전 랜딩을 다시 만들지 말 것.
