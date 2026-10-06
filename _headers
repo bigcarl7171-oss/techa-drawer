@@ -17,3 +17,7 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+
+# llms.txt 는 한글이라 charset 을 밝혀야 한다. 빠지면 브라우저가 EUC-KR 로 읽어 글자가 깨진다 (2026-10-06)
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
