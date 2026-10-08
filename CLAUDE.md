@@ -27,7 +27,7 @@ Claude가 사용자(작업자)와 나누는 대화는 **친구 같은 반말**�
 | 브랜드 톤·품질게이트·색상 | `techa-brand-rules.md` (이 저장소 = 원본) |
 | 채널별 분량·구조 규격 | `docs/channel-specs.md` (이 저장소 = 원본, 매거진·네이버·스레드 공통) |
 | 매거진 발행 절차 | `.claude/skills/techa-publish/SKILL.md` (정본) · `docs/blog-seo-guide.md` (근거·이유) |
-| **쇼츠·릴스 영상 제작** (원고·TTS 내레이션·렌더·검수) | `.claude/skills/techa-shorts-video/SKILL.md` (정본, 2026-10-05) — 결과 영상은 저장소 밖 `D:	echa-shortsuild` |
+| **쇼츠·릴스 영상 제작** (대본·Gemini 내레이션·자막·렌더·검수) | techa-shorts 저장소 `.claude/skills/techa-shorts-studio/SKILL.md` — 쇼츠 규칙은 거기 하나뿐 (2026-10-08 통일, 이 저장소의 `techa-shorts-video` 스킬은 흡수 후 삭제) |
 
 # 매거진 파이프라인 — 사람이 부를 때만 돈다 (2026-09-07 개정)
 

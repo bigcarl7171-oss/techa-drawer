@@ -21,7 +21,7 @@
 | "초안 써줘" 하면 뭘 하나 | `routine-draft.md` — 스크래치 폴더에 `magazine.md` + `blog.md` 를 쓴다 (저장소 밖) |
 | 매거진·네이버·스레드 분량·구조 기준 | `channel-specs.md` — 숫자의 단일 출처(스크립트도 여기서 읽는다) |
 | 여러 AI가 이 저장소를 어떻게 나눠 쓰나 | `AI-WORKFLOW.md` — 역할 분담, 브랜치 규칙 (루트 `AGENTS.md` 와 한 쌍) |
-| 쇼츠 자막을 어떻게 만드나 | `shorts-caption-system-2026-08.md` — `assets/` 의 스크림·세이프존 PNG와 함께 본다 |
+| 쇼츠 자막을 어떻게 만드나 | techa-shorts 저장소 `.claude/skills/techa-shorts-studio/refs/render.md` (2026-10-08 이동). 세이프존 PNG·엔드카드 배경은 여기 `assets/` 에 남아 있다 |
 | 이 키워드에 광고를 켜도 되나 | `serp-terrain-2026-09-05.md` — 화면을 열어 네 갈래로 판정하는 규칙. 켜기 **전에** 적합도를 본다 |
 | 주말에도 광고를 켜야 하나 | `ad-daypart-2026-09.md` — 요일별 관측 기록과 세팅 방침. 판정은 4주 뒤 |
 
