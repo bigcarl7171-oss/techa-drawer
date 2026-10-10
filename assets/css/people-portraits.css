@@ -1,0 +1,36 @@
+/* 공방 소개와 두 사람의 매거진 글에 함께 쓰는 인물 사진. */
+.techa-couple-photo { aspect-ratio: 3 / 2; }
+.techa-people-portraits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 720px;
+  margin: 36px auto 0;
+}
+.techa-people-portraits figure { margin: 0; }
+.techa-people-portraits img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 2px;
+  margin: 0;
+}
+.techa-people-portraits figcaption, .article .techa-people-portraits figcaption {
+  display: grid;
+  gap: 3px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+  text-align: left;
+}
+.techa-people-portraits figcaption b { color: var(--brown); font-size: 16px; }
+.article .techa-people-portraits { margin-block: 32px; }
+@media (max-width: 640px) {
+  .techa-people-portraits { gap: 16px; margin-top: 28px; }
+}
+@media (max-width: 420px) {
+  .techa-people-portraits { grid-template-columns: minmax(0, 1fr); max-width: 300px; gap: 24px; }
+}
