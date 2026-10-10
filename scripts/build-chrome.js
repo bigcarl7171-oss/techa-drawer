@@ -64,6 +64,7 @@ const BUSINESS = {
   areaServed: [{ '@type': 'City', name: '고양시' }, { '@type': 'Country', name: '대한민국' }],
   knowsAbout: ['프리저브드 플라워', '비누꽃', '꽃 무드등', '글라스돔 꽃', '단체 꽃다발 납품', '플라워 클래스'],
   sameAs: [
+    'https://blog.naver.com/bigcarl',
     'https://www.instagram.com/techa_flower/',
     'https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C',
     'https://www.facebook.com/techagongbang/',
@@ -158,6 +159,7 @@ function footerMarkup(isTool, shopUrl) {
     '      <div><p class="sf-logo"><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="287" height="90"><span class="brand-descriptor">꽃 공방</span></p>' +
       '<p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p><p class="sf-brand-family">테차(TECHA)는 고양시 덕양구에서 시들지 않는 꽃 선물을 만드는 꽃공방 브랜드입니다. 차 이야기는 <a href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA Tea ↗</a>에서 나눕니다.</p></div>',
     '      <nav class="sf-sns" aria-label="테차 채널">' +
+      '<a href="https://blog.naver.com/bigcarl" target="_blank" rel="noopener">네이버 블로그</a>' +
       '<a href="https://www.instagram.com/techa_flower/" target="_blank" rel="noopener">인스타그램</a>' +
       '<a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡 상담</a>' +
       '<a href="https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C" target="_blank" rel="noopener">유튜브</a>' +
