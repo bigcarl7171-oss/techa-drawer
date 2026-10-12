@@ -1,0 +1,150 @@
+/* 로또 도구 전용: 공통 메뉴와 다른 도구의 디자인에는 영향을 주지 않는다. */
+.lotto-page {
+  --lotto-green: #344f42;
+  --lotto-green-soft: #e9eee6;
+  --lotto-rose: #ead2cb;
+  background: radial-gradient(ellipse at 90% 16%, #efe2d8 0, transparent 42%), #faf5ee;
+}
+.lotto-page main.wrap, .lotto-page #page-head > .wrap { max-width: 1040px; }
+.lotto-page .page-head { padding-bottom: 8px; }
+.lotto-page .page-head h1 { font-size: 26px; }
+.lotto-card.card { margin: 18px 0 28px; padding: 0; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 45px #5546330d; }
+.lotto-hero { position: relative; isolation: isolate; min-height: 244px; padding: 34px 38px 30px; background: #edf0e8; border-bottom: 1px solid #dce2d7; }
+.lotto-hero::before { content: ""; position: absolute; z-index: -1; inset: 0; background: radial-gradient(ellipse at 75% 35%, #fff7e9 0, transparent 60%); }
+.lotto-kicker { margin: 0 0 10px; font-size: 11px; font-weight: 600; letter-spacing: .15em; color: #596b59; }
+.lotto-hero h2 { position: relative; margin: 0; color: var(--lotto-green); font-size: clamp(25px, 3.8vw, 35px); font-weight: 700; line-height: 1.45; letter-spacing: -.035em; }
+.lotto-hero-copy { position: relative; z-index: 1; max-width: 57%; }
+.lotto-hero-copy > p:last-child { margin: 15px 0 0; color: #53634f; font-size: 13px; }
+.lotto-bouquet { position: absolute; z-index: -1; width: 390px; height: 260px; object-fit: contain; right: 10px; bottom: -4px; pointer-events: none; }
+.lotto-layout { display: grid; grid-template-columns: minmax(0, 310px) minmax(0, 1fr); gap: 30px; padding: 30px; align-items: start; }
+.lotto-controls, .lotto-output { min-width: 0; }
+.lotto-section-label { margin: 0 0 16px; display: flex; align-items: center; gap: 9px; font-family: inherit; font-size: 16px; font-weight: 700; }
+.lotto-section-label .section-number { display: inline-grid; place-items: center; width: 26px; height: 26px; border: 1px solid #d9dfd3; border-radius: 50%; font-size: 11px; font-weight: 500; color: var(--lotto-green); background: #f1f4ee; }
+.draw-info { display: grid; gap: 5px; padding: 15px 17px; border: 1px solid #e3dace; border-radius: 14px; background: #f9f4eb; }
+.draw-info .round { font-size: 15px; font-weight: 700; }
+.draw-info .when { font-size: 12px; color: var(--muted); }
+.draw-info .left { justify-self: start; margin-top: 5px; padding: 3px 9px; color: #4c604b; font-size: 11px; font-weight: 600; border-radius: 5px; background: #e9ede1; font-variant-numeric: tabular-nums; }
+.stepper-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 22px 0 10px; }
+.stepper-row .field { margin: 0; font-size: 14px; font-weight: 600; }
+.stepper-row .hint { display: block; margin-top: 3px; font-size: 11px; }
+.stepper { display: inline-flex; align-items: center; border: 1px solid #dadfd4; border-radius: 11px; background: #f5f6f0; }
+.stepper button { width: 40px; height: 44px; border: 0; background: transparent; font-size: 20px; color: var(--lotto-green); cursor: pointer; font-family: inherit; }
+.stepper button:disabled { color: #a0a599; cursor: default; }
+.stepper output { min-width: 28px; text-align: center; font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums; }
+.game-presets { display: flex; gap: 7px; margin-bottom: 19px; }
+.game-presets button { flex: 1; min-height: 36px; padding: 6px 10px; background: transparent; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); font-family: inherit; font-size: 12px; cursor: pointer; }
+.game-presets button[aria-pressed="true"] { color: var(--lotto-green); border-color: #9dad97; background: var(--lotto-green-soft); font-weight: 700; }
+.board-wrap { margin: 0 0 18px; border: 1px solid var(--line); border-radius: 12px; background: #fffcf7; }
+.board-wrap summary { display: flex; align-items: center; flex-wrap: wrap; gap: 3px 8px; padding: 13px 14px; font-size: 13px; font-weight: 600; cursor: pointer; list-style: none; }
+.board-wrap summary::-webkit-details-marker { display: none; }
+.board-wrap summary::after { content: "+"; font-size: 19px; font-weight: 400; margin-left: auto; color: #687961; }
+.board-wrap[open] summary::after { content: "−"; }
+.board-wrap summary .hint { flex: 0 0 100%; order: 1; font-size: 11px; }
+.board-body { padding: 0 12px 13px; }
+.board-body > .hint { margin: 0 0 12px; font-size: 11px; line-height: 1.7; }
+.board { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+.board button { aspect-ratio: 1; min-width: 0; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--white); font-family: inherit; font-size: 12px; font-weight: 600; color: var(--brown); cursor: pointer; font-variant-numeric: tabular-nums; transition: background-color 150ms ease, transform 140ms var(--ease-out); }
+.board button:active { transform: scale(.92); }
+.board button.fixed { background: var(--lotto-green); border-color: var(--lotto-green); color: white; }
+.board button.excluded { background: #f3eee9; color: #82736b; text-decoration: line-through; border-style: dashed; }
+.board-foot { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 10px; font-size: 11px; color: var(--muted); }
+.board-foot .legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; vertical-align: -1px; margin: 0 4px 0 5px; }
+.board-foot .legend i.fx { background: var(--lotto-green); }
+.board-foot .legend i.ex { border: 1px dashed #82736b; }
+.board-msg { min-height: 1em; margin-top: 8px; font-size: 12px; color: #984533; }
+.lotto-card .btn-primary { min-height: 54px; padding: 13px 12px; border-radius: 12px; background: var(--lotto-green); color: #fffdf6; box-shadow: 0 5px 12px #344f4220; }
+.lotto-card .btn-primary:disabled { opacity: .55; cursor: default; }
+.lotto-card .btn-ghost { background: #f5f1ea; border-color: #e2dbd1; font-weight: 500; }
+.lotto-draw-note { margin: 10px 0 0; text-align: center; font-size: 11px; color: var(--muted); }
+.ticket { position: relative; background: #fcf8f0; border: 1px solid #e5daca; border-radius: 16px; box-shadow: 0 6px 18px #5d493509; }
+.ticket-head { position: relative; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px 12px; padding: 15px 18px; border-bottom: 1px dashed #d6c9b6; background: #f6eddf; border-radius: 15px 15px 0 0; }
+.ticket-head::before, .ticket-head::after { content: ""; position: absolute; bottom: -8px; width: 14px; height: 14px; border-radius: 50%; background: var(--white); border: 1px solid #e5daca; }
+.ticket-head::before { left: -8px; clip-path: inset(0 0 0 50%); }
+.ticket-head::after { right: -8px; clip-path: inset(0 50% 0 0); }
+.ticket-head .t { display: flex; align-items: center; gap: 7px; color: #685534; font-size: 12px; font-weight: 700; letter-spacing: .09em; }
+.ticket-head .d { font-size: 11px; color: #756b5b; font-variant-numeric: tabular-nums; }
+.ticket-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 12px; padding: 12px 18px; border-top: 1px dashed #d6c9b6; font-size: 11px; color: var(--muted); }
+.ticket-seal { font-size: 11px; letter-spacing: .12em; color: #756b5b; }
+.game { container-type: inline-size; padding: 12px 18px 17px; border-bottom: 1px solid #ece4d7; transition: background-color 200ms ease; }
+.game:last-child { border-bottom: 0; }
+.game.locked { background: #eaf0e6; }
+.game-top { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+.game-top .lb { display: inline-grid; place-items: center; flex: none; width: 23px; height: 23px; border-radius: 6px; background: #efe7da; color: #725f40; font-size: 12px; font-weight: 700; }
+.game.locked .lb { background: #dce6d5; color: var(--lotto-green); }
+.game-top .st { white-space: nowrap; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.game-top .acts { margin-left: auto; display: flex; gap: 3px; }
+.game-top .acts button { width: 34px; height: 34px; display: inline-grid; place-items: center; border: 1px solid transparent; border-radius: 8px; background: none; color: var(--muted); cursor: pointer; transition: background-color 150ms ease, color 150ms ease; }
+.game-top .acts button:disabled { opacity: .3; cursor: default; }
+.game-top .acts button[aria-pressed="true"] { color: var(--lotto-green); background: #dce6d5; }
+.balls { --bs: min(46px, calc((100cqi - 45px) / 7)); display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+.balls .plus { color: #847564; font-size: 14px; flex: none; }
+.ball { --c: #827f7a; --d: #605c56; flex: none; width: var(--bs); height: var(--bs); border-radius: 50%; display: inline-grid; place-items: center; font-weight: 700; font-size: max(12px, calc(var(--bs) * .39)); line-height: 1; color: #fff; font-variant-numeric: tabular-nums; text-shadow: 0 1px 1px #0002; background: radial-gradient(circle at 32% 23%, #ffffff95 0, transparent 38%), radial-gradient(circle at 50% 48%, var(--c) 42%, var(--d) 100%); box-shadow: inset 0 -3px 5px #0002, inset 0 1px 1px #fff6, 0 3px 6px #59452a26; }
+.ball.y { --c: #edc966; --d: #bf9441; color: #4a3410; text-shadow: 0 1px 0 #ffffff59; }
+.ball.b { --c: #678ab5; --d: #426489; }
+.ball.r { --c: #c87365; --d: #974d40; }
+.ball.g { --c: #7f9d76; --d: #526f47; }
+.ball.bonus { outline: 1px solid #b49764; outline-offset: 3px; }
+.ball.empty { background: #f5efE5; box-shadow: inset 0 1px 3px #8d755313; border: 1px dashed #d8cbb6; outline: none; }
+.ball.empty::after { content: "·"; color: #b2a188; font-size: 20px; font-weight: 400; }
+.ball.empty.bonus { background: #edf0e7; border-color: #b6c1ac; }
+.ball.in { animation: ball-in 420ms var(--ease-out) both; animation-delay: var(--dl, 0ms); }
+@keyframes ball-in { from { opacity: 0; transform: translateY(-10px) scale(.7); } to { opacity: 1; transform: none; } }
+.lotto-actions { display: flex; flex-wrap: wrap; gap: 9px 12px; align-items: center; justify-content: space-between; margin-top: 13px; }
+.lotto-actions .btn { margin-top: 0; min-height: 40px; }
+.lotto-actions .btn:disabled { opacity: .5; cursor: default; }
+.lotto-status { flex: 1 1 150px; font-size: 11px; color: var(--muted); }
+.lotto-guide { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; padding: 20px 30px; border-top: 1px solid var(--line); background: #faf8f3; }
+.lotto-guide p { margin: 0; font-size: 11px; color: var(--muted); line-height: 1.7; }
+.lotto-guide strong { display: block; margin-bottom: 4px; font-size: 12px; color: #445c45; font-weight: 600; }
+.lotto-guide strong span { margin-right: 6px; color: #8a7860; font-size: 11px; }
+.lotto-noscript { padding: 12px 18px; margin: 0; background: #f6e4da; font-size: 13px; }
+.lotto-page .article, .lotto-page .related { max-width: 760px; margin-inline: auto; }
+@media (hover: hover) and (pointer: fine) {
+  .lotto-card .btn-primary:not(:disabled):hover { background: #45634e; box-shadow: 0 6px 15px #344f4230; }
+  .game-presets button:hover, .board button:not(.fixed):hover { background: #edf0e7; }
+  .game-top .acts button:not(:disabled):hover { background: #e8e5d9; color: var(--lotto-green); }
+}
+@media (max-width: 800px) {
+  .lotto-layout { grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 20px; padding: 24px; }
+  .lotto-hero { padding: 30px; }
+  .lotto-bouquet { right: -25px; width: 350px; }
+  .game { padding-inline: 12px; }
+  .game-top { gap: 6px; }
+  .game-top .acts { gap: 1px; }
+  .game-top .acts button { width: 30px; }
+}
+@media (max-width: 680px) {
+  .lotto-page main.wrap, .lotto-page #page-head > .wrap { padding-inline: 16px; }
+  .lotto-card.card { border-radius: 20px; }
+  .lotto-hero { min-height: 226px; padding: 25px 22px; }
+  .lotto-hero-copy { max-width: 70%; }
+  .lotto-hero h2 { font-size: 25px; }
+  .lotto-hero-copy > p:last-child { max-width: 200px; font-size: 11px; }
+  .lotto-bouquet { right: -60px; width: 260px; height: 220px; bottom: -12px; opacity: .65; }
+  .lotto-kicker { font-size: 11px; letter-spacing: .1em; }
+  .lotto-layout { grid-template-columns: minmax(0, 1fr); padding: 22px 18px; gap: 27px; }
+  .lotto-section-label { font-size: 15px; margin-bottom: 13px; }
+  .draw-info { grid-template-columns: 1fr auto; gap: 3px 8px; padding: 13px 14px; }
+  .draw-info .round { font-size: 14px; }
+  .draw-info .when { grid-column: 1; font-size: 11px; }
+  .draw-info .left { grid-column: 2; grid-row: 1 / 3; margin: 0; align-self: center; white-space: nowrap; }
+  .stepper-row { margin-top: 17px; }
+  .board { max-width: 390px; margin-inline: auto; }
+  .board button { font-size: 14px; }
+  .ticket-head { padding: 13px 14px; }
+  .ticket-head .d { font-size: 11px; }
+  .game { padding: 11px 12px 16px; }
+  .game-top .acts button { width: 34px; height: 36px; }
+  .balls { --bs: min(46px, calc((100cqi - 45px) / 7)); }
+  .lotto-guide { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 18px 22px; }
+  .lotto-guide strong { display: inline; margin-right: 8px; }
+}
+@media (max-width: 360px) {
+  .lotto-hero h2 { font-size: 22px; }
+  .lotto-hero-copy { max-width: 83%; }
+  .lotto-bouquet { right: -85px; opacity: .45; }
+  .draw-info { grid-template-columns: minmax(0, 1fr); }
+  .draw-info .left { grid-column: 1; grid-row: auto; }
+  .game-top .st { font-size: 11px; }
+  .game-top .acts button { width: 30px; }
+}

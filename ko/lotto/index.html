@@ -29,97 +29,9 @@
   "applicationCategory":"GameApplication","operatingSystem":"Any",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"} }
 </script>
-<style>
-  /* 추첨 정보 */
-  .draw-info { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:4px 12px;
-    padding-bottom:14px; margin-bottom:4px; border-bottom:1px solid var(--line); }
-  .draw-info .round { font-family:"Gowun Batang", serif; font-weight:700; font-size:17px; }
-  .draw-info .when { font-size:13px; color:var(--muted); }
-  .draw-info .left { font-size:13px; font-weight:700; color:var(--gold-deep); font-variant-numeric:tabular-nums; }
-
-  /* 게임 수 스테퍼 */
-  .stepper-row { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 4px; }
-  .stepper-row .field { margin:0; }
-  .stepper-row .hint { display:block; margin-top:2px; }
-  .stepper { display:inline-flex; align-items:center; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--paper); }
-  .stepper button { width:40px; height:40px; border:0; background:none; font-size:20px; color:var(--brown); cursor:pointer; font-family:inherit; }
-  .stepper button:disabled { color:var(--line); cursor:default; }
-  .stepper output { min-width:30px; text-align:center; font-weight:700; font-size:17px; font-variant-numeric:tabular-nums; }
-
-  /* 고정·제외 번호판 */
-  .board-wrap { margin:10px 0 16px; border:1px solid var(--line); border-radius:var(--radius-md); background:var(--paper); }
-  .board-wrap summary { cursor:pointer; padding:12px 14px; font-size:14px; font-weight:600; display:flex; justify-content:space-between; gap:8px; list-style:none; }
-  .board-wrap summary::-webkit-details-marker { display:none; }
-  .board-wrap summary::after { content:"펼치기"; font-size:12px; font-weight:400; color:var(--muted); }
-  .board-wrap[open] summary::after { content:"접기"; }
-  .board-wrap summary .hint { margin-left:auto; }
-  .board-body { padding:0 14px 14px; }
-  .board-body > .hint { margin:0 0 10px; }
-  .board { display:grid; grid-template-columns:repeat(7, minmax(0, 46px)); gap:6px; justify-content:space-between; max-width:380px; }
-  .board button { aspect-ratio:1; border:1px solid var(--line); border-radius:50%; background:var(--white);
-    font-family:inherit; font-size:14px; font-weight:600; line-height:1; color:var(--brown); cursor:pointer; font-variant-numeric:tabular-nums;
-    transition:background-color 150ms ease, color 150ms ease, transform 140ms var(--ease-out); }
-  .board button:active { transform:scale(.92); }
-  .board button.fixed { background:var(--gold); border-color:var(--gold); color:var(--gold-cta-ink); font-weight:700; }
-  .board button.excluded { background:transparent; color:var(--muted-soft); text-decoration:line-through; border-style:dashed; }
-  .board-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; font-size:12px; color:var(--muted); }
-  .board-foot .legend i { display:inline-block; width:10px; height:10px; border-radius:50%; vertical-align:-1px; margin:0 4px 0 8px; }
-  .board-foot .legend i.fx { background:var(--gold); }
-  .board-foot .legend i.ex { border:1px dashed var(--muted-soft); }
-  .board-msg { min-height:1em; margin-top:8px; font-size:12px; color:#a0533f; }
-
-  /* 번호표 */
-  .ticket { position:relative; margin-top:18px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-md); }
-  .ticket-head { position:relative; display:flex; justify-content:space-between; align-items:baseline; padding:12px 16px;
-    border-bottom:1.5px dashed var(--line); }
-  .ticket-head::before, .ticket-head::after { content:""; position:absolute; bottom:-9px; width:16px; height:16px; border-radius:50%;
-    background:var(--white); border:1px solid var(--line); }
-  .ticket-head::before { left:-9px; clip-path:inset(0 0 0 50%); }
-  .ticket-head::after { right:-9px; clip-path:inset(0 50% 0 0); }
-  .ticket-head .t { font-family:"Gowun Batang", serif; font-weight:700; font-size:15px; letter-spacing:.04em; }
-  .ticket-head .d { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
-  .ticket-foot { padding:10px 16px 12px; border-top:1px solid var(--line); font-size:12px; color:var(--muted); }
-
-  .game { container-type:inline-size; padding:12px 16px 14px; border-bottom:1px solid var(--line); transition:background-color 200ms ease; }
-  .game:last-child { border-bottom:0; }
-  .game.locked { background:rgba(239,227,204,.55); }
-  .game-top { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-  .game-top .lb { font-family:"Gowun Batang", serif; font-weight:700; font-size:16px; color:var(--gold-deep); width:14px; }
-  .game-top .st { white-space:nowrap; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
-  .game-top .acts { margin-left:auto; display:flex; gap:2px; }
-  .game-top .acts button { width:32px; height:32px; display:inline-grid; place-items:center; border:0; border-radius:8px; background:none;
-    color:var(--muted); cursor:pointer; transition:background-color 150ms ease, color 150ms ease; }
-  .game-top .acts button:disabled { opacity:.35; cursor:default; }
-  .game-top .acts button[aria-pressed="true"] { color:var(--gold-deep); background:var(--gold-soft); }
-  @media (hover:hover) and (pointer:fine) { .game-top .acts button:not(:disabled):hover { background:var(--sage-soft); color:var(--brown); } }
-  /* 공 크기는 줄 폭에서 계산한다 — 7개 + '+' 가 320px 폰에서도 한 줄에 들어가게 */
-  .balls { --bs:min(42px, calc((100cqi - 40px) / 7)); display:flex; align-items:center; gap:min(9px, 1.6cqi); }
-  @media (max-width:420px) { .lotto-card { padding:18px 14px; } .game { padding:12px 12px 14px; } }
-  .balls .plus { color:var(--muted-soft); font-size:14px; margin:0 1px; }
-
-  /* 공 — 번호대별 색은 동행복권 규칙(1~10 노랑, 11~20 파랑, 21~30 빨강, 31~40 회색, 41~45 초록)을 채도만 낮춰 따른다 */
-  .ball { --c:#8C857D; --d:#6E675F; flex:none; width:var(--bs); height:var(--bs); border-radius:50%;
-    display:inline-grid; place-items:center; font-weight:700; font-size:calc(var(--bs) * .4); color:#fff;
-    font-variant-numeric:tabular-nums; text-shadow:0 1px 1px rgba(0,0,0,.18);
-    background:
-      radial-gradient(circle at 32% 26%, rgba(255,255,255,.7) 0, rgba(255,255,255,0) 36%),
-      radial-gradient(circle at 50% 58%, var(--c) 55%, var(--d) 100%);
-    box-shadow:inset 0 -2px 4px rgba(0,0,0,.12), 0 2px 5px rgba(58,50,43,.18); }
-  .ball.y { --c:#E4BA5E; --d:#C69A3E; color:#4a3410; text-shadow:0 1px 0 rgba(255,255,255,.35); }
-  .ball.b { --c:#6A84AD; --d:#526B92; }
-  .ball.r { --c:#C4705B; --d:#A65844; }
-  .ball.g { --c:#7F9A6C; --d:#657F54; }
-  .ball.bonus { outline:1.5px solid var(--gold); outline-offset:2px; }
-  .ball.empty { background:none; box-shadow:none; border:1.5px dashed var(--line); outline:none; }
-  .ball.empty.bonus { border-color:var(--gold-border); }
-  .ball.in { animation:ball-in 380ms var(--ease-out) both; animation-delay:var(--dl, 0ms); }
-  @keyframes ball-in { from { opacity:0; transform:translateY(-12px) scale(.7); } to { opacity:1; transform:none; } }
-
-  .lotto-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:12px; }
-  .lotto-actions .btn { margin-top:0 !important; }
-</style>
+<link rel="stylesheet" href="/assets/css/lotto.css">
 </head>
-<body>
+<body class="lotto-page">
 <header id="site-header">
   <!-- BEGIN site-header (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
   <div class="wrap">
@@ -147,55 +59,88 @@
 </div>
 
 <main class="wrap">
-  <div class="ad-slot"></div>
-
-  <section class="card lotto-card">
-    <div class="draw-info" id="draw-info" aria-live="off">
-      <span class="round" id="di-round">로또 6/45</span>
-      <span class="when" id="di-when">매주 토요일 오후 8시 35분 추첨</span>
-      <span class="left" id="di-left"></span>
+  <section class="card lotto-card" aria-label="로또 번호 추첨">
+    <div class="lotto-hero">
+      <div class="lotto-hero-copy">
+        <p class="lotto-kicker">TECHA FLOWER · 일상의 작은 즐거움</p>
+        <h2>오늘은 어떤 번호가<br>나올까요?</h2>
+        <p>잠깐 쉬어가는 시간, 나만의 번호를 골라보세요.</p>
+      </div>
+      <img class="lotto-bouquet" src="/assets/images/lotto-bouquet.svg" alt="" width="420" height="280" aria-hidden="true">
     </div>
 
-    <div class="stepper-row">
-      <div>
-        <span class="field" id="games-label">게임 수</span>
-        <span class="hint">5게임이 용지 한 장입니다</span>
-      </div>
-      <div class="stepper" role="group" aria-labelledby="games-label">
-        <button type="button" id="g-minus" aria-label="게임 수 줄이기">−</button>
-        <output id="games" aria-live="polite">5</output>
-        <button type="button" id="g-plus" aria-label="게임 수 늘리기">+</button>
-      </div>
-    </div>
+    <noscript><p class="lotto-noscript">번호를 뽑으려면 브라우저 설정에서 자바스크립트를 켜 주세요.</p></noscript>
 
-    <details class="board-wrap" id="board-wrap">
-      <summary>번호 고정·제외 <span class="hint" id="board-sum">선택 안 함</span></summary>
-      <div class="board-body">
-        <p class="hint">한 번 누르면 <b>고정</b>(모든 게임에 넣음), 두 번 누르면 <b>제외</b>, 세 번 누르면 원래대로 돌아갑니다. 고정은 5개까지입니다.</p>
-        <div class="board" id="board"></div>
-        <div class="board-msg" id="board-msg" role="status"></div>
-        <div class="board-foot">
-          <span class="legend"><i class="fx"></i>고정 <i class="ex"></i>제외</span>
-          <button type="button" class="btn btn-ghost btn-sm" id="board-reset">초기화</button>
+    <div class="lotto-layout">
+      <div class="lotto-controls">
+        <h3 class="lotto-section-label"><span class="section-number" aria-hidden="true">01</span>번호 뽑기 설정</h3>
+        <div class="draw-info" id="draw-info" aria-live="off">
+          <span class="round" id="di-round">로또 6/45</span>
+          <span class="when" id="di-when">매주 토요일 오후 8시 35분 추첨</span>
+          <span class="left" id="di-left"></span>
+        </div>
+
+        <div class="stepper-row">
+          <div>
+            <span class="field" id="games-label">몇 게임 뽑을까요?</span>
+            <span class="hint">1~10게임 · 용지 한 장은 5게임</span>
+          </div>
+          <div class="stepper" role="group" aria-labelledby="games-label">
+            <button type="button" id="g-minus" aria-label="게임 수 줄이기">−</button>
+            <output id="games" aria-live="polite">5</output>
+            <button type="button" id="g-plus" aria-label="게임 수 늘리기">+</button>
+          </div>
+        </div>
+        <div class="game-presets" id="game-presets" role="group" aria-label="게임 수 빠른 선택">
+          <button type="button" data-games="1" aria-pressed="false">1게임</button>
+          <button type="button" data-games="5" aria-pressed="true">5게임</button>
+          <button type="button" data-games="10" aria-pressed="false">10게임</button>
+        </div>
+
+        <details class="board-wrap" id="board-wrap">
+          <summary>꼭 넣거나 빼고 싶은 번호 <span class="hint" id="board-sum">선택 안 함</span></summary>
+          <div class="board-body">
+            <p class="hint">한 번 누르면 <b>고정</b>, 두 번 누르면 <b>제외</b>, 세 번 누르면 선택이 해제됩니다. 고정한 번호는 모든 게임에 들어가며, 5개까지 정할 수 있습니다.</p>
+            <div class="board" id="board"></div>
+            <div class="board-msg" id="board-msg" role="status"></div>
+            <div class="board-foot">
+              <span class="legend"><i class="fx" aria-hidden="true"></i>고정 <i class="ex" aria-hidden="true"></i>제외</span>
+              <button type="button" class="btn btn-ghost btn-sm" id="board-reset">선택 초기화</button>
+            </div>
+          </div>
+        </details>
+
+        <button type="button" class="btn btn-primary btn-block" id="draw">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.3 6.7L21 12l-6.7 2.3L12 21l-2.3-6.7L3 12l6.7-2.3Z"/></svg>
+          <span id="draw-label">번호 뽑기</span>
+        </button>
+        <p class="lotto-draw-note">번호 6개 + 보너스 · 중복 없이 무작위로</p>
+      </div>
+
+      <div class="lotto-output">
+        <h3 class="lotto-section-label"><span class="section-number" aria-hidden="true">02</span>나의 번호표</h3>
+        <div class="ticket">
+          <div class="ticket-head">
+            <span class="t"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 4c5-7 12 0 5 5 8 2 5 11-2 8 0 8-10 8-8 0-8 2-10-7-2-8-5-5 2-12 7-5Z"/><circle cx="11" cy="11" r="2.5"/></svg>LOTTO 6/45</span>
+            <span class="d" id="ticket-date">아직 뽑기 전이에요</span>
+          </div>
+          <div id="results" role="group" aria-label="추첨한 번호"></div>
+          <div class="ticket-foot"><span>자물쇠로 마음에 드는 줄을 고정하세요.</span><span class="ticket-seal">TECHA FLOWER</span></div>
+        </div>
+        <div class="lotto-actions">
+          <span class="lotto-status" id="draw-status" role="status" aria-live="polite">왼쪽에서 번호 뽑기를 눌러 주세요.</span>
+          <button type="button" class="btn btn-ghost btn-sm" id="copy" disabled>전체 번호 복사</button>
+          <span id="share-text" hidden></span>
         </div>
       </div>
-    </details>
-
-    <button class="btn btn-primary btn-block" id="draw">번호 뽑기</button>
-
-    <div class="ticket">
-      <div class="ticket-head"><span class="t">LOTTO 6/45</span><span class="d" id="ticket-date">번호를 뽑으면 여기에 나옵니다</span></div>
-      <div id="results"></div>
-      <div class="ticket-foot">브라우저의 암호학적 난수(crypto)로 뽑습니다. 합계·홀짝은 참고용이며, 어떤 조합이든 당첨 확률은 같습니다.</div>
     </div>
 
-    <div class="lotto-actions">
-      <button class="btn btn-ghost btn-sm" id="copy" disabled>전체 복사</button>
-      <span id="share-text" hidden></span>
+    <div class="lotto-guide" aria-label="번호표 사용 팁">
+      <p><strong><span>01</span>마음에 드는 줄은 고정</strong>다시 뽑아도 그 줄은 그대로 남아요.</p>
+      <p><strong><span>02</span>한 줄만 다시 뽑기</strong>번호표의 둥근 화살표를 눌러보세요.</p>
+      <p><strong><span>03</span>번호는 복사해서 보관</strong>이 화면을 닫으면 번호는 사라져요.</p>
     </div>
   </section>
-
-  <div class="ad-slot"></div>
 
   <article class="article">
     <h2>로또 번호 추첨기 사용법</h2>
@@ -397,8 +342,11 @@ TECHA.initPage({
     copyBtn.disabled = !any;
     $("share-text").textContent = allText();
     var locked = rows.filter(function (r) { return r.locked; }).length;
-    drawBtn.textContent = !any ? "번호 뽑기" : locked === rows.length ? "모든 줄이 고정되어 있습니다" : locked ? "고정한 줄 빼고 다시 뽑기" : "다시 뽑기";
+    $("draw-label").textContent = !any ? "번호 뽑기" : locked === rows.length ? "모든 줄이 고정되어 있습니다" : locked ? "고정한 줄 빼고 다시 뽑기" : "다시 뽑기";
     drawBtn.disabled = locked === rows.length;
+    $("draw-status").textContent = !any ? "번호 뽑기를 눌러 나의 번호표를 채워보세요."
+      : locked === rows.length ? "모든 줄을 고정했어요. 자물쇠를 풀면 다시 뽑을 수 있어요."
+      : rows.filter(function (r) { return r.main; }).length + "게임 번호 준비 완료" + (locked ? " · " + locked + "줄 고정 중" : " · 마음에 드는 줄을 고정해 보세요.");
   }
 
   function rowText(r, i) { return LETTERS[i] + ": " + r.main.join(", ") + " + 보너스 " + r.bonus; }
@@ -406,9 +354,17 @@ TECHA.initPage({
     return rows.map(function (r, i) { return r.main ? rowText(r, i) : null; }).filter(Boolean).join("\n");
   }
   function copy(text, btn, done) {
-    if (navigator.clipboard) navigator.clipboard.writeText(text);
-    var prev = btn.innerHTML; btn.innerHTML = done;
-    setTimeout(function () { btn.innerHTML = prev; }, 1200);
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+      $("draw-status").textContent = "이 브라우저에서는 복사를 사용할 수 없어요. 번호를 직접 적어 주세요.";
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function () {
+      var prev = btn.innerHTML; btn.innerHTML = done;
+      $("draw-status").textContent = "번호를 복사했어요. 메모장 등에 붙여 넣어 보관하세요.";
+      setTimeout(function () { btn.innerHTML = prev; }, 1200);
+    }).catch(function () {
+      $("draw-status").textContent = "복사하지 못했어요. 브라우저의 복사 권한을 확인해 주세요.";
+    });
   }
 
   // ---------- 게임 수 ----------
@@ -417,12 +373,20 @@ TECHA.initPage({
     $("games").textContent = games;
     $("g-minus").disabled = games <= MIN_GAMES;
     $("g-plus").disabled = games >= MAX_GAMES;
+    $("game-presets").querySelectorAll("button[data-games]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(+b.getAttribute("data-games") === games));
+    });
     while (rows.length < games) rows.push({ main: null, bonus: null, locked: false });
     rows.length = games;
     render();
   }
   $("g-minus").addEventListener("click", function () { setGames(games - 1); });
   $("g-plus").addEventListener("click", function () { setGames(games + 1); });
+
+  $("game-presets").addEventListener("click", function (ev) {
+    var b = ev.target.closest("button[data-games]");
+    if (b) setGames(+b.getAttribute("data-games"));
+  });
 
   // ---------- 고정·제외 번호판 ----------
   var board = $("board"), msg = $("board-msg");
