@@ -11,7 +11,7 @@ sources:
   - 비누꽃은 물이 닿으면 형태가 무너진다, 실크플라워는 원단으로 만든 꽃 — blog/flower-material-difference
   - 날별 상품 연결(졸업·발표회·기업 행사·부모님·기념일·집들이·병문안) — assets/data/gift-finder-products.json 의 occasions, 사장님 확정 플레이스 공지(2026-10-13)
   - 사진 — 테차 공방 실사(C:\미디어\사진영상 260820·260914·260908·260918·261005·261007 폴더, 영상 두 편의 장면 캡처 포함)
-naver: (사장님 게시 후 주소 기입)
+naver: https://blog.naver.com/bigcarl/224440163530 (2026-10-13 게시)
 ---
 
 # 초안 원고
