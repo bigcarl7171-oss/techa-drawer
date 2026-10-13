@@ -291,6 +291,10 @@ textarea { min-height: 160px; resize: vertical; line-height: 1.6; }
 .compare-table th, .compare-table td { padding: 8px 12px; border: 1px solid var(--line); text-align: left; white-space: nowrap; }
 .compare-table th { background: var(--gold-soft); color: var(--gold-strong-ink); font-weight: 700; }
 .compare-table tr:nth-child(even) td { background: var(--sage-soft); }
+.article .post-table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; border-top: 1px solid var(--ink, #3A322B); }
+.article .post-table th, .article .post-table td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; color: var(--body-text); }
+.article .post-table th { font-weight: 700; color: var(--ink, #3A322B); white-space: nowrap; }
+.article .post-table td:first-child { font-weight: 700; color: var(--ink, #3A322B); }
 .article img { max-width: 100%; height: auto; border-radius: var(--radius-md); margin: 18px 0; display: block; box-shadow: var(--img-outline); }
 .article figure { margin: 18px 0; }
 .article figcaption { font-size: 13px; color: var(--gold-muted-ink); text-align: center; margin-top: 8px; }

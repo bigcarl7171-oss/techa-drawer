@@ -194,7 +194,23 @@ function mdToHtml(md) {
 
   const out = [];
   let ul = null;
+  let rows = null;
+  const flushTable = () => {
+    if (!rows) return;
+    // `| 머리 | … |` / `|---|…|` / 본문 줄. 둘째 줄이 구분선이 아니면 전부 본문으로 본다.
+    // 2026-10-13 추가 — 그전엔 표를 몰라서 `| 겹 | 재료 |` 가 글자 그대로 발행됐다(one-stem-flower-wrapping).
+    const cells = (r) => r.replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => inline(c.trim()));
+    const hasHead = rows.length > 1 && /^\|?\s*:?-{3,}/.test(rows[1]);
+    out.push(`    <table class="post-table">`);
+    if (hasHead) out.push(`      <thead><tr>${cells(rows[0]).map((c) => `<th>${c}</th>`).join("")}</tr></thead>`);
+    out.push("      <tbody>");
+    for (const r of rows.slice(hasHead ? 2 : 0)) out.push(`        <tr>${cells(r).map((c) => `<td>${c}</td>`).join("")}</tr>`);
+    out.push("      </tbody>");
+    out.push("    </table>");
+    rows = null;
+  };
   const flush = () => {
+    flushTable();
     if (!ul) return;
     out.push("    <ul>");
     out.push(...ul);
@@ -205,6 +221,9 @@ function mdToHtml(md) {
   for (const raw of lines) {
     const line = raw.trim();
     if (!line) { flush(); continue; }
+
+    if (line.startsWith("|")) { (rows = rows || []).push(line); continue; }
+    flushTable();
 
     const img = D.parseMarker(line);
     if (img) {
