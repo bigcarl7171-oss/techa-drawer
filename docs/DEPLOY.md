@@ -1,5 +1,14 @@
 # 배포 가이드 (무료)
 
+> ⚠️ **2026-10-14 확인 필요:** 작업 브랜치 `feature/message-page-refresh-20261014`의
+> Cloudflare 검사가 `production/builds`로 기록됐고, `main`에 병합하기 전에도 그 변경이
+> `www.techa.kr/message/`에서 보였다. 아래의 `main` 전용 배포 설명은 현재 동작과
+> 일치하지 않을 수 있다. Cloudflare 대시보드의 **Workers & Pages → techa-automation →
+> Settings → Builds → Branch control**에서 Production branch가 `main`인지 확인하고,
+> 다른 브랜치의 Preview command가 `npx wrangler preview`인지 확인해야 한다.
+> 설정을 확인·수정하기 전에는 **작업 브랜치 푸시도 운영 반영 가능성이 있다고 보고**
+> 공개 페이지를 확인한다. [Cloudflare 브랜치 설정 안내](https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/)
+
 > ✅ **현재 이미 배포되어 있음** (2026-07-28 기준, Cloudflare 대시보드로 확인됨)
 > - Cloudflare Pages/Workers 프로젝트명: **techa-automation** (GitHub 저장소가 `techa-drawer`로
 >   이름 변경된 뒤에도 연결은 안 끊김 — 저장소 ID 기준 연결이라 이름 변경엔 영향 없음)
