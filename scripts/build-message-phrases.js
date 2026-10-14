@@ -73,7 +73,7 @@ function buildList(data) {
         out.push(
           `        <li class="msg-item" data-tone="${esc(t)}"><p>${esc(p)}</p>` +
           `<span class="msg-meta">${esc(data.tones[t])} · ${[...p].length}자</span>` +
-          `<div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: ${esc(p)}">카드에 보기</button>` +
+          `<div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: ${esc(p)}">미리보기</button>` +
           `<button class="copy-btn" type="button" aria-label="문구 복사: ${esc(p)}">복사</button></div></li>`
         );
       }
