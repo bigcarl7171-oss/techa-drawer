@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <title>꽃 선물 메시지 문구 찾기 · 테차 꽃공방</title>
-<meta name="description" content="생일·졸업·부모님·선생님·승진·개업·기념일 등 상황을 고르면 테차가 꽃 선물에 담아 보내 온 메시지 카드 문구를 바로 복사할 수 있습니다. 모든 문구는 카드 한 장에 들어가는 40자 이내입니다.">
+<meta name="description" content="생일·졸업·취업·퇴사·부모님·선생님·승진·기념일 등 꽃 선물 상황과 말투에 맞는 카드 문구를 고르세요. 40자 이내의 문구를 내 말로 고쳐 미리 보고 복사할 수 있습니다.">
 <link rel="canonical" href="https://www.techa.kr/message/">
 <meta property="og:type" content="website"><meta property="og:image" content="https://www.techa.kr/assets/og/og-default.png">
 <meta property="og:title" content="꽃 선물 메시지 문구 찾기 · 테차 꽃공방">
@@ -21,30 +21,39 @@
 <style>
   /* 2026-09-22 개편 — docs/DESIGN-kkotgongbang.md: 상자·그림자 대신 선과 여백, 모서리 2px, 진한 버튼은 화면에 하나 */
   body.msg-page main.wrap, body.msg-page #page-head .wrap { max-width:1080px; }
-  .msg-fact { display:flex; flex-wrap:wrap; gap:6px 22px; margin:4px 0 26px; padding:12px 0; border-top:1px solid var(--brown); border-bottom:1px solid var(--line); font-size:13.5px; color:var(--muted); }
+  .msg-fact { margin:4px 0 26px; padding:12px 0; border-top:1px solid var(--brown); border-bottom:1px solid var(--line); font-size:13.5px; line-height:1.7; color:var(--muted); }
   .msg-fact b { color:var(--brown); font-weight:700; }
-  .msg-picker { margin:0 0 8px; }
-  .picker-label { margin:0 0 8px; font-size:12.5px; font-weight:700; letter-spacing:.08em; color:#9E8551; }
+  .msg-picker { margin:0 0 12px; }
+  .picker-label { display:block; margin:0 0 10px; font-size:13px; font-weight:700; letter-spacing:.02em; color:#9E8551; }
+  .msg-select-wrap { display:none; }
   .choice-row { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 18px; }
-  .choice-btn { padding:8px 12px; border:1px solid var(--line); border-radius:2px; background:transparent; color:var(--brown); font:500 14px/1.3 inherit; cursor:pointer; transition:background-color .15s, border-color .15s; }
+  .choice-btn { min-height:40px; padding:8px 12px; border:1px solid var(--line); border-radius:2px; background:transparent; color:var(--brown); font-family:inherit; font-size:14px; font-weight:500; line-height:1.3; cursor:pointer; transition:background-color .15s, border-color .15s; }
   .choice-btn:hover { border-color:var(--brown); }
   .choice-btn[aria-pressed="true"] { background:var(--brown); border-color:var(--brown); color:#FAF3EA; }
-  /* 문구가 없는 조합은 눌러도 결과가 0개라 아예 잠근다 (scripts/build-message-phrases.js 가 찍는 짝 정보를 보고 판단) */
+  /* 현재 상황에 문구가 없는 말투만 잠근다. 상황은 언제든 바꿀 수 있다. */
   .choice-btn[disabled] { opacity:.35; cursor:not-allowed; }
   .choice-btn[disabled]:hover { border-color:var(--line); }
   #toneChoices .tone-all { font-weight:700; }
-  .message-results { margin:10px 0 40px; }
-  #msgCount { margin:0 0 4px; font-size:13px; color:var(--muted); }
+  #toneChoices { margin-bottom:6px; }
+  .msg-tone-note { margin:0 0 16px; font-size:12.5px; color:var(--muted); }
+  .message-results { margin:6px 0 40px; min-width:0; }
+  .msg-result-head { display:flex; flex-wrap:wrap; gap:4px 14px; align-items:baseline; margin:0 0 10px; padding-top:14px; border-top:1px solid var(--brown); }
+  .msg-result-head h2 { margin:0; font-family:"Gowun Batang",serif; font-size:21px; }
+  #msgCount { margin:0; font-size:13px; color:var(--muted); }
+  .msg-visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
   /* 아래는 scripts/build-message-phrases.js 가 찍는 정적 문구 목록 */
   .msg-group { margin:0 0 34px; scroll-margin-top:84px; }
-  .msg-group h3 { margin:0 0 4px; padding-top:14px; border-top:1px solid var(--brown); font-family:"Gowun Batang",serif; font-size:21px; }
+  .msg-group h3 { margin:0 0 4px; font-family:"Gowun Batang",serif; font-size:18px; }
   .msg-lead { margin:0 0 6px; color:var(--muted); font-size:13.5px; line-height:1.65; }
   .msg-list { list-style:none; margin:0; padding:0; }
-  .msg-item { display:grid; grid-template-columns:1fr auto; grid-template-areas:"text btn" "meta btn"; column-gap:14px; align-items:center; padding:13px 0; border-bottom:1px solid var(--line); }
+  .msg-item { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"text actions" "meta actions"; column-gap:14px; align-items:center; padding:13px 0; border-bottom:1px solid var(--line); }
   .msg-item[hidden] { display:none; }
   .msg-item p { grid-area:text; margin:0; font-family:"Gowun Batang",serif; font-size:16.5px; line-height:1.55; color:var(--brown); word-break:keep-all; }
   .msg-meta { grid-area:meta; margin-top:3px; font-size:12px; color:var(--muted); }
-  .copy-btn { grid-area:btn; min-width:58px; min-height:40px; padding:0 12px; border:1px solid var(--brown); border-radius:2px; background:transparent; color:var(--brown); font:600 13px inherit; cursor:pointer; transition:background-color .15s, color .15s; }
+  .msg-actions { grid-area:actions; display:none; align-items:center; gap:8px; }
+  .msg-ready .msg-actions { display:flex; }
+  .preview-btn { min-height:40px; padding:0 6px; border:0; background:transparent; color:var(--brown); font-family:inherit; font-size:13px; font-weight:600; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+  .copy-btn { min-width:58px; min-height:40px; padding:0 12px; border:1px solid var(--brown); border-radius:2px; background:transparent; color:var(--brown); font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; transition:background-color .15s, color .15s; }
   .copy-btn:hover, .copy-btn.done { background:var(--brown); color:#FAF3EA; }
   .msg-guide { margin:8px 0 30px; }
   .msg-guide h2 { font-family:"Gowun Batang",serif; font-size:22px; margin:34px 0 10px; }
@@ -66,18 +75,36 @@
   .msg-faq details p { margin:0 0 14px; font-size:14.5px; }
   .related-message { margin:34px 0; padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .related-message a { display:block; padding:7px 0; font-size:14px; text-decoration:underline; text-underline-offset:3px; }
+  .msg-page :is(.choice-btn,.preview-btn,.copy-btn,.msg-mode-btn,.msg-preview-toggle,#occasionSelect,#messageEditor,#copyEdited):focus-visible { outline:2px solid var(--brown); outline-offset:3px; }
   @media(max-width:640px){
     .choice-btn { padding:7px 10px; font-size:13.5px; }
+    .msg-page.msg-ready #occasionChoices { display:none; }
+    .msg-page.msg-ready .msg-select-wrap { display:block; margin:0 0 20px; }
+    #occasionSelect { display:block; width:100%; min-height:48px; padding:8px 12px; border:1px solid var(--brown); border-radius:2px; background:#FFFDF9; color:var(--brown); font-family:inherit; font-size:16px; font-weight:500; }
     .msg-tips { grid-template-columns:1fr; }
     .msg-tips div + div { padding-left:0; border-left:0; border-top:1px solid var(--line); }
     .msg-item p { font-size:16px; }
+    .msg-item { grid-template-areas:"text text" "meta actions"; row-gap:5px; }
+    .msg-actions { justify-self:end; }
   }
   /* 2026-10-05 카드 미리보기 — 고른 문구가 꽃다발 메시지 카드와 꽃 엽서에 어떻게 보이는지 */
-  .msg-layout { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:40px; align-items:start; }
-  .msg-preview { margin-top:4px; }
+  .msg-layout { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:36px; align-items:start; }
+  .msg-preview { position:sticky; top:24px; margin-top:6px; min-width:0; scroll-margin-top:76px; }
+  .msg-preview-bar { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .msg-preview-bar > div { min-width:0; }
   .msg-preview-hint { margin:0 0 12px; font-size:12.5px; font-weight:700; letter-spacing:.06em; color:#9E8551; }
+  .msg-preview-summary, .msg-preview-toggle { display:none; }
+  .msg-preview-toggle[hidden] { display:none !important; }
+  .msg-preview-intro { margin:0 0 13px; font-size:12.5px; line-height:1.6; color:var(--muted); }
+  .msg-preview-intro strong { color:var(--brown); }
+  .msg-preview-modes { display:flex; gap:16px; margin:0 0 12px; border-bottom:1px solid var(--line); }
+  .msg-preview-modes[hidden], .msg-editor[hidden] { display:none; }
+  .msg-mode-btn { padding:0 0 10px; border:0; border-bottom:2px solid transparent; background:transparent; color:var(--muted); font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; }
+  .msg-mode-btn[aria-selected="true"] { border-bottom-color:var(--brown); color:var(--brown); }
+  .msg-preview.msg-enhanced .msg-sample[hidden] { display:none; }
   .msg-sample + .msg-sample { margin-top:28px; padding-top:24px; border-top:1px solid var(--line); }
-  .msg-preview-photo { margin:0; aspect-ratio:4/3; overflow:hidden; border-radius:2px; background:#F3EADC; }
+  .msg-preview.msg-enhanced .msg-sample + .msg-sample { margin:0; padding:0; border:0; }
+  .msg-preview-photo { margin:0; aspect-ratio:16/10; overflow:hidden; border-radius:2px; background:#F3EADC; }
   .msg-preview-photo img { width:100%; height:100%; object-fit:cover; display:block; }
   .msg-card { position:relative; margin:-30px 16px 0; padding:16px 18px 16px; background:#FFFDF9; border:1px solid var(--line); border-top:2px solid #C9A961; }
   .msg-card-label { margin:0 0 10px; font-size:12px; font-weight:700; letter-spacing:.08em; color:#9E8551; }
@@ -86,22 +113,48 @@
   .msg-card-note { margin:10px 0 0; font-size:12px; color:var(--muted); line-height:1.6; }
   .msg-card-ring { display:none; }
   /* 꽃다발 메시지 카드 — 크래프트지 바탕 + 흰 종이 + 분홍 리본 테두리 + 손글씨, 아래 금색 고리 */
-  .msg-card.is-bouquet .msg-card-paper { display:flex; margin:0 auto; max-width:190px; aspect-ratio:4/5; padding:11px; background:#C9A26F; }
+  .msg-card.is-bouquet .msg-card-paper { display:flex; margin:0 auto; max-width:165px; aspect-ratio:4/5; padding:10px; background:#C9A26F; }
   .msg-card.is-bouquet .msg-card-text { position:relative; flex:1; display:flex; align-items:center; justify-content:center; min-height:0; padding:18px 16px 30px; background:#FFFEFB; text-align:center; font-family:"Nanum Pen Script","Gowun Batang",cursive; font-size:26px; line-height:1.2; color:#2E2A27; }
   .msg-card.is-bouquet .msg-card-text::before { content:""; position:absolute; inset:10px 10px 24px; border:1.5px solid #E7A3AE; border-radius:46% / 40%; pointer-events:none; }
+  .msg-card.is-bouquet .msg-card-copy { position:relative; z-index:1; display:block; width:80%; line-height:1.2; white-space:pre-wrap; overflow-wrap:anywhere; }
   .msg-card.is-bouquet .msg-card-ring { display:block; position:absolute; left:50%; bottom:5px; width:22px; height:22px; margin-left:-11px; border:2px solid #B8973F; border-radius:50%; }
-  .msg-item { cursor:pointer; }
-  .msg-item.is-preview p { text-decoration:underline; text-decoration-color:#C9A961; text-underline-offset:5px; }
+  .msg-readability { margin:12px 0 0; padding:8px 10px; border-left:2px solid #9E8551; background:#F7F1E7; color:var(--brown); font-size:12.5px; line-height:1.5; }
+  .msg-readability.is-long { border-left-color:#943F33; color:#943F33; }
+  .msg-item.is-preview { border-left:2px solid #9E8551; padding-left:10px; }
+  .msg-editor { margin:20px 0 0; padding:18px 0 0; border-top:1px solid var(--line); }
+  .msg-editor label { display:block; margin:0 0 5px; font-weight:700; font-size:14px; }
+  .msg-editor-help { margin:0 0 10px; font-size:12.5px; line-height:1.6; color:var(--muted); }
+  #messageEditor { display:block; box-sizing:border-box; width:100%; min-height:94px; padding:11px 12px; border:1px solid var(--line); border-radius:2px; background:#FFFDF9; color:var(--brown); font-family:inherit; font-size:15px; font-weight:500; line-height:1.6; resize:vertical; }
+  .msg-editor-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:8px 0 0; }
+  #editorCount { margin:0; font-size:12.5px; color:var(--muted); }
+  #editorCount.is-long { color:#943F33; font-weight:700; }
+  #copyEdited { min-height:42px; padding:0 15px; border:1px solid var(--brown); border-radius:2px; background:var(--brown); color:#FAF3EA; font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; }
+  #copyStatus { min-height:1.5em; margin:5px 0 0; font-size:12.5px; color:var(--brown); }
   @media(max-width:900px){
-    .msg-layout { grid-template-columns:1fr; gap:0; }
-    .msg-preview { order:-1; display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:0 0 18px; }
-    .msg-preview-hint { grid-column:1 / -1; margin:0; }
-    .msg-sample + .msg-sample { margin-top:0; padding-top:0; border-top:0; }
-    .msg-card { margin:-22px 8px 0; padding:10px 10px 12px; }
-    .msg-card-text { font-size:15px; min-height:0; }
-    .msg-card.is-bouquet .msg-card-paper { max-width:150px; padding:8px; }
-    .msg-card.is-bouquet .msg-card-text { font-size:19px; padding:12px 10px 24px; }
+    .msg-layout { grid-template-columns:1fr; gap:8px; }
+    .msg-preview { position:static; order:-1; margin:0 0 8px; }
+    .msg-preview-bar { padding:13px 14px; border-top:1px solid var(--brown); border-bottom:1px solid var(--line); background:#F3EADC; }
+    .msg-preview-hint { margin:0 0 3px; }
+    .msg-preview-summary { display:block; overflow:hidden; max-width:44ch; margin:0; color:var(--brown); font-family:"Gowun Batang",serif; font-size:15px; line-height:1.5; text-overflow:ellipsis; white-space:nowrap; }
+    .msg-page.msg-ready .msg-preview-toggle { display:block; flex:none; min-height:40px; padding:0 10px; border:1px solid var(--brown); border-radius:2px; background:transparent; color:var(--brown); font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; }
+    .msg-page.msg-ready .msg-preview-body:not(.is-open) { display:none; }
+    .msg-preview-body { padding:14px 0 0; }
+    .msg-sample { display:grid; grid-template-columns:minmax(0,180px) minmax(0,1fr); align-items:center; gap:12px; }
+    .msg-sample + .msg-sample { margin:16px 0 0; padding:16px 0 0; }
+    .msg-card { margin:0; padding:10px 12px; }
+    .msg-card-text { font-size:16px; min-height:0; }
+    .msg-card.is-bouquet .msg-card-paper { max-width:130px; padding:7px; }
+    .msg-card.is-bouquet .msg-card-text { font-size:18px; padding:10px 8px 22px; }
     .msg-card-note { display:none; }
+    .msg-editor { margin-top:12px; padding-top:12px; }
+    .message-results { margin-top:12px; }
+  }
+  @media(max-width:520px){
+    .msg-sample { display:block; }
+    .msg-preview-photo { aspect-ratio:16/7; }
+    .msg-card { margin:-22px 12px 0; padding:12px 14px; }
+    .msg-card.is-bouquet .msg-card-paper { max-width:165px; padding:10px; }
+    .msg-card.is-bouquet .msg-card-text { font-size:26px; padding:18px 16px 30px; }
   }
 </style>
 </head>
@@ -127,358 +180,428 @@
   <!-- BEGIN page-head (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
   <div class="wrap">
     <div class="breadcrumb"><a href="/">홈</a> › <span>꽃 선물 메시지</span></div>
-    <div class="page-head"><h1>꽃 선물 메시지</h1><p class="lead">테차가 꽃과 함께 보내 온 카드 문구를 모았어요. 상황을 고르면 어울리는 문장을 바로 복사할 수 있어요.</p></div>
+    <div class="page-head"><h1>꽃 선물 메시지</h1><p class="lead">꽃 선물 상황과 말투를 고르고, 마음에 드는 문구를 내 말로 다듬어 복사해 보세요.</p></div>
   </div>
   <!-- END page-head -->
 </div>
 <main class="wrap">
-  <p class="msg-fact"><span>테차 꽃과 함께 <b>실제로 보내 온 문장</b></span><span>카드 한 장 <b>25자 안팎</b></span><span>모든 문구 <b>40자 이내</b></span></p>
+  <p class="msg-fact">테차의 주문 카드 표현과 새로 쓴 예시를 모았습니다. <b>상황을 고르고, 내 말로 고쳐 써 보세요.</b></p>
+
+  <section class="msg-picker" aria-label="상황과 말투 고르기">
+    <!-- BEGIN message-occasions (생성: scripts/build-message-phrases.js — 직접 고치지 말 것) -->
+      <label class="picker-label" id="picker-title" for="occasionSelect">1. 어떤 날인가요?</label>
+      <div class="msg-select-wrap"><select id="occasionSelect" aria-label="꽃 선물 상황 고르기"><option value="popular">많이 쓰는 문구</option><option value="birthday">생일·생신</option><option value="milestone">환갑·칠순·팔순</option><option value="parents">부모님·어버이날</option><option value="graduation">졸업·입학</option><option value="job">합격·취업</option><option value="teacher">선생님·스승의 날</option><option value="recital">발표회·연주회·전시</option><option value="promotion">승진·취임</option><option value="church">임직·세례</option><option value="farewell">퇴사·이직</option><option value="retirement">퇴임·정년</option><option value="opening">개업·이전</option><option value="wedding">결혼·집들이</option><option value="wedding-anniv">결혼기념일·프러포즈</option><option value="anniversary">연인·기념일</option><option value="baby">임신·출산</option><option value="cheer">응원·위로</option><option value="thanks">감사</option><option value="recovery">병문안·퇴원</option><option value="business">근속·수상·기업 행사</option></select></div>
+      <div class="choice-row" id="occasionChoices" role="group" aria-labelledby="picker-title"><button class="choice-btn" type="button" data-occasion="popular" data-tones="warm concise formal">많이 쓰는 문구</button><button class="choice-btn" type="button" data-occasion="birthday" data-tones="warm concise formal cheerful work">생일·생신</button><button class="choice-btn" type="button" data-occasion="milestone" data-tones="warm concise formal cheerful work">환갑·칠순·팔순</button><button class="choice-btn" type="button" data-occasion="parents" data-tones="warm concise formal cheerful">부모님·어버이날</button><button class="choice-btn" type="button" data-occasion="graduation" data-tones="warm concise formal cheerful work">졸업·입학</button><button class="choice-btn" type="button" data-occasion="job" data-tones="warm concise formal cheerful work">합격·취업</button><button class="choice-btn" type="button" data-occasion="teacher" data-tones="warm concise formal cheerful">선생님·스승의 날</button><button class="choice-btn" type="button" data-occasion="recital" data-tones="warm concise formal cheerful work">발표회·연주회·전시</button><button class="choice-btn" type="button" data-occasion="promotion" data-tones="warm concise formal cheerful work">승진·취임</button><button class="choice-btn" type="button" data-occasion="church" data-tones="warm concise formal">임직·세례</button><button class="choice-btn" type="button" data-occasion="farewell" data-tones="warm concise formal cheerful work">퇴사·이직</button><button class="choice-btn" type="button" data-occasion="retirement" data-tones="warm concise formal cheerful work">퇴임·정년</button><button class="choice-btn" type="button" data-occasion="opening" data-tones="warm concise formal cheerful work">개업·이전</button><button class="choice-btn" type="button" data-occasion="wedding" data-tones="warm concise formal cheerful work">결혼·집들이</button><button class="choice-btn" type="button" data-occasion="wedding-anniv" data-tones="warm concise formal cheerful">결혼기념일·프러포즈</button><button class="choice-btn" type="button" data-occasion="anniversary" data-tones="warm concise cheerful">연인·기념일</button><button class="choice-btn" type="button" data-occasion="baby" data-tones="warm concise formal cheerful work">임신·출산</button><button class="choice-btn" type="button" data-occasion="cheer" data-tones="warm concise formal cheerful work">응원·위로</button><button class="choice-btn" type="button" data-occasion="thanks" data-tones="warm concise formal cheerful work">감사</button><button class="choice-btn" type="button" data-occasion="recovery" data-tones="warm concise formal work">병문안·퇴원</button><button class="choice-btn" type="button" data-occasion="business" data-tones="warm concise formal work">근속·수상·기업 행사</button></div>
+      <p class="picker-label" id="tone-title">2. 어떤 말투로 전할까요?</p>
+      <div class="choice-row" id="toneChoices" role="group" aria-labelledby="tone-title"><button class="choice-btn tone-all" type="button" data-tone-all>전체</button><button class="choice-btn" type="button" data-tone="warm" data-occasions="popular birthday milestone parents graduation job teacher recital promotion church farewell retirement opening wedding wedding-anniv anniversary baby cheer thanks recovery business">다정하게</button><button class="choice-btn" type="button" data-tone="concise" data-occasions="popular birthday milestone parents graduation job teacher recital promotion church farewell retirement opening wedding wedding-anniv anniversary baby cheer thanks recovery business">짧고 담백하게</button><button class="choice-btn" type="button" data-tone="formal" data-occasions="popular birthday milestone parents graduation job teacher recital promotion church farewell retirement opening wedding wedding-anniv baby cheer thanks recovery business">정중하게</button><button class="choice-btn" type="button" data-tone="cheerful" data-occasions="birthday milestone parents graduation job teacher recital promotion farewell retirement opening wedding wedding-anniv anniversary baby cheer thanks">밝고 재치 있게</button><button class="choice-btn" type="button" data-tone="work" data-occasions="birthday milestone graduation job recital promotion farewell retirement opening wedding baby cheer thanks recovery business">거래처·직장용</button></div>
+      <!-- END message-occasions -->
+    <p class="msg-tone-note">선택할 수 없는 말투는 이 상황에 맞는 문구가 없는 경우입니다.</p>
+  </section>
 
   <div class="msg-layout">
   <div class="msg-main">
-  <section class="msg-picker" aria-label="상황과 말투 고르기">
-    <!-- BEGIN message-occasions (생성: scripts/build-message-phrases.js — 직접 고치지 말 것) -->
-      <p class="picker-label" id="picker-title">상황</p>
-      <div class="choice-row" id="occasionChoices" role="group" aria-labelledby="picker-title"><button class="choice-btn" type="button" data-occasion="popular" data-tones="warm concise formal">많이 쓰는 문구</button><button class="choice-btn" type="button" data-occasion="birthday" data-tones="warm concise formal cheerful work">생일·생신</button><button class="choice-btn" type="button" data-occasion="milestone" data-tones="warm concise formal cheerful work">환갑·칠순·팔순</button><button class="choice-btn" type="button" data-occasion="parents" data-tones="warm concise formal cheerful">부모님·어버이날</button><button class="choice-btn" type="button" data-occasion="graduation" data-tones="warm concise formal cheerful work">졸업·입학</button><button class="choice-btn" type="button" data-occasion="teacher" data-tones="warm concise formal cheerful">선생님·스승의 날</button><button class="choice-btn" type="button" data-occasion="recital" data-tones="warm concise formal cheerful work">발표회·연주회·전시</button><button class="choice-btn" type="button" data-occasion="promotion" data-tones="warm concise formal cheerful work">승진·취임</button><button class="choice-btn" type="button" data-occasion="church" data-tones="warm concise formal">임직·세례</button><button class="choice-btn" type="button" data-occasion="retirement" data-tones="warm concise formal cheerful work">퇴임·정년</button><button class="choice-btn" type="button" data-occasion="opening" data-tones="warm concise formal cheerful work">개업·이전</button><button class="choice-btn" type="button" data-occasion="wedding" data-tones="warm concise formal cheerful work">결혼·집들이</button><button class="choice-btn" type="button" data-occasion="wedding-anniv" data-tones="warm concise formal cheerful">결혼기념일·프러포즈</button><button class="choice-btn" type="button" data-occasion="anniversary" data-tones="warm concise cheerful">연인·기념일</button><button class="choice-btn" type="button" data-occasion="baby" data-tones="warm concise formal cheerful work">임신·출산</button><button class="choice-btn" type="button" data-occasion="cheer" data-tones="warm concise formal cheerful work">응원·위로</button><button class="choice-btn" type="button" data-occasion="thanks" data-tones="warm concise formal cheerful work">감사</button><button class="choice-btn" type="button" data-occasion="recovery" data-tones="warm concise formal work">병문안·퇴원</button><button class="choice-btn" type="button" data-occasion="business" data-tones="warm concise formal work">근속·수상·기업 행사</button></div>
-      <p class="picker-label" id="tone-title">말투</p>
-      <div class="choice-row" id="toneChoices" role="group" aria-labelledby="tone-title"><button class="choice-btn tone-all" type="button" data-tone-all>전체</button><button class="choice-btn" type="button" data-tone="warm" data-occasions="popular birthday milestone parents graduation teacher recital promotion church retirement opening wedding wedding-anniv anniversary baby cheer thanks recovery business">다정하게</button><button class="choice-btn" type="button" data-tone="concise" data-occasions="popular birthday milestone parents graduation teacher recital promotion church retirement opening wedding wedding-anniv anniversary baby cheer thanks recovery business">짧고 담백하게</button><button class="choice-btn" type="button" data-tone="formal" data-occasions="popular birthday milestone parents graduation teacher recital promotion church retirement opening wedding wedding-anniv baby cheer thanks recovery business">정중하게</button><button class="choice-btn" type="button" data-tone="cheerful" data-occasions="birthday milestone parents graduation teacher recital promotion retirement opening wedding wedding-anniv anniversary baby cheer thanks">밝고 재치 있게</button><button class="choice-btn" type="button" data-tone="work" data-occasions="birthday milestone graduation recital promotion retirement opening wedding baby cheer thanks recovery business">거래처·직장용</button></div>
-      <!-- END message-occasions -->
-  </section>
-
-  <section class="message-results" aria-live="polite">
-    <p id="msgCount"></p>
+  <section class="message-results">
+    <div class="msg-result-head"><h2>3. 문구를 골라 보세요</h2><p id="msgCount" role="status" aria-live="polite"></p></div>
+    <p class="msg-visually-hidden" id="rowCopyStatus" role="status" aria-live="polite"></p>
     <!-- BEGIN message-phrases (생성: scripts/build-message-phrases.js — 직접 고치지 말 것) -->
     <section class="msg-group" id="m-popular" data-occasion="popular">
-      <h3>많이 쓰는 문구 카드 문구</h3>
+      <h3>자주 고른 한 줄</h3>
       <p class="msg-lead">테차 주문 카드에서 가장 많이 고른 문구입니다. 상황을 가리지 않고 무난합니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>내가 사랑하는 그대에게</p><span class="msg-meta">다정하게 · 12자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>당신의 내일, 기대해도 좋아요</p><span class="msg-meta">다정하게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>당신의 오늘도 예쁘다</p><span class="msg-meta">다정하게 · 11자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>꽃길만 걷자</p><span class="msg-meta">짧고 담백하게 · 6자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>어제보다 오늘 더 사랑해</p><span class="msg-meta">짧고 담백하게 · 13자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>이 순간을 소중히</p><span class="msg-meta">짧고 담백하게 · 9자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>함께 있어줘서 고마워</p><span class="msg-meta">짧고 담백하게 · 11자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>늘 건강하시고 꽃길만 가득하세요</p><span class="msg-meta">정중하게 · 17자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>베풀어 주신 은혜 항상 감사드립니다. 건강하시고 꽃길만 가득하세요</p><span class="msg-meta">정중하게 · 36자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>일 년 중 가장 특별한 오늘, 생신을 축하드립니다</p><span class="msg-meta">정중하게 · 27자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>곁에 있어줘서 고마워요. 사랑하고 존경합니다</p><span class="msg-meta">정중하게 · 24자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>함께 있어줘서 고마워</p><span class="msg-meta">다정하게 · 11자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 함께 있어줘서 고마워">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 함께 있어줘서 고마워">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>내가 사랑하는 그대에게</p><span class="msg-meta">다정하게 · 12자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 내가 사랑하는 그대에게">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 내가 사랑하는 그대에게">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>당신의 내일, 기대해도 좋아요</p><span class="msg-meta">다정하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 당신의 내일, 기대해도 좋아요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 당신의 내일, 기대해도 좋아요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>당신의 오늘도 예쁘다</p><span class="msg-meta">다정하게 · 11자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 당신의 오늘도 예쁘다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 당신의 오늘도 예쁘다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>꽃길만 걷자</p><span class="msg-meta">짧고 담백하게 · 6자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 꽃길만 걷자">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 꽃길만 걷자">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>어제보다 오늘 더 사랑해</p><span class="msg-meta">짧고 담백하게 · 13자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 어제보다 오늘 더 사랑해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 어제보다 오늘 더 사랑해">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>이 순간을 소중히</p><span class="msg-meta">짧고 담백하게 · 9자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 이 순간을 소중히">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 이 순간을 소중히">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>늘 건강하시고 꽃길만 가득하세요</p><span class="msg-meta">정중하게 · 17자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 늘 건강하시고 꽃길만 가득하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 늘 건강하시고 꽃길만 가득하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>베풀어 주신 은혜 항상 감사드립니다. 건강하시고 꽃길만 가득하세요</p><span class="msg-meta">정중하게 · 36자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 베풀어 주신 은혜 항상 감사드립니다. 건강하시고 꽃길만 가득하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 베풀어 주신 은혜 항상 감사드립니다. 건강하시고 꽃길만 가득하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>일 년 중 가장 특별한 오늘, 생신을 축하드립니다</p><span class="msg-meta">정중하게 · 27자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 일 년 중 가장 특별한 오늘, 생신을 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 일 년 중 가장 특별한 오늘, 생신을 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>곁에 있어줘서 고마워요. 사랑하고 존경합니다</p><span class="msg-meta">정중하게 · 24자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 곁에 있어줘서 고마워요. 사랑하고 존경합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 곁에 있어줘서 고마워요. 사랑하고 존경합니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-birthday" data-occasion="birthday">
       <h3>생일·생신 카드 문구</h3>
       <p class="msg-lead">받는 분 이름을 앞에 붙이면 같은 문장도 훨씬 가깝게 읽힙니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>태어나줘서 고마워. 생일 축하해</p><span class="msg-meta">다정하게 · 17자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>좋은 일은 햇살처럼 스미고, 나쁜 일은 바람처럼 날아가길</p><span class="msg-meta">다정하게 · 31자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>오늘 하루가 좋아하는 것들로만 채워지길 바라요</p><span class="msg-meta">다정하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>생일 축하해. 오늘이 행복했으면 좋겠어</p><span class="msg-meta">짧고 담백하게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>생일 축하해요. 늘 곁에 있어줘서 고마워요</p><span class="msg-meta">짧고 담백하게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>생신을 진심으로 축하드립니다. 늘 건강하세요</p><span class="msg-meta">정중하게 · 24자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>올 한 해도 꽃처럼 향기로운 날들만 가득하시길 바랍니다</p><span class="msg-meta">정중하게 · 30자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>어차피 예쁠 텐데 한 살 더 먹으면 어때? 생일 축하해</p><span class="msg-meta">밝고 재치 있게 · 30자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>오늘의 주인공은 너야. 하고 싶은 거 다 해!</p><span class="msg-meta">밝고 재치 있게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>엄마는 좋겠다, 우리가 있어서. 생신 축하드려요</p><span class="msg-meta">밝고 재치 있게 · 26자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>생신을 축하드립니다. 하시는 일마다 좋은 일만 가득하시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 36자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>뜻깊은 날을 축하드립니다. 늘 건강하시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 27자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>태어나줘서 고마워. 생일 축하해</p><span class="msg-meta">다정하게 · 17자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 태어나줘서 고마워. 생일 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 태어나줘서 고마워. 생일 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>좋은 일은 햇살처럼 스미고, 나쁜 일은 바람처럼 날아가길</p><span class="msg-meta">다정하게 · 31자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 좋은 일은 햇살처럼 스미고, 나쁜 일은 바람처럼 날아가길">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 좋은 일은 햇살처럼 스미고, 나쁜 일은 바람처럼 날아가길">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>오늘 하루가 좋아하는 것들로만 채워지길 바라요</p><span class="msg-meta">다정하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오늘 하루가 좋아하는 것들로만 채워지길 바라요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오늘 하루가 좋아하는 것들로만 채워지길 바라요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>오늘만큼은 네가 가장 행복했으면 해</p><span class="msg-meta">다정하게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오늘만큼은 네가 가장 행복했으면 해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오늘만큼은 네가 가장 행복했으면 해">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>생일 축하해. 오늘이 행복했으면 좋겠어</p><span class="msg-meta">짧고 담백하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 생일 축하해. 오늘이 행복했으면 좋겠어">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 생일 축하해. 오늘이 행복했으면 좋겠어">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>생일 축하해요. 늘 곁에 있어줘서 고마워요</p><span class="msg-meta">짧고 담백하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 생일 축하해요. 늘 곁에 있어줘서 고마워요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 생일 축하해요. 늘 곁에 있어줘서 고마워요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>생신을 진심으로 축하드립니다. 늘 건강하세요</p><span class="msg-meta">정중하게 · 24자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 생신을 진심으로 축하드립니다. 늘 건강하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 생신을 진심으로 축하드립니다. 늘 건강하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>올 한 해도 꽃처럼 향기로운 날들만 가득하시길 바랍니다</p><span class="msg-meta">정중하게 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 올 한 해도 꽃처럼 향기로운 날들만 가득하시길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 올 한 해도 꽃처럼 향기로운 날들만 가득하시길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>어차피 예쁠 텐데 한 살 더 먹으면 어때? 생일 축하해</p><span class="msg-meta">밝고 재치 있게 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 어차피 예쁠 텐데 한 살 더 먹으면 어때? 생일 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 어차피 예쁠 텐데 한 살 더 먹으면 어때? 생일 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>오늘의 주인공은 너야. 하고 싶은 거 다 해!</p><span class="msg-meta">밝고 재치 있게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오늘의 주인공은 너야. 하고 싶은 거 다 해!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오늘의 주인공은 너야. 하고 싶은 거 다 해!">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>엄마는 좋겠다, 우리가 있어서. 생신 축하드려요</p><span class="msg-meta">밝고 재치 있게 · 26자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 엄마는 좋겠다, 우리가 있어서. 생신 축하드려요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 엄마는 좋겠다, 우리가 있어서. 생신 축하드려요">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>생신을 축하드립니다. 하시는 일마다 좋은 일만 가득하시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 36자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 생신을 축하드립니다. 하시는 일마다 좋은 일만 가득하시길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 생신을 축하드립니다. 하시는 일마다 좋은 일만 가득하시길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>뜻깊은 날을 축하드립니다. 늘 건강하시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 27자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 뜻깊은 날을 축하드립니다. 늘 건강하시길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 뜻깊은 날을 축하드립니다. 늘 건강하시길 바랍니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-milestone" data-occasion="milestone">
       <h3>환갑·칠순·팔순 카드 문구</h3>
       <p class="msg-lead">나이를 직접 세기보다 걸어오신 세월을 높이는 문장이 오래 남습니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>모든 순간이 꽃처럼 피어나길. 칠순 축하드려요</p><span class="msg-meta">다정하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>환갑 축하드려요. 아빠의 꽃청춘을 응원합니다</p><span class="msg-meta">다정하게 · 24자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>오래오래 건강하게 곁에 계셔주세요. 사랑합니다</p><span class="msg-meta">다정하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>칠순을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>우리 집안의 기둥, 아버지의 칠순을 축하드려요</p><span class="msg-meta">짧고 담백하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>걸어오신 세월을 존경하고 사랑합니다. 팔순을 축하드립니다</p><span class="msg-meta">정중하게 · 31자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>가족의 든든한 울타리가 되어주셔서 감사합니다. 늘 강건하세요</p><span class="msg-meta">정중하게 · 33자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>세 번째 스무 살! 환갑을 축하드립니다</p><span class="msg-meta">밝고 재치 있게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>인생은 칠순부터! 앞으로가 더 기대돼요</p><span class="msg-meta">밝고 재치 있게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>팔팔하니까 팔순이다! 늘 건강하세요</p><span class="msg-meta">밝고 재치 있게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>뜻깊은 생신을 축하드립니다. 늘 강녕하시기를 기원합니다</p><span class="msg-meta">거래처·직장용 · 30자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>고희를 진심으로 축하드리며 만수무강을 기원합니다</p><span class="msg-meta">거래처·직장용 · 26자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>모든 순간이 꽃처럼 피어나길. 칠순 축하드려요</p><span class="msg-meta">다정하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 모든 순간이 꽃처럼 피어나길. 칠순 축하드려요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 모든 순간이 꽃처럼 피어나길. 칠순 축하드려요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>환갑 축하드려요. 아빠의 꽃청춘을 응원합니다</p><span class="msg-meta">다정하게 · 24자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 환갑 축하드려요. 아빠의 꽃청춘을 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 환갑 축하드려요. 아빠의 꽃청춘을 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>오래오래 건강하게 곁에 계셔주세요. 사랑합니다</p><span class="msg-meta">다정하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오래오래 건강하게 곁에 계셔주세요. 사랑합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오래오래 건강하게 곁에 계셔주세요. 사랑합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>칠순을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 칠순을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 칠순을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>우리 집안의 기둥, 아버지의 칠순을 축하드려요</p><span class="msg-meta">짧고 담백하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 우리 집안의 기둥, 아버지의 칠순을 축하드려요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 우리 집안의 기둥, 아버지의 칠순을 축하드려요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>걸어오신 세월을 존경하고 사랑합니다. 팔순을 축하드립니다</p><span class="msg-meta">정중하게 · 31자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 걸어오신 세월을 존경하고 사랑합니다. 팔순을 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 걸어오신 세월을 존경하고 사랑합니다. 팔순을 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>가족의 든든한 울타리가 되어주셔서 감사합니다. 늘 강건하세요</p><span class="msg-meta">정중하게 · 33자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 가족의 든든한 울타리가 되어주셔서 감사합니다. 늘 강건하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 가족의 든든한 울타리가 되어주셔서 감사합니다. 늘 강건하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>칠순을 축하드립니다. 함께할 날들을 기대합니다</p><span class="msg-meta">정중하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 칠순을 축하드립니다. 함께할 날들을 기대합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 칠순을 축하드립니다. 함께할 날들을 기대합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>세 번째 스무 살! 환갑을 축하드립니다</p><span class="msg-meta">밝고 재치 있게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 세 번째 스무 살! 환갑을 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 세 번째 스무 살! 환갑을 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>인생은 칠순부터! 앞으로가 더 기대돼요</p><span class="msg-meta">밝고 재치 있게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 인생은 칠순부터! 앞으로가 더 기대돼요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 인생은 칠순부터! 앞으로가 더 기대돼요">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>팔팔하니까 팔순이다! 늘 건강하세요</p><span class="msg-meta">밝고 재치 있게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 팔팔하니까 팔순이다! 늘 건강하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 팔팔하니까 팔순이다! 늘 건강하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>뜻깊은 생신을 축하드립니다. 늘 강녕하시기를 기원합니다</p><span class="msg-meta">거래처·직장용 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 뜻깊은 생신을 축하드립니다. 늘 강녕하시기를 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 뜻깊은 생신을 축하드립니다. 늘 강녕하시기를 기원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>고희를 진심으로 축하드리며 만수무강을 기원합니다</p><span class="msg-meta">거래처·직장용 · 26자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 고희를 진심으로 축하드리며 만수무강을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 고희를 진심으로 축하드리며 만수무강을 기원합니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-parents" data-occasion="parents">
       <h3>부모님·어버이날 카드 문구</h3>
       <p class="msg-lead">테차 카드에 가장 자주 담기는 마음입니다. 짧은 감사 한 줄이면 충분합니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>낳아주시고 키워주셔서 감사합니다. 사랑해요</p><span class="msg-meta">다정하게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>엄마 아빠의 딸이라서 행복해요</p><span class="msg-meta">다정하게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>존재만으로도 고마운 우리 엄마, 사랑해요</p><span class="msg-meta">다정하게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>엄마, 늘 고맙고 사랑해</p><span class="msg-meta">짧고 담백하게 · 13자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>사랑으로 키워주셔서 감사합니다</p><span class="msg-meta">짧고 담백하게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>평생 든든한 버팀목이 되어주셔서 감사합니다. 늘 건강하세요</p><span class="msg-meta">정중하게 · 32자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>베풀어 주신 사랑 잊지 않겠습니다. 오래오래 건강하세요</p><span class="msg-meta">정중하게 · 30자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>다음 생에도 우리 엄마 해줘</p><span class="msg-meta">밝고 재치 있게 · 15자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>앞으로의 꽃길은 제가 책임질게요</p><span class="msg-meta">밝고 재치 있게 · 17자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>첫 월급 기념! 평생 효도하겠습니다</p><span class="msg-meta">밝고 재치 있게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>낳아주시고 키워주셔서 감사합니다. 사랑해요</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 낳아주시고 키워주셔서 감사합니다. 사랑해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 낳아주시고 키워주셔서 감사합니다. 사랑해요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>엄마 아빠의 딸이라서 행복해요</p><span class="msg-meta">다정하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 엄마 아빠의 딸이라서 행복해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 엄마 아빠의 딸이라서 행복해요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>존재만으로도 고마운 우리 엄마, 사랑해요</p><span class="msg-meta">다정하게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 존재만으로도 고마운 우리 엄마, 사랑해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 존재만으로도 고마운 우리 엄마, 사랑해요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>엄마, 늘 고맙고 사랑해</p><span class="msg-meta">짧고 담백하게 · 13자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 엄마, 늘 고맙고 사랑해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 엄마, 늘 고맙고 사랑해">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>사랑으로 키워주셔서 감사합니다</p><span class="msg-meta">짧고 담백하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 사랑으로 키워주셔서 감사합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 사랑으로 키워주셔서 감사합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>엄마 아빠, 언제나 제 편이 되어주셔서 고마워요</p><span class="msg-meta">짧고 담백하게 · 26자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 엄마 아빠, 언제나 제 편이 되어주셔서 고마워요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 엄마 아빠, 언제나 제 편이 되어주셔서 고마워요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>평생 든든한 버팀목이 되어주셔서 감사합니다. 늘 건강하세요</p><span class="msg-meta">정중하게 · 32자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 평생 든든한 버팀목이 되어주셔서 감사합니다. 늘 건강하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 평생 든든한 버팀목이 되어주셔서 감사합니다. 늘 건강하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>베풀어 주신 사랑 잊지 않겠습니다. 오래오래 건강하세요</p><span class="msg-meta">정중하게 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 베풀어 주신 사랑 잊지 않겠습니다. 오래오래 건강하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 베풀어 주신 사랑 잊지 않겠습니다. 오래오래 건강하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>다음 생에도 우리 엄마 해줘</p><span class="msg-meta">밝고 재치 있게 · 15자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 다음 생에도 우리 엄마 해줘">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 다음 생에도 우리 엄마 해줘">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>앞으로의 꽃길은 제가 책임질게요</p><span class="msg-meta">밝고 재치 있게 · 17자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 앞으로의 꽃길은 제가 책임질게요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 앞으로의 꽃길은 제가 책임질게요">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>첫 월급 기념! 평생 효도하겠습니다</p><span class="msg-meta">밝고 재치 있게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 첫 월급 기념! 평생 효도하겠습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 첫 월급 기념! 평생 효도하겠습니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-graduation" data-occasion="graduation">
       <h3>졸업·입학 카드 문구</h3>
       <p class="msg-lead">테차 카드에서 가장 많이 쓰이는 상황입니다. '응원해'로 맺는 문장이 특히 사랑받습니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>반짝반짝 빛날 너의 앞날을 응원해</p><span class="msg-meta">다정하게 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>졸업 축하해. 너의 모든 날을 응원할게</p><span class="msg-meta">다정하게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>항상 너를 믿어. 졸업 진심으로 축하해</p><span class="msg-meta">다정하게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>끝이 아닌 새로운 시작. 졸업 축하해</p><span class="msg-meta">짧고 담백하게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>졸업 축하해. 그동안 정말 애썼어</p><span class="msg-meta">짧고 담백하게 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>졸업을 진심으로 축하드립니다. 앞날에 좋은 일만 가득하길 바랍니다</p><span class="msg-meta">정중하게 · 36자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>입학을 축하드립니다. 새로운 시작을 응원합니다</p><span class="msg-meta">정중하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>이제 진짜 중학생! 슬기로운 중학 생활을 응원해</p><span class="msg-meta">밝고 재치 있게 · 26자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>너의 가능성은 무한대! 졸업 축하해</p><span class="msg-meta">밝고 재치 있게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>끝까지 해낸 네가 최고야. 오늘은 실컷 즐기자</p><span class="msg-meta">밝고 재치 있게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>자녀분의 졸업을 진심으로 축하드립니다</p><span class="msg-meta">거래처·직장용 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>새로운 출발을 응원하며 입학을 축하드립니다</p><span class="msg-meta">거래처·직장용 · 23자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>반짝반짝 빛날 너의 앞날을 응원해</p><span class="msg-meta">다정하게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 반짝반짝 빛날 너의 앞날을 응원해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 반짝반짝 빛날 너의 앞날을 응원해">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>졸업 축하해. 너의 모든 날을 응원할게</p><span class="msg-meta">다정하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 졸업 축하해. 너의 모든 날을 응원할게">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 졸업 축하해. 너의 모든 날을 응원할게">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>항상 너를 믿어. 졸업 진심으로 축하해</p><span class="msg-meta">다정하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 항상 너를 믿어. 졸업 진심으로 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 항상 너를 믿어. 졸업 진심으로 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>입학 축하해. 새로운 친구들과 즐거운 날 보내</p><span class="msg-meta">다정하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 입학 축하해. 새로운 친구들과 즐거운 날 보내">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 입학 축하해. 새로운 친구들과 즐거운 날 보내">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>끝이 아닌 새로운 시작. 졸업 축하해</p><span class="msg-meta">짧고 담백하게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 끝이 아닌 새로운 시작. 졸업 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 끝이 아닌 새로운 시작. 졸업 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>졸업 축하해. 그동안 정말 애썼어</p><span class="msg-meta">짧고 담백하게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 졸업 축하해. 그동안 정말 애썼어">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 졸업 축하해. 그동안 정말 애썼어">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>졸업을 진심으로 축하드립니다. 앞날에 좋은 일만 가득하길 바랍니다</p><span class="msg-meta">정중하게 · 36자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 졸업을 진심으로 축하드립니다. 앞날에 좋은 일만 가득하길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 졸업을 진심으로 축하드립니다. 앞날에 좋은 일만 가득하길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>입학을 축하드립니다. 새로운 시작을 응원합니다</p><span class="msg-meta">정중하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 입학을 축하드립니다. 새로운 시작을 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 입학을 축하드립니다. 새로운 시작을 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>이제 진짜 중학생! 슬기로운 중학 생활을 응원해</p><span class="msg-meta">밝고 재치 있게 · 26자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 이제 진짜 중학생! 슬기로운 중학 생활을 응원해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 이제 진짜 중학생! 슬기로운 중학 생활을 응원해">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>너의 가능성은 무한대! 졸업 축하해</p><span class="msg-meta">밝고 재치 있게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 너의 가능성은 무한대! 졸업 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 너의 가능성은 무한대! 졸업 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>끝까지 해낸 네가 최고야. 오늘은 실컷 즐기자</p><span class="msg-meta">밝고 재치 있게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 끝까지 해낸 네가 최고야. 오늘은 실컷 즐기자">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 끝까지 해낸 네가 최고야. 오늘은 실컷 즐기자">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>자녀분의 졸업을 진심으로 축하드립니다</p><span class="msg-meta">거래처·직장용 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 자녀분의 졸업을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 자녀분의 졸업을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>새로운 출발을 응원하며 입학을 축하드립니다</p><span class="msg-meta">거래처·직장용 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 출발을 응원하며 입학을 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 출발을 응원하며 입학을 축하드립니다">복사</button></div></li>
+      </ul>
+    </section>
+    <section class="msg-group" id="m-job" data-occasion="job">
+      <h3>합격·취업 카드 문구</h3>
+      <p class="msg-lead">결과를 축하하고, 새 자리에서의 첫걸음을 응원하는 문장을 골라 보세요.</p>
+      <ul class="msg-list">
+        <li class="msg-item" data-tone="warm"><p>네가 해낸 거야. 합격 정말 축하해</p><span class="msg-meta">다정하게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 네가 해낸 거야. 합격 정말 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 네가 해낸 거야. 합격 정말 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>새로운 곳에서의 하루하루를 응원할게</p><span class="msg-meta">다정하게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 곳에서의 하루하루를 응원할게">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 곳에서의 하루하루를 응원할게">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>합격을 진심으로 축하해</p><span class="msg-meta">짧고 담백하게 · 12자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 합격을 진심으로 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 합격을 진심으로 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>첫 출근, 너답게 잘해낼 거야</p><span class="msg-meta">짧고 담백하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 첫 출근, 너답게 잘해낼 거야">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 첫 출근, 너답게 잘해낼 거야">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>합격을 진심으로 축하드립니다. 새 출발을 응원합니다</p><span class="msg-meta">정중하게 · 28자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 합격을 진심으로 축하드립니다. 새 출발을 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 합격을 진심으로 축하드립니다. 새 출발을 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>취업을 축하드립니다. 앞날에 좋은 일 가득하시길 바랍니다</p><span class="msg-meta">정중하게 · 31자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 취업을 축하드립니다. 앞날에 좋은 일 가득하시길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 취업을 축하드립니다. 앞날에 좋은 일 가득하시길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>합격 소식에 내가 더 신났어! 축하해</p><span class="msg-meta">밝고 재치 있게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 합격 소식에 내가 더 신났어! 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 합격 소식에 내가 더 신났어! 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>첫 월급보다 꽃이 먼저 도착했네! 취업 축하해</p><span class="msg-meta">밝고 재치 있게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 첫 월급보다 꽃이 먼저 도착했네! 취업 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 첫 월급보다 꽃이 먼저 도착했네! 취업 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>입사를 축하드립니다. 새로운 자리에서의 활약을 기대합니다</p><span class="msg-meta">거래처·직장용 · 31자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 입사를 축하드립니다. 새로운 자리에서의 활약을 기대합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 입사를 축하드립니다. 새로운 자리에서의 활약을 기대합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>최종 합격을 축하드리며 앞날의 건승을 기원합니다</p><span class="msg-meta">거래처·직장용 · 26자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 최종 합격을 축하드리며 앞날의 건승을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 최종 합격을 축하드리며 앞날의 건승을 기원합니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-teacher" data-occasion="teacher">
       <h3>선생님·스승의 날 카드 문구</h3>
       <p class="msg-lead">졸업식과 학년 말에 몰립니다. 끝에 '○○반 ○○ 올림'을 붙이면 누가 보냈는지 바로 압니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>선생님과 함께한 모든 날이 행복했어요</p><span class="msg-meta">다정하게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>1년 동안 사랑으로 돌봐주셔서 감사합니다</p><span class="msg-meta">다정하게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>선생님 덕분에 많이 웃고 많이 자랐어요</p><span class="msg-meta">다정하게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>선생님, 정말 감사했습니다</p><span class="msg-meta">짧고 담백하게 · 14자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>선생님의 제자라서 행복했습니다</p><span class="msg-meta">짧고 담백하게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>따뜻한 가르침 잊지 않겠습니다. 늘 건강하세요</p><span class="msg-meta">정중하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>스승의 은혜에 깊이 감사드립니다. 늘 평안하시길 바랍니다</p><span class="msg-meta">정중하게 · 31자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>헤어져도 또 만나고 싶어요. 선생님 최고!</p><span class="msg-meta">밝고 재치 있게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>우리 반이 빛난 건 다 선생님 덕분이에요</p><span class="msg-meta">밝고 재치 있게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>선생님과 함께한 모든 날이 행복했어요</p><span class="msg-meta">다정하게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 선생님과 함께한 모든 날이 행복했어요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 선생님과 함께한 모든 날이 행복했어요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>1년 동안 사랑으로 돌봐주셔서 감사합니다</p><span class="msg-meta">다정하게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 1년 동안 사랑으로 돌봐주셔서 감사합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 1년 동안 사랑으로 돌봐주셔서 감사합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>선생님 덕분에 많이 웃고 많이 자랐어요</p><span class="msg-meta">다정하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 선생님 덕분에 많이 웃고 많이 자랐어요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 선생님 덕분에 많이 웃고 많이 자랐어요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>선생님, 정말 감사했습니다</p><span class="msg-meta">짧고 담백하게 · 14자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 선생님, 정말 감사했습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 선생님, 정말 감사했습니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>선생님의 제자라서 행복했습니다</p><span class="msg-meta">짧고 담백하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 선생님의 제자라서 행복했습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 선생님의 제자라서 행복했습니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>따뜻한 가르침 잊지 않겠습니다. 늘 건강하세요</p><span class="msg-meta">정중하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 따뜻한 가르침 잊지 않겠습니다. 늘 건강하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 따뜻한 가르침 잊지 않겠습니다. 늘 건강하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>스승의 은혜에 깊이 감사드립니다. 늘 평안하시길 바랍니다</p><span class="msg-meta">정중하게 · 31자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 스승의 은혜에 깊이 감사드립니다. 늘 평안하시길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 스승의 은혜에 깊이 감사드립니다. 늘 평안하시길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>선생님께 배운 마음 오래 간직하겠습니다</p><span class="msg-meta">정중하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 선생님께 배운 마음 오래 간직하겠습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 선생님께 배운 마음 오래 간직하겠습니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>헤어져도 또 만나고 싶어요. 선생님 최고!</p><span class="msg-meta">밝고 재치 있게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 헤어져도 또 만나고 싶어요. 선생님 최고!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 헤어져도 또 만나고 싶어요. 선생님 최고!">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>우리 반이 빛난 건 다 선생님 덕분이에요</p><span class="msg-meta">밝고 재치 있게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 우리 반이 빛난 건 다 선생님 덕분이에요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 우리 반이 빛난 건 다 선생님 덕분이에요">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-recital" data-occasion="recital">
       <h3>발표회·연주회·전시 카드 문구</h3>
       <p class="msg-lead">결과보다 준비한 시간과 용기를 알아주는 문장이 가장 반갑습니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>오늘 무대 정말 멋졌어. 준비한 시간이 다 보였어</p><span class="msg-meta">다정하게 · 27자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>떨렸을 텐데 끝까지 해냈네. 정말 자랑스러워</p><span class="msg-meta">다정하게 · 24자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>너의 시작을 함께 볼 수 있어 행복해. 첫 전시 축하해</p><span class="msg-meta">다정하게 · 30자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>오늘 연주 최고였어</p><span class="msg-meta">짧고 담백하게 · 10자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>첫 콩쿠르 도전을 축하해</p><span class="msg-meta">짧고 담백하게 · 13자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>뜻깊은 무대를 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>아름다운 연주 감사합니다. 다음 무대도 기다리겠습니다</p><span class="msg-meta">정중하게 · 29자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>오늘 무대 위에서 네가 제일 빛났어!</p><span class="msg-meta">밝고 재치 있게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>미모도 최고, 연주도 최고!</p><span class="msg-meta">밝고 재치 있게 · 15자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>앙코르! 다음 공연도 맨 앞줄 예약이야</p><span class="msg-meta">밝고 재치 있게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>공연 개최를 진심으로 축하드립니다</p><span class="msg-meta">거래처·직장용 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>귀한 전시를 열게 되심을 진심으로 축하드립니다</p><span class="msg-meta">거래처·직장용 · 25자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>오늘 무대 정말 멋졌어. 준비한 시간이 다 보였어</p><span class="msg-meta">다정하게 · 27자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오늘 무대 정말 멋졌어. 준비한 시간이 다 보였어">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오늘 무대 정말 멋졌어. 준비한 시간이 다 보였어">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>떨렸을 텐데 끝까지 해냈네. 정말 자랑스러워</p><span class="msg-meta">다정하게 · 24자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 떨렸을 텐데 끝까지 해냈네. 정말 자랑스러워">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 떨렸을 텐데 끝까지 해냈네. 정말 자랑스러워">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>너의 시작을 함께 볼 수 있어 행복해. 첫 전시 축하해</p><span class="msg-meta">다정하게 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 너의 시작을 함께 볼 수 있어 행복해. 첫 전시 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 너의 시작을 함께 볼 수 있어 행복해. 첫 전시 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>오늘 연주 최고였어</p><span class="msg-meta">짧고 담백하게 · 10자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오늘 연주 최고였어">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오늘 연주 최고였어">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>첫 콩쿠르 도전을 축하해</p><span class="msg-meta">짧고 담백하게 · 13자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 첫 콩쿠르 도전을 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 첫 콩쿠르 도전을 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>뜻깊은 무대를 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 뜻깊은 무대를 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 뜻깊은 무대를 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>아름다운 연주 감사합니다. 다음 무대도 기다리겠습니다</p><span class="msg-meta">정중하게 · 29자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 아름다운 연주 감사합니다. 다음 무대도 기다리겠습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 아름다운 연주 감사합니다. 다음 무대도 기다리겠습니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>첫 전시를 축하드립니다. 다음 이야기도 기대하겠습니다</p><span class="msg-meta">정중하게 · 29자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 첫 전시를 축하드립니다. 다음 이야기도 기대하겠습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 첫 전시를 축하드립니다. 다음 이야기도 기대하겠습니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>오늘 무대 위에서 네가 제일 빛났어!</p><span class="msg-meta">밝고 재치 있게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오늘 무대 위에서 네가 제일 빛났어!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오늘 무대 위에서 네가 제일 빛났어!">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>미모도 최고, 연주도 최고!</p><span class="msg-meta">밝고 재치 있게 · 15자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 미모도 최고, 연주도 최고!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 미모도 최고, 연주도 최고!">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>앙코르! 다음 공연도 맨 앞줄 예약이야</p><span class="msg-meta">밝고 재치 있게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 앙코르! 다음 공연도 맨 앞줄 예약이야">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 앙코르! 다음 공연도 맨 앞줄 예약이야">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>공연 개최를 진심으로 축하드립니다</p><span class="msg-meta">거래처·직장용 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 공연 개최를 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 공연 개최를 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>귀한 전시를 열게 되심을 진심으로 축하드립니다</p><span class="msg-meta">거래처·직장용 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 귀한 전시를 열게 되심을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 귀한 전시를 열게 되심을 진심으로 축하드립니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-promotion" data-occasion="promotion">
       <h3>승진·취임 카드 문구</h3>
       <p class="msg-lead">인사 배경이나 다른 사람 이야기는 빼고 축하만 담습니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>그동안 애쓰신 걸 알기에 더 반가운 소식이에요</p><span class="msg-meta">다정하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>충분히 잘해 오셨어요. 앞으로도 응원할게요</p><span class="msg-meta">다정하게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>승진을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>새로운 시작에서의 활약을 응원합니다</p><span class="msg-meta">짧고 담백하게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>승진을 축하드립니다. 그동안의 노력이 결실을 맺어 기쁩니다</p><span class="msg-meta">정중하게 · 32자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>취임을 진심으로 축하드립니다. 앞날에 건승을 기원합니다</p><span class="msg-meta">정중하게 · 30자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>경사났네, 경사났어! 승진 축하해요</p><span class="msg-meta">밝고 재치 있게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>역시 될 사람은 되네요. 오늘은 한턱 내셔야죠</p><span class="msg-meta">밝고 재치 있게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>영전을 진심으로 축하드립니다. 앞으로도 좋은 인연 이어가길 바랍니다</p><span class="msg-meta">거래처·직장용 · 37자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>취임을 축하드리며 귀하의 건승을 기원합니다</p><span class="msg-meta">거래처·직장용 · 23자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>그동안 애쓰신 걸 알기에 더 반가운 소식이에요</p><span class="msg-meta">다정하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 그동안 애쓰신 걸 알기에 더 반가운 소식이에요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 그동안 애쓰신 걸 알기에 더 반가운 소식이에요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>충분히 잘해 오셨어요. 앞으로도 응원할게요</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 충분히 잘해 오셨어요. 앞으로도 응원할게요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 충분히 잘해 오셨어요. 앞으로도 응원할게요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>새 자리에서 펼칠 하루하루를 응원합니다</p><span class="msg-meta">다정하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새 자리에서 펼칠 하루하루를 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새 자리에서 펼칠 하루하루를 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>승진을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 승진을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 승진을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>새로운 시작에서의 활약을 응원합니다</p><span class="msg-meta">짧고 담백하게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 시작에서의 활약을 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 시작에서의 활약을 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>승진을 축하드립니다. 그동안의 노력이 결실을 맺어 기쁩니다</p><span class="msg-meta">정중하게 · 32자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 승진을 축하드립니다. 그동안의 노력이 결실을 맺어 기쁩니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 승진을 축하드립니다. 그동안의 노력이 결실을 맺어 기쁩니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>취임을 진심으로 축하드립니다. 앞날에 건승을 기원합니다</p><span class="msg-meta">정중하게 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 취임을 진심으로 축하드립니다. 앞날에 건승을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 취임을 진심으로 축하드립니다. 앞날에 건승을 기원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>경사났네, 경사났어! 승진 축하해요</p><span class="msg-meta">밝고 재치 있게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 경사났네, 경사났어! 승진 축하해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 경사났네, 경사났어! 승진 축하해요">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>역시 될 사람은 되네요. 오늘은 한턱 내셔야죠</p><span class="msg-meta">밝고 재치 있게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 역시 될 사람은 되네요. 오늘은 한턱 내셔야죠">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 역시 될 사람은 되네요. 오늘은 한턱 내셔야죠">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>영전을 진심으로 축하드립니다. 앞으로도 좋은 인연 이어가길 바랍니다</p><span class="msg-meta">거래처·직장용 · 37자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 영전을 진심으로 축하드립니다. 앞으로도 좋은 인연 이어가길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 영전을 진심으로 축하드립니다. 앞으로도 좋은 인연 이어가길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>취임을 축하드리며 귀하의 건승을 기원합니다</p><span class="msg-meta">거래처·직장용 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 취임을 축하드리며 귀하의 건승을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 취임을 축하드리며 귀하의 건승을 기원합니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-church" data-occasion="church">
       <h3>임직·세례 카드 문구</h3>
       <p class="msg-lead">권사·장로·집사 임직과 세례·입교·첫영성체 주문이 꾸준히 들어옵니다. 직분을 정확히 적어 주세요.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>하나님의 자녀가 된 것을 축하해. 늘 주님과 동행하길</p><span class="msg-meta">다정하게 · 29자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>첫 영성체를 축하해. 주님과 더 가까워지길</p><span class="msg-meta">다정하게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>권사 임직을 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 13자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>장로 임직을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>임직을 축하드립니다. 주 안에서 늘 강건하시길 기도합니다</p><span class="msg-meta">정중하게 · 31자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>헌신과 섬김에 감사드립니다. 축복 가운데 꽃길만 걸으세요</p><span class="msg-meta">정중하게 · 31자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>하나님의 자녀가 된 것을 축하해. 늘 주님과 동행하길</p><span class="msg-meta">다정하게 · 29자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 하나님의 자녀가 된 것을 축하해. 늘 주님과 동행하길">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 하나님의 자녀가 된 것을 축하해. 늘 주님과 동행하길">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>첫 영성체를 축하해. 주님과 더 가까워지길</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 첫 영성체를 축하해. 주님과 더 가까워지길">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 첫 영성체를 축하해. 주님과 더 가까워지길">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>권사 임직을 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 13자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 권사 임직을 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 권사 임직을 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>장로 임직을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 장로 임직을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 장로 임직을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>임직을 축하드립니다. 주 안에서 늘 강건하시길 기도합니다</p><span class="msg-meta">정중하게 · 31자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 임직을 축하드립니다. 주 안에서 늘 강건하시길 기도합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 임직을 축하드립니다. 주 안에서 늘 강건하시길 기도합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>헌신과 섬김에 감사드립니다. 축복 가운데 꽃길만 걸으세요</p><span class="msg-meta">정중하게 · 31자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 헌신과 섬김에 감사드립니다. 축복 가운데 꽃길만 걸으세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 헌신과 섬김에 감사드립니다. 축복 가운데 꽃길만 걸으세요">복사</button></div></li>
+      </ul>
+    </section>
+    <section class="msg-group" id="m-farewell" data-occasion="farewell">
+      <h3>퇴사·이직 카드 문구</h3>
+      <p class="msg-lead">떠나는 분에게는 함께한 시간의 고마움과 다음 걸음을 응원하는 마음을 전해 보세요.</p>
+      <ul class="msg-list">
+        <li class="msg-item" data-tone="warm"><p>함께 일한 시간이 오래 기억에 남을 거예요</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 함께 일한 시간이 오래 기억에 남을 거예요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 함께 일한 시간이 오래 기억에 남을 거예요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>새로운 자리에서도 늘 당신을 응원할게요</p><span class="msg-meta">다정하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 자리에서도 늘 당신을 응원할게요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 자리에서도 늘 당신을 응원할게요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>그동안 함께해 줘서 고마웠어요</p><span class="msg-meta">짧고 담백하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 그동안 함께해 줘서 고마웠어요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 그동안 함께해 줘서 고마웠어요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>새로운 출발을 진심으로 응원합니다</p><span class="msg-meta">짧고 담백하게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 출발을 진심으로 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 출발을 진심으로 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>함께해 주신 시간에 감사드리며 앞날을 응원합니다</p><span class="msg-meta">정중하게 · 26자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 함께해 주신 시간에 감사드리며 앞날을 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 함께해 주신 시간에 감사드리며 앞날을 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>새로운 도약을 응원하며 그동안의 노고에 감사드립니다</p><span class="msg-meta">정중하게 · 28자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 도약을 응원하며 그동안의 노고에 감사드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 도약을 응원하며 그동안의 노고에 감사드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>새 회사에서도 점심은 꼭 챙겨 먹어!</p><span class="msg-meta">밝고 재치 있게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새 회사에서도 점심은 꼭 챙겨 먹어!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새 회사에서도 점심은 꼭 챙겨 먹어!">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>회사 밖에서도 우리 자주 보자!</p><span class="msg-meta">밝고 재치 있게 · 17자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 회사 밖에서도 우리 자주 보자!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 회사 밖에서도 우리 자주 보자!">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>그동안의 협력에 감사드립니다. 새 출발을 응원합니다</p><span class="msg-meta">거래처·직장용 · 28자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 그동안의 협력에 감사드립니다. 새 출발을 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 그동안의 협력에 감사드립니다. 새 출발을 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>앞으로의 행보를 응원하며 함께한 시간에 감사드립니다</p><span class="msg-meta">거래처·직장용 · 28자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 앞으로의 행보를 응원하며 함께한 시간에 감사드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 앞으로의 행보를 응원하며 함께한 시간에 감사드립니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-retirement" data-occasion="retirement">
       <h3>퇴임·정년 카드 문구</h3>
-      <p class="msg-lead">'수고하셨습니다'는 아랫사람에게 쓰는 말이라 '노고에 감사드립니다'로 바꿔 씁니다.</p>
+      <p class="msg-lead">격식을 갖춰 전하고 싶다면 '그동안의 노고에 감사드립니다'가 무난합니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>긴 세월 헌신에 감사드려요. 멋진 제2막을 응원해요</p><span class="msg-meta">다정하게 · 28자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>아빠가 걸어온 길은 우리 가족의 자랑이에요</p><span class="msg-meta">다정하게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>이제는 하고 싶으셨던 일들을 마음껏 하세요</p><span class="msg-meta">다정하게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>그동안의 노고에 깊이 감사드립니다</p><span class="msg-meta">짧고 담백하게 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>명예로운 정년을 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>영예로운 퇴임을 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>오랜 헌신에 감사드리며 새 출발을 응원합니다</p><span class="msg-meta">정중하게 · 24자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>인생 2막 시작! 이제 월요일이 즐거우시겠어요</p><span class="msg-meta">밝고 재치 있게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>엄마의 인생은 지금부터! 정년 축하해요</p><span class="msg-meta">밝고 재치 있게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>퇴임을 축하드리며 그동안의 노고에 감사드립니다</p><span class="msg-meta">거래처·직장용 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>영예로운 퇴임을 축하드립니다. 앞날에 건강을 기원합니다</p><span class="msg-meta">거래처·직장용 · 30자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>긴 세월 헌신에 감사드려요. 멋진 제2막을 응원해요</p><span class="msg-meta">다정하게 · 28자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 긴 세월 헌신에 감사드려요. 멋진 제2막을 응원해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 긴 세월 헌신에 감사드려요. 멋진 제2막을 응원해요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>아빠가 걸어온 길은 우리 가족의 자랑이에요</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 아빠가 걸어온 길은 우리 가족의 자랑이에요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 아빠가 걸어온 길은 우리 가족의 자랑이에요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>이제는 하고 싶으셨던 일들을 마음껏 하세요</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 이제는 하고 싶으셨던 일들을 마음껏 하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 이제는 하고 싶으셨던 일들을 마음껏 하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>그동안의 노고에 깊이 감사드립니다</p><span class="msg-meta">짧고 담백하게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 그동안의 노고에 깊이 감사드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 그동안의 노고에 깊이 감사드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>명예로운 정년을 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 명예로운 정년을 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 명예로운 정년을 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>영예로운 퇴임을 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 영예로운 퇴임을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 영예로운 퇴임을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>오랜 헌신에 감사드리며 새 출발을 응원합니다</p><span class="msg-meta">정중하게 · 24자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오랜 헌신에 감사드리며 새 출발을 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오랜 헌신에 감사드리며 새 출발을 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>그동안 함께한 시간에 깊이 감사드립니다</p><span class="msg-meta">정중하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 그동안 함께한 시간에 깊이 감사드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 그동안 함께한 시간에 깊이 감사드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>인생 2막 시작! 이제 월요일이 즐거우시겠어요</p><span class="msg-meta">밝고 재치 있게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 인생 2막 시작! 이제 월요일이 즐거우시겠어요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 인생 2막 시작! 이제 월요일이 즐거우시겠어요">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>엄마의 인생은 지금부터! 정년 축하해요</p><span class="msg-meta">밝고 재치 있게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 엄마의 인생은 지금부터! 정년 축하해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 엄마의 인생은 지금부터! 정년 축하해요">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>퇴임을 축하드리며 그동안의 노고에 감사드립니다</p><span class="msg-meta">거래처·직장용 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 퇴임을 축하드리며 그동안의 노고에 감사드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 퇴임을 축하드리며 그동안의 노고에 감사드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>영예로운 퇴임을 축하드립니다. 앞날에 건강을 기원합니다</p><span class="msg-meta">거래처·직장용 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 영예로운 퇴임을 축하드립니다. 앞날에 건강을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 영예로운 퇴임을 축하드립니다. 앞날에 건강을 기원합니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-opening" data-occasion="opening">
       <h3>개업·이전 카드 문구</h3>
       <p class="msg-lead">크게 부풀린 재물 표현보다 담백하게 시작을 축하하는 문장이 낫습니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>새로운 시작을 축하해요. 좋은 손님이 늘 찾는 곳이 되길</p><span class="msg-meta">다정하게 · 31자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>다시 시작하는 공간에 좋은 일만 가득하길</p><span class="msg-meta">다정하게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>개업을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>새로운 출발을 응원합니다</p><span class="msg-meta">짧고 담백하게 · 13자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>개업을 축하드립니다. 하시는 일마다 번창하시길 바랍니다</p><span class="msg-meta">정중하게 · 30자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>사옥 이전을 축하드립니다. 더 큰 도약을 기원합니다</p><span class="msg-meta">정중하게 · 28자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>개업 축하해요! 첫 손님은 제가 할게요</p><span class="msg-meta">밝고 재치 있게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>자주 들를게요. 단골 대접 부탁해요!</p><span class="msg-meta">밝고 재치 있게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>개업을 축하드리며 귀사의 번창을 기원합니다</p><span class="msg-meta">거래처·직장용 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>사무실 이전을 축하드립니다. 앞으로도 함께하길 바랍니다</p><span class="msg-meta">거래처·직장용 · 30자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>새로운 시작을 축하해요. 좋은 손님이 늘 찾는 곳이 되길</p><span class="msg-meta">다정하게 · 31자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 시작을 축하해요. 좋은 손님이 늘 찾는 곳이 되길">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 시작을 축하해요. 좋은 손님이 늘 찾는 곳이 되길">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>다시 시작하는 공간에 좋은 일만 가득하길</p><span class="msg-meta">다정하게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 다시 시작하는 공간에 좋은 일만 가득하길">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 다시 시작하는 공간에 좋은 일만 가득하길">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>새 공간에서 좋은 인연 많이 만나길 바라요</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새 공간에서 좋은 인연 많이 만나길 바라요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새 공간에서 좋은 인연 많이 만나길 바라요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>개업을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 개업을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 개업을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>새로운 출발을 응원합니다</p><span class="msg-meta">짧고 담백하게 · 13자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 출발을 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 출발을 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>개업을 축하드립니다. 하시는 일마다 번창하시길 바랍니다</p><span class="msg-meta">정중하게 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 개업을 축하드립니다. 하시는 일마다 번창하시길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 개업을 축하드립니다. 하시는 일마다 번창하시길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>사옥 이전을 축하드립니다. 더 큰 도약을 기원합니다</p><span class="msg-meta">정중하게 · 28자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 사옥 이전을 축하드립니다. 더 큰 도약을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 사옥 이전을 축하드립니다. 더 큰 도약을 기원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>개업 축하해요! 첫 손님은 제가 할게요</p><span class="msg-meta">밝고 재치 있게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 개업 축하해요! 첫 손님은 제가 할게요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 개업 축하해요! 첫 손님은 제가 할게요">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>자주 들를게요. 단골 대접 부탁해요!</p><span class="msg-meta">밝고 재치 있게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 자주 들를게요. 단골 대접 부탁해요!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 자주 들를게요. 단골 대접 부탁해요!">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>개업을 축하드리며 귀사의 번창을 기원합니다</p><span class="msg-meta">거래처·직장용 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 개업을 축하드리며 귀사의 번창을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 개업을 축하드리며 귀사의 번창을 기원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>사무실 이전을 축하드립니다. 앞으로도 함께하길 바랍니다</p><span class="msg-meta">거래처·직장용 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 사무실 이전을 축하드립니다. 앞으로도 함께하길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 사무실 이전을 축하드립니다. 앞으로도 함께하길 바랍니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-wedding" data-occasion="wedding">
       <h3>결혼·집들이 카드 문구</h3>
       <p class="msg-lead">'드디어'는 늦었다는 뜻으로 읽힐 수 있어 피합니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>두 분의 새로운 시작을 진심으로 축하해요</p><span class="msg-meta">다정하게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>새 보금자리에 웃음이 가득하길 바라요</p><span class="msg-meta">다정하게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>결혼을 축하합니다. 행복하세요</p><span class="msg-meta">짧고 담백하게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>새집에서의 시작을 축하해요</p><span class="msg-meta">짧고 담백하게 · 14자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>두 분의 결혼을 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>새 보금자리에 평안과 행복이 머물길 바랍니다</p><span class="msg-meta">정중하게 · 24자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>결혼 축하해! 지금처럼 웃으면서 살자</p><span class="msg-meta">밝고 재치 있게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>집들이 축하해! 자주 놀러 갈게</p><span class="msg-meta">밝고 재치 있게 · 17자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>결혼을 축하드립니다. 두 분의 앞날에 행복이 가득하길 기원합니다</p><span class="msg-meta">거래처·직장용 · 35자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>화목한 가정 이루시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 16자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>두 분의 새로운 시작을 진심으로 축하해요</p><span class="msg-meta">다정하게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 두 분의 새로운 시작을 진심으로 축하해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 두 분의 새로운 시작을 진심으로 축하해요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>새 보금자리에 웃음이 가득하길 바라요</p><span class="msg-meta">다정하게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새 보금자리에 웃음이 가득하길 바라요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새 보금자리에 웃음이 가득하길 바라요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>두 사람이 함께 꾸려갈 날들을 축하해요</p><span class="msg-meta">다정하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 두 사람이 함께 꾸려갈 날들을 축하해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 두 사람이 함께 꾸려갈 날들을 축하해요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>결혼을 축하합니다. 행복하세요</p><span class="msg-meta">짧고 담백하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 결혼을 축하합니다. 행복하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 결혼을 축하합니다. 행복하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>새집에서의 시작을 축하해요</p><span class="msg-meta">짧고 담백하게 · 14자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새집에서의 시작을 축하해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새집에서의 시작을 축하해요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>두 분의 결혼을 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 두 분의 결혼을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 두 분의 결혼을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>새 보금자리에 평안과 행복이 머물길 바랍니다</p><span class="msg-meta">정중하게 · 24자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새 보금자리에 평안과 행복이 머물길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새 보금자리에 평안과 행복이 머물길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>결혼 축하해! 지금처럼 웃으면서 살자</p><span class="msg-meta">밝고 재치 있게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 결혼 축하해! 지금처럼 웃으면서 살자">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 결혼 축하해! 지금처럼 웃으면서 살자">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>집들이 축하해! 자주 놀러 갈게</p><span class="msg-meta">밝고 재치 있게 · 17자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 집들이 축하해! 자주 놀러 갈게">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 집들이 축하해! 자주 놀러 갈게">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>결혼을 축하드립니다. 두 분의 앞날에 행복이 가득하길 기원합니다</p><span class="msg-meta">거래처·직장용 · 35자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 결혼을 축하드립니다. 두 분의 앞날에 행복이 가득하길 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 결혼을 축하드립니다. 두 분의 앞날에 행복이 가득하길 기원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>화목한 가정 이루시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 화목한 가정 이루시길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 화목한 가정 이루시길 바랍니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-wedding-anniv" data-occasion="wedding-anniv">
       <h3>결혼기념일·프러포즈 카드 문구</h3>
       <p class="msg-lead">'결혼 10주년'처럼 햇수를 넣으면 그해만의 카드가 됩니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>나랑 결혼해줘서 고마워. 사랑해</p><span class="msg-meta">다정하게 · 17자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>함께한 모든 해가 고마워. 결혼기념일 축하해</p><span class="msg-meta">다정하게 · 24자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>내 삶에 당신이 있어 행복해요</p><span class="msg-meta">다정하게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>나랑 결혼해 줄래?</p><span class="msg-meta">짧고 담백하게 · 10자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>결혼 10주년, 고맙고 사랑해</p><span class="msg-meta">짧고 담백하게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>부모님의 결혼기념일을 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>두 분의 결혼기념일을 축하드립니다. 늘 행복하세요</p><span class="msg-meta">정중하게 · 27자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>결혼해주니까 내가 이렇게 호강하지!</p><span class="msg-meta">밝고 재치 있게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>벌써 1주년! 평생 나랑 재미있게 살자</p><span class="msg-meta">밝고 재치 있게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>우리의 마지막 연애 기념일, 이제는 결혼기념일</p><span class="msg-meta">밝고 재치 있게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>나랑 결혼해줘서 고마워. 사랑해</p><span class="msg-meta">다정하게 · 17자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 나랑 결혼해줘서 고마워. 사랑해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 나랑 결혼해줘서 고마워. 사랑해">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>함께한 모든 해가 고마워. 결혼기념일 축하해</p><span class="msg-meta">다정하게 · 24자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 함께한 모든 해가 고마워. 결혼기념일 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 함께한 모든 해가 고마워. 결혼기념일 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>내 삶에 당신이 있어 행복해요</p><span class="msg-meta">다정하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 내 삶에 당신이 있어 행복해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 내 삶에 당신이 있어 행복해요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>올해도 당신과 함께여서 고마워</p><span class="msg-meta">다정하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 올해도 당신과 함께여서 고마워">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 올해도 당신과 함께여서 고마워">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>나랑 결혼해 줄래?</p><span class="msg-meta">짧고 담백하게 · 10자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 나랑 결혼해 줄래?">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 나랑 결혼해 줄래?">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>결혼 10주년, 고맙고 사랑해</p><span class="msg-meta">짧고 담백하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 결혼 10주년, 고맙고 사랑해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 결혼 10주년, 고맙고 사랑해">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>부모님의 결혼기념일을 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 부모님의 결혼기념일을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 부모님의 결혼기념일을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>두 분의 결혼기념일을 축하드립니다. 늘 행복하세요</p><span class="msg-meta">정중하게 · 27자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 두 분의 결혼기념일을 축하드립니다. 늘 행복하세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 두 분의 결혼기념일을 축하드립니다. 늘 행복하세요">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>결혼해주니까 내가 이렇게 호강하지!</p><span class="msg-meta">밝고 재치 있게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 결혼해주니까 내가 이렇게 호강하지!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 결혼해주니까 내가 이렇게 호강하지!">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>벌써 1주년! 평생 나랑 재미있게 살자</p><span class="msg-meta">밝고 재치 있게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 벌써 1주년! 평생 나랑 재미있게 살자">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 벌써 1주년! 평생 나랑 재미있게 살자">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>우리의 마지막 연애 기념일, 이제는 결혼기념일</p><span class="msg-meta">밝고 재치 있게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 우리의 마지막 연애 기념일, 이제는 결혼기념일">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 우리의 마지막 연애 기념일, 이제는 결혼기념일">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-anniversary" data-occasion="anniversary">
       <h3>연인·기념일 카드 문구</h3>
       <p class="msg-lead">100일·1000일처럼 날짜를 넣거나, 둘만 아는 기억 한 단어를 붙여 보세요.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>함께한 시간 고맙고, 함께할 시간 미리 고마워</p><span class="msg-meta">다정하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>오늘처럼 웃는 날이 앞으로도 가득하길</p><span class="msg-meta">다정하게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>어떤 모습이든 있는 그대로 사랑해</p><span class="msg-meta">다정하게 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>어제보다 오늘 더 사랑해</p><span class="msg-meta">짧고 담백하게 · 13자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>널 만난 건 최고의 행운이야</p><span class="msg-meta">짧고 담백하게 · 15자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>이 순간을 소중히</p><span class="msg-meta">짧고 담백하게 · 9자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>벌써 200일! 우주만큼 사랑해</p><span class="msg-meta">밝고 재치 있게 · 17자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>1000일도 부족해. 앞으로도 잘 부탁해</p><span class="msg-meta">밝고 재치 있게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>함께한 시간 고맙고, 함께할 시간 미리 고마워</p><span class="msg-meta">다정하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 함께한 시간 고맙고, 함께할 시간 미리 고마워">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 함께한 시간 고맙고, 함께할 시간 미리 고마워">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>오늘처럼 웃는 날이 앞으로도 가득하길</p><span class="msg-meta">다정하게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오늘처럼 웃는 날이 앞으로도 가득하길">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오늘처럼 웃는 날이 앞으로도 가득하길">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>어떤 모습이든 있는 그대로 사랑해</p><span class="msg-meta">다정하게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 어떤 모습이든 있는 그대로 사랑해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 어떤 모습이든 있는 그대로 사랑해">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>어제보다 오늘 더 사랑해</p><span class="msg-meta">짧고 담백하게 · 13자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 어제보다 오늘 더 사랑해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 어제보다 오늘 더 사랑해">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>널 만난 건 최고의 행운이야</p><span class="msg-meta">짧고 담백하게 · 15자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 널 만난 건 최고의 행운이야">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 널 만난 건 최고의 행운이야">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>이 순간을 소중히</p><span class="msg-meta">짧고 담백하게 · 9자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 이 순간을 소중히">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 이 순간을 소중히">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>우리의 100일, 내일도 같이 걷자</p><span class="msg-meta">짧고 담백하게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 우리의 100일, 내일도 같이 걷자">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 우리의 100일, 내일도 같이 걷자">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>벌써 200일! 우주만큼 사랑해</p><span class="msg-meta">밝고 재치 있게 · 17자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 벌써 200일! 우주만큼 사랑해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 벌써 200일! 우주만큼 사랑해">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>1000일도 부족해. 앞으로도 잘 부탁해</p><span class="msg-meta">밝고 재치 있게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 1000일도 부족해. 앞으로도 잘 부탁해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 1000일도 부족해. 앞으로도 잘 부탁해">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-baby" data-occasion="baby">
       <h3>임신·출산 카드 문구</h3>
       <p class="msg-lead">아기만큼 엄마·아빠의 수고를 알아주는 한 줄이 반갑습니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>소중한 생명이 찾아온 걸 진심으로 축하해</p><span class="msg-meta">다정하게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>열 달 동안 고생 많았어. 고마워, 사랑해</p><span class="msg-meta">다정하게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>아기와 함께할 모든 날이 행복하길</p><span class="msg-meta">다정하게 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>출산을 진심으로 축하해요</p><span class="msg-meta">짧고 담백하게 · 13자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>임신 축하해. 건강하게 만나자</p><span class="msg-meta">짧고 담백하게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>순산을 축하드립니다. 산모와 아기의 건강을 기원합니다</p><span class="msg-meta">정중하게 · 29자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>귀한 생명의 탄생을 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>세상에 온 걸 환영해, 꼬마 손님!</p><span class="msg-meta">밝고 재치 있게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>이제 진짜 엄마 아빠! 축하해</p><span class="msg-meta">밝고 재치 있게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>출산을 축하드립니다. 가정에 기쁨이 가득하길 바랍니다</p><span class="msg-meta">거래처·직장용 · 29자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>새 가족을 맞으신 것을 진심으로 축하드립니다</p><span class="msg-meta">거래처·직장용 · 24자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>소중한 생명이 찾아온 걸 진심으로 축하해</p><span class="msg-meta">다정하게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 소중한 생명이 찾아온 걸 진심으로 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 소중한 생명이 찾아온 걸 진심으로 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>열 달 동안 고생 많았어. 고마워, 사랑해</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 열 달 동안 고생 많았어. 고마워, 사랑해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 열 달 동안 고생 많았어. 고마워, 사랑해">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>아기와 함께할 모든 날이 행복하길</p><span class="msg-meta">다정하게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 아기와 함께할 모든 날이 행복하길">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 아기와 함께할 모든 날이 행복하길">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>엄마와 아기 모두 편안한 날 보내길 바라요</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 엄마와 아기 모두 편안한 날 보내길 바라요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 엄마와 아기 모두 편안한 날 보내길 바라요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>출산을 진심으로 축하해요</p><span class="msg-meta">짧고 담백하게 · 13자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 출산을 진심으로 축하해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 출산을 진심으로 축하해요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>임신 축하해. 건강하게 만나자</p><span class="msg-meta">짧고 담백하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 임신 축하해. 건강하게 만나자">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 임신 축하해. 건강하게 만나자">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>순산을 축하드립니다. 산모와 아기의 건강을 기원합니다</p><span class="msg-meta">정중하게 · 29자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 순산을 축하드립니다. 산모와 아기의 건강을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 순산을 축하드립니다. 산모와 아기의 건강을 기원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>귀한 생명의 탄생을 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 귀한 생명의 탄생을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 귀한 생명의 탄생을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>세상에 온 걸 환영해, 꼬마 손님!</p><span class="msg-meta">밝고 재치 있게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 세상에 온 걸 환영해, 꼬마 손님!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 세상에 온 걸 환영해, 꼬마 손님!">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>이제 진짜 엄마 아빠! 축하해</p><span class="msg-meta">밝고 재치 있게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 이제 진짜 엄마 아빠! 축하해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 이제 진짜 엄마 아빠! 축하해">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>출산을 축하드립니다. 가정에 기쁨이 가득하길 바랍니다</p><span class="msg-meta">거래처·직장용 · 29자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 출산을 축하드립니다. 가정에 기쁨이 가득하길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 출산을 축하드립니다. 가정에 기쁨이 가득하길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>새 가족을 맞으신 것을 진심으로 축하드립니다</p><span class="msg-meta">거래처·직장용 · 24자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새 가족을 맞으신 것을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새 가족을 맞으신 것을 진심으로 축하드립니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-cheer" data-occasion="cheer">
       <h3>응원·위로 카드 문구</h3>
       <p class="msg-lead">시험·입대·수료·이직처럼 새 출발 앞이나 지친 날에 보내는 카드입니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>잘했고, 잘하고 있고, 잘할 거야</p><span class="msg-meta">다정하게 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>괜찮아, 언젠간 꽃이 필 거야</p><span class="msg-meta">다정하게 · 16자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>네가 가는 길에 늘 네 편이 되어줄게</p><span class="msg-meta">다정하게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>수고했어, 오늘도</p><span class="msg-meta">짧고 담백하게 · 9자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>너의 새로운 시작을 응원해</p><span class="msg-meta">짧고 담백하게 · 14자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>새로운 도전을 진심으로 응원합니다</p><span class="msg-meta">정중하게 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>앞으로의 여정에 좋은 일만 함께하길 바랍니다</p><span class="msg-meta">정중하게 · 24자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>전역까지 화이팅! 멋진 모습으로 만나자</p><span class="msg-meta">밝고 재치 있게 · 21자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>꽃길만 걷자! 꽃은 내가 준비했어</p><span class="msg-meta">밝고 재치 있게 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>새로운 출발을 응원합니다. 늘 건승하시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 27자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>새로운 곳에서도 늘 좋은 일만 있으시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 26자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>잘했고, 잘하고 있고, 잘할 거야</p><span class="msg-meta">다정하게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 잘했고, 잘하고 있고, 잘할 거야">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 잘했고, 잘하고 있고, 잘할 거야">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>괜찮아, 언젠간 꽃이 필 거야</p><span class="msg-meta">다정하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 괜찮아, 언젠간 꽃이 필 거야">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 괜찮아, 언젠간 꽃이 필 거야">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>네가 가는 길에 늘 네 편이 되어줄게</p><span class="msg-meta">다정하게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 네가 가는 길에 늘 네 편이 되어줄게">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 네가 가는 길에 늘 네 편이 되어줄게">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>오늘은 쉬어도 괜찮아. 나는 네 편이야</p><span class="msg-meta">다정하게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 오늘은 쉬어도 괜찮아. 나는 네 편이야">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 오늘은 쉬어도 괜찮아. 나는 네 편이야">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>수고했어, 오늘도</p><span class="msg-meta">짧고 담백하게 · 9자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 수고했어, 오늘도">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 수고했어, 오늘도">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>너의 새로운 시작을 응원해</p><span class="msg-meta">짧고 담백하게 · 14자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 너의 새로운 시작을 응원해">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 너의 새로운 시작을 응원해">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>새로운 도전을 진심으로 응원합니다</p><span class="msg-meta">정중하게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 도전을 진심으로 응원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 도전을 진심으로 응원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>앞으로의 여정에 좋은 일만 함께하길 바랍니다</p><span class="msg-meta">정중하게 · 24자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 앞으로의 여정에 좋은 일만 함께하길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 앞으로의 여정에 좋은 일만 함께하길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>전역까지 화이팅! 멋진 모습으로 만나자</p><span class="msg-meta">밝고 재치 있게 · 21자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 전역까지 화이팅! 멋진 모습으로 만나자">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 전역까지 화이팅! 멋진 모습으로 만나자">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>꽃길만 걷자! 꽃은 내가 준비했어</p><span class="msg-meta">밝고 재치 있게 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 꽃길만 걷자! 꽃은 내가 준비했어">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 꽃길만 걷자! 꽃은 내가 준비했어">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>새로운 출발을 응원합니다. 늘 건승하시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 27자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 출발을 응원합니다. 늘 건승하시길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 출발을 응원합니다. 늘 건승하시길 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>새로운 곳에서도 늘 좋은 일만 있으시길 바랍니다</p><span class="msg-meta">거래처·직장용 · 26자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 새로운 곳에서도 늘 좋은 일만 있으시길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 새로운 곳에서도 늘 좋은 일만 있으시길 바랍니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-thanks" data-occasion="thanks">
       <h3>감사 카드 문구</h3>
       <p class="msg-lead">무엇이 고마웠는지 한 단어만 넣어도 인사치레가 아닌 카드가 됩니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>늘 챙겨주셔서 고마워요. 마음을 꽃으로 전해요</p><span class="msg-meta">다정하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>덕분에 잘 지내고 있어요. 정말 고마워요</p><span class="msg-meta">다정하게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>진심으로 고맙습니다</p><span class="msg-meta">짧고 담백하게 · 10자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>함께 있어줘서 고마워</p><span class="msg-meta">짧고 담백하게 · 11자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>베풀어 주신 은혜 잊지 않겠습니다. 감사합니다</p><span class="msg-meta">정중하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>항상 바른길로 이끌어 주셔서 감사드립니다</p><span class="msg-meta">정중하게 · 22자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>이건 아주 작은 보답이에요. 다음엔 제가 쏠게요!</p><span class="msg-meta">밝고 재치 있게 · 27자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="cheerful"><p>고마운 마음이 넘쳐서 꽃으로 보내요</p><span class="msg-meta">밝고 재치 있게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>보내주신 신뢰에 깊이 감사드립니다</p><span class="msg-meta">거래처·직장용 · 18자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>늘 협조해 주셔서 감사합니다. 귀사의 발전을 기원합니다</p><span class="msg-meta">거래처·직장용 · 30자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>늘 챙겨주셔서 고마워요. 마음을 꽃으로 전해요</p><span class="msg-meta">다정하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 늘 챙겨주셔서 고마워요. 마음을 꽃으로 전해요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 늘 챙겨주셔서 고마워요. 마음을 꽃으로 전해요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>덕분에 잘 지내고 있어요. 정말 고마워요</p><span class="msg-meta">다정하게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 덕분에 잘 지내고 있어요. 정말 고마워요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 덕분에 잘 지내고 있어요. 정말 고마워요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>그날 도와줘서 정말 고마웠어요</p><span class="msg-meta">다정하게 · 16자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 그날 도와줘서 정말 고마웠어요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 그날 도와줘서 정말 고마웠어요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>진심으로 고맙습니다</p><span class="msg-meta">짧고 담백하게 · 10자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 진심으로 고맙습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 진심으로 고맙습니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>함께 있어줘서 고마워</p><span class="msg-meta">짧고 담백하게 · 11자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 함께 있어줘서 고마워">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 함께 있어줘서 고마워">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>베풀어 주신 은혜 잊지 않겠습니다. 감사합니다</p><span class="msg-meta">정중하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 베풀어 주신 은혜 잊지 않겠습니다. 감사합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 베풀어 주신 은혜 잊지 않겠습니다. 감사합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>항상 바른길로 이끌어 주셔서 감사드립니다</p><span class="msg-meta">정중하게 · 22자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 항상 바른길로 이끌어 주셔서 감사드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 항상 바른길로 이끌어 주셔서 감사드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>이건 아주 작은 보답이에요. 다음엔 제가 쏠게요!</p><span class="msg-meta">밝고 재치 있게 · 27자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 이건 아주 작은 보답이에요. 다음엔 제가 쏠게요!">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 이건 아주 작은 보답이에요. 다음엔 제가 쏠게요!">복사</button></div></li>
+        <li class="msg-item" data-tone="cheerful"><p>고마운 마음이 넘쳐서 꽃으로 보내요</p><span class="msg-meta">밝고 재치 있게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 고마운 마음이 넘쳐서 꽃으로 보내요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 고마운 마음이 넘쳐서 꽃으로 보내요">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>보내주신 신뢰에 깊이 감사드립니다</p><span class="msg-meta">거래처·직장용 · 18자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 보내주신 신뢰에 깊이 감사드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 보내주신 신뢰에 깊이 감사드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>늘 협조해 주셔서 감사합니다. 귀사의 발전을 기원합니다</p><span class="msg-meta">거래처·직장용 · 30자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 늘 협조해 주셔서 감사합니다. 귀사의 발전을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 늘 협조해 주셔서 감사합니다. 귀사의 발전을 기원합니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-recovery" data-occasion="recovery">
       <h3>병문안·퇴원 카드 문구</h3>
       <p class="msg-lead">카드는 여러 사람이 봅니다. 병명과 상태는 적지 않습니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>편히 쉬면서 천천히 회복하길 바라요</p><span class="msg-meta">다정하게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>퇴원 축하해요. 이제 더 건강하고 행복하자</p><span class="msg-meta">다정하게 · 23자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>믿고 응원하고 있어요. 천천히 힘내요</p><span class="msg-meta">다정하게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>편안한 회복을 바랍니다</p><span class="msg-meta">짧고 담백하게 · 12자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>퇴원을 진심으로 축하드려요</p><span class="msg-meta">짧고 담백하게 · 14자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>빠른 쾌유를 진심으로 기원합니다</p><span class="msg-meta">정중하게 · 17자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>쾌유를 빕니다. 건강한 모습으로 뵙기를 기다리겠습니다</p><span class="msg-meta">정중하게 · 29자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>쾌유를 기원합니다. 무엇보다 건강이 우선입니다</p><span class="msg-meta">거래처·직장용 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>건강한 모습으로 다시 뵙기를 기다리겠습니다</p><span class="msg-meta">거래처·직장용 · 23자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>편히 쉬면서 천천히 회복하길 바라요</p><span class="msg-meta">다정하게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 편히 쉬면서 천천히 회복하길 바라요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 편히 쉬면서 천천히 회복하길 바라요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>퇴원 축하해요. 이제 더 건강하고 행복하자</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 퇴원 축하해요. 이제 더 건강하고 행복하자">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 퇴원 축하해요. 이제 더 건강하고 행복하자">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>믿고 응원하고 있어요. 천천히 힘내요</p><span class="msg-meta">다정하게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 믿고 응원하고 있어요. 천천히 힘내요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 믿고 응원하고 있어요. 천천히 힘내요">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>답장은 천천히 해도 괜찮아요. 편히 쉬세요</p><span class="msg-meta">다정하게 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 답장은 천천히 해도 괜찮아요. 편히 쉬세요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 답장은 천천히 해도 괜찮아요. 편히 쉬세요">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>편안한 회복을 바랍니다</p><span class="msg-meta">짧고 담백하게 · 12자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 편안한 회복을 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 편안한 회복을 바랍니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>퇴원을 진심으로 축하드려요</p><span class="msg-meta">짧고 담백하게 · 14자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 퇴원을 진심으로 축하드려요">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 퇴원을 진심으로 축하드려요">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>빠른 쾌유를 진심으로 기원합니다</p><span class="msg-meta">정중하게 · 17자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 빠른 쾌유를 진심으로 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 빠른 쾌유를 진심으로 기원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>쾌유를 빕니다. 건강한 모습으로 뵙기를 기다리겠습니다</p><span class="msg-meta">정중하게 · 29자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 쾌유를 빕니다. 건강한 모습으로 뵙기를 기다리겠습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 쾌유를 빕니다. 건강한 모습으로 뵙기를 기다리겠습니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>쾌유를 기원합니다. 무엇보다 건강이 우선입니다</p><span class="msg-meta">거래처·직장용 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 쾌유를 기원합니다. 무엇보다 건강이 우선입니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 쾌유를 기원합니다. 무엇보다 건강이 우선입니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>건강한 모습으로 다시 뵙기를 기다리겠습니다</p><span class="msg-meta">거래처·직장용 · 23자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 건강한 모습으로 다시 뵙기를 기다리겠습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 건강한 모습으로 다시 뵙기를 기다리겠습니다">복사</button></div></li>
       </ul>
     </section>
     <section class="msg-group" id="m-business" data-occasion="business">
       <h3>근속·수상·기업 행사 카드 문구</h3>
       <p class="msg-lead">장기근속과 수상 축하 주문이 많습니다. 보내는 곳을 '○○팀 일동'처럼 끝에 적습니다.</p>
       <ul class="msg-list">
-        <li class="msg-item" data-tone="warm"><p>함께해 주신 모든 분께 감사의 마음을 전합니다</p><span class="msg-meta">다정하게 · 25자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="warm"><p>당신의 성실한 10년, 늘 고맙습니다</p><span class="msg-meta">다정하게 · 20자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>장기근속 10주년을 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 17자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="concise"><p>수상을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>뜻깊은 행사를 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 19자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="formal"><p>당신의 열정이 회사의 성장이 되었습니다. 감사합니다</p><span class="msg-meta">정중하게 · 28자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>창립 기념일을 축하드리며 귀사의 발전을 기원합니다</p><span class="msg-meta">거래처·직장용 · 27자</span><button class="copy-btn" type="button">복사</button></li>
-        <li class="msg-item" data-tone="work"><p>행사 개최를 축하드립니다. 앞으로도 좋은 관계로 함께하길 바랍니다</p><span class="msg-meta">거래처·직장용 · 36자</span><button class="copy-btn" type="button">복사</button></li>
+        <li class="msg-item" data-tone="warm"><p>함께해 주신 모든 분께 감사의 마음을 전합니다</p><span class="msg-meta">다정하게 · 25자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 함께해 주신 모든 분께 감사의 마음을 전합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 함께해 주신 모든 분께 감사의 마음을 전합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="warm"><p>당신의 성실한 10년, 늘 고맙습니다</p><span class="msg-meta">다정하게 · 20자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 당신의 성실한 10년, 늘 고맙습니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 당신의 성실한 10년, 늘 고맙습니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>장기근속 10주년을 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 17자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 장기근속 10주년을 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 장기근속 10주년을 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="concise"><p>수상을 진심으로 축하드립니다</p><span class="msg-meta">짧고 담백하게 · 15자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 수상을 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 수상을 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>뜻깊은 행사를 진심으로 축하드립니다</p><span class="msg-meta">정중하게 · 19자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 뜻깊은 행사를 진심으로 축하드립니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 뜻깊은 행사를 진심으로 축하드립니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>당신의 열정이 회사의 성장이 되었습니다. 감사합니다</p><span class="msg-meta">정중하게 · 28자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 당신의 열정이 회사의 성장이 되었습니다. 감사합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 당신의 열정이 회사의 성장이 되었습니다. 감사합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="formal"><p>함께 만든 성과에 감사드립니다. 수상을 축하합니다</p><span class="msg-meta">정중하게 · 27자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 함께 만든 성과에 감사드립니다. 수상을 축하합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 함께 만든 성과에 감사드립니다. 수상을 축하합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>창립 기념일을 축하드리며 귀사의 발전을 기원합니다</p><span class="msg-meta">거래처·직장용 · 27자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 창립 기념일을 축하드리며 귀사의 발전을 기원합니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 창립 기념일을 축하드리며 귀사의 발전을 기원합니다">복사</button></div></li>
+        <li class="msg-item" data-tone="work"><p>행사 개최를 축하드립니다. 앞으로도 좋은 관계로 함께하길 바랍니다</p><span class="msg-meta">거래처·직장용 · 36자</span><div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: 행사 개최를 축하드립니다. 앞으로도 좋은 관계로 함께하길 바랍니다">미리보기</button><button class="copy-btn" type="button" aria-label="문구 복사: 행사 개최를 축하드립니다. 앞으로도 좋은 관계로 함께하길 바랍니다">복사</button></div></li>
       </ul>
     </section>
     <!-- END message-phrases -->
   </section>
   </div>
-  <aside class="msg-preview" aria-label="카드 미리보기">
-    <p class="msg-preview-hint">문구를 누르면 두 카드에 적어 보여드려요</p>
-    <section class="msg-sample" aria-label="꽃다발 메시지 카드 미리보기">
+  <aside class="msg-preview" aria-label="카드 미리보기" tabindex="-1">
+    <div class="msg-preview-bar">
+      <div><p class="msg-preview-hint">카드에 넣을 문구</p><p class="msg-preview-summary" id="previewSummary">함께 있어줘서 고마워</p></div>
+      <button class="msg-preview-toggle" id="previewToggle" type="button" aria-expanded="false" aria-controls="previewBody" hidden>미리보기·수정</button>
+    </div>
+    <div class="msg-preview-body" id="previewBody">
+    <p class="msg-preview-intro"><strong>문구 길이를 가늠하는 예시 화면입니다.</strong> 아래 카드의 디자인·서체·배치는 실제 제공 카드와 다릅니다. 사진은 테차 제작 사례입니다.</p>
+    <div class="msg-preview-modes" role="tablist" aria-label="미리볼 카드 종류" hidden>
+      <button class="msg-mode-btn" type="button" role="tab" id="bouquetTab" aria-controls="bouquetPreview" aria-selected="true">꽃다발 카드</button>
+      <button class="msg-mode-btn" type="button" role="tab" id="postcardTab" aria-controls="postcardPreview" aria-selected="false">꽃 엽서</button>
+    </div>
+    <section class="msg-sample" id="bouquetPreview" role="tabpanel" aria-labelledby="bouquetTab" aria-label="꽃다발 메시지 카드 미리보기">
       <figure class="msg-preview-photo"><img src="/assets/images/message/bouquet-message-card.jpg" alt="택배 상자 안 분홍 장미 돈꽃다발에 '함께 있어줘서 고마워요'라고 적힌 테차 메시지 카드가 금색 픽으로 꽂혀 있는 모습" width="1200" height="900" loading="lazy"></figure>
       <div class="msg-card is-bouquet">
-        <p class="msg-card-label">꽃다발 메시지 카드</p>
+        <p class="msg-card-label">꽃다발 카드 문구 길이 예시</p>
         <div class="msg-card-paper">
-          <p class="msg-card-text" data-card-text>내가 사랑하는 그대에게</p>
+          <p class="msg-card-text" data-card-text><span class="msg-card-copy">함께 있어줘서 고마워</span></p>
           <span class="msg-card-ring" aria-hidden="true"></span>
         </div>
+        <p class="msg-readability" id="previewReadability">11자 · 문구가 길어질수록 원 안의 글씨가 작아집니다.</p>
         <p class="msg-card-note">금색 픽에 고정돼 꽃다발에 꽂고 뺄 수 있어요.</p>
       </div>
     </section>
-    <section class="msg-sample" aria-label="꽃 엽서 미리보기">
+    <section class="msg-sample" id="postcardPreview" role="tabpanel" aria-labelledby="postcardTab" aria-label="꽃 엽서 미리보기">
       <figure class="msg-preview-photo"><img src="/assets/images/gift-finder/flower-postcard-01.webp" alt="말린 꽃을 붙인 카드가 책상 위에 펼쳐져 있는 모습" width="1000" height="1000" loading="lazy"></figure>
       <div class="msg-card">
-        <p class="msg-card-label">꽃 엽서</p>
+        <p class="msg-card-label">꽃 엽서 문구 길이 예시</p>
         <div class="msg-card-paper">
-          <p class="msg-card-text" data-card-text>내가 사랑하는 그대에게</p>
+          <p class="msg-card-text" data-card-text>함께 있어줘서 고마워</p>
         </div>
       </div>
     </section>
+    <div class="msg-editor" hidden>
+      <label for="messageEditor">내 카드 문구 다듬기</label>
+      <p class="msg-editor-help">호칭이나 보내는 이름을 더해 보세요. 입력한 글은 이 화면에서만 보입니다.</p>
+      <textarea id="messageEditor" rows="3" aria-describedby="editorCount"></textarea>
+      <div class="msg-editor-foot"><p id="editorCount">0자 / 권장 40자</p><button id="copyEdited" type="button">수정한 문구 복사</button></div>
+      <p id="copyStatus" role="status" aria-live="polite"></p>
+    </div>
+    </div>
   </aside>
   </div>
 
@@ -500,7 +623,7 @@
       <thead><tr><th>받는 분</th><th>고를 말투</th><th>주의할 점</th></tr></thead>
       <tbody>
         <tr><td>부모님·어른</td><td>정중하게</td><td>나이를 직접 세는 표현은 피합니다</td></tr>
-        <tr><td>직장 상사</td><td>정중하게</td><td>"수고하셨습니다"는 아랫사람에게 쓰는 말입니다</td></tr>
+        <tr><td>직장 상사</td><td>정중하게</td><td>격식 있는 자리라면 노고에 감사하는 표현이 무난합니다</td></tr>
         <tr><td>동료·친구</td><td>다정하게 · 밝고 재치 있게</td><td>여러 사람이 볼 수 있으면 농담 수위를 낮춥니다</td></tr>
         <tr><td>거래처</td><td>거래처·직장용</td><td>보내는 주체가 회사로 읽히게 씁니다</td></tr>
         <tr><td>연인·배우자</td><td>다정하게 · 짧고 담백하게</td><td>둘만 아는 기억 한 단어가 가장 크게 남습니다</td></tr>
@@ -509,7 +632,7 @@
 
     <h2>피하는 표현</h2>
     <ul class="msg-avoid">
-      <li><b>퇴임에 "수고하셨습니다".</b> "그동안의 노고에 감사드립니다"로 바꿉니다.</li>
+      <li><b>퇴임에 너무 가벼운 인사.</b> 공식 카드라면 "그동안의 노고에 감사드립니다"가 무난합니다.</li>
       <li><b>병문안에 병명과 상태.</b> "빨리 나으세요"도 재촉으로 읽혀 "편안히 회복하시기를"이 무난합니다.</li>
       <li><b>결혼에 "드디어".</b> 늦었다는 뜻으로 읽힐 수 있습니다.</li>
       <li><b>개업에 과한 재물 표현.</b> 크게 부풀린 말은 가볍게 읽힙니다.</li>
@@ -519,16 +642,16 @@
     <h2>자주 묻는 질문</h2>
     <div class="msg-faq">
       <details><summary>문구를 그대로 써도 되나요?</summary>
-        <p>됩니다. 테차 카드에 자주 담기는 문장을 누구나 쓰기 좋게 다듬었습니다. 받는 분 호칭만 앞에 붙여도 충분히 달라집니다.</p></details>
+        <p>됩니다. 실제 주문 표현을 다듬은 문장과 테차가 새로 쓴 예시를 함께 실었습니다. 받는 분 호칭이나 보내는 이름을 더해 보세요.</p></details>
       <details><summary>40자보다 길게 쓰고 싶으면요?</summary>
-        <p>문구 두 개를 이어 붙이면 됩니다. 다만 카드 한 장에 50자를 넘기면 글씨가 작아지니, 긴 편지는 따로 넣는 편을 권합니다.</p></details>
+        <p>이 페이지에서 문구를 직접 고쳐 쓸 수 있습니다. 40자를 넘기면 글씨가 작아질 수 있으니 핵심만 남기고, 긴 마음은 별도 편지로 전해 보세요.</p></details>
       <details><summary>카드에 보내는 사람 이름을 꼭 써야 하나요?</summary>
         <p>택배로 갈 때는 쓰는 편이 좋습니다. 받는 분이 상자만 보고는 누가 보냈는지 모르는 경우가 많습니다.</p></details>
       <details><summary>테차에 주문하면 카드도 함께 오나요?</summary>
         <p>주문 화면에서 문구를 고르거나, 배송 요청란에 원하는 문장을 남겨 주시면 메시지 카드에 담아 함께 보내 드립니다.</p></details>
     </div>
 
-    <p class="note">테차가 꽃 선물에 담아 보내 온 카드 문구를 바탕으로 정리했습니다.</p>
+    <p class="note">실제 주문 카드에서 이름을 뺀 표현을 참고하고, 새로운 예시를 더해 정리했습니다.</p>
   </article>
 
   <nav class="related-message" aria-label="상황별 선물 가이드">
@@ -569,31 +692,98 @@
 </footer>
 <script src="/assets/js/site.js"></script>
 <script>
-TECHA.initPage({ title:"꽃 선물 메시지", desc:"테차가 꽃과 함께 보내 온 카드 문구를 모았어요. 상황을 고르면 어울리는 문장을 바로 복사할 수 있어요.", category:null });
+TECHA.initPage({ title:"꽃 선물 메시지", desc:"꽃 선물 상황과 말투를 고르고, 마음에 드는 문구를 내 말로 다듬어 복사해 보세요.", category:null });
 
-// 문구는 위 HTML 에 이미 다 적혀 있다 (scripts/build-message-phrases.js 가 찍는다).
-// 여기서는 고른 상황 한 묶음만 남기고 말투로 한 번 더 거른다 —
-// 문구를 JS 안에 두 벌 두지 않기 위해서다. 스크립트가 꺼져 있으면 전체 문구가 그대로 보인다.
-// 2026-09-22: 전에는 처음에 136개가 전부 펼쳐져 페이지가 끝없이 길었다. 이제 늘 상황 하나만 보인다.
+// 문구의 단일 출처는 data/message-phrases.json 이 생성한 위 정적 HTML이다.
+// 스크립트가 꺼져 있어도 모든 문구는 읽을 수 있다.
 (function () {
   var occWrap = document.getElementById("occasionChoices");
+  var occSelect = document.getElementById("occasionSelect");
   var toneWrap = document.getElementById("toneChoices");
   var countEl = document.getElementById("msgCount");
-  if (!occWrap || !toneWrap) return;
-
+  var preview = document.querySelector(".msg-preview");
+  var previewBody = document.getElementById("previewBody");
+  var previewToggle = document.getElementById("previewToggle");
+  var previewSummary = document.getElementById("previewSummary");
+  var editorBox = document.querySelector(".msg-editor");
+  var editor = document.getElementById("messageEditor");
+  var editorCount = document.getElementById("editorCount");
+  var status = document.getElementById("copyStatus");
+  var rowStatus = document.getElementById("rowCopyStatus");
+  var cards = [].slice.call(document.querySelectorAll("[data-card-text]"));
+  var bouquetCopy = document.querySelector(".msg-card.is-bouquet .msg-card-copy");
+  var readability = document.getElementById("previewReadability");
   var groups = [].slice.call(document.querySelectorAll(".msg-group"));
-  var DEFAULT = groups[0] ? groups[0].dataset.occasion : "";
-  var occ = DEFAULT, tone = "";
+  if (!occWrap || !occSelect || !toneWrap || !groups.length || !editor || !cards.length || !bouquetCopy || !readability) return;
 
-  // 주소 끝 #m-graduation 으로 바로 들어올 수 있다 (매거진·선물 추천에서 링크)
+  var DEFAULT = groups[0].dataset.occasion;
+  var occ = DEFAULT, tone = "", current = null, edited = false;
+  function validOcc(key) { return groups.some(function (g) { return g.dataset.occasion === key; }); }
   var fromHash = (location.hash || "").replace(/^#m-/, "");
-  if (fromHash && groups.some(function (g) { return g.dataset.occasion === fromHash; })) occ = fromHash;
+  if (validOcc(fromHash)) occ = fromHash;
 
   function has(btn, attr, value) {
-    if (!value) return true;
-    return (" " + (btn.getAttribute(attr) || "") + " ").indexOf(" " + value + " ") !== -1;
+    return !value || (" " + (btn.getAttribute(attr) || "") + " ").indexOf(" " + value + " ") !== -1;
   }
-
+  function fitBouquetText() {
+    var area = bouquetCopy.parentElement;
+    if (!area.clientHeight || !bouquetCopy.clientWidth) return;
+    var style = getComputedStyle(area);
+    var maxSize = parseFloat(style.fontSize);
+    var room = (area.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom)) * .82;
+    if (room <= 0) return;
+    bouquetCopy.style.fontSize = maxSize + "px";
+    bouquetCopy.style.transform = "";
+    function fits() { return bouquetCopy.scrollHeight <= room && bouquetCopy.scrollWidth <= bouquetCopy.clientWidth + 1; }
+    if (fits()) return;
+    var low = 6, high = maxSize;
+    for (var i = 0; i < 9; i++) {
+      var mid = (low + high) / 2;
+      bouquetCopy.style.fontSize = mid + "px";
+      if (fits()) low = mid; else high = mid;
+    }
+    bouquetCopy.style.fontSize = Math.floor(low * 10) / 10 + "px";
+    if (!fits()) {
+      var scale = Math.min(1, room / bouquetCopy.scrollHeight, bouquetCopy.clientWidth / Math.max(1, bouquetCopy.scrollWidth));
+      bouquetCopy.style.transform = "scale(" + Math.max(.01, scale * .98) + ")";
+    }
+  }
+  function updateCard() {
+    var value = editor.value;
+    cards.forEach(function (c) { (c.querySelector(".msg-card-copy") || c).textContent = value || "문구를 입력해 주세요"; });
+    previewSummary.textContent = value || "문구를 입력해 주세요";
+    var length = Array.from(value).length;
+    editorCount.textContent = length + "자 / 권장 40자" + (length > 40 ? " · 카드 공간을 확인해 주세요" : "");
+    editorCount.classList.toggle("is-long", length > 40);
+    readability.textContent = length > 40 ? length + "자 · 글씨가 많이 작아져 읽기 어려워요. 문구를 줄여 보세요." :
+      length > 25 ? length + "자 · 원 안에 맞추면 글씨가 작아져요." :
+      length + "자 · 문구가 길어질수록 원 안의 글씨가 작아집니다.";
+    readability.classList.toggle("is-long", length > 40);
+    fitBouquetText();
+  }
+  function setPreviewOpen(open) {
+    previewBody.classList.toggle("is-open", open);
+    previewToggle.setAttribute("aria-expanded", String(open));
+    previewToggle.textContent = open ? "접기" : "미리보기·수정";
+    if (open) fitBouquetText();
+  }
+  function selectPhrase(li, scroll) {
+    if (!li) return;
+    if (current) current.classList.remove("is-preview");
+    current = li;
+    edited = false;
+    li.classList.add("is-preview");
+    editor.value = li.querySelector("p").textContent;
+    status.textContent = "";
+    updateCard();
+    if (scroll) {
+      if (matchMedia("(max-width: 900px)").matches) {
+        setPreviewOpen(true);
+        preview.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+      }
+      preview.focus({ preventScroll:true });
+    }
+  }
   function apply() {
     var shown = 0;
     groups.forEach(function (g) {
@@ -605,80 +795,120 @@ TECHA.initPage({ title:"꽃 선물 메시지", desc:"테차가 꽃과 함께 보
         if (!li.hidden) shown++;
       });
     });
+    occSelect.value = occ;
     var occBtn = occWrap.querySelector('[data-occasion="' + occ + '"]');
     var toneBtn = tone && toneWrap.querySelector('[data-tone="' + tone + '"]');
-    countEl.textContent = (occBtn ? occBtn.textContent : "") + (toneBtn ? " · " + toneBtn.textContent : "") + " — 문구 " + shown + "개";
-
+    countEl.textContent = (occBtn ? occBtn.textContent : "") + (toneBtn ? " · " + toneBtn.textContent : "") + " · " + shown + "개";
     [].slice.call(occWrap.querySelectorAll("button[data-occasion]")).forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.dataset.occasion === occ));
-      b.disabled = !has(b, "data-tones", tone);
-      b.title = b.disabled ? "이 말투는 이 상황에 어울리지 않아 문구를 두지 않았습니다." : "";
     });
     [].slice.call(toneWrap.querySelectorAll("button")).forEach(function (b) {
       if (b.hasAttribute("data-tone-all")) { b.setAttribute("aria-pressed", String(!tone)); return; }
       b.setAttribute("aria-pressed", String(b.dataset.tone === tone));
-      // 문구가 없는 조합은 아예 못 누르게 잠근다 — 눌렀더니 0개가 뜨면 고장난 화면으로 읽힌다
       b.disabled = !has(b, "data-occasions", occ);
-      b.title = b.disabled ? "이 상황에는 어울리지 않는 말투라 문구를 두지 않았습니다." : "";
+      b.title = b.disabled ? "이 상황에 맞는 문구가 없는 말투입니다." : "";
     });
+    if (edited) {
+      if (current && (current.hidden || current.closest(".msg-group").hidden)) {
+        current.classList.remove("is-preview"); current = null;
+      }
+    } else {
+      selectPhrase(document.querySelector(".msg-group:not([hidden]) .msg-item:not([hidden])"), false);
+    }
   }
-
+  function chooseOcc(key) {
+    if (!validOcc(key)) return;
+    occ = key;
+    var btn = occWrap.querySelector('[data-occasion="' + occ + '"]');
+    if (tone && !has(btn, "data-tones", tone)) tone = "";
+    if (history.replaceState) history.replaceState(null, "", location.pathname + location.search + (occ === DEFAULT ? "" : "#m-" + occ));
+    apply();
+  }
   occWrap.addEventListener("click", function (e) {
     var b = e.target.closest("button[data-occasion]");
-    if (!b || b.disabled) return;
-    occ = b.dataset.occasion;
-    if (tone && !has(b, "data-tones", tone)) tone = "";
-    if (history.replaceState) history.replaceState(null, "", occ === DEFAULT ? location.pathname : "#m-" + occ);
-    apply();
+    if (b) chooseOcc(b.dataset.occasion);
   });
+  occSelect.addEventListener("change", function () { chooseOcc(occSelect.value); });
   toneWrap.addEventListener("click", function (e) {
     var b = e.target.closest("button");
     if (!b || b.disabled) return;
-    tone = b.hasAttribute("data-tone-all") || b.dataset.tone === tone ? "" : b.dataset.tone; // 같은 것을 다시 누르면 해제
+    tone = b.hasAttribute("data-tone-all") || b.dataset.tone === tone ? "" : b.dataset.tone;
     apply();
   });
-
-  // 복사 — 문단 텍스트를 그대로 가져간다
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest(".copy-btn");
-    if (!b || !navigator.clipboard) return;
-    navigator.clipboard.writeText(b.parentNode.querySelector("p").textContent).then(function () {
-      b.textContent = "복사됨";
-      b.classList.add("done");
-      setTimeout(function () { b.textContent = "복사"; b.classList.remove("done"); }, 1400);
-    });
+  window.addEventListener("hashchange", function () {
+    var key = (location.hash || "").replace(/^#m-/, "");
+    if (validOcc(key)) chooseOcc(key);
   });
 
-  apply();
-})();
-</script>
-<script>
-// 카드 미리보기 — 문구를 누르면 그 문장을, 상황·말투를 바꾸면 첫 문구를 꽃다발 카드와 꽃 엽서에 함께 적는다.
-// 문구 목록과 거르는 동작은 위 스크립트가 맡고, 여기서는 보이는 결과만 읽는다.
-(function () {
-  var cards = [].slice.call(document.querySelectorAll("[data-card-text]"));
-  if (!cards.length) return;
-  var current = null;
-  function show(li) {
-    if (!li) return;
-    if (current) current.classList.remove("is-preview");
-    current = li; li.classList.add("is-preview");
-    var text = li.querySelector("p").textContent;
-    cards.forEach(function (c) { c.textContent = text; });
+  function fallbackCopy(value) {
+    var field = document.createElement("textarea");
+    field.value = value;
+    field.style.position = "fixed";
+    field.style.opacity = "0";
+    document.body.appendChild(field);
+    field.select();
+    var ok = document.execCommand("copy");
+    field.remove();
+    if (!ok) throw new Error("copy failed");
   }
-  function first() {
-    show(document.querySelector(".msg-group:not([hidden]) .msg-item:not([hidden])"));
+  function copyText(value) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(value).catch(function () { fallbackCopy(value); });
+    }
+    return Promise.resolve().then(function () { fallbackCopy(value); });
+  }
+  function flash(button, message, reset) {
+    button.textContent = message;
+    button.classList.toggle("done", message === "복사됨");
+    setTimeout(function () { button.textContent = reset; button.classList.remove("done"); }, 1700);
   }
   document.querySelector(".message-results").addEventListener("click", function (e) {
     var li = e.target.closest(".msg-item");
-    if (li) show(li);
+    if (!li) return;
+    if (e.target.closest(".preview-btn")) selectPhrase(li, true);
+    var b = e.target.closest(".copy-btn");
+    if (!b) return;
+    selectPhrase(li, false);
+    var phrase = li.querySelector("p").textContent;
+    rowStatus.textContent = "";
+    copyText(phrase).then(function () {
+      flash(b, "복사됨", "복사");
+      rowStatus.textContent = "문구를 복사했습니다: " + phrase;
+    }).catch(function () { flash(b, "복사 실패", "복사"); rowStatus.textContent = "복사하지 못했습니다. 문구를 선택해 직접 복사해 주세요."; });
   });
-  ["occasionChoices", "toneChoices"].forEach(function (id) {
-    var el = document.getElementById(id);
-    if (el) el.addEventListener("click", function () { setTimeout(first, 0); });
+  editor.addEventListener("input", function () { edited = true; status.textContent = ""; updateCard(); });
+  previewToggle.addEventListener("click", function () { setPreviewOpen(previewToggle.getAttribute("aria-expanded") !== "true"); });
+  document.getElementById("copyEdited").addEventListener("click", function () {
+    if (!editor.value.trim()) { status.textContent = "문구를 먼저 입력해 주세요."; editor.focus(); return; }
+    copyText(editor.value).then(function () { status.textContent = "수정한 문구를 복사했습니다."; })
+      .catch(function () { status.textContent = "복사할 수 없었습니다. 문구를 길게 눌러 직접 복사해 주세요."; });
   });
-  first();
 
+  var tabs = [].slice.call(preview.querySelectorAll(".msg-mode-btn"));
+  var panels = [document.getElementById("bouquetPreview"), document.getElementById("postcardPreview")];
+  function setMode(index) {
+    tabs.forEach(function (tab, i) { tab.setAttribute("aria-selected", String(i === index)); tab.tabIndex = i === index ? 0 : -1; });
+    panels.forEach(function (panel, i) { panel.hidden = i !== index; });
+    if (index === 0) fitBouquetText();
+  }
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener("click", function () { setMode(i); });
+    tab.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      var next = (i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+      setMode(next); tabs[next].focus();
+    });
+  });
+  preview.classList.add("msg-enhanced");
+  preview.querySelector(".msg-preview-modes").hidden = false;
+  previewToggle.hidden = false;
+  editorBox.hidden = false;
+  setMode(0);
+  apply();
+  window.addEventListener("resize", fitBouquetText);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBouquetText);
+  document.body.classList.add("msg-ready");
 })();
 </script>
 </body>

@@ -41,11 +41,15 @@ function buildChoices(data) {
       return `<button class="choice-btn" type="button" data-tone="${esc(k)}" data-occasions="${esc(os)}">${esc(label)}</button>`;
     })
     .join('');
+  const options = data.occasions
+    .map((o) => `<option value="${esc(o.key)}">${esc(o.label)}</option>`)
+    .join('');
   return [
     CHOICE_BEGIN,
-    '      <p class="picker-label" id="picker-title">상황</p>',
+    '      <label class="picker-label" id="picker-title" for="occasionSelect">1. 어떤 날인가요?</label>',
+    '      <div class="msg-select-wrap"><select id="occasionSelect" aria-label="꽃 선물 상황 고르기">' + options + '</select></div>',
     '      <div class="choice-row" id="occasionChoices" role="group" aria-labelledby="picker-title">' + occ + '</div>',
-    '      <p class="picker-label" id="tone-title">말투</p>',
+    '      <p class="picker-label" id="tone-title">2. 어떤 말투로 전할까요?</p>',
     '      <div class="choice-row" id="toneChoices" role="group" aria-labelledby="tone-title"><button class="choice-btn tone-all" type="button" data-tone-all>전체</button>' + tones + '</div>',
     '      ' + CHOICE_END
   ].join('\n');
@@ -60,7 +64,7 @@ function buildList(data) {
   let n = 0;
   for (const o of data.occasions) {
     out.push(`    <section class="msg-group" id="m-${esc(o.key)}" data-occasion="${esc(o.key)}">`);
-    out.push(`      <h3>${esc(o.label)} 카드 문구</h3>`);
+    out.push(`      <h3>${o.key === 'popular' ? '자주 고른 한 줄' : esc(o.label) + ' 카드 문구'}</h3>`);
     out.push(`      <p class="msg-lead">${esc(o.lead)}</p>`);
     out.push('      <ul class="msg-list">');
     for (const t of toneKeys.filter((k) => o.phrases[k])) {
@@ -69,7 +73,8 @@ function buildList(data) {
         out.push(
           `        <li class="msg-item" data-tone="${esc(t)}"><p>${esc(p)}</p>` +
           `<span class="msg-meta">${esc(data.tones[t])} · ${[...p].length}자</span>` +
-          '<button class="copy-btn" type="button">복사</button></li>'
+          `<div class="msg-actions"><button class="preview-btn" type="button" aria-label="카드에서 보기: ${esc(p)}">미리보기</button>` +
+          `<button class="copy-btn" type="button" aria-label="문구 복사: ${esc(p)}">복사</button></div></li>`
         );
       }
     }
@@ -103,12 +108,16 @@ function main() {
 
   // 어긋난 조합 방어 — tones 에 없는 말투를 쓰면 화면에서 버튼 없이 사라진다
   const errors = [];
+  const keys = new Set();
   for (const o of data.occasions) {
+    if (keys.has(o.key)) errors.push(`${o.key}: 상황 키가 중복된다`);
+    keys.add(o.key);
     const tones = Object.keys(o.phrases);
     if (!tones.length) errors.push(`${o.key}: 문구가 하나도 없다`);
     for (const t of tones) {
       if (!data.tones[t]) errors.push(`${o.key}: tones 에 없는 말투 '${t}'`);
       if (!Array.isArray(o.phrases[t]) || !o.phrases[t].length) errors.push(`${o.key}/${t}: 문구가 비었다`);
+      if (Array.isArray(o.phrases[t]) && new Set(o.phrases[t]).size !== o.phrases[t].length) errors.push(`${o.key}/${t}: 같은 문구가 중복된다`);
     }
   }
   // _excluded 는 "왜 이 칸이 비어 있는지" 를 적어두는 곳이다. 문구를 채우고 나서도
