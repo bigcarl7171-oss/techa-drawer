@@ -96,6 +96,7 @@
   .msg-preview-summary, .msg-preview-toggle { display:none; }
   .msg-preview-toggle[hidden] { display:none !important; }
   .msg-preview-intro { margin:0 0 13px; font-size:12.5px; line-height:1.6; color:var(--muted); }
+  .msg-preview-intro strong { color:var(--brown); }
   .msg-preview-modes { display:flex; gap:16px; margin:0 0 12px; border-bottom:1px solid var(--line); }
   .msg-preview-modes[hidden], .msg-editor[hidden] { display:none; }
   .msg-mode-btn { padding:0 0 10px; border:0; border-bottom:2px solid transparent; background:transparent; color:var(--muted); font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; }
@@ -115,7 +116,10 @@
   .msg-card.is-bouquet .msg-card-paper { display:flex; margin:0 auto; max-width:165px; aspect-ratio:4/5; padding:10px; background:#C9A26F; }
   .msg-card.is-bouquet .msg-card-text { position:relative; flex:1; display:flex; align-items:center; justify-content:center; min-height:0; padding:18px 16px 30px; background:#FFFEFB; text-align:center; font-family:"Nanum Pen Script","Gowun Batang",cursive; font-size:26px; line-height:1.2; color:#2E2A27; }
   .msg-card.is-bouquet .msg-card-text::before { content:""; position:absolute; inset:10px 10px 24px; border:1.5px solid #E7A3AE; border-radius:46% / 40%; pointer-events:none; }
+  .msg-card.is-bouquet .msg-card-copy { position:relative; z-index:1; display:block; width:80%; line-height:1.2; white-space:pre-wrap; overflow-wrap:anywhere; }
   .msg-card.is-bouquet .msg-card-ring { display:block; position:absolute; left:50%; bottom:5px; width:22px; height:22px; margin-left:-11px; border:2px solid #B8973F; border-radius:50%; }
+  .msg-readability { margin:12px 0 0; padding:8px 10px; border-left:2px solid #9E8551; background:#F7F1E7; color:var(--brown); font-size:12.5px; line-height:1.5; }
+  .msg-readability.is-long { border-left-color:#943F33; color:#943F33; }
   .msg-item.is-preview { border-left:2px solid #9E8551; padding-left:10px; }
   .msg-editor { margin:20px 0 0; padding:18px 0 0; border-top:1px solid var(--line); }
   .msg-editor label { display:block; margin:0 0 5px; font-weight:700; font-size:14px; }
@@ -557,7 +561,7 @@
       <button class="msg-preview-toggle" id="previewToggle" type="button" aria-expanded="false" aria-controls="previewBody" hidden>미리보기·수정</button>
     </div>
     <div class="msg-preview-body" id="previewBody">
-    <p class="msg-preview-intro">사진은 실제 제작 사례입니다. 아래 카드는 문구 배치 예시이며, 카드 구성은 상품마다 다를 수 있어요.</p>
+    <p class="msg-preview-intro"><strong>문구 길이를 가늠하는 예시 화면입니다.</strong> 아래 카드의 디자인·서체·배치는 실제 제공 카드와 다릅니다. 사진은 테차 제작 사례입니다.</p>
     <div class="msg-preview-modes" role="tablist" aria-label="미리볼 카드 종류" hidden>
       <button class="msg-mode-btn" type="button" role="tab" id="bouquetTab" aria-controls="bouquetPreview" aria-selected="true">꽃다발 카드</button>
       <button class="msg-mode-btn" type="button" role="tab" id="postcardTab" aria-controls="postcardPreview" aria-selected="false">꽃 엽서</button>
@@ -565,18 +569,19 @@
     <section class="msg-sample" id="bouquetPreview" role="tabpanel" aria-labelledby="bouquetTab" aria-label="꽃다발 메시지 카드 미리보기">
       <figure class="msg-preview-photo"><img src="/assets/images/message/bouquet-message-card.jpg" alt="택배 상자 안 분홍 장미 돈꽃다발에 '함께 있어줘서 고마워요'라고 적힌 테차 메시지 카드가 금색 픽으로 꽂혀 있는 모습" width="1200" height="900" loading="lazy"></figure>
       <div class="msg-card is-bouquet">
-        <p class="msg-card-label">꽃다발 메시지 카드</p>
+        <p class="msg-card-label">꽃다발 카드 문구 길이 예시</p>
         <div class="msg-card-paper">
-          <p class="msg-card-text" data-card-text>함께 있어줘서 고마워</p>
+          <p class="msg-card-text" data-card-text><span class="msg-card-copy">함께 있어줘서 고마워</span></p>
           <span class="msg-card-ring" aria-hidden="true"></span>
         </div>
+        <p class="msg-readability" id="previewReadability">11자 · 문구가 길어질수록 원 안의 글씨가 작아집니다.</p>
         <p class="msg-card-note">금색 픽에 고정돼 꽃다발에 꽂고 뺄 수 있어요.</p>
       </div>
     </section>
     <section class="msg-sample" id="postcardPreview" role="tabpanel" aria-labelledby="postcardTab" aria-label="꽃 엽서 미리보기">
       <figure class="msg-preview-photo"><img src="/assets/images/gift-finder/flower-postcard-01.webp" alt="말린 꽃을 붙인 카드가 책상 위에 펼쳐져 있는 모습" width="1000" height="1000" loading="lazy"></figure>
       <div class="msg-card">
-        <p class="msg-card-label">꽃 엽서</p>
+        <p class="msg-card-label">꽃 엽서 문구 길이 예시</p>
         <div class="msg-card-paper">
           <p class="msg-card-text" data-card-text>함께 있어줘서 고마워</p>
         </div>
@@ -699,8 +704,10 @@ TECHA.initPage({ title:"꽃 선물 메시지", desc:"꽃 선물 상황과 말투
   var status = document.getElementById("copyStatus");
   var rowStatus = document.getElementById("rowCopyStatus");
   var cards = [].slice.call(document.querySelectorAll("[data-card-text]"));
+  var bouquetCopy = document.querySelector(".msg-card.is-bouquet .msg-card-copy");
+  var readability = document.getElementById("previewReadability");
   var groups = [].slice.call(document.querySelectorAll(".msg-group"));
-  if (!occWrap || !occSelect || !toneWrap || !groups.length || !editor || !cards.length) return;
+  if (!occWrap || !occSelect || !toneWrap || !groups.length || !editor || !cards.length || !bouquetCopy || !readability) return;
 
   var DEFAULT = groups[0].dataset.occasion;
   var occ = DEFAULT, tone = "", current = null, edited = false;
@@ -711,18 +718,47 @@ TECHA.initPage({ title:"꽃 선물 메시지", desc:"꽃 선물 상황과 말투
   function has(btn, attr, value) {
     return !value || (" " + (btn.getAttribute(attr) || "") + " ").indexOf(" " + value + " ") !== -1;
   }
+  function fitBouquetText() {
+    var area = bouquetCopy.parentElement;
+    if (!area.clientHeight || !bouquetCopy.clientWidth) return;
+    var style = getComputedStyle(area);
+    var maxSize = parseFloat(style.fontSize);
+    var room = (area.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom)) * .82;
+    if (room <= 0) return;
+    bouquetCopy.style.fontSize = maxSize + "px";
+    bouquetCopy.style.transform = "";
+    function fits() { return bouquetCopy.scrollHeight <= room && bouquetCopy.scrollWidth <= bouquetCopy.clientWidth + 1; }
+    if (fits()) return;
+    var low = 6, high = maxSize;
+    for (var i = 0; i < 9; i++) {
+      var mid = (low + high) / 2;
+      bouquetCopy.style.fontSize = mid + "px";
+      if (fits()) low = mid; else high = mid;
+    }
+    bouquetCopy.style.fontSize = Math.floor(low * 10) / 10 + "px";
+    if (!fits()) {
+      var scale = Math.min(1, room / bouquetCopy.scrollHeight, bouquetCopy.clientWidth / Math.max(1, bouquetCopy.scrollWidth));
+      bouquetCopy.style.transform = "scale(" + Math.max(.01, scale * .98) + ")";
+    }
+  }
   function updateCard() {
     var value = editor.value;
-    cards.forEach(function (c) { c.textContent = value || "문구를 입력해 주세요"; });
+    cards.forEach(function (c) { (c.querySelector(".msg-card-copy") || c).textContent = value || "문구를 입력해 주세요"; });
     previewSummary.textContent = value || "문구를 입력해 주세요";
     var length = Array.from(value).length;
     editorCount.textContent = length + "자 / 권장 40자" + (length > 40 ? " · 카드 공간을 확인해 주세요" : "");
     editorCount.classList.toggle("is-long", length > 40);
+    readability.textContent = length > 40 ? length + "자 · 글씨가 많이 작아져 읽기 어려워요. 문구를 줄여 보세요." :
+      length > 25 ? length + "자 · 원 안에 맞추면 글씨가 작아져요." :
+      length + "자 · 문구가 길어질수록 원 안의 글씨가 작아집니다.";
+    readability.classList.toggle("is-long", length > 40);
+    fitBouquetText();
   }
   function setPreviewOpen(open) {
     previewBody.classList.toggle("is-open", open);
     previewToggle.setAttribute("aria-expanded", String(open));
     previewToggle.textContent = open ? "접기" : "미리보기·수정";
+    if (open) fitBouquetText();
   }
   function selectPhrase(li, scroll) {
     if (!li) return;
@@ -846,6 +882,7 @@ TECHA.initPage({ title:"꽃 선물 메시지", desc:"꽃 선물 상황과 말투
   function setMode(index) {
     tabs.forEach(function (tab, i) { tab.setAttribute("aria-selected", String(i === index)); tab.tabIndex = i === index ? 0 : -1; });
     panels.forEach(function (panel, i) { panel.hidden = i !== index; });
+    if (index === 0) fitBouquetText();
   }
   tabs.forEach(function (tab, i) {
     tab.addEventListener("click", function () { setMode(i); });
@@ -862,6 +899,8 @@ TECHA.initPage({ title:"꽃 선물 메시지", desc:"꽃 선물 상황과 말투
   editorBox.hidden = false;
   setMode(0);
   apply();
+  window.addEventListener("resize", fitBouquetText);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBouquetText);
   document.body.classList.add("msg-ready");
 })();
 </script>
