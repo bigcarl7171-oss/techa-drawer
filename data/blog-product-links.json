@@ -293,5 +293,10 @@
     "rose-hydrangea-bouquet",
     "hydrangea-moodlamp",
     "sunflower-frame"
+  ],
+  "hydrangea-petals-sepal": [
+    "hydrangea-bouquet",
+    "glassdome-moodlamp",
+    "rose-hydrangea-bouquet"
   ]
 }
