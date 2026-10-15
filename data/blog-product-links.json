@@ -298,5 +298,10 @@
     "hydrangea-bouquet",
     "glassdome-moodlamp",
     "rose-hydrangea-bouquet"
+  ],
+  "bouquet-card-message-phrases": [
+    "flower-postcard",
+    "rose-money-bouquet",
+    "rose-hydrangea-bouquet"
   ]
 }
