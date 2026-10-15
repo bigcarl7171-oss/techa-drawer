@@ -97,8 +97,12 @@
   .msg-preview-hint { margin:0 0 12px; font-size:12.5px; font-weight:700; letter-spacing:.06em; color:#9E8551; }
   .msg-preview-summary, .msg-preview-toggle { display:none; }
   .msg-preview-toggle[hidden] { display:none !important; }
-  .msg-preview-intro { margin:0 0 13px; font-size:12.5px; line-height:1.6; color:var(--muted); }
-  .msg-preview-intro strong { color:var(--brown); }
+  /* 2026-10-15 예시 안내를 크게 — 그림 카드를 실제 제공 카드로 오해하지 않게 */
+  .msg-preview-notice { margin:0 0 14px; padding:12px 14px; border:1px solid var(--brown); border-left-width:4px; border-radius:2px; background:#FFFDF9; }
+  .msg-preview-notice p { margin:0; font-size:13.5px; line-height:1.6; color:var(--body-text); word-break:keep-all; }
+  .msg-preview-notice .msg-preview-notice-title { margin:0 0 4px; font-size:16px; font-weight:800; color:var(--brown); }
+  .msg-preview-notice .msg-preview-notice-sub { margin-top:4px; font-size:12.5px; color:var(--muted); }
+  .msg-card-stamp { position:absolute; top:10px; right:10px; z-index:2; padding:3px 8px; border-radius:2px; background:var(--brown); color:#FAF3EA; font-size:12px; font-weight:700; line-height:1.4; letter-spacing:.04em; }
   .msg-preview-modes { display:flex; gap:16px; margin:0 0 12px; border-bottom:1px solid var(--line); }
   .msg-preview-modes[hidden], .msg-editor[hidden] { display:none; }
   .msg-mode-btn { padding:0 0 10px; border:0; border-bottom:2px solid transparent; background:transparent; color:var(--muted); font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; }
@@ -573,7 +577,11 @@
       <button class="msg-preview-toggle" id="previewToggle" type="button" aria-expanded="false" aria-controls="previewBody" hidden>미리보기·수정</button>
     </div>
     <div class="msg-preview-body" id="previewBody">
-    <p class="msg-preview-intro"><strong>문구 길이를 가늠하는 예시 화면입니다.</strong> 아래 카드의 디자인·서체·배치는 실제 제공 카드와 다릅니다. 사진은 테차 제작 사례입니다.</p>
+    <div class="msg-preview-notice" role="note">
+      <p class="msg-preview-notice-title">예시 화면입니다</p>
+      <p>아래 카드 그림은 문구 길이만 가늠해 보는 예시예요. 실제로 받으시는 카드의 디자인·서체·크기·배치와 다릅니다.</p>
+      <p class="msg-preview-notice-sub">사진은 테차 제작 사례입니다.</p>
+    </div>
     <div class="msg-preview-modes" role="tablist" aria-label="미리볼 카드 종류" hidden>
       <button class="msg-mode-btn" type="button" role="tab" id="bouquetTab" aria-controls="bouquetPreview" aria-selected="true">꽃다발 카드</button>
       <button class="msg-mode-btn" type="button" role="tab" id="postcardTab" aria-controls="postcardPreview" aria-selected="false">꽃 엽서</button>
@@ -581,6 +589,7 @@
     <section class="msg-sample" id="bouquetPreview" role="tabpanel" aria-labelledby="bouquetTab" aria-label="꽃다발 메시지 카드 미리보기">
       <figure class="msg-preview-photo"><img src="/assets/images/message/bouquet-message-card.jpg" alt="택배 상자 안 분홍 장미 돈꽃다발에 '함께 있어줘서 고마워요'라고 적힌 테차 메시지 카드가 금색 픽으로 꽂혀 있는 모습" width="1200" height="900" loading="lazy"></figure>
       <div class="msg-card is-bouquet">
+        <span class="msg-card-stamp" aria-hidden="true">예시</span>
         <p class="msg-card-label">꽃다발 카드 문구 길이 예시</p>
         <div class="msg-card-paper">
           <p class="msg-card-text" data-card-text><span class="msg-card-copy">함께 있어줘서 고마워</span></p>
@@ -593,6 +602,7 @@
     <section class="msg-sample" id="postcardPreview" role="tabpanel" aria-labelledby="postcardTab" aria-label="꽃 엽서 미리보기">
       <figure class="msg-preview-photo"><img src="/assets/images/gift-finder/flower-postcard-01.webp" alt="말린 꽃을 붙인 카드가 책상 위에 펼쳐져 있는 모습" width="1000" height="1000" loading="lazy"></figure>
       <div class="msg-card">
+        <span class="msg-card-stamp" aria-hidden="true">예시</span>
         <p class="msg-card-label">꽃 엽서 문구 길이 예시</p>
         <div class="msg-card-paper">
           <p class="msg-card-text" data-card-text>함께 있어줘서 고마워</p>
