@@ -8,7 +8,7 @@
 #
 # 사용법:  scripts/check-publish.sh <slug> --blog <스크래치폴더/blog.md>
 #          scripts/check-publish.sh <slug> --no-blog      # 네이버판을 안 쓰는 글일 때만
-#   예)    scripts/check-publish.sh flower-gift-better-than-photo --blog "C:/연습/x_원고/blog.md"
+#   예)    scripts/check-publish.sh flower-gift-better-than-photo --blog "C:/연습/원고작업/x_원고/blog.md"
 
 set -uo pipefail
 SLUG="${1:-}"
