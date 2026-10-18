@@ -623,10 +623,10 @@
     var ctx = canvas.getContext('2d');
     var o = Object.assign({ text: '오늘, 꽃이 도착했어요', from: '', mark: true, bright: 0, warm: 0, anim: false, t: 0 }, opts);
     o.received = o.received || new Date(); o.today = o.today || new Date();
-    o.text = (o.text || '').trim() || '오늘, 꽃이 도착했어요';
+    o.text = o.omitText ? '' : (o.text || '').trim() || '오늘, 꽃이 도착했어요';
     // 영상·GIF: 문구가 2개 이상이면 시간에 따라 하나씩 바뀐다 (나타남 12% · 머묾 · 사라짐 12%)
     cap = null;
-    var caps = (o.caps || []).map(function (c) { return String(c || '').trim(); }).filter(Boolean);
+    var caps = o.omitText ? [] : (o.caps || []).map(function (c) { return String(c || '').trim(); }).filter(Boolean);
     if (o.anim && caps.length > 1) {
       var m = caps.length, seg = (o.t || 0) * m, k = Math.min(m - 1, Math.floor(seg)), f = seg - Math.floor(seg);
       var a = f < 0.12 ? ease(f / 0.12) : f > 0.88 ? 1 - ease((f - 0.88) / 0.12) : 1;

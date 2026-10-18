@@ -33,6 +33,10 @@
 
 <footer id="site-footer"></footer>
 
+<script>
+// /frame/·/hello/ 뒤에 글자가 잘못 붙은 주소(메신저 복사·QR 오타, 예: /frame/)와)는 원래 페이지로 보낸다
+(function(){var m=location.pathname.match(/^\/(frame|hello)(?=$|[^a-z0-9_-])/i);if(m){location.replace('/'+m[1].toLowerCase()+'/'+location.search);}})();
+</script>
 <script src="/assets/js/site.js"></script>
 <script>TECHA.initPage({}); TECHA.renderHome();</script>
 </body>
