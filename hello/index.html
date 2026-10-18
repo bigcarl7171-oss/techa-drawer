@@ -74,6 +74,8 @@ section.block{background:var(--card);border:1px solid var(--hair);border-radius:
 footer{margin-top:22px;padding:18px 4px 0;border-top:1px solid var(--hair);font-size:13px;line-height:1.65;color:var(--muted)}
 footer nav{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px}
 footer nav a{color:var(--ink);text-underline-offset:3px}
+.feedback{margin-top:12px;padding:14px;border:1px solid var(--hair);border-radius:12px;background:var(--card);color:var(--body)}
+.feedback a{display:inline-block;margin-top:6px;font-weight:700;color:var(--blue);text-underline-offset:3px}
 </style>
 </head>
 <body>
@@ -146,6 +148,7 @@ footer nav a{color:var(--ink);text-underline-offset:3px}
   </section>
 
   <footer>
+    <p class="feedback">더 편하게 쓰실 수 있도록 계속 다듬고 있어요. 이 안내서와 사진 꾸미기를 쓰시면서 불편하셨던 점이나 '이런 기능이 있으면 좋겠다' 싶은 점이 있으시면 네이버 톡톡으로 편하게 알려 주세요. 보내 주신 의견은 하나하나 꼼꼼히 읽고 반영하겠습니다.<br><a id="fbLink" href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡으로 의견 보내기 ›</a></p>
     테차(TECHA)는 경기 고양 공방에서 시들지 않는 꽃 선물을 손으로 만드는 꽃공방이에요. 인스타 스토리에 올리실 때 <b>@techa_flower</b>를 언급해 주시면 찾아가서 인사드릴게요.
     <nav>
       <a href="https://www.instagram.com/techa_flower/" target="_blank" rel="noopener">인스타그램</a>
@@ -185,7 +188,7 @@ footer nav a{color:var(--ink);text-underline-offset:3px}
   // 꾸미기로 가는 링크에 들어온 곳(from)을 실어 보낸다
   function withFrom(id){ var a = $(id); var u = new URL(a.getAttribute('href'), location.origin); u.searchParams.set('from', FROM); a.href = u.pathname + u.search; }
   ['goFrameG','goFrameR','goThanks','goSquare'].forEach(withFrom);
-  [['goFrameG','frame_giver'],['goFrameR','frame'],['goThanks','thanks'],['goSquare','square'],['goMessage','message'],['talkBtn','talk'],['shopLink','shop']].forEach(function(x){ $(x[0]).addEventListener('click', function(){ track('hello_click', {target: x[1]}); }); });
+  [['goFrameG','frame_giver'],['goFrameR','frame'],['goThanks','thanks'],['goSquare','square'],['goMessage','message'],['talkBtn','talk'],['fbLink','feedback'],['shopLink','shop']].forEach(function(x){ $(x[0]).addEventListener('click', function(){ track('hello_click', {target: x[1]}); }); });
 
   // ---------- 받는 분께 안내 보내기: 링크만 (보내는 분 정보 없음) ----------
   $('shareRecipient').onclick = async function(){
