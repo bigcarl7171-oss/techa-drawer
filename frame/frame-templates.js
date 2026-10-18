@@ -82,6 +82,10 @@
     if (b < 0) { ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = 'rgba(40,30,20,' + (-b * 0.35) + ')'; ctx.fillRect(x, y, w, h); }
     if (t > 0) { ctx.globalCompositeOperation = 'soft-light'; ctx.fillStyle = 'rgba(255,150,60,' + (t * 0.45) + ')'; ctx.fillRect(x, y, w, h); }
     if (t < 0) { ctx.globalCompositeOperation = 'soft-light'; ctx.fillStyle = 'rgba(70,120,200,' + (-t * 0.45) + ')'; ctx.fillRect(x, y, w, h); }
+    // 색 빼기(0..1): 회색을 '채도' 혼합으로 덮는다 — 1이면 흑백 (사파리에서도 같은 결과)
+    if (o.sat > 0) { ctx.globalCompositeOperation = 'saturation'; ctx.globalAlpha = Math.min(1, o.sat); ctx.fillStyle = '#808080'; ctx.fillRect(x, y, w, h); ctx.globalAlpha = 1; }
+    // 빛바램(0..1): 어두운 곳을 살짝 띄워 필름처럼
+    if (o.fade > 0) { ctx.globalCompositeOperation = 'lighten'; ctx.fillStyle = 'rgba(70,58,48,' + Math.min(1, o.fade * 2.2) + ')'; ctx.fillRect(x, y, w, h); }
     ctx.restore();
   }
 
@@ -659,5 +663,11 @@
     return pending;
   }
 
-  global.TechaFrame = { SAFE: SAFE, W: W, H: H, templates: T.map(function (t) { return { id: t.id, name: t.name, photos: t.photos }; }), squares: Q.map(function (t) { return { id: t.id, name: t.name, photos: t.photos }; }), render: render, loadFonts: loadFonts };
+  // 필터 썸네일: 사진 한 장을 칸에 채우고 보정만 입힌다
+  function swatch(canvas, p, t) {
+    var ctx = canvas.getContext('2d'), w = canvas.width, h = canvas.height, o = Object.assign({ bright: 0, warm: 0, sat: 0, fade: 0 }, t);
+    ctx.clearRect(0, 0, w, h); cover(ctx, p.img, 0, 0, w, h, p.adj); tone(ctx, 0, 0, w, h, o);
+  }
+
+  global.TechaFrame = { swatch: swatch, SAFE: SAFE, W: W, H: H, templates: T.map(function (t) { return { id: t.id, name: t.name, photos: t.photos }; }), squares: Q.map(function (t) { return { id: t.id, name: t.name, photos: t.photos }; }), render: render, loadFonts: loadFonts };
 })(window);

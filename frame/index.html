@@ -117,6 +117,33 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 .btn.sub{background:#fff;border:1px solid var(--hair);color:var(--ink)}
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;white-space:nowrap}
 .toast.show{opacity:1}
+.vtabs{display:flex;background:#efe9df;border-radius:12px;padding:4px;gap:4px}
+.vtabs button{flex:1;border:0;background:none;border-radius:9px;padding:10px 4px;font:700 14px Pretendard;color:var(--muted);cursor:pointer}
+.vtabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(58,50,43,.12)}
+.vtabs button:disabled{opacity:.4}
+.film{position:relative;height:58px;display:flex;border-radius:10px;overflow:hidden;touch-action:none;cursor:pointer;background:#2b2622}
+.film img{flex:1;min-width:0;height:100%;object-fit:cover;display:block;pointer-events:none}
+.film .win{position:absolute;top:0;bottom:0;border:3px solid var(--amber);border-radius:10px;box-shadow:0 0 0 999px rgba(20,16,13,.55);pointer-events:none}
+.lens{display:flex;gap:6px}
+.lens button{border:1px solid var(--hair);background:#fff;border-radius:999px;padding:6px 12px;font:600 13px Pretendard;color:var(--body);cursor:pointer}
+.lens button.on{background:var(--amber-soft,#fbeecf);border-color:var(--amber);color:var(--ink)}
+.lens button:disabled{opacity:.35}
+.frames{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;max-height:34vh;overflow-y:auto}
+.frames button{position:relative;padding:0;border:3px solid transparent;border-radius:9px;overflow:hidden;background:#2b2622;cursor:pointer}
+.frames button.on{border-color:var(--amber)}
+.frames img{width:100%;aspect-ratio:var(--va,9/16);object-fit:cover;display:block}
+.frames b{position:absolute;right:4px;top:4px;min-width:22px;height:22px;border-radius:11px;background:var(--amber);color:var(--amber-ink);font:700 12px/22px Pretendard;text-align:center}
+.frames button:not(.on) b{display:none}
+.frames i{position:absolute;left:4px;bottom:4px;background:rgba(20,16,13,.7);color:#fff;font:600 10px Pretendard;font-style:normal;border-radius:5px;padding:1px 5px}
+.vs details{font-size:13px;color:var(--muted)}
+.vs details summary{cursor:pointer;padding:6px 0}
+.filters{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px}
+.filters button{flex:0 0 64px;padding:0;border:0;background:none;cursor:pointer;font:500 12px Pretendard;color:var(--body);text-align:center}
+.filters canvas{width:64px;height:64px;border-radius:12px;display:block;border:2px solid transparent;background:#eee8de}
+.filters button.on canvas{border-color:var(--blue)}
+.filters button.on span{color:var(--ink);font-weight:700}
+.filters span{display:block;margin-top:4px}
+#fine summary{cursor:pointer;font-size:14px;font-weight:600;color:var(--ink);padding:10px 0 2px}
 .rprev{display:flex;justify-content:center}
 .rprev video,.rprev img{max-height:46vh;max-width:min(320px,80vw);border-radius:12px;box-shadow:0 8px 24px rgba(58,50,43,.2);background:#eee8de}
 .thumbs .full{width:64px;height:64px;border:1.5px dashed var(--hair);border-radius:10px;background:#f4efe6;color:var(--muted);font:600 11px/1.35 Pretendard;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px}
@@ -159,7 +186,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     <p class="samplenote">마음에 드는 예시를 누르면 그 틀로 시작해요 · 틀은 모두 15가지</p>
     <ol class="steps">
       <li><b>1</b><div>사진·동영상 고르기<small>사진은 8장까지, 찍은 동영상도 한 편(최대 8초)</small></div></li>
-      <li><b>2</b><div>틀과 글귀 고르기<small>어울리는 문구도 골라 드려요</small></div></li>
+      <li><b>2</b><div>틀과 문구 고르기<small>어울리는 문구도 골라 드려요</small></div></li>
       <li><b>3</b><div>저장하거나 바로 올리기<small>사진 · 움직이는 영상 · GIF 중에서</small></div></li>
     </ol>
     <p class="safe"><span aria-hidden="true">🔒</span><span>사진은 이 휴대폰 안에서만 꾸며져요. 테차를 포함해 어디에도 저장되거나 올라가지 않아요.</span></p>
@@ -181,14 +208,14 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 
     <div class="controls">
     <div class="ptabs" role="tablist">
-      <button type="button" data-p="pText" class="on">글귀</button>
+      <button type="button" data-p="pText" class="on">문구</button>
       <button type="button" data-p="pPhoto">사진</button>
       <button type="button" data-p="pTone">보정</button>
     </div>
 
     <div class="panels">
     <div class="panel" id="pText">
-      <label for="txt"><span id="capLabel">글귀</span> <span id="cnt" style="font-weight:400;color:var(--muted);font-size:13px">0/60 · 20자 안팎이 가장 예뻐요</span></label>
+      <label for="txt"><span id="capLabel">문구</span> <span id="cnt" style="font-weight:400;color:var(--muted);font-size:13px">0/60 · 20자 안팎이 가장 예뻐요</span></label>
       <textarea id="txt" maxlength="60" placeholder="오늘, 꽃이 도착했어요"></textarea>
       <div id="moreCaps" class="hidden">
         <input id="cap2" class="capin" type="text" maxlength="40" placeholder="문구 2 (선택)">
@@ -197,7 +224,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
       </div>
       <button type="button" class="pickbtn" id="pickPhrase">어울리는 문구 고르기</button>
       <div class="picker hidden" id="picker">
-        <div class="tabs"><button type="button" data-src="mine" class="on">받은 사람의 한마디</button><button type="button" data-src="card">카드 문구</button></div>
+        <div class="tabs"><button type="button" data-src="mine" class="on">추천 문구</button><button type="button" data-src="card">카드 문구</button></div>
         <select id="occ" aria-label="상황 고르기"></select>
         <div class="plist" id="plist"></div>
         <p class="note" id="pickNote">누르면 지금 고른 칸에 들어가요.</p>
@@ -220,8 +247,12 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     </div>
 
     <div class="panel hidden" id="pTone">
+      <label>필터 <span style="font-weight:400;color:var(--muted);font-size:13px">누르면 바로 바뀌어요</span></label>
+      <div class="filters" id="filters"></div>
+      <details id="fine"><summary>직접 조정</summary>
       <label for="bright">밝기</label><input id="bright" type="range" min="-1" max="1" step="0.05" value="0">
       <label for="warm">따뜻함</label><input id="warm" type="range" min="-1" max="1" step="0.05" value="0">
+      </details>
       <div class="toggle"><input id="mk" type="checkbox" checked><label for="mk" style="margin:0;font-weight:500">테차 표시 넣기</label></div>
     </div>
     </div>
@@ -243,14 +274,25 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
   <p class="note" style="max-width:300px;text-align:center">'공유하기'를 누르면 휴대폰 공유창이 열려요. 인스타그램이나 카카오톡을 고르면 바로 올릴 수 있고, 아이폰은 '이미지 저장'·'비디오 저장'을 누르면 사진첩에 들어가요.</p>
   <button type="button" id="rClose" style="border:0;background:none;color:var(--muted);font:500 14px Pretendard;margin-top:4px;padding:8px">닫기</button></div>
 <div class="busy hidden" id="vsheet"><div class="vs">
-  <h3>동영상에서 고르기</h3>
+  <h3>동영상으로 무엇을 할까요?</h3>
+  <div class="vtabs"><button type="button" data-vt="clip" class="on" id="vtClipBtn">영상 그대로 넣기</button><button type="button" data-vt="still">장면을 사진으로</button></div>
   <video id="vsv" playsinline muted preload="auto"></video>
-  <div class="pos"><span>시작 위치</span><span id="vsPos">0:00 ~ 0:08</span></div>
-  <input type="range" id="vsRange" min="0" max="0" step="0.05" value="0" aria-label="시작 위치">
-  <button class="btn sub" id="vsPlay" type="button">▶ 여기부터 미리 보기</button>
-  <button class="btn cta" id="vsClip" type="button">영상 그대로 넣기 (최대 8초 · 소리 포함)</button>
-  <button class="btn sub" id="vsStill" type="button">지금 장면을 사진으로 넣기</button>
-  <p class="note">일부 휴대폰(오래된 기종이나 일부 안드로이드)에서는 영상 넣기·영상 만들기가 어려울 수 있어요. 안 될 때는 '지금 장면을 사진으로 넣기'를 써 주세요.</p>
+  <div id="vtClip">
+    <div class="film" id="vsFilm" aria-label="넣을 구간 고르기"><div class="win" id="vsWin"></div></div>
+    <div class="pos" style="margin-top:8px"><span id="vsPos">0:00 ~ 0:08</span><span class="lens" id="vsLens"><button type="button" data-l="3">3초</button><button type="button" data-l="5">5초</button><button type="button" data-l="8" class="on">8초</button></span></div>
+    <p class="note" id="vsClipNote" style="text-align:left;margin-top:6px">장면 띠를 누르거나 끌어서 넣을 구간을 고르세요. 고른 구간이 위에서 반복 재생돼요.</p>
+    <button class="btn cta" id="vsClip" type="button" style="margin-top:8px">이 구간 넣기 (소리 포함)</button>
+  </div>
+  <div id="vtStill" class="hidden">
+    <p class="note" id="vsPickNote" style="text-align:left;margin:0 0 6px">넣을 장면을 눌러 고르세요</p>
+    <div class="frames" id="vsFrames"></div>
+    <details><summary>원하는 장면이 없나요? 직접 찾기</summary>
+      <input type="range" id="vsRange" min="0" max="0" step="0.05" value="0" aria-label="장면 찾기">
+      <button class="btn sub" id="vsAddNow" type="button">지금 장면 추가</button>
+    </details>
+    <button class="btn cta" id="vsStill" type="button" style="margin-top:8px">장면을 골라 주세요</button>
+  </div>
+  <p class="note">일부 휴대폰(오래된 기종이나 일부 안드로이드)에서는 영상 넣기·영상 만들기가 어려울 수 있어요. 안 될 때는 '장면을 사진으로'를 써 주세요.</p>
   <button type="button" id="vsClose" style="border:0;background:none;color:var(--muted);font:500 14px Pretendard;padding:8px">닫기</button>
 </div></div>
 <div class="busy hidden" id="busy"><div id="busyMsg">만드는 중…</div><div class="track"><div class="fill" id="busyFill"></div></div></div>
@@ -259,7 +301,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 <script>
 (function(){
   var $ = function(id){return document.getElementById(id)};
-  var S = {photos:[], tpl:'gallery', sel:0, logo:null};
+  var S = {photos:[], tpl:'gallery', sel:0, logo:null, tone:{k:'orig', s:0, f:0}};
   var Q = {}; new URLSearchParams(location.search).forEach(function(v, k){ Q[k] = v; });
   if (Q.tpl && TechaFrame.templates.some(function(t){ return t.id === Q.tpl; })) S.tpl = Q.tpl;
   var today = new Date();
@@ -287,7 +329,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     var d = $('recv').value ? new Date($('recv').value+'T00:00:00') : today;
     var caps = still() ? [] : [$('txt').value, $('cap2').value, $('cap3').value];
     return {photos:S.photos, text:$('txt').value, caps:caps, from:$('from').value.trim(), received:d, today:today,
-      mark:$('mk').checked, logo:S.logo, bright:+$('bright').value, warm:+$('warm').value};
+      mark:$('mk').checked, logo:S.logo, bright:+$('bright').value, warm:+$('warm').value, sat:S.tone.s, fade:S.tone.f};
   }
 
   /* ---------- 문구 고르기: 받은 사람의 한마디(frame-phrases.json) · 카드 문구(data/message-phrases.json) ---------- */
@@ -429,7 +471,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     [].forEach.call($('kind').children, function(x){ x.classList.toggle('on', x.dataset.k === k); });
     $('kindNote').textContent = NOTE[k]; $('saveBtn').textContent = SAVE[k];
     $('motion').classList.toggle('hidden', k !== 'video' && k !== 'gif');
-    $('moreCaps').classList.toggle('hidden', still()); $('capLabel').textContent = still() ? '글귀' : '문구 1';
+    $('moreCaps').classList.toggle('hidden', still()); $('capLabel').textContent = still() ? '문구' : '문구 1';
     if (!$('picker').classList.contains('hidden')) buildList();
     draw();
   }
@@ -467,9 +509,51 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
   $('pickBtn').onclick = function(){ S.adding = false; $('file').click(); };
   [].forEach.call(document.querySelectorAll('.samples [data-tpl]'), function(b){ b.onclick = function(){ S.tpl = b.dataset.tpl; S.adding = false; $('file').click(); }; });
   $('pickBtn2').onclick = function(){ S.adding = false; $('file').click(); };
-  // 아래 탭: 글귀 · 사진 · 보정 — 한 번에 하나만 보인다
+  /* ---------- 보정: 필터(한 번 누르기) + 직접 조정 ---------- */
+  S.tone = {k: 'orig', s: 0, f: 0};
+  var PRESETS = [
+    {k: 'orig', n: '원본', b: 0, w: 0, s: 0, f: 0},
+    {k: 'auto', n: '자동'},
+    {k: 'bright', n: '화사하게', b: 0.5, w: 0.12, s: 0, f: 0},
+    {k: 'warm', n: '따뜻하게', b: 0.12, w: 0.8, s: 0, f: 0},
+    {k: 'calm', n: '차분하게', b: 0, w: -0.35, s: 0.5, f: 0.08},
+    {k: 'film', n: '필름', b: 0.1, w: 0.45, s: 0.35, f: 0.3},
+    {k: 'mono', n: '흑백', b: 0.08, w: 0, s: 1, f: 0.05}
+  ];
+  // 자동: 첫 사진의 평균 밝기를 재서 어두우면 밝히고 밝으면 살짝 낮춘다
+  function autoTone(){
+    var p = S.photos[0]; if (!p) return {b: 0, w: 0, s: 0, f: 0};
+    var c = document.createElement('canvas'); c.width = c.height = 24; var x = c.getContext('2d');
+    try { x.drawImage(p.img, 0, 0, 24, 24); var d = x.getImageData(0, 0, 24, 24).data, sum = 0;
+      for (var i = 0; i < d.length; i += 4) sum += (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255;
+      var mean = sum / (d.length / 4); return {b: Math.max(-0.25, Math.min(0.45, (0.56 - mean) * 1.6)), w: 0.06, s: 0, f: 0};
+    } catch (e) { return {b: 0.1, w: 0.06, s: 0, f: 0}; }
+  }
+  function applyPreset(p){
+    var v = p.k === 'auto' ? autoTone() : p;
+    $('bright').value = v.b; $('warm').value = v.w; S.tone = {k: p.k, s: v.s, f: v.f};
+    markFilter(); draw();
+  }
+  function markFilter(){ [].forEach.call($('filters').children, function(b){ b.classList.toggle('on', b.dataset.k === S.tone.k); }); }
+  function buildFilters(){
+    var box = $('filters'); box.innerHTML = '';
+    PRESETS.forEach(function(p){
+      var b = document.createElement('button'); b.type = 'button'; b.dataset.k = p.k;
+      var c = document.createElement('canvas'); c.width = c.height = 128;
+      var v = p.k === 'auto' ? autoTone() : p;
+      if (S.photos[0]) TechaFrame.swatch(c, S.photos[0], {bright: v.b, warm: v.w, sat: v.s, fade: v.f});
+      var sp = document.createElement('span'); sp.textContent = p.n;
+      b.appendChild(c); b.appendChild(sp); b.onclick = function(){ applyPreset(p); };
+      box.appendChild(b);
+    });
+    markFilter();
+  }
+  ['bright','warm'].forEach(function(id){ $(id).addEventListener('input', function(){ S.tone.k = 'custom'; markFilter(); }); });
+
+  // 아래 탭: 문구 · 사진 · 보정 — 한 번에 하나만 보인다
   [].forEach.call(document.querySelectorAll('.ptabs button'), function(b){ b.onclick = function(){
     [].forEach.call(document.querySelectorAll('.ptabs button'), function(x){ x.classList.toggle('on', x === b); $(x.dataset.p).classList.toggle('hidden', x !== b); });
+    if (b.dataset.p === 'pTone') buildFilters();
   }; });
   async function usePhotos(srcs, add){
     var room = add ? MAXP - S.photos.length : MAXP;
@@ -513,38 +597,108 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     c.width = Math.round(w * k); c.height = Math.round(h * k); c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
     return c.toDataURL('image/jpeg', 0.9);
   }
-  var VS = {file: null, url: ''};
-  function vsLen(){ var v = $('vsv'); return Math.min(CLIP_MAX, Math.max(0.5, (v.duration || 0) - (+$('vsRange').value))); }
-  function vsLabel(){ var st = +$('vsRange').value; $('vsPos').textContent = mmss(st) + ' ~ ' + mmss(st + vsLen()); }
+  var VS = {file: null, url: '', dur: 0, start: 0, len: CLIP_MAX, frames: [], picked: [], vt: 'clip', fv: null};
+  function canClip(){ return !!(VIDEO_MIME || typeof VideoEncoder !== 'undefined'); }
+  function vsWin(){
+    var d = VS.dur || 1; $('vsWin').style.left = (VS.start / d * 100) + '%'; $('vsWin').style.width = (VS.len / d * 100) + '%';
+    $('vsPos').textContent = mmss(VS.start) + ' ~ ' + mmss(VS.start + VS.len) + ' (' + Math.round(VS.len) + '초)';
+  }
+  function setVt(t){
+    VS.vt = t;
+    [].forEach.call(document.querySelectorAll('.vtabs button'), function(b){ b.classList.toggle('on', b.dataset.vt === t); });
+    $('vtClip').classList.toggle('hidden', t !== 'clip'); $('vtStill').classList.toggle('hidden', t !== 'still');
+    var v = $('vsv');
+    if (t === 'clip') { v.currentTime = VS.start; v.play().catch(function(){}); } else v.pause();
+  }
+  [].forEach.call(document.querySelectorAll('.vtabs button'), function(b){ b.onclick = function(){ setVt(b.dataset.vt); }; });
+  // 고른 구간만 반복 재생
+  $('vsv').addEventListener('timeupdate', function(){ var v = $('vsv'); if (VS.vt === 'clip' && (v.currentTime >= VS.start + VS.len - 0.05 || v.currentTime < VS.start - 0.3)) v.currentTime = VS.start; });
+  // 장면 띠: 누르거나 끌면 그 자리가 구간 가운데가 된다
+  (function(){
+    var f = $('vsFilm'), on = false;
+    function at(e){ var r = f.getBoundingClientRect(), x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      VS.start = Math.min(Math.max(0, x * VS.dur - VS.len / 2), Math.max(0, VS.dur - VS.len)); vsWin(); $('vsv').currentTime = VS.start; }
+    f.addEventListener('pointerdown', function(e){ if (VS.dur <= VS.len) return; on = true; f.setPointerCapture(e.pointerId); at(e); });
+    f.addEventListener('pointermove', function(e){ if (on) at(e); });
+    ['pointerup','pointercancel'].forEach(function(n){ f.addEventListener(n, function(){ on = false; $('vsv').play().catch(function(){}); }); });
+  })();
+  [].forEach.call(document.querySelectorAll('#vsLens button'), function(b){ b.onclick = function(){
+    VS.len = Math.min(+b.dataset.l, VS.dur); VS.start = Math.min(VS.start, Math.max(0, VS.dur - VS.len));
+    [].forEach.call(document.querySelectorAll('#vsLens button'), function(x){ x.classList.toggle('on', x === b); }); vsWin(); $('vsv').currentTime = VS.start;
+  }; });
+  // 장면 12개를 고르게 뽑아 띠·격자에 쓴다 (작게 — 넣을 때 큰 그림으로 다시 뽑는다)
+  async function makeFrames(){
+    var fv = VS.fv = document.createElement('video'); fv.src = VS.url; fv.muted = true; fv.playsInline = true; fv.setAttribute('playsinline', ''); fv.preload = 'auto';
+    await once(fv, 'loadeddata');
+    VS.frames = [];
+    for (var i = 0; i < 12; i++) { var t = (i + 0.5) * VS.dur / 12; await seekTo(fv, t); VS.frames.push({t: t, url: frameURL(fv, 260)}); }
+  }
+  function room(){ return MAXP - S.photos.length; }
+  function renderFrames(){
+    var g = $('vsFrames'); g.innerHTML = '';
+    VS.frames.forEach(function(fr, idx){
+      var b = document.createElement('button'); b.type = 'button';
+      b.innerHTML = '<img alt=""><b></b><i></i>'; b.querySelector('img').src = fr.url; b.querySelector('i').textContent = mmss(fr.t) + (fr.own ? ' · 직접' : '');
+      var k = VS.picked.indexOf(idx); if (k >= 0) { b.classList.add('on'); b.querySelector('b').textContent = k + 1; }
+      b.onclick = function(){
+        var j = VS.picked.indexOf(idx);
+        if (j >= 0) VS.picked.splice(j, 1);
+        else if (VS.picked.length >= room()) { dialog('사진은 ' + MAXP + '장까지예요', '지금 ' + room() + '장을 더 넣을 수 있어요. 다른 장면을 빼고 골라 주세요.'); return; }
+        else VS.picked.push(idx);
+        renderFrames();
+      };
+      g.appendChild(b);
+    });
+    var n = VS.picked.length;
+    $('vsPickNote').textContent = '넣을 장면을 눌러 고르세요 · 고른 순서대로 들어가요 · 남은 자리 ' + (room() - n) + '장';
+    $('vsStill').textContent = n ? '고른 ' + n + '장 넣기' : '장면을 골라 주세요'; $('vsStill').disabled = !n;
+  }
   async function openVideo(file){
     if (VS.url) URL.revokeObjectURL(VS.url);
-    VS.file = file; VS.url = URL.createObjectURL(file);
+    VS.file = file; VS.url = URL.createObjectURL(file); VS.picked = []; VS.frames = [];
     var v = $('vsv'); v.src = VS.url; $('vsheet').classList.remove('hidden');
-    $('vsClip').disabled = !(VIDEO_MIME || typeof VideoEncoder !== 'undefined');
+    $('vsPickNote').textContent = '장면을 고르는 중이에요…'; $('vsFrames').innerHTML = ''; $('vsStill').disabled = true;
     try { await once(v, 'loadedmetadata'); } catch (e) {}
     if (!v.duration || !isFinite(v.duration) || !v.videoWidth) { $('vsheet').classList.add('hidden'); toast('이 동영상은 열 수 없어요. 사진으로 해 주세요'); return; }
-    $('vsRange').max = Math.max(0, v.duration - 0.5).toFixed(2); $('vsRange').value = 0; vsLabel();
-    await seekTo(v, 0.05);
+    VS.dur = v.duration; VS.start = 0; VS.len = Math.min(CLIP_MAX, VS.dur);
+    $('vsFrames').style.setProperty('--va', v.videoWidth + '/' + v.videoHeight);
+    $('vsRange').max = VS.dur.toFixed(2); $('vsRange').value = 0;
+    // 8초 이하 영상은 고를 것 없이 전체
+    var short = VS.dur <= CLIP_MAX + 0.05;
+    $('vsLens').classList.toggle('hidden', short);
+    $('vsClipNote').textContent = short ? '영상이 ' + Math.round(VS.dur) + '초라 전체를 그대로 넣어요.' : '장면 띠를 누르거나 끌어서 넣을 구간을 고르세요. 고른 구간이 위에서 반복 재생돼요.';
+    [].forEach.call(document.querySelectorAll('#vsLens button'), function(x){ x.disabled = +x.dataset.l > VS.dur + 0.5; x.classList.toggle('on', +x.dataset.l === CLIP_MAX); });
+    $('vtClipBtn').disabled = !canClip();
+    vsWin();
+    setVt(canClip() ? 'clip' : 'still');
+    try { await makeFrames(); } catch (e) {}
+    var film = $('vsFilm'); [].slice.call(film.querySelectorAll('img')).forEach(function(i){ i.remove(); });
+    VS.frames.forEach(function(fr){ var im = document.createElement('img'); im.src = fr.url; im.alt = ''; film.insertBefore(im, $('vsWin')); });
+    renderFrames();
   }
-  $('vsRange').addEventListener('input', function(){ var v = $('vsv'); v.pause(); v.currentTime = +$('vsRange').value; vsLabel(); });
-  $('vsPlay').onclick = function(){
-    var v = $('vsv'), st = +$('vsRange').value, end = st + vsLen();
-    v.currentTime = st; v.play().catch(function(){});
-    function stop(){ if (v.currentTime >= end || v.paused) { v.pause(); v.removeEventListener('timeupdate', stop); } }
-    v.addEventListener('timeupdate', stop);
+  $('vsRange').addEventListener('input', function(){ var v = $('vsv'); v.pause(); v.currentTime = +$('vsRange').value; });
+  $('vsAddNow').onclick = function(){
+    var v = $('vsv'); v.pause();
+    if (VS.picked.length >= room()) { dialog('사진은 ' + MAXP + '장까지예요', '다른 장면을 빼고 추가해 주세요.'); return; }
+    VS.frames.push({t: v.currentTime, url: frameURL(v, 260), own: true}); VS.picked.push(VS.frames.length - 1); renderFrames();
+    toast(mmss(v.currentTime) + ' 장면을 골랐어요');
   };
   $('vsClose').onclick = function(){ $('vsv').pause(); $('vsheet').classList.add('hidden'); };
   $('vsStill').onclick = async function(){
-    var v = $('vsv'); v.pause();
-    if (S.photos.length >= MAXP) { dialog('사진은 ' + MAXP + '장까지예요', '사진 칸에서 하나를 빼고(×) 다시 넣어 주세요.'); return; }
-    var url = frameURL(v, 2000);
-    await usePhotos([url], S.photos.length > 0);
-    toast('이 장면을 사진으로 넣었어요. 다른 장면도 고를 수 있어요');
+    if (!VS.picked.length) return;
+    busy(true, '장면을 넣는 중…', 0);
+    var urls = [];
+    try {
+      for (var i = 0; i < VS.picked.length; i++) { await seekTo(VS.fv, VS.frames[VS.picked[i]].t); urls.push(frameURL(VS.fv, 2000)); busy(true, '장면을 넣는 중…', (i + 1) / VS.picked.length); }
+    } finally { busy(false); }
+    $('vsv').pause(); $('vsheet').classList.add('hidden');
+    await usePhotos(urls, S.photos.length > 0);
+    toast(urls.length + '장을 사진으로 넣었어요');
   };
   function dropClip(){ if (S.clip) { try { S.clip.el.pause(); } catch (e) {} S.clip = null; } }
   $('vsClip').onclick = async function(){
     var v = $('vsv'); v.pause();
-    var st = +$('vsRange').value, len = vsLen();
+    var st = VS.start, len = VS.len;
     var pv = document.createElement('video'); pv.src = VS.url; pv.muted = true; pv.playsInline = true; pv.setAttribute('playsinline', ''); pv.preload = 'auto';
     try { await once(pv, 'loadeddata'); } catch (e) {}
     await seekTo(pv, st);
@@ -558,7 +712,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     if ($('s2').classList.contains('hidden')) enterEditor(); else photosChanged();
     pv.play().catch(function(){});
     if (!$('kVideo').classList.contains('hidden')) setKind('video');
-    toast('영상을 넣었어요. 틀 안에서 재생돼요');
+    toast(Math.round(len) + '초 영상을 넣었어요. 틀 안에서 재생돼요');
   };
   // 미리보기용 영상은 고른 구간만 반복
   function clipLoop(){ var c = S.clip; if (!c) return; var v = c.el; if (v.currentTime >= c.start + c.len || v.currentTime < c.start - 0.2) v.currentTime = c.start; if (v.paused) v.play().catch(function(){}); }
@@ -814,7 +968,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 
   // 같은 설정으로 저장·나누기를 연달아 누르면 다시 만들지 않는다
   var made = {key: '', blob: null};
-  function stateKey(){ var o = opts(); return JSON.stringify([S.tpl, S.kind, o.text, o.caps, o.from, $('recv').value, o.mark, o.bright, o.warm, S.photos.map(function(p){ return [String(p.img.src).slice(-40), p.adj]; }), S.clip ? [S.clip.start, S.clip.len] : 0, S.clip && still() ? S.clip.el.currentTime : 0]); }
+  function stateKey(){ var o = opts(); return JSON.stringify([S.tpl, S.kind, o.text, o.caps, o.from, $('recv').value, o.mark, o.bright, o.warm, o.sat, o.fade, S.photos.map(function(p){ return [String(p.img.src).slice(-40), p.adj]; }), S.clip ? [S.clip.start, S.clip.len] : 0, S.clip && still() ? S.clip.el.currentTime : 0]); }
   async function make(){
     var k = stateKey(); if (made.key === k && made.blob) return made.blob;
     await TechaFrame.loadFonts(textNow());
@@ -864,7 +1018,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     if (el.play) el.play().catch(function(){});
   }
 
-  // 고마움 전하기 모드: 보낸 분께 보낼 사진 — 글귀·틀·버튼 이름을 맞춘다
+  // 고마움 전하기 모드: 보낸 분께 보낼 사진 — 문구·틀·버튼 이름을 맞춘다
   if (Q.mode === 'thanks') {
     if (!Q.tpl) S.tpl = 'polaroid';
     $('txt').value = '보내 준 꽃, 잘 받았어요. 고마워요'; $('cnt').textContent = $('txt').value.length + '/60 · 20자 안팎이 가장 예뻐요';
@@ -880,7 +1034,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     document.querySelector('#s1 h1').innerHTML = '건넨 순간을<br>예쁘게 남겨 보세요';
     document.querySelector('#s1 .eyebrow').textContent = '선물하신 날의 사진으로';
     document.querySelector('#s1 .lead').textContent = '받는 분의 표정과 꽃을 담은 사진을 고르면 틀 15가지가 입혀져요. 여러 장이면 움직이는 영상으로도 만들 수 있어요.';
-    src = 'card'; [].forEach.call(document.querySelectorAll('.tabs button'), function(x){ x.classList.toggle('on', x.dataset.src === 'card'); });
+    S.phraseGroup = 'gave';
   }
   if (Q.kind && /^(photo|video|gif|square)$/.test(Q.kind)) setTimeout(function(){ if (Q.kind !== 'video' || !$('kVideo').classList.contains('hidden')) setKind(Q.kind); }, 0);
 
@@ -901,7 +1055,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     track('frame_inapp', {app: kakao ? 'kakao' : naver ? 'naver' : insta ? 'instagram' : fb ? 'facebook' : band ? 'band' : 'line'});
   })();
 
-  // GA4 (사이트 공통 측정 ID). 사진·글귀는 보내지 않는다 — 틀·형태·장수만.
+  // GA4 (사이트 공통 측정 ID). 사진·문구는 보내지 않는다 — 틀·형태·장수만.
   (function(){
     var id = 'G-SEQ155EHQ7'; window.dataLayer = window.dataLayer || [];
     window.gtag = function(){ window.dataLayer.push(arguments); };
