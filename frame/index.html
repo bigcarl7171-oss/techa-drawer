@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<title>받은 꽃 사진 꾸미기 · 테차 꽃공방</title>
+<meta name="description" content="테차 꽃을 받으셨나요? 사진을 고르면 고급스러운 틀 15가지로 꾸며 바로 저장하고 나눌 수 있어요. 사진은 휴대폰 밖으로 나가지 않아요.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap">
+<style>
+:root{--blue:#6E82A6;--blue-soft:#eef1f6;--amber:#EFB054;--amber-ink:#4a3410;--canvas:#FAF7F1;--card:#fffdf9;--ink:#3A322B;--body:#4a4137;--muted:#857c70;--hair:#e7e1d6;--green:#7C8B6F}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--canvas);color:var(--body);font-family:Pretendard,-apple-system,sans-serif;-webkit-text-size-adjust:100%}
+.wrap{max-width:560px;margin:0 auto;padding:20px 16px 120px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+header img{height:26px;display:block}
+header span{font-size:13px;color:var(--muted)}
+h1{font-family:'Gowun Batang',serif;font-size:26px;line-height:1.35;color:var(--ink);margin:6px 0 8px}
+.lead{font-size:15px;line-height:1.6;margin:0 0 18px}
+.note{font-size:13px;color:var(--muted);line-height:1.55}
+.note a{color:var(--blue);text-underline-offset:2px}
+.card{background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:16px;margin-bottom:16px}
+.step{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.04em;margin-bottom:8px}
+.pick{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;border:1.5px dashed #cfc6b8;border-radius:12px;background:#fff;color:var(--ink);font:600 16px Pretendard,sans-serif;cursor:pointer}
+.thumbs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.thumbs button{position:relative;width:64px;height:64px;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;background:#eee;cursor:pointer}
+.thumbs button.on{border-color:var(--blue)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs i{position:absolute;left:4px;top:4px;background:rgba(58,50,43,.75);color:#fff;font:700 11px Pretendard;border-radius:6px;padding:1px 5px;font-style:normal}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+canvas{max-width:100%;height:auto}
+.card,.wrap{min-width:0;overflow:hidden}
+.grid button{padding:0;border:2px solid transparent;border-radius:10px;background:none;cursor:pointer;text-align:center;color:var(--body);font:500 12px Pretendard}
+.grid button.on{border-color:var(--blue)}
+.grid canvas{width:100%;aspect-ratio:9/16;display:block;border-radius:8px;background:#eee8de}
+.grid span{display:block;padding:5px 0 4px}
+.preview{position:relative;touch-action:none}
+.preview canvas{width:100%;aspect-ratio:9/16;display:block;border-radius:10px;box-shadow:0 8px 28px rgba(58,50,43,.18);background:#eee8de}
+.hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);background:rgba(58,50,43,.7);color:#fff;font-size:12px;padding:4px 10px;border-radius:999px;pointer-events:none}
+label{display:block;font-size:14px;font-weight:600;color:var(--ink);margin:14px 0 6px}
+textarea,input[type=text],input[type=date]{width:100%;padding:12px;border:1px solid var(--hair);border-radius:10px;background:#fff;font:16px Pretendard,sans-serif;color:var(--ink)}
+textarea{resize:vertical;min-height:76px}
+.row{display:flex;gap:12px}.row>div{flex:1}
+input[type=range]{width:100%;accent-color:var(--blue)}
+.toggle{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:14px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{border:1px solid var(--hair);background:#fff;border-radius:999px;padding:6px 12px;font:500 13px Pretendard;color:var(--body);cursor:pointer}
+.chips button.on{background:var(--blue-soft);border-color:var(--blue);color:var(--ink)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(250,247,241,.96);border-top:1px solid var(--hair);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.bar .in{max-width:560px;margin:0 auto;display:flex;gap:10px}
+.btn{flex:1;padding:15px;border:0;border-radius:10px;font:700 16px Pretendard,sans-serif;cursor:pointer}
+.btn.cta{background:var(--amber);color:var(--amber-ink)}
+.btn.sub{background:#fff;border:1px solid var(--hair);color:var(--ink)}
+.btn:disabled{opacity:.45}
+.hidden{display:none !important}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.pickbtn{margin-top:8px;border:1px solid var(--blue);background:var(--blue-soft);color:var(--ink);border-radius:999px;padding:8px 14px;font:600 14px Pretendard;cursor:pointer}
+.picker{margin-top:10px;border:1px solid var(--hair);border-radius:12px;background:#fff;padding:12px}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tabs button{flex:1;border:1px solid var(--hair);background:#fff;border-radius:10px;padding:9px 6px;font:600 13px Pretendard;color:var(--body);cursor:pointer}
+.tabs button.on{background:var(--blue-soft);border-color:var(--blue);color:var(--ink)}
+.picker select{width:100%;padding:10px;border:1px solid var(--hair);border-radius:10px;font:15px Pretendard;background:#fff;color:var(--ink);margin-bottom:10px}
+.plist{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow:auto}
+.plist button{text-align:left;border:1px solid var(--hair);background:var(--card);border-radius:10px;padding:10px 12px;font:15px/1.45 Pretendard;color:var(--ink);cursor:pointer}
+.plist button.flow{background:#fbf6ea;border-color:#f0dca8}
+.plist .sub{font-size:12px;color:var(--muted);margin:6px 2px 2px}
+.capin{margin-top:8px}
+.busy{position:fixed;inset:0;background:rgba(250,247,241,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font:600 16px Pretendard;color:var(--ink);z-index:9}
+.busy .track{width:220px;height:6px;border-radius:3px;background:var(--hair);overflow:hidden}
+.busy .fill{height:100%;width:0;background:var(--blue);transition:width .15s}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="83" height="26"><span>받은 꽃 사진 꾸미기</span></header>
+  <h1>받은 꽃, 더 예쁘게 남겨 보세요</h1>
+  <p class="lead">사진을 고르면 틀 15가지가 바로 입혀져요. 사진은 이 휴대폰 안에서만 꾸며지고, 어디에도 올라가지 않아요.</p>
+
+  <section class="card" id="s1">
+    <div class="step">1. 사진 고르기 (최대 4장)</div>
+    <input id="file" type="file" accept="image/*" multiple class="hidden">
+    <button class="pick" id="pickBtn" type="button">사진 고르기</button>
+    <div class="thumbs" id="thumbs"></div>
+    <p class="note" id="thumbNote"></p>
+  </section>
+
+  <section class="card hidden" id="s2">
+    <div class="step">2. 틀 고르기</div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="card hidden" id="s3">
+    <div class="step">3. 다듬기</div>
+    <div class="preview" id="pv"><canvas id="main"></canvas><div class="hint" id="hint">사진을 끌어서 위치를 옮길 수 있어요</div></div>
+    <label for="txt"><span id="capLabel">글귀</span> <span id="cnt" style="font-weight:400;color:var(--muted);font-size:13px">0/60 · 20자 안팎이 가장 예뻐요</span></label>
+    <textarea id="txt" maxlength="60" placeholder="오늘, 꽃이 도착했어요"></textarea>
+    <div id="moreCaps" class="hidden">
+      <input id="cap2" class="capin" type="text" maxlength="40" placeholder="문구 2 (선택)">
+      <input id="cap3" class="capin" type="text" maxlength="40" placeholder="문구 3 (선택)">
+      <p class="note">영상·GIF에서는 문구가 차례로 하나씩 나와요. 하나만 쓰면 계속 보여요.</p>
+    </div>
+    <button type="button" class="pickbtn" id="pickPhrase">문구 고르기</button>
+    <div class="picker hidden" id="picker">
+      <div class="tabs"><button type="button" data-src="mine" class="on">받은 사람의 한마디</button><button type="button" data-src="card">카드 문구</button></div>
+      <select id="occ" aria-label="상황 고르기"></select>
+      <div class="plist" id="plist"></div>
+      <p class="note" id="pickNote">누르면 지금 고른 칸에 들어가요.</p>
+    </div>
+    <div class="row">
+      <div><label for="from">보낸 사람 (선택)</label><input id="from" type="text" maxlength="12" placeholder="예: 지수"></div>
+      <div><label for="recv">꽃을 받은 날</label><input id="recv" type="date"></div>
+    </div>
+    <label>위치를 옮길 사진</label>
+    <div class="chips" id="which"></div>
+    <label for="zoom">확대</label><input id="zoom" type="range" min="1" max="2.5" step="0.01" value="1">
+    <label for="bright">밝기</label><input id="bright" type="range" min="-1" max="1" step="0.05" value="0">
+    <label for="warm">따뜻함</label><input id="warm" type="range" min="-1" max="1" step="0.05" value="0">
+    <div class="toggle"><input id="mk" type="checkbox" checked><label for="mk" style="margin:0;font-weight:500">테차 표시 넣기</label></div>
+    <label>만들 형태</label>
+    <div class="chips" id="kind">
+      <button type="button" data-k="photo" class="on">사진</button>
+      <button type="button" data-k="video" id="kVideo">영상 6초</button>
+      <button type="button" data-k="gif">GIF</button>
+    </div>
+    <p class="note" id="kindNote">한 장의 사진으로 저장해요.</p>
+    <p class="note" style="margin-top:16px">인스타 스토리에 올리실 때 @techa_flower 를 언급해 주시면 찾아가서 인사드릴게요.</p>
+  </section>
+</div>
+
+<div class="bar hidden" id="bar"><div class="in">
+  <button class="btn sub" id="saveBtn" type="button">사진 저장</button>
+  <button class="btn cta" id="shareBtn" type="button">바로 나누기</button>
+</div></div>
+<div class="toast" id="toast"></div>
+<div class="busy hidden" id="ready"><div id="readyMsg">다 만들었어요</div>
+  <div style="display:flex;gap:10px;width:min(320px,86vw)"><button class="btn sub" id="rSave" type="button">저장</button><button class="btn cta" id="rShare" type="button">나누기</button></div>
+  <p class="note" style="max-width:300px;text-align:center">아이폰은 '나누기'에서 '이미지 저장'이나 '비디오 저장'을 누르면 사진첩에 들어가요.</p>
+  <button type="button" id="rClose" style="border:0;background:none;color:var(--muted);font:500 14px Pretendard;margin-top:4px">닫기</button></div>
+<div class="busy hidden" id="busy"><div id="busyMsg">만드는 중…</div><div class="track"><div class="fill" id="busyFill"></div></div></div>
+
+<script src="/frame/frame-templates.js"></script>
+<script>
+(function(){
+  var $ = function(id){return document.getElementById(id)};
+  var S = {photos:[], tpl:'gallery', sel:0, logo:null};
+  var today = new Date();
+  $('recv').value = today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+
+  function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2200);}
+  function loadImg(src){return new Promise(function(r){var i=new Image();i.onload=function(){r(i)};i.onerror=function(){r(null)};i.src=src;});}
+
+  // 큰 사진은 긴 변 2000px 로 줄여 메모리를 아낀다
+  function shrink(img){
+    var m = 2000, w = img.naturalWidth, h = img.naturalHeight;
+    if (Math.max(w,h) <= m) return Promise.resolve(img);
+    var k = m / Math.max(w,h), c = document.createElement('canvas'); c.width = Math.round(w*k); c.height = Math.round(h*k);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    return loadImg(c.toDataURL('image/jpeg',0.92));
+  }
+
+  function opts(){
+    var d = $('recv').value ? new Date($('recv').value+'T00:00:00') : today;
+    var caps = S.kind === 'photo' ? [] : [$('txt').value, $('cap2').value, $('cap3').value];
+    return {photos:S.photos, text:$('txt').value, caps:caps, from:$('from').value.trim(), received:d, today:today,
+      mark:$('mk').checked, logo:S.logo, bright:+$('bright').value, warm:+$('warm').value};
+  }
+
+  /* ---------- 문구 고르기: 받은 사람의 한마디(frame-phrases.json) · 카드 문구(data/message-phrases.json) ---------- */
+  var PH = {mine: null, card: null}, src = 'mine', target = 'txt';
+  ['txt','cap2','cap3'].forEach(function(id){ $(id).addEventListener('focus', function(){ target = id; }); });
+  function fill(id, v){ $(id).value = v; $(id).dispatchEvent(new Event('input')); $(id).dispatchEvent(new Event('change')); }
+  function nextTarget(){
+    if (S.kind === 'photo') return 'txt';
+    var ids = ['txt','cap2','cap3'];
+    if ($(target).value.trim() === '') return target;
+    for (var i = 0; i < ids.length; i++) if (!$(ids[i]).value.trim()) return ids[i];
+    return target;
+  }
+  async function loadPhrases(){
+    if (!PH.mine) { try { PH.mine = await (await fetch('/frame/frame-phrases.json')).json(); } catch (e) { PH.mine = {groups: []}; } }
+    if (!PH.card) { try { PH.card = await (await fetch('/data/message-phrases.json')).json(); } catch (e) { PH.card = {occasions: [], tones: {}}; } }
+  }
+  function groups(){
+    if (src === 'mine') return PH.mine.groups.map(function(g){ return {key: g.key, label: g.label}; });
+    return PH.card.occasions.map(function(o){ return {key: o.key, label: o.label}; });
+  }
+  function buildOcc(){
+    var sel = $('occ'), prev = sel.value; sel.innerHTML = '';
+    groups().forEach(function(g){ var op = document.createElement('option'); op.value = g.key; op.textContent = g.label; sel.appendChild(op); });
+    if ([].some.call(sel.options, function(o){ return o.value === prev; })) sel.value = prev;
+    buildList();
+  }
+  function btn(label, cls, on){ var b = document.createElement('button'); b.type = 'button'; b.textContent = label; if (cls) b.className = cls; b.onclick = on; return b; }
+  function sub(t){ var d = document.createElement('div'); d.className = 'sub'; d.textContent = t; return d; }
+  function buildList(){
+    var L = $('plist'), key = $('occ').value; L.innerHTML = '';
+    if (src === 'mine') {
+      var g = PH.mine.groups.filter(function(x){ return x.key === key; })[0]; if (!g) return;
+      if (S.kind !== 'photo' && g.flows && g.flows.length) {
+        L.appendChild(sub('영상용 세 줄 흐름 — 누르면 세 칸이 한 번에 채워져요'));
+        g.flows.forEach(function(f){ L.appendChild(btn(f.join('  →  '), 'flow', function(){ fill('txt', f[0]); fill('cap2', f[1] || ''); fill('cap3', f[2] || ''); toast('세 줄을 넣었어요'); })); });
+        L.appendChild(sub('한 줄 문구'));
+      }
+      g.lines.forEach(function(t){ L.appendChild(btn(t, '', function(){ var id = nextTarget(); fill(id, t); toast('문구를 넣었어요'); })); });
+    } else {
+      var o = PH.card.occasions.filter(function(x){ return x.key === key; })[0]; if (!o) return;
+      Object.keys(o.phrases).forEach(function(tk){
+        L.appendChild(sub(PH.card.tones[tk] || tk));
+        o.phrases[tk].forEach(function(t){ L.appendChild(btn(t, '', function(){ var id = nextTarget(); fill(id, t); toast('문구를 넣었어요'); })); });
+      });
+    }
+  }
+  $('pickPhrase').onclick = async function(){
+    var P = $('picker'); if (!P.classList.contains('hidden')) { P.classList.add('hidden'); return; }
+    await loadPhrases(); buildOcc(); P.classList.remove('hidden');
+  };
+  [].forEach.call(document.querySelectorAll('.tabs button'), function(b){ b.onclick = function(){
+    src = b.dataset.src; [].forEach.call(document.querySelectorAll('.tabs button'), function(x){ x.classList.toggle('on', x === b); });
+    $('pickNote').textContent = src === 'mine' ? '누르면 지금 고른 칸에 들어가요.' : '받은 카드의 말을 그대로 옮기고 싶을 때 써요. 누르면 지금 고른 칸에 들어가요.';
+    buildOcc(); }; });
+  $('occ').onchange = buildList;
+
+  function thumb(id, target){ TechaFrame.render(target, id, opts(), 0.25); }
+
+  function buildGrid(){
+    var g = $('grid'); g.innerHTML = '';
+    TechaFrame.templates.forEach(function(t, i){
+      var b = document.createElement('button'); b.type='button'; if (t.id===S.tpl) b.className='on';
+      var c = document.createElement('canvas'); var s = document.createElement('span'); s.textContent = (i+1)+'. '+t.name+(t.photos>1?' · 사진 '+t.photos+'장':'');
+      b.appendChild(c); b.appendChild(s); g.appendChild(b);
+      b.onclick = function(){ S.tpl=t.id; [].forEach.call(g.children,function(x){x.className=''}); b.className='on'; draw(); $('s3').scrollIntoView({behavior:'smooth'}); };
+      setTimeout(function(){ thumb(t.id, c); }, 30*i);
+    });
+  }
+
+  // 미리보기: 사진은 한 번 그리고, 영상·GIF 는 반복 재생한다 (절반 크기로 그려 가볍게)
+  S.kind = 'photo';
+  var DUR = {video:6000, gif:4000};
+  var raf = 0, anim = 0, t0 = 0;
+  function draw(){
+    cancelAnimationFrame(raf);
+    if (S.kind === 'photo') { cancelAnimationFrame(anim); anim = 0; raf = requestAnimationFrame(function(){ TechaFrame.render($('main'), S.tpl, opts()); }); return; }
+    if (!anim) { t0 = performance.now(); tick(); }
+  }
+  function tick(){
+    var d = DUR[S.kind] || 6000, o = opts(); o.anim = true; o.t = ((performance.now() - t0) % d) / d;
+    TechaFrame.render($('main'), S.tpl, o, 0.5);
+    anim = requestAnimationFrame(tick);
+  }
+
+  // 영상은 이 브라우저가 녹화할 수 있을 때만 보인다 (아이폰 iOS 14.5+, 최신 크롬)
+  var VIDEO_MIME = (function(){
+    if (typeof MediaRecorder === 'undefined' || !HTMLCanvasElement.prototype.captureStream) return '';
+    var c = ['video/mp4;codecs=avc1.42E01E','video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
+    for (var i = 0; i < c.length; i++) if (MediaRecorder.isTypeSupported(c[i])) return c[i];
+    return '';
+  })();
+  if (!VIDEO_MIME && typeof VideoEncoder === 'undefined') $('kVideo').classList.add('hidden');
+  var NOTE = {
+    photo: '한 장의 사진으로 저장해요.',
+    video: '사진이 천천히 움직이는 6초 영상이에요. 인스타 스토리·릴스에 잘 맞아요. 만드는 데 몇 초 걸리니 화면을 켜 두세요.',
+    gif: '계속 반복되는 움직이는 사진이에요. 카톡으로 보내기 좋아요. 인스타 스토리에는 멈춘 사진으로 올라갈 수 있어서, 인스타에는 영상을 추천해요.'
+  };
+  var SAVE = {photo:'사진 저장', video:'영상 저장', gif:'GIF 저장'};
+  function setKind(k){
+    S.kind = k;
+    [].forEach.call($('kind').children, function(x){ x.classList.toggle('on', x.dataset.k === k); });
+    $('kindNote').textContent = NOTE[k]; $('saveBtn').textContent = SAVE[k];
+    $('moreCaps').classList.toggle('hidden', k === 'photo'); $('capLabel').textContent = k === 'photo' ? '글귀' : '문구 1';
+    if (!$('picker').classList.contains('hidden')) buildList();
+    draw();
+  }
+  [].forEach.call($('kind').children, function(b){ b.onclick = function(){ setKind(b.dataset.k); }; });
+
+  function buildWhich(){
+    var w = $('which'); w.innerHTML='';
+    S.photos.forEach(function(p,i){ var b=document.createElement('button'); b.type='button'; b.textContent='사진 '+(i+1); if(i===S.sel) b.className='on';
+      b.onclick=function(){S.sel=i; buildWhich(); $('zoom').value=S.photos[i].adj.zoom;}; w.appendChild(b); });
+  }
+
+  function buildThumbs(){
+    var th = $('thumbs'); th.innerHTML='';
+    S.photos.forEach(function(p,i){ var b=document.createElement('button'); b.type='button'; b.title='이 사진을 맨 앞으로';
+      var im=document.createElement('img'); im.src=p.img.src; var n=document.createElement('i'); n.textContent=i+1;
+      b.appendChild(im); b.appendChild(n); if(i===0) b.className='on';
+      b.onclick=function(){ if(i===0) return; S.photos.unshift(S.photos.splice(i,1)[0]); S.sel=0; buildThumbs(); buildWhich(); buildGrid(); draw(); };
+      th.appendChild(b); });
+    $('thumbNote').textContent = S.photos.length>1 ? '누른 사진이 첫 번째 사진이 돼요. 사진 여러 장을 쓰는 틀은 순서대로 들어가요.' : '';
+  }
+
+  $('pickBtn').onclick = function(){ $('file').click(); };
+  async function usePhotos(srcs){
+    var list = [];
+    for (var s of srcs){ var im = await loadImg(s); if(im) list.push({img: await shrink(im), adj:{zoom:1,dx:0,dy:0}}); }
+    if(!list.length){ toast('사진을 열 수 없어요. 다른 사진으로 해 볼까요?'); return; }
+    S.photos = list; S.sel = 0;
+    $('pickBtn').textContent = '사진 다시 고르기';
+    buildThumbs(); buildWhich();
+    ['s2','s3','bar'].forEach(function(id){$(id).classList.remove('hidden')});
+    buildGrid(); draw();
+    $('s2').scrollIntoView({behavior:'smooth'});
+  }
+  $('file').onchange = function(e){
+    var files = [].slice.call(e.target.files||[], 0, 4); if(!files.length) return;
+    usePhotos(files.map(function(f){return URL.createObjectURL(f)}));
+  };
+  // 화면 확인용: ?demo=1 이면 공방 사진 2장으로 시작
+  if (/[?&]demo=1/.test(location.search)) usePhotos(['/assets/images/home/hydrangea-pink.jpg','/assets/images/home/glassdome-rose.jpg']);
+
+  $('txt').addEventListener('input', function(){ $('cnt').textContent = $('txt').value.length + '/60 · 20자 안팎이 가장 예뻐요'; });
+  ['cap2','cap3'].forEach(function(id){ $(id).addEventListener('input', draw); });
+  ['txt','from','recv','bright','warm','mk'].forEach(function(id){ $(id).addEventListener('input', draw); $(id).addEventListener('change', function(){ draw(); if(id!=='bright'&&id!=='warm') buildGrid(); }); });
+  $('zoom').addEventListener('input', function(){ var p=S.photos[S.sel]; if(p){p.adj.zoom=+$('zoom').value; draw();} });
+
+  // 미리보기에서 끌어서 사진 위치 옮기기
+  var drag=null;
+  $('pv').addEventListener('pointerdown', function(e){ var p=S.photos[S.sel]; if(!p) return; drag={x:e.clientX,y:e.clientY,dx:p.adj.dx,dy:p.adj.dy,w:$('pv').clientWidth}; $('hint').classList.add('hidden'); $('pv').setPointerCapture(e.pointerId); });
+  $('pv').addEventListener('pointermove', function(e){ if(!drag) return; var p=S.photos[S.sel], k=2.4/drag.w;
+    p.adj.dx=Math.max(-1,Math.min(1,drag.dx-(e.clientX-drag.x)*k)); p.adj.dy=Math.max(-1,Math.min(1,drag.dy-(e.clientY-drag.y)*k)); draw(); });
+  ['pointerup','pointercancel'].forEach(function(ev){ $('pv').addEventListener(ev, function(){ if(drag){drag=null; buildGrid();} }); });
+
+  /* ---------- 만들기: 사진(JPG) · 영상(MP4/WebM) · GIF ---------- */
+  function busy(on, msg, p){ $('busy').classList.toggle('hidden', !on); if (msg) $('busyMsg').textContent = msg; $('busyFill').style.width = Math.round((p || 0) * 100) + '%'; }
+  function nextFrame(){ return new Promise(function(r){ setTimeout(r, 0); }); }
+
+  function photoBlob(){
+    return new Promise(function(r){ var c = document.createElement('canvas'); TechaFrame.render(c, S.tpl, opts()); c.toBlob(r, 'image/jpeg', 0.93); });
+  }
+
+  // 영상(우선): WebCodecs 로 30fps 장면을 하나씩 인코딩 → mp4-muxer 로 표준 MP4(faststart).
+  // 실시간 녹화가 아니라 빠르고, 인스타가 받는 일반 MP4 구조로 나온다.
+  var VW = 720, VH = 1280, FPS = 30;
+  var WC_CODEC = null;
+  async function webcodecsCodec(){
+    if (WC_CODEC !== null) return WC_CODEC;
+    WC_CODEC = '';
+    if (typeof VideoEncoder === 'undefined' || typeof VideoFrame === 'undefined') return WC_CODEC;
+    var list = ['avc1.4d0028', 'avc1.42e028', 'avc1.640028'];
+    for (var i = 0; i < list.length; i++) {
+      try { var r = await VideoEncoder.isConfigSupported({codec: list[i], width: VW, height: VH, bitrate: 6000000, framerate: FPS}); if (r.supported) { WC_CODEC = list[i]; break; } } catch (e) {}
+    }
+    return WC_CODEC;
+  }
+  var muxLib = null;
+  async function videoBlobWC(codec){
+    if (!muxLib) muxLib = await import('/frame/vendor/mp4-muxer.min.mjs');
+    var target = new muxLib.ArrayBufferTarget();
+    var muxer = new muxLib.Muxer({target: target, video: {codec: 'avc', width: VW, height: VH, frameRate: FPS}, fastStart: 'in-memory'});
+    var err = null;
+    var enc = new VideoEncoder({output: function(chunk, meta){ muxer.addVideoChunk(chunk, meta); }, error: function(e){ err = e; }});
+    enc.configure({codec: codec, width: VW, height: VH, bitrate: 6000000, framerate: FPS, avc: {format: 'avc'}});
+    var c = document.createElement('canvas'), o = opts(); o.anim = true;
+    var n = Math.round(DUR.video / 1000 * FPS), us = 1e6 / FPS;
+    for (var i = 0; i < n; i++) {
+      if (err) throw err;
+      o.t = i / n; TechaFrame.render(c, S.tpl, o, VW / 1080);
+      var f = new VideoFrame(c, {timestamp: Math.round(i * us), duration: Math.round(us)});
+      enc.encode(f, {keyFrame: i % 60 === 0}); f.close();
+      if (enc.encodeQueueSize > 8) await new Promise(function(r){ setTimeout(r, 5); });
+      if (i % 5 === 0) { busy(true, '영상 만드는 중…', i / n); await nextFrame(); }
+    }
+    await enc.flush(); enc.close();
+    if (err) throw err;
+    muxer.finalize();
+    return new Blob([target.buffer], {type: 'video/mp4'});
+  }
+
+  async function videoBlob(){
+    var codec = await webcodecsCodec();
+    if (codec) { try { return await videoBlobWC(codec); } catch (e) { console.warn('WebCodecs 실패, 녹화 방식으로', e); } }
+    return videoBlobRec();
+  }
+
+  // 영상(대신): 720×1280 캔버스를 실제로 6초 재생하면서 녹화한다
+  function videoBlobRec(){
+    return new Promise(function(resolve, reject){
+      var s = 2 / 3, c = document.createElement('canvas'), o = opts(); o.anim = true; o.t = 0;
+      TechaFrame.render(c, S.tpl, o, s);
+      c.style.cssText = 'position:fixed;left:-10000px;top:0;width:10px;height:18px'; document.body.appendChild(c);
+      var stream = c.captureStream(30), parts = [], rec;
+      try { rec = new MediaRecorder(stream, {mimeType: VIDEO_MIME, videoBitsPerSecond: 8000000}); } catch (e) { c.remove(); reject(e); return; }
+      rec.ondataavailable = function(e){ if (e.data && e.data.size) parts.push(e.data); };
+      rec.onstop = function(){ stream.getTracks().forEach(function(t){ t.stop(); }); c.remove(); resolve(new Blob(parts, {type: VIDEO_MIME.split(';')[0]})); };
+      rec.onerror = function(e){ c.remove(); reject(e.error || e); };
+      var d = DUR.video, st = 0;
+      rec.start(250);
+      function f(now){
+        if (!st) st = now;
+        var t = (now - st) / d;
+        if (t >= 1) { o.t = 0; TechaFrame.render(c, S.tpl, o, s); setTimeout(function(){ rec.stop(); }, 150); return; }
+        o.t = t; TechaFrame.render(c, S.tpl, o, s); busy(true, '영상 만드는 중…', t);
+        requestAnimationFrame(f);
+      }
+      requestAnimationFrame(f);
+    });
+  }
+
+  // GIF: 432×768, 초당 10장, 4초 반복. 미세 질감은 뺀다(파일 크기). 장마다 색 256개를 새로 골라 꽃 색이 덜 뭉개지게
+  var gifLib = null;
+  async function gifBlob(){
+    if (!gifLib) gifLib = await import('/frame/vendor/gifenc.esm.js');
+    var s = 432 / 1080, fps = 10, n = Math.round(DUR.gif / 1000 * fps), delay = Math.round(1000 / fps);
+    var c = document.createElement('canvas'), o = opts(); o.anim = true; o.lite = true;
+    TechaFrame.render(c, S.tpl, Object.assign({}, o, {t: 0}), s);
+    var x = c.getContext('2d', {willReadFrequently: true}), enc = gifLib.GIFEncoder();
+    // 색 256개는 여러 장면에서 고루 뽑아 한 번만 정한다 — 장면마다 바꾸면 색이 깜빡인다
+    var picks = 8, px = c.width * c.height, sample = new Uint8ClampedArray(picks * Math.ceil(px / 4) * 4), si = 0;
+    for (var p = 0; p < picks; p++) {
+      o.t = p / picks; TechaFrame.render(c, S.tpl, o, s);
+      var d0 = x.getImageData(0, 0, c.width, c.height).data;
+      for (var q = 0; q < d0.length; q += 16) { sample[si++] = d0[q]; sample[si++] = d0[q + 1]; sample[si++] = d0[q + 2]; sample[si++] = 255; }
+      busy(true, 'GIF 준비 중…', (p + 1) / picks * 0.2); await nextFrame();
+    }
+    var palette = gifLib.quantize(sample.subarray(0, si), 256);
+    for (var i = 0; i < n; i++) {
+      o.t = i / n; TechaFrame.render(c, S.tpl, o, s);
+      var data = x.getImageData(0, 0, c.width, c.height).data;
+      enc.writeFrame(gifLib.applyPalette(data, palette), c.width, c.height, i === 0 ? {palette: palette, delay: delay} : {delay: delay});
+      busy(true, 'GIF 만드는 중…', 0.2 + (i + 1) / n * 0.8);
+      await nextFrame();
+    }
+    enc.finish();
+    return new Blob([enc.bytes()], {type: 'image/gif'});
+  }
+
+  // 같은 설정으로 저장·나누기를 연달아 누르면 다시 만들지 않는다
+  var made = {key: '', blob: null};
+  function stateKey(){ var o = opts(); return JSON.stringify([S.tpl, S.kind, o.text, o.caps, o.from, $('recv').value, o.mark, o.bright, o.warm, S.photos.map(function(p){ return [p.img.src.slice(-40), p.adj]; })]); }
+  async function make(){
+    var k = stateKey(); if (made.key === k && made.blob) return made.blob;
+    busy(true, S.kind === 'photo' ? '사진 만드는 중…' : S.kind === 'video' ? '영상 만드는 중…' : 'GIF 만드는 중…', 0);
+    try {
+      var b = S.kind === 'video' ? await videoBlob() : S.kind === 'gif' ? await gifBlob() : await photoBlob();
+      made = {key: k, blob: b}; return b;
+    } finally { busy(false); }
+  }
+  function ext(b){ return b.type === 'image/gif' ? 'gif' : b.type.indexOf('mp4') >= 0 ? 'mp4' : b.type.indexOf('webm') >= 0 ? 'webm' : 'jpg'; }
+  function fname(b){ return 'techa-flower-' + S.tpl + '.' + ext(b); }
+  var DONE = {photo:'사진을 저장했어요', video:'영상을 저장했어요', gif:'GIF를 저장했어요'};
+
+  function saveBlob(b){
+    var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = fname(b); document.body.appendChild(a); a.click(); a.remove();
+    toast(DONE[S.kind]);
+  }
+  async function shareBlob(b){
+    var file = new File([b], fname(b), {type: b.type});
+    if (navigator.canShare && navigator.canShare({files: [file]})) { try { await navigator.share({files: [file]}); } catch (e) {} }
+    else { saveBlob(b); toast('저장한 파일을 인스타·카톡에서 올려 주세요'); }
+  }
+  // 이미 만들어 둔 게 있으면 바로, 없으면 만든 뒤 '다 만들었어요' 시트에서 한 번 더 누르게 한다
+  async function act(kind){
+    if (made.key === stateKey() && made.blob) { if (kind === 'share') shareBlob(made.blob); else saveBlob(made.blob); return; }
+    try { await make(); } catch (e) { toast('만들지 못했어요. 사진으로 해 볼까요?'); return; }
+    $('readyMsg').textContent = S.kind === 'video' ? '영상을 다 만들었어요' : S.kind === 'gif' ? 'GIF를 다 만들었어요' : '사진을 다 만들었어요';
+    $('ready').classList.remove('hidden');
+  }
+  $('saveBtn').onclick = function(){ act('save'); };
+  $('shareBtn').onclick = function(){ act('share'); };
+  $('rSave').onclick = function(){ $('ready').classList.add('hidden'); saveBlob(made.blob); };
+  $('rShare').onclick = function(){ $('ready').classList.add('hidden'); shareBlob(made.blob); };
+  $('rClose').onclick = function(){ $('ready').classList.add('hidden'); };
+
+  // 화면 확인용 (사진은 어디로도 보내지 않는다)
+  window.__techaFrame = { setTpl: function(id){ S.tpl = id; draw(); }, setKind: setKind, make: make, mime: VIDEO_MIME, codec: webcodecsCodec, setText: function(t){ $('txt').value = t; draw(); }, setCaps: function(a){ fill('txt', a[0] || ''); fill('cap2', a[1] || ''); fill('cap3', a[2] || ''); } };
+
+  Promise.all([TechaFrame.loadFonts(), loadImg('/assets/icons/techa-wordmark.png')]).then(function(r){ S.logo = r[1]; if(S.photos.length){ buildGrid(); draw(); } });
+})();
+</script>
+</body>
+</html>
