@@ -584,9 +584,19 @@
   }
 
   var FONT_FACES = ["700 40px 'Gowun Batang'", "400 40px 'Gowun Batang'", "400 40px 'Nanum Pen Script'", "500 40px 'Cormorant Garamond'", "italic 500 40px 'Cormorant Garamond'", "600 40px 'Cormorant Garamond'", "500 40px 'Pretendard'", "700 40px 'Pretendard'"];
-  function loadFonts() {
+  // 한글 웹글꼴은 글자 묶음(unicode-range)별로 나뉘어 있어서, 그릴 글자를 미리 불러와야 캔버스에 제 글꼴로 찍힌다.
+  // 안 그러면 처음 쓰는 글자가 대체 글꼴로 찍힌다(2026-10-18 실제 사이트에서 발견).
+  var FIXED = '가갤거골관꽃날낸네년는늘니님다당도드들등라랩러레로름리매멀무물미박받밤버변보서션스시신아않액어에엽오온요월은을의이인일임자지진짜착창치캡커컷크큰편폴프필했0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,·—-:\'!?…▸ ';
+  var loadedText = '', pending = Promise.resolve();
+  function loadFonts(extra) {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
-    return Promise.all(FONT_FACES.map(function (f) { return document.fonts.load(f, '가A1').catch(function () {}); }));
+    var want = FIXED + (extra || ''), add = '';
+    for (var i = 0; i < want.length; i++) { var ch = want.charAt(i); if (loadedText.indexOf(ch) < 0 && add.indexOf(ch) < 0) add += ch; }
+    if (!add) return pending; // 이미 부르는 중인 글자는 그 불러오기가 끝날 때까지 기다린다
+    loadedText += add;
+    pending = Promise.all([pending].concat(FONT_FACES.map(function (f) { return document.fonts.load(f, add).catch(function () {}); })))
+      .then(function () { stampCache = {}; });
+    return pending;
   }
 
   global.TechaFrame = { W: W, H: H, templates: T.map(function (t) { return { id: t.id, name: t.name, photos: t.photos }; }), render: render, loadFonts: loadFonts };

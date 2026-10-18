@@ -244,6 +244,9 @@ input[type=range]{width:100%;accent-color:var(--blue)}
   function thumb(id, target){ TechaFrame.render(target, id, opts(), 0.25); }
 
   function buildGrid(){
+    TechaFrame.loadFonts(textNow()).then(buildGridNow);
+  }
+  function buildGridNow(){
     var g = $('grid'); g.innerHTML = '';
     TechaFrame.templates.forEach(function(t, i){
       var b = document.createElement('button'); b.type='button'; if (t.id===S.tpl) b.className='on';
@@ -258,7 +261,13 @@ input[type=range]{width:100%;accent-color:var(--blue)}
   S.kind = 'photo';
   var DUR = {video:6000, gif:4000};
   var raf = 0, anim = 0, t0 = 0;
+  function textNow(){ var o = opts(); return [o.text, (o.caps || []).join(''), o.from].join(''); }
   function draw(){
+    var t = textNow();
+    if (t !== draw.last) { draw.last = t; TechaFrame.loadFonts(t).then(function(){ drawNow(); }); }
+    drawNow();
+  }
+  function drawNow(){
     cancelAnimationFrame(raf);
     if (S.kind === 'photo') { cancelAnimationFrame(anim); anim = 0; raf = requestAnimationFrame(function(){ TechaFrame.render($('main'), S.tpl, opts()); }); return; }
     if (!anim) { t0 = performance.now(); tick(); }
@@ -449,6 +458,7 @@ input[type=range]{width:100%;accent-color:var(--blue)}
   function stateKey(){ var o = opts(); return JSON.stringify([S.tpl, S.kind, o.text, o.caps, o.from, $('recv').value, o.mark, o.bright, o.warm, S.photos.map(function(p){ return [p.img.src.slice(-40), p.adj]; })]); }
   async function make(){
     var k = stateKey(); if (made.key === k && made.blob) return made.blob;
+    await TechaFrame.loadFonts(textNow());
     busy(true, S.kind === 'photo' ? '사진 만드는 중…' : S.kind === 'video' ? '영상 만드는 중…' : 'GIF 만드는 중…', 0);
     try {
       var b = S.kind === 'video' ? await videoBlob() : S.kind === 'gif' ? await gifBlob() : await photoBlob();
