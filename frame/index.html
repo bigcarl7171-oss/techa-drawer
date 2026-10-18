@@ -117,6 +117,14 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 .btn.sub{background:#fff;border:1px solid var(--hair);color:var(--ink)}
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;white-space:nowrap}
 .toast.show{opacity:1}
+.rprev{display:flex;justify-content:center}
+.rprev video,.rprev img{max-height:46vh;max-width:min(320px,80vw);border-radius:12px;box-shadow:0 8px 24px rgba(58,50,43,.2);background:#eee8de}
+.thumbs .full{width:64px;height:64px;border:1.5px dashed var(--hair);border-radius:10px;background:#f4efe6;color:var(--muted);font:600 11px/1.35 Pretendard;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px}
+.motion{position:absolute;left:50%;top:8px;transform:translateX(-50%);background:rgba(58,50,43,.72);color:#fff;font:600 11px Pretendard;padding:3px 9px;border-radius:999px;pointer-events:none}
+.dialog{position:fixed;inset:0;z-index:40;background:rgba(58,50,43,.45);display:flex;align-items:center;justify-content:center;padding:24px}
+.dialog .box{background:#fff;border-radius:16px;padding:22px 20px 16px;max-width:320px;text-align:center;font-size:15px;line-height:1.6;color:var(--ink)}
+.dialog .box b{display:block;font-size:17px;margin-bottom:6px}
+.dialog .box button{margin-top:14px;width:100%;padding:12px;border:0;border-radius:10px;background:var(--amber);color:var(--amber-ink);font:700 15px Pretendard;cursor:pointer}
 .vs{width:min(420px,100%);margin:auto;display:flex;flex-direction:column;gap:10px;font-weight:400}
 .vs h3{font-family:'Gowun Batang',serif;font-size:20px;margin:0;color:var(--ink);text-align:center}
 .vs video{width:100%;max-height:44vh;border-radius:12px;background:#000;object-fit:contain}
@@ -167,7 +175,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
         <button type="button" data-k="square">카톡 프사</button>
       </div>
       <p class="kindNote" id="kindNote">한 장의 사진으로 만들어요.</p>
-      <div class="preview" id="pv"><canvas id="main"></canvas><div class="hint" id="hint">끌어서 위치 조정</div></div>
+      <div class="preview" id="pv"><canvas id="main"></canvas><div class="hint" id="hint">끌어서 위치 조정</div><div class="motion hidden" id="motion">움직임 미리보기</div></div>
       <div class="strip" id="grid" aria-label="틀 고르기"></div>
     </div>
 
@@ -226,12 +234,13 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 </div></div>
 <div class="bar hidden" id="bar"><div class="in">
   <button class="btn sub" id="saveBtn" type="button">저장</button>
-  <button class="btn cta" id="shareBtn" type="button">인스타·카톡에 올리기</button>
+  <button class="btn cta" id="shareBtn" type="button">공유하기</button>
 </div></div>
 <div class="toast" id="toast"></div>
 <div class="busy hidden" id="ready"><div id="readyMsg">다 만들었어요</div>
-  <div class="sheetbtns"><button class="btn cta" id="rShare" type="button">인스타·카톡에 올리기</button><button class="btn sub" id="rSave" type="button">휴대폰에 저장</button></div>
-  <p class="note" style="max-width:300px;text-align:center">'올리기'를 누르면 휴대폰 공유창이 열려요. 인스타그램이나 카카오톡을 고르면 바로 올릴 수 있고, 아이폰은 '이미지 저장'·'비디오 저장'을 누르면 사진첩에 들어가요.</p>
+  <div class="rprev" id="rprev"></div>
+  <div class="sheetbtns"><button class="btn cta" id="rShare" type="button">공유하기</button><button class="btn sub" id="rSave" type="button">휴대폰에 저장</button></div>
+  <p class="note" style="max-width:300px;text-align:center">'공유하기'를 누르면 휴대폰 공유창이 열려요. 인스타그램이나 카카오톡을 고르면 바로 올릴 수 있고, 아이폰은 '이미지 저장'·'비디오 저장'을 누르면 사진첩에 들어가요.</p>
   <button type="button" id="rClose" style="border:0;background:none;color:var(--muted);font:500 14px Pretendard;margin-top:4px;padding:8px">닫기</button></div>
 <div class="busy hidden" id="vsheet"><div class="vs">
   <h3>동영상에서 고르기</h3>
@@ -256,6 +265,12 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
   var today = new Date();
   $('recv').value = /^\d{4}-\d{2}-\d{2}$/.test(Q.recv || '') ? Q.recv : today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
 
+  function dialog(t, m){
+    var d = document.createElement('div'); d.className = 'dialog';
+    d.innerHTML = '<div class="box"><b></b><span></span><button type="button">확인</button></div>';
+    d.querySelector('b').textContent = t; d.querySelector('span').textContent = m;
+    d.querySelector('button').onclick = function(){ d.remove(); }; document.body.appendChild(d);
+  }
   function toast(m){var t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2200);}
   function loadImg(src){return new Promise(function(r){var i=new Image();i.onload=function(){r(i)};i.onerror=function(){r(null)};i.src=src;});}
 
@@ -413,6 +428,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     if (k === 'square' || wasSq) buildGrid();
     [].forEach.call($('kind').children, function(x){ x.classList.toggle('on', x.dataset.k === k); });
     $('kindNote').textContent = NOTE[k]; $('saveBtn').textContent = SAVE[k];
+    $('motion').classList.toggle('hidden', k !== 'video' && k !== 'gif');
     $('moreCaps').classList.toggle('hidden', still()); $('capLabel').textContent = still() ? '글귀' : '문구 1';
     if (!$('picker').classList.contains('hidden')) buildList();
     draw();
@@ -443,6 +459,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
       th.appendChild(tile); });
     if (S.photos.length < MAXP) { var a=document.createElement('button'); a.type='button'; a.className='add'; a.innerHTML='<b>+</b>더하기';
       a.onclick=function(){ S.adding = true; $('file').click(); }; th.appendChild(a); }
+    else { var f=document.createElement('div'); f.className='full'; f.textContent='8장이 꽉 찼어요'; th.appendChild(f); }
     $('pcount').textContent = S.photos.length + '/' + MAXP + ' · 누르면 첫 번째 사진이 돼요';
     $('thumbNote').textContent = S.photos.length>1 ? '여러 장을 쓰는 틀(폴라로이드·필름·네 컷·스크랩)은 순서대로 들어가고, 영상·GIF에서는 모든 사진이 차례로 바뀌어요.' : '사진을 더하면 영상·GIF에서 사진이 차례로 바뀌어요.';
   }
@@ -456,7 +473,8 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
   }; });
   async function usePhotos(srcs, add){
     var room = add ? MAXP - S.photos.length : MAXP;
-    if (srcs.length > room) toast('사진은 ' + MAXP + '장까지예요. 앞의 ' + room + '장만 넣었어요');
+    if (room <= 0) { dialog('사진은 ' + MAXP + '장까지예요', '이미 ' + MAXP + '장이 들어 있어요. 사진을 빼고(×) 다시 더해 주세요.'); return; }
+    if (srcs.length > room) dialog('사진은 ' + MAXP + '장까지예요', srcs.length + '장을 고르셔서 앞의 ' + room + '장만 넣었어요. 다른 사진으로 바꾸려면 사진 칸에서 빼고(×) 다시 더해 주세요.');
     var list = [];
     for (var s of srcs.slice(0, room)){ var im = await loadImg(s); if(im) list.push({img: await shrink(im), adj:{zoom:1,dx:0,dy:0}}); }
     if(!list.length){ toast('사진을 열 수 없어요. 다른 사진으로 해 볼까요?'); return; }
@@ -518,7 +536,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
   $('vsClose').onclick = function(){ $('vsv').pause(); $('vsheet').classList.add('hidden'); };
   $('vsStill').onclick = async function(){
     var v = $('vsv'); v.pause();
-    if (S.photos.length >= MAXP) { toast('사진은 ' + MAXP + '장까지예요'); return; }
+    if (S.photos.length >= MAXP) { dialog('사진은 ' + MAXP + '장까지예요', '사진 칸에서 하나를 빼고(×) 다시 넣어 주세요.'); return; }
     var url = frameURL(v, 2000);
     await usePhotos([url], S.photos.length > 0);
     toast('이 장면을 사진으로 넣었어요. 다른 장면도 고를 수 있어요');
@@ -827,13 +845,24 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     if (made.key === stateKey() && made.blob) { if (kind === 'share') shareBlob(made.blob); else saveBlob(made.blob); return; }
     try { await make(); } catch (e) { toast('만들지 못했어요. 사진으로 해 볼까요?'); return; }
     $('readyMsg').textContent = S.kind === 'video' ? '영상을 다 만들었어요' : S.kind === 'gif' ? 'GIF를 다 만들었어요' : '사진을 다 만들었어요';
+    showResult(made.blob);
     $('ready').classList.remove('hidden');
   }
   $('saveBtn').onclick = function(){ act('save'); };
   $('shareBtn').onclick = function(){ act('share'); };
-  $('rSave').onclick = function(){ $('ready').classList.add('hidden'); saveBlob(made.blob); };
-  $('rShare').onclick = function(){ $('ready').classList.add('hidden'); shareBlob(made.blob); };
-  $('rClose').onclick = function(){ $('ready').classList.add('hidden'); };
+  $('rSave').onclick = function(){ $('ready').classList.add('hidden'); clearResult(); saveBlob(made.blob); };
+  $('rShare').onclick = function(){ $('ready').classList.add('hidden'); clearResult(); shareBlob(made.blob); };
+  $('rClose').onclick = function(){ $('ready').classList.add('hidden'); clearResult(); };
+  var resultURL = '';
+  function clearResult(){ $('rprev').innerHTML = ''; if (resultURL) { URL.revokeObjectURL(resultURL); resultURL = ''; } }
+  function showResult(b){
+    clearResult(); resultURL = URL.createObjectURL(b);
+    var el;
+    if (/^video\//.test(b.type)) { el = document.createElement('video'); el.src = resultURL; el.muted = true; el.loop = true; el.autoplay = true; el.playsInline = true; el.setAttribute('playsinline', ''); el.controls = true; }
+    else { el = document.createElement('img'); el.src = resultURL; el.alt = '만든 결과'; }
+    $('rprev').appendChild(el);
+    if (el.play) el.play().catch(function(){});
+  }
 
   // 고마움 전하기 모드: 보낸 분께 보낼 사진 — 글귀·틀·버튼 이름을 맞춘다
   if (Q.mode === 'thanks') {
@@ -842,7 +871,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     document.querySelector('#s1 h1').innerHTML = '보내 주신 분께<br>고맙다고 전해 보세요';
     document.querySelector('#s1 .eyebrow').textContent = '꽃을 받은 사진으로';
     document.querySelector('#s1 .lead').textContent = '받은 꽃 사진에 고마운 마음을 한 줄 담아, 카톡으로 바로 보낼 수 있어요.';
-    $('shareBtn').textContent = '보낸 분께 보내기'; $('rShare').textContent = '보낸 분께 보내기';
+
     S.phraseGroup = 'reply';
   }
   // 선물하신 분 모드: 건넨 순간(받는 분 반응) 사진 — 보내는 사람의 말인 '카드 문구'부터
