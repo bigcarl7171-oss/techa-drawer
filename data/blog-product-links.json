@@ -313,5 +313,10 @@
     "flower-postcard",
     "rose-money-bouquet",
     "rose-hydrangea-bouquet"
+  ],
+  "soap-preserved-mixed-bouquet": [
+    "rose-hydrangea-bouquet",
+    "superior-rose",
+    "sunflower-bouquet"
   ]
 }

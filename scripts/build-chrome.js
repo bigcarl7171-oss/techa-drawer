@@ -227,6 +227,10 @@ function fill(html, tag, id, begin, end, markup, eol) {
   return { html: html.replace(re, m[1] + body + m[2]), found: true };
 }
 
+// 사이트 머리말·푸터 없이 화면 전체를 쓰는 도구 페이지 — 푸터가 없어도 오류로 치지 않는다
+// (2026-10-18 사진 꾸미기 frame/ · 안내서 hello/ 추가 뒤 매거진 발행 게이트가 막혀 2026-10-19 예외로 둠)
+const STANDALONE = ['frame/index.html', 'hello/index.html'];
+
 function listPages() {
   const out = [];
   (function walk(d) {
@@ -263,7 +267,7 @@ function main() {
 
     r = fill(next, 'footer', 'site-footer', FOOTER_BEGIN, FOOTER_END, footerMarkup(rel.startsWith('ko/'), shopUrl), eol);
     if (r.found) { next = r.html; footers++; }
-    else errors.push(rel + ': site-footer 를 못 찾음');
+    else if (!STANDALONE.includes(rel)) errors.push(rel + ': site-footer 를 못 찾음');
 
     if (BIZ_PAGES.includes(rel)) {
       r = fillBusiness(next, eol);
