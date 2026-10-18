@@ -184,7 +184,22 @@ input[type=range]{width:100%;accent-color:var(--blue)}
   }
   async function loadPhrases(){
     if (!PH.mine) { try { PH.mine = await (await fetch('/frame/frame-phrases.json')).json(); } catch (e) { PH.mine = {groups: []}; } }
-    if (!PH.card) { try { PH.card = await (await fetch('/data/message-phrases.json')).json(); } catch (e) { PH.card = {occasions: [], tones: {}}; } }
+    // 카드 문구는 /message/ 페이지에서 읽는다. 원본 data/message-phrases.json 은 공개 자산이 아니고(.assetsignore),
+    // 그 페이지가 원본으로 찍은 정적 HTML 이라 문구를 고치면 여기에도 그대로 반영된다.
+    if (!PH.card) {
+      try {
+        var doc = new DOMParser().parseFromString(await (await fetch('/message/')).text(), 'text/html');
+        var labels = {}, tones = {};
+        [].forEach.call(doc.querySelectorAll('#occasionSelect option'), function(op){ labels[op.value] = op.textContent.trim(); });
+        [].forEach.call(doc.querySelectorAll('#toneChoices [data-tone]'), function(b){ tones[b.dataset.tone] = b.textContent.trim(); });
+        var occ = [].map.call(doc.querySelectorAll('section.msg-group[data-occasion]'), function(sec){
+          var ph = {};
+          [].forEach.call(sec.querySelectorAll('li.msg-item'), function(li){ var t = li.dataset.tone, p = li.querySelector('p'); if (t && p) (ph[t] = ph[t] || []).push(p.textContent.trim()); });
+          return {key: sec.dataset.occasion, label: labels[sec.dataset.occasion] || sec.dataset.occasion, phrases: ph};
+        });
+        PH.card = {occasions: occ, tones: tones};
+      } catch (e) { PH.card = {occasions: [], tones: {}}; }
+    }
   }
   function groups(){
     if (src === 'mine') return PH.mine.groups.map(function(g){ return {key: g.key, label: g.label}; });
