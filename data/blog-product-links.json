@@ -318,5 +318,9 @@
     "rose-hydrangea-bouquet",
     "superior-rose",
     "sunflower-bouquet"
+  ],
+  "bouquet-drying-upside-down": [
+    "superior-rose",
+    "rose-hydrangea-bouquet"
   ]
 }
