@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<title>테차 꽃 안내서 · 테차 꽃공방</title>
-<meta name="description" content="테차 꽃을 선물하실 분과 받으신 분을 위한 안내서. 건네기 전 보관, 카드 문구, 건네는 순간 남기기, 받는 분께 안내 보내기, 오래 두는 법, 사진 꾸미기, 문의를 모았어요.">
+<title>꽃 사진 꾸미기와 선물 안내 · 테차 꽃공방</title>
+<meta name="description" content="내 꽃 사진에 틀과 문구를 더해 저장하고 공유해 보세요. 테차 사진 꾸미기와 함께 건네기 전 보관, 카드 문구, 받는 분께 안내 공유와 오래 두는 법을 모았어요.">
+<link rel="preload" as="image" href="/frame/samples/polaroid.webp">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,6 +30,23 @@ header span{font-size:13px;color:var(--muted)}
 .inapp{background:#fff7e6;border:1px solid #f0dca8;border-radius:12px;padding:12px 14px;margin:14px 0 0;font-size:13px;line-height:1.55;color:var(--amber-ink)}
 .inapp button{margin-top:8px;border:0;background:var(--amber);color:var(--amber-ink);border-radius:999px;padding:8px 14px;font:700 13px Pretendard;cursor:pointer}
 h1{font-family:'Gowun Batang',serif;font-size:27px;line-height:1.35;color:var(--ink);margin:22px 0 14px}
+.toolHero{padding-top:22px}
+.toolHero h1{font-size:30px;margin:0 0 8px;letter-spacing:-.025em}
+.toolLead{font-size:15px;line-height:1.65;margin:0 0 12px;max-width:29em}
+.toolSteps{display:flex;align-items:center;gap:7px;padding:0;margin:0 0 14px;list-style:none;font-size:13px;line-height:1.5;color:var(--body)}
+.toolSteps li{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.toolSteps li+li:before{content:'›';color:var(--blue);font-size:17px}
+#goFrameHero{display:flex;align-items:center;justify-content:center;min-height:52px;font-size:17px;line-height:1.4;text-decoration:none}
+#goFrameHero:active{transform:translateY(1px)}
+.toolPreviews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:410px;margin:18px auto 0}
+.toolPreviews figure{margin:0;min-width:0}
+.toolPreviews img{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:12px;box-shadow:0 5px 16px rgba(58,50,43,.12)}
+.toolPreviews figcaption{font-size:12px;line-height:1.5;text-align:center;color:var(--body);margin-top:7px}
+.toolPrivacy{font-size:13px;line-height:1.6;margin:14px 0 0;color:var(--body)}
+.guideIntro{padding-top:24px;margin-top:24px;border-top:1px solid var(--hair);scroll-margin-top:16px}
+.guideIntro h2{font-size:23px;margin-bottom:6px}
+.guideIntro p{font-size:14px;line-height:1.6;margin:0 0 14px;color:var(--body)}
+@media(max-width:359px){.toolHero h1{font-size:28px}.toolSteps{gap:5px;font-size:12px}.toolSteps li{gap:5px}.toolPreviews{gap:10px}}
 .who{display:flex;background:#efe9df;border-radius:14px;padding:4px;gap:4px}
 .who button{flex:1;border:0;background:none;border-radius:11px;padding:13px 6px;font:700 15px Pretendard;color:var(--muted);cursor:pointer}
 .who button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(58,50,43,.12)}
@@ -90,10 +108,25 @@ footer nav a{color:var(--ink);text-underline-offset:3px}
 </head>
 <body>
 <div class="wrap">
-  <header><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="77" height="24"><span>테차 꽃 안내서</span></header>
+  <header><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="77" height="24"><span>사진 꾸미기와 꽃 선물 안내</span></header>
   <div class="inapp hidden" id="inapp"></div>
 
-  <h1>테차 꽃,<br>이렇게 쓰시면 좋아요</h1>
+  <section class="toolHero" aria-labelledby="toolTitle">
+    <h1 id="toolTitle">꽃 사진 꾸미기</h1>
+    <p class="toolLead">내 꽃 사진에 틀과 문구를 더해<br>저장하거나 공유해 보세요.</p>
+    <ol class="toolSteps" aria-label="사진 꾸미기 순서"><li>사진 고르기</li><li>틀·문구 꾸미기</li><li>저장·공유</li></ol>
+    <a class="btn cta" id="goFrameHero" href="/frame/?mode=giver">사진 꾸미기 시작하기</a>
+    <div class="toolPreviews" aria-label="사진 꾸미기 완성 예시">
+      <figure><img src="/frame/samples/polaroid.webp" alt="꽃 사진 두 장과 생일 축하 문구를 담은 폴라로이드 틀 완성 예시" width="360" height="640" fetchpriority="high" decoding="async"><figcaption>폴라로이드 완성 예시</figcaption></figure>
+      <figure><img src="/frame/samples/fourcut.webp" alt="꽃 사진 네 장을 세로로 모은 네 컷 틀 완성 예시" width="360" height="640" decoding="async"><figcaption>네 컷 완성 예시</figcaption></figure>
+    </div>
+  </section>
+  <p class="toolPrivacy">무료로 이용할 수 있어요. 사진·영상은 이 기기에서만 편집해요.</p>
+
+  <section class="guideIntro" aria-labelledby="guideTitle">
+    <h2 id="guideTitle">꽃 선물 안내</h2>
+    <p>건네기 전 보관부터 받는 분께 안내 공유까지,<br>필요한 내용을 골라 보세요.</p>
+  </section>
   <div class="who" role="group" aria-label="어떤 분이세요">
     <button type="button" data-who="giver" class="on" aria-pressed="true" aria-controls="giver">선물하실 분</button>
     <button type="button" data-who="recipient" aria-pressed="false" aria-controls="recipient">선물 받으신 분</button>
@@ -195,14 +228,16 @@ footer nav a{color:var(--ink);text-underline-offset:3px}
     WHO = w;
     [].forEach.call(document.querySelectorAll('.who button'), function(b){ var selected = b.dataset.who === w; b.classList.toggle('on', selected); b.setAttribute('aria-pressed', String(selected)); });
     $('giver').classList.toggle('hidden', w !== 'giver'); $('recipient').classList.toggle('hidden', w !== 'recipient');
+    $('goFrameHero').href = w === 'giver' ? '/frame/?mode=giver' : '/frame/';
+    withFrom('goFrameHero');
     mountCare();
   }
   [].forEach.call(document.querySelectorAll('.who button'), function(b){ b.onclick = function(){ setWho(b.dataset.who); track('hello_who', {}); }; });
 
   // 꾸미기로 가는 링크에 들어온 곳(from)을 실어 보낸다
   function withFrom(id){ var a = $(id); var u = new URL(a.getAttribute('href'), location.origin); u.searchParams.set('from', FROM); a.href = u.pathname + u.search; }
-  ['goFrameG','goFrameR','goThanks','goSquare'].forEach(withFrom);
-  [['goFrameG','frame_giver'],['goFrameR','frame'],['goThanks','thanks'],['goSquare','square'],['goMessage','message'],['talkBtn','talk'],['fbLink','feedback'],['shopLink','shop']].forEach(function(x){ $(x[0]).addEventListener('click', function(){ track('hello_click', {target: x[1]}); }); });
+  ['goFrameHero','goFrameG','goFrameR','goThanks','goSquare'].forEach(withFrom);
+  [['goFrameHero','frame_hero'],['goFrameG','frame_giver'],['goFrameR','frame'],['goThanks','thanks'],['goSquare','square'],['goMessage','message'],['talkBtn','talk'],['fbLink','feedback'],['shopLink','shop']].forEach(function(x){ $(x[0]).addEventListener('click', function(){ track('hello_click', {target: x[1]}); }); });
 
   // ---------- 받는 분께 안내 보내기: 링크만 (보내는 분 정보 없음) ----------
   function guideURL(who, from){

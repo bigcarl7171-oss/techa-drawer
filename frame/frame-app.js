@@ -84,76 +84,141 @@
   }
 
   /* ---------- 문구 고르기: 받은 사람의 한마디(frame-phrases.json) · 카드 문구(data/message-phrases.json) ---------- */
-  var PH = {mine: null, card: null}, src = 'mine', target = 'txt';
-  ['txt','cap2','cap3'].forEach(function(id){ $(id).addEventListener('focus', function(){ target = id; }); });
-  function fill(id, v){ if ($('noCaption')) { $('noCaption').checked = false; captionState(); } $(id).value = v; $(id).dispatchEvent(new Event('input')); $(id).dispatchEvent(new Event('change')); }
-  function captionState(){ if ($('textFields')) $('textFields').classList.toggle('hidden', $('noCaption').checked); draw(); buildGrid(); }
-  if ($('noCaption')) $('noCaption').addEventListener('change', captionState);
-  function nextTarget(){
-    if (still()) return 'txt';
-    var ids = ['txt','cap2','cap3'];
-    if ($(target).value.trim() === '') return target;
-    for (var i = 0; i < ids.length; i++) if (!$(ids[i]).value.trim()) return ids[i];
+  var PH = {mine:null,card:null}, phrasePending = {mine:null,card:null}, phraseOcc = {mine:'',card:''};
+  var src = 'mine', target = 'txt', phraseGeneration = 0, captionUndo = null;
+  var CAPTION_IDS = ['txt','cap2','cap3'];
+  function captionLimit(id){var limit=Number($(id).maxLength);return limit>0?limit:(id==='txt'?60:40)}
+  function captionName(id){return still()?'문구':'문구 '+(CAPTION_IDS.indexOf(id)+1)}
+  function snapshotCaptions(){return {txt:$('txt').value,cap2:$('cap2').value,cap3:$('cap3').value,noCaption:$('noCaption').checked}}
+  function clearCaptionUndo(){captionUndo=null;$('undoPhrase').classList.add('hidden')}
+  function captionStatus(message){if($('phraseStatus').textContent!==message)$('phraseStatus').textContent=message}
+  function updateCaptionUI(){
+    $('textFields').classList.toggle('hidden',$('noCaption').checked);
+    $('cnt').textContent=$('txt').value.length+'/60 · 20자 안팎을 권해요';
+    $('cnt2').textContent=$('cap2').value.length+'/40';$('cnt3').textContent=$('cap3').value.length+'/40';
+  }
+  function captionState(){updateCaptionUI();draw();buildGrid()}
+  function writeCaptions(value){CAPTION_IDS.forEach(function(id){$(id).value=value[id]});$('noCaption').checked=value.noCaption;captionState()}
+  function applyCaptionValues(values,note){
+    var ids=Object.keys(values||{}),before=snapshotCaptions(),after=Object.assign({},before,{noCaption:false});
+    if(!ids.length||ids.some(function(id){return CAPTION_IDS.indexOf(id)<0||typeof values[id]!=='string'}))return false;
+    for(var i=0;i<ids.length;i++){
+      var id=ids[i];if(values[id].length>captionLimit(id)){captionStatus(captionName(id)+'는 '+captionLimit(id)+'자까지 넣을 수 있어요. 기존 문구는 그대로예요.');return false}
+      after[id]=values[id];
+    }
+    if(JSON.stringify(before)!==JSON.stringify(after)){
+      captionUndo={before:before,after:JSON.stringify(after)};writeCaptions(after);$('undoPhrase').classList.remove('hidden');
+    }
+    closePhrasePicker();document.querySelector('.panels').scrollTop=0;captionStatus(note||'문구를 적용했어요. 미리보기에서 확인해 주세요.');toast(note||'문구를 적용했어요');return true;
+  }
+  function undoCaptionChange(){
+    if(!captionUndo)return;
+    if(JSON.stringify(snapshotCaptions())!==captionUndo.after){clearCaptionUndo();captionStatus('직접 고친 문구는 그대로 두었어요.');return}
+    var previous=captionUndo.before;clearCaptionUndo();writeCaptions(previous);captionStatus('방금 문구 선택을 되돌렸어요.');
+  }
+  function fill(id,value){var values={};values[id]=value;return applyCaptionValues(values,captionName(id)+'에 적용했어요.')}
+  function nextTarget(){return still()?'txt':target}
+  function syncCaptionTarget(){
+    $('pickerTarget').classList.toggle('hidden',still());
+    [].forEach.call($('pickerTarget').querySelectorAll('[data-target]'),function(b){var on=b.dataset.target===target;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on))});
+    $('pickNote').textContent=captionName(nextTarget())+'에 넣어요. 문구를 누르면 바로 적용돼요.';
+  }
+  function setCaptionTarget(id){
+    target=still()||CAPTION_IDS.indexOf(id)<0?'txt':id;syncCaptionTarget();
+    if(PH[src]&&!$('phraseSheet').classList.contains('hidden')&&$('phraseLoading').classList.contains('hidden'))buildList();
     return target;
   }
-  async function loadPhrases(){
-    if (!PH.mine) { try { PH.mine = await (await fetch('/frame/frame-phrases.json')).json(); } catch (e) { PH.mine = {groups: []}; } }
-    // 카드 문구는 /message/ 페이지에서 읽는다. 원본 data/message-phrases.json 은 공개 자산이 아니고(.assetsignore),
-    // 그 페이지가 원본으로 찍은 정적 HTML 이라 문구를 고치면 여기에도 그대로 반영된다.
-    if (!PH.card) {
-      try {
-        var doc = new DOMParser().parseFromString(await (await fetch('/message/')).text(), 'text/html');
-        var labels = {}, tones = {};
-        [].forEach.call(doc.querySelectorAll('#occasionSelect option'), function(op){ labels[op.value] = op.textContent.trim(); });
-        [].forEach.call(doc.querySelectorAll('#toneChoices [data-tone]'), function(b){ tones[b.dataset.tone] = b.textContent.trim(); });
-        var occ = [].map.call(doc.querySelectorAll('section.msg-group[data-occasion]'), function(sec){
-          var ph = {};
-          [].forEach.call(sec.querySelectorAll('li.msg-item'), function(li){ var t = li.dataset.tone, p = li.querySelector('p'); if (t && p) (ph[t] = ph[t] || []).push(p.textContent.trim()); });
-          return {key: sec.dataset.occasion, label: labels[sec.dataset.occasion] || sec.dataset.occasion, phrases: ph};
-        });
-        PH.card = {occasions: occ, tones: tones};
-      } catch (e) { PH.card = {occasions: [], tones: {}}; }
-    }
+  CAPTION_IDS.forEach(function(id){
+    $(id).addEventListener('focus',function(){setCaptionTarget(id)});
+    $(id).addEventListener('input',function(){clearCaptionUndo();updateCaptionUI();captionStatus('직접 고친 문구가 미리보기에 반영돼요.')});
+  });
+  $('noCaption').addEventListener('change',function(){clearCaptionUndo();captionState();captionStatus(this.checked?'문구를 숨겼어요. 다시 켜면 쓴 내용이 돌아와요.':'문구를 다시 표시해요.')});
+  $('undoPhrase').onclick=undoCaptionChange;
+  function editCaption(){
+    closePhrasePicker();if($('noCaption').checked){$('noCaption').checked=false;clearCaptionUndo();captionState()}
+    var id=nextTarget();$(id).focus();$(id).scrollIntoView({block:'nearest'});
+  }
+  $('editPhrase').onclick=editCaption;$('phraseWrite').onclick=editCaption;
+  [].forEach.call($('pickerTarget').querySelectorAll('[data-target]'),function(b){b.onclick=function(){setCaptionTarget(b.dataset.target)}});
+  async function loadPhrases(which,force){
+    which=which||src;if(PH[which]&&!force)return PH[which];if(phrasePending[which])return phrasePending[which];
+    phrasePending[which]=bounded((async function(){
+      var response=await fetch(which==='mine'?'/frame/frame-phrases.json':'/message/');if(response.ok===false)throw new Error('phrases');
+      if(which==='mine'){
+        var data=await response.json();if(!data||!Array.isArray(data.groups))throw new Error('phrases');
+        var list=data.groups.filter(function(g){return g&&typeof g.key==='string'&&typeof g.label==='string'&&Array.isArray(g.lines)}).map(function(g){return {key:g.key,label:g.label,lines:g.lines.filter(function(t){return typeof t==='string'&&t.trim()}),flows:Array.isArray(g.flows)?g.flows.filter(function(f){return Array.isArray(f)&&f.length===3&&f.every(function(t){return typeof t==='string'})}):[]}}).filter(function(g){return g.lines.length});
+        if(!list.length)throw new Error('phrases');return {groups:list};
+      }
+      // 카드 문구도 공개 /message/ 한 곳을 원본으로 쓴다. 입력한 문구는 전송하지 않는다.
+      var doc=new DOMParser().parseFromString(await response.text(),'text/html'),labels={},tones={};
+      [].forEach.call(doc.querySelectorAll('#occasionSelect option'),function(op){labels[op.value]=op.textContent.trim()});
+      [].forEach.call(doc.querySelectorAll('#toneChoices [data-tone]'),function(b){tones[b.dataset.tone]=b.textContent.trim()});
+      var occ=[].map.call(doc.querySelectorAll('section.msg-group[data-occasion]'),function(sec){
+        var ph=Object.create(null);[].forEach.call(sec.querySelectorAll('li.msg-item'),function(li){var t=li.dataset.tone,p=li.querySelector('p');if(t&&p&&p.textContent.trim())(ph[t]=ph[t]||[]).push(p.textContent.trim())});
+        return {key:sec.dataset.occasion,label:labels[sec.dataset.occasion]||sec.dataset.occasion,phrases:ph};
+      }).filter(function(o){return Object.keys(o.phrases).length});
+      if(!occ.length)throw new Error('phrases');return {occasions:occ,tones:tones};
+    })(),10000).then(function(data){PH[which]=data;return data}).finally(function(){phrasePending[which]=null});
+    return phrasePending[which];
   }
   function groups(){
-    if (src === 'mine') return PH.mine.groups.map(function(g){ return {key: g.key, label: g.label}; });
-    return PH.card.occasions.map(function(o){ return {key: o.key, label: o.label}; });
+    if(!PH[src])return [];
+    return (src==='mine'?PH.mine.groups:PH.card.occasions).map(function(g){return {key:g.key,label:g.label}});
   }
   function buildOcc(){
-    var sel = $('occ'), prev = sel.value || (src === 'mine' ? S.phraseGroup : ''); sel.innerHTML = '';
-    groups().forEach(function(g){ var op = document.createElement('option'); op.value = g.key; op.textContent = g.label; sel.appendChild(op); });
-    if ([].some.call(sel.options, function(o){ return o.value === prev; })) sel.value = prev;
-    buildList();
+    var sel=$('occ'),all=groups(),prev=phraseOcc[src]||(src==='mine'?S.phraseGroup:'');sel.innerHTML='';
+    all.forEach(function(g){var op=document.createElement('option');op.value=g.key;op.textContent=g.label;sel.appendChild(op)});
+    sel.value=all.some(function(g){return g.key===prev})?prev:(all[0]?all[0].key:'');phraseOcc[src]=sel.value;buildList();
   }
-  function btn(label, cls, on){ var b = document.createElement('button'); b.type = 'button'; b.textContent = label; if (cls) b.className = cls; b.onclick = on; return b; }
-  function sub(t){ var d = document.createElement('div'); d.className = 'sub'; d.textContent = t; return d; }
+  function btn(label,cls,on){var b=document.createElement('button');b.type='button';b.textContent=label;if(cls)b.className=cls;b.onclick=on;return b}
+  function sub(t){var d=document.createElement('div');d.className='sub';d.textContent=t;return d}
+  function phraseButton(text){
+    var id=nextTarget(),limit=captionLimit(id),fits=text.length<=limit;
+    var b=btn(text+(fits?'':' ('+limit+'자까지 넣을 수 있어요)'),'',function(){var values={};values[nextTarget()]=text;applyCaptionValues(values,captionName(nextTarget())+'에 적용했어요.')});
+    b.disabled=!fits;b.setAttribute('aria-pressed',String(!$('noCaption').checked&&$(id).value===text));return b;
+  }
   function buildList(){
-    var L = $('plist'), key = $('occ').value; L.innerHTML = '';
-    if (src === 'mine') {
-      var g = PH.mine.groups.filter(function(x){ return x.key === key; })[0]; if (!g) return;
-      if (!still() && g.flows && g.flows.length) {
-        L.appendChild(sub('영상용 세 줄 흐름 — 누르면 세 칸이 한 번에 채워져요'));
-        g.flows.forEach(function(f){ L.appendChild(btn(f.join('  →  '), 'flow', function(){ fill('txt', f[0]); fill('cap2', f[1] || ''); fill('cap3', f[2] || ''); toast('세 줄을 넣었어요'); })); });
-        L.appendChild(sub('한 줄 문구'));
+    var L=$('plist'),key=$('occ').value;L.innerHTML='';if(!PH[src])return;
+    if(src==='mine'){
+      var g=PH.mine.groups.filter(function(x){return x.key===key})[0];if(!g)return;
+      g.lines.forEach(function(t){L.appendChild(phraseButton(t))});
+      if(!still()&&g.flows&&g.flows.length){
+        L.appendChild(sub('문구 1·2·3을 모두 바꾸는 묶음이에요. 순서대로 나타나요.'));
+        g.flows.forEach(function(f){var b=btn('문구 1·2·3 한 번에 넣기: '+f.join(' → '),'flow',function(){applyCaptionValues({txt:f[0],cap2:f[1],cap3:f[2]},'문구 1·2·3에 한 번에 적용했어요.')});b.disabled=f.some(function(t,i){return t.length>captionLimit(CAPTION_IDS[i])});L.appendChild(b)});
       }
-      g.lines.forEach(function(t){ L.appendChild(btn(t, '', function(){ var id = nextTarget(); fill(id, t); toast('문구를 넣었어요'); })); });
-    } else {
-      var o = PH.card.occasions.filter(function(x){ return x.key === key; })[0]; if (!o) return;
-      Object.keys(o.phrases).forEach(function(tk){
-        L.appendChild(sub(PH.card.tones[tk] || tk));
-        o.phrases[tk].forEach(function(t){ L.appendChild(btn(t, '', function(){ var id = nextTarget(); fill(id, t); toast('문구를 넣었어요'); })); });
-      });
+    }else{
+      var o=PH.card.occasions.filter(function(x){return x.key===key})[0];if(!o)return;
+      Object.keys(o.phrases).forEach(function(tk){L.appendChild(sub(PH.card.tones[tk]||tk));o.phrases[tk].forEach(function(t){L.appendChild(phraseButton(t))})});
     }
+    if(!L.children.length)L.appendChild(sub('이 상황의 문구가 아직 없어요. 다른 상황을 고르거나 직접 써 주세요.'));
+    L.scrollTop=0;
   }
-  $('pickPhrase').onclick = async function(){
-    var P = $('picker'); if (!P.classList.contains('hidden')) { P.classList.add('hidden'); return; }
-    await loadPhrases(); buildOcc(); P.classList.remove('hidden');
-  };
-  [].forEach.call(document.querySelectorAll('.tabs button'), function(b){ b.onclick = function(){
-    src = b.dataset.src; [].forEach.call(document.querySelectorAll('.tabs button'), function(x){ x.classList.toggle('on', x === b); });
-    $('pickNote').textContent = src === 'mine' ? '누르면 지금 고른 칸에 들어가요.' : '받은 카드의 말을 그대로 옮기고 싶을 때 써요. 누르면 지금 고른 칸에 들어가요.';
-    buildOcc(); }; });
-  $('occ').onchange = buildList;
+  async function refreshPhrasePicker(force){
+    var generation=++phraseGeneration,which=src;
+    $('phraseLoading').classList.remove('hidden');$('phraseError').classList.add('hidden');$('plist').innerHTML='';$('occ').disabled=true;
+    $('phraseSourceNote').textContent=src==='mine'?'꽃을 받거나 선물한 날을 사진에 남기는 말이에요.':'꽃과 함께 전하는 축하·감사 인사예요. 사진에도 넣을 수 있어요.';
+    try{
+      await loadPhrases(which,force);
+      if(generation!==phraseGeneration||src!==which||$('phraseSheet').classList.contains('hidden'))return;
+      $('occ').disabled=false;buildOcc();
+    }catch(e){
+      if(generation!==phraseGeneration||src!==which||$('phraseSheet').classList.contains('hidden'))return;
+      $('phraseErrorText').textContent='문구를 불러오지 못했어요. 다시 불러오거나 직접 써 주세요. 쓰던 문구는 그대로 있어요.';$('phraseError').classList.remove('hidden');
+    }finally{if(generation===phraseGeneration)$('phraseLoading').classList.add('hidden')}
+  }
+  async function openPhrasePicker(){
+    setCaptionTarget(target);$('pickPhrase').setAttribute('aria-expanded','true');showModal($('phraseSheet'),$('phraseClose'));return refreshPhrasePicker(false);
+  }
+  function closePhrasePicker(){++phraseGeneration;$('pickPhrase').setAttribute('aria-expanded','false');closeModal($('phraseSheet'))}
+  $('phraseSheet').dismiss=closePhrasePicker;$('phraseClose').onclick=closePhrasePicker;$('pickPhrase').onclick=openPhrasePicker;
+  $('phraseSheet').addEventListener('click',function(e){if(e.target===this)closePhrasePicker()});
+  $('retryPhrases').onclick=function(){return refreshPhrasePicker(true)};
+  [].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.onclick=function(){
+    phraseOcc[src]=$('occ').value;if(src===b.dataset.src)return;src=b.dataset.src;
+    [].forEach.call(document.querySelectorAll('.tabs button'),function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',String(on))});
+    return refreshPhrasePicker(false);
+  }});
+  $('occ').onchange=function(){phraseOcc[src]=this.value;buildList()};
 
   function thumb(id, target){ TechaFrame.render(target, id, opts(), 0.25); }
 
@@ -166,7 +231,22 @@
   window.addEventListener('resize', fitPreview);
   if(typeof ResizeObserver!=='undefined')new ResizeObserver(fitPreview).observe($('pv'));
   if(window.visualViewport)window.visualViewport.addEventListener('resize',fitPreview);
-  if(typeof ResizeObserver!=='undefined')new ResizeObserver(fitPreview).observe($('pv'));
+  // 같은 캔버스의 표시 영역만 넓힌다. 고른 사진·문구·편집 상태는 유지한다.
+  function setPreviewExpanded(expanded){
+    document.body.classList.toggle('previewExpanded',expanded);
+    $('expandPreview').setAttribute('aria-expanded',String(expanded));
+    $('expandPreview').setAttribute('aria-label',expanded?'미리보기 줄이고 편집 도구 보기':'미리보기 크게 보기');
+    $('expandPreview').textContent=expanded?'도구 다시 보기':'크게 보기';
+    $('editorControls').inert=expanded;
+    $('editorControls').setAttribute('aria-hidden',String(expanded));
+    requestAnimationFrame(fitPreview);
+  }
+  $('expandPreview').onclick=function(){setPreviewExpanded(!document.body.classList.contains('previewExpanded'))};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!e.defaultPrevented&&!modalStack.length&&document.body.classList.contains('previewExpanded')){
+      e.preventDefault();setPreviewExpanded(false);$('expandPreview').focus();
+    }
+  });
   function buildGrid(){
     TechaFrame.loadFonts(textNow()).then(buildGridNow);
   }
@@ -239,7 +319,7 @@
     $('kindNote').textContent = NOTE[k]; $('saveBtn').textContent = SAVE[k];
     $('motion').classList.toggle('hidden', k !== 'video' && k !== 'gif');
     $('moreCaps').classList.toggle('hidden', still()); $('capLabel').textContent = still() ? '문구' : '문구 1';
-    if (!$('picker').classList.contains('hidden')) buildList();
+    setCaptionTarget(target);
     draw();
     requestAnimationFrame(fitPreview);
   }
@@ -359,6 +439,7 @@
   function enterEditor(){
     S.sel = 0;
     buildThumbs(); buildWhich();
+    setPreviewExpanded(false);
     $('s1').classList.add('hidden'); $('introBar').classList.add('hidden'); document.body.classList.add('editing');
     setTimeout(function(){ $('hint').classList.add('fade'); }, 3000);
     ['s2','bar'].forEach(function(id){$(id).classList.remove('hidden')});
@@ -595,7 +676,6 @@
   if (/[?&]demo=1/.test(location.search)) usePhotos(['/assets/images/home/hydrangea-pink.jpg','/assets/images/home/glassdome-rose.jpg']);
   if (/[?&]demo=8/.test(location.search)) usePhotos(['hydrangea-pink','glassdome-rose','hydrangea-blue','pinkpeach-bouquet','red-rose-bouquet','sunflower-bouquet','rose-soap-bouquet','glassdome-hydrangea'].map(function(n){ return '/assets/images/home/' + n + '.jpg'; }));
 
-  $('txt').addEventListener('input', function(){ $('cnt').textContent = $('txt').value.length + '/60 · 20자 안팎이 가장 예뻐요'; });
   ['cap2','cap3'].forEach(function(id){ $(id).addEventListener('input', draw); });
   ['txt','from','recv','bright','warm','mk'].forEach(function(id){ $(id).addEventListener('input', draw); $(id).addEventListener('change', function(){ draw(); if(id!=='bright'&&id!=='warm') buildGrid(); }); });
   $('zoom').addEventListener('input', function(){ var p=S.photos[S.sel]; if(p){p.adj.zoom=+$('zoom').value; draw();} });
@@ -604,7 +684,7 @@
 
   // 미리보기에서 끌어서 사진 위치 옮기기
   var drag=null;
-  $('pv').addEventListener('pointerdown', function(e){ var p=S.photos[S.sel]; if(!p) return; drag={x:e.clientX,y:e.clientY,dx:p.adj.dx,dy:p.adj.dy,w:$('pv').clientWidth}; $('hint').classList.add('hidden'); $('pv').setPointerCapture(e.pointerId); });
+  $('pv').addEventListener('pointerdown', function(e){ var p=S.photos[S.sel]; if(!p||e.target!==$('main')||e.button>0) return; var r=$('main').getBoundingClientRect();drag={x:e.clientX,y:e.clientY,dx:p.adj.dx,dy:p.adj.dy,w:Math.max(1,r.width)}; $('hint').classList.add('hidden'); $('pv').setPointerCapture(e.pointerId); });
   $('pv').addEventListener('pointermove', function(e){ if(!drag) return; var p=S.photos[S.sel], k=2.4/drag.w;
     p.adj.dx=Math.max(-1,Math.min(1,drag.dx-(e.clientX-drag.x)*k)); p.adj.dy=Math.max(-1,Math.min(1,drag.dy-(e.clientY-drag.y)*k)); draw(); });
   ['pointerup','pointercancel'].forEach(function(ev){ $('pv').addEventListener(ev, function(){ if(drag){drag=null; buildGrid();} }); });
@@ -893,9 +973,8 @@
   if (Q.mode === 'thanks') {
     if (!Q.tpl) S.tpl = 'polaroid';
     $('txt').value = '보내 준 꽃, 잘 받았어요. 고마워요'; $('cnt').textContent = $('txt').value.length + '/60 · 20자 안팎이 가장 예뻐요';
-    document.querySelector('#s1 h1').innerHTML = '보내 주신 분께<br>고맙다고 전해 보세요';
-    document.querySelector('#s1 .eyebrow').textContent = '꽃을 받은 사진으로';
-    document.querySelector('#s1 .lead').textContent = '받은 꽃 사진에 고마운 마음을 한 줄 담아, 카톡으로 바로 보낼 수 있어요.';
+    document.querySelector('#s1 .eyebrow').textContent = '테차 무료 사진 도구 · 고마움 전하기';
+    document.querySelector('#s1 .lead').textContent = '받은 꽃 사진에 틀과 고마운 문구를 더해 보세요. 완성한 파일을 저장하거나 공유할 수 있어요.';
 
     S.phraseGroup = 'reply';
   }
@@ -903,9 +982,8 @@
   if (Q.mode === 'giver') {
     if($('guideLink')){$('guideLink').textContent='선물하실 분 안내서 ›';$('guideLink').href='/hello/?to=giver';}
     $('txt').value = '오늘, 마음을 전했어요'; $('cnt').textContent = $('txt').value.length + '/60 · 20자 안팎이 가장 예뻐요';
-    document.querySelector('#s1 h1').innerHTML = '건넨 순간을<br>예쁘게 남겨 보세요';
-    document.querySelector('#s1 .eyebrow').textContent = '선물하신 날의 사진으로';
-    document.querySelector('#s1 .lead').textContent = '받는 분의 표정과 꽃을 담은 사진을 고르면 틀 15가지가 입혀져요. 여러 장이면 움직이는 영상으로도 만들 수 있어요.';
+    document.querySelector('#s1 .eyebrow').textContent = '테차 무료 사진 도구 · 선물하실 분께';
+    document.querySelector('#s1 .lead').textContent = '꽃을 건넨 순간의 사진·영상에 틀과 문구를 더해 보세요. 완성한 파일을 저장하거나 공유할 수 있어요.';
     S.phraseGroup = 'gave';
   }
   if (Q.kind && /^(photo|gif|square)$/.test(Q.kind)) setTimeout(function(){setKind(Q.kind)},0);
@@ -949,15 +1027,15 @@
   /* ---------- 휴대폰 뒤로가기: 열린 창부터 닫고, 편집 중에는 한 번 더 눌러야 나간다 ---------- */
   (function(){
     var armed = 0;
-    function overlays(){ return ['vsheet','ready'].filter(function(id){ return !$(id).classList.contains('hidden'); }); }
     function guard(){ try { history.pushState({frame: 1}, ''); } catch (e) {} }
     // 편집 화면에 들어가면 뒤로가기 한 번을 붙잡을 자리를 만든다
     var mo = new MutationObserver(function(){ if (document.body.classList.contains('editing') && !guard.done) { guard.done = true; guard(); } });
     mo.observe(document.body, {attributes: true, attributeFilter: ['class']});
     window.addEventListener('popstate', function(){
-      var open = overlays();
       if(job){job.cancel=true;guard();return;}
-      if (open.length) { open.forEach(function(id){ if (id === 'vsheet') $('vsClose').click(); if (id === 'ready') $('rClose').click(); }); guard(); return; }
+      var top=modalStack.length?modalStack[modalStack.length-1].el:null;
+      if(top){if(top.id==='vsheet')$('vsClose').click();else if(top.id==='ready')$('rClose').click();else if(top.dismiss)top.dismiss();guard();return;}
+      if (document.body.classList.contains('previewExpanded')) { setPreviewExpanded(false); guard(); return; }
       if (!document.body.classList.contains('editing')) return;
       if (Date.now() - armed < 2500) { history.back(); return; }
       armed = Date.now(); toast('한 번 더 누르면 나가요. 만들던 사진은 저장되지 않아요'); guard();
@@ -965,7 +1043,7 @@
   })();
 
   // 화면 확인용 (사진은 어디로도 보내지 않는다)
-  window.__techaFrame = { setTpl: function(id){ S.tpl = id; draw(); }, setKind: setKind, make: make, mime: VIDEO_MIME, codec: webcodecsCodec, setText: function(t){ $('txt').value = t; draw(); }, openVideoFile: async function(u){ var b = await (await fetch(u)).blob(); return openVideo(new File([b], 'test.mp4', {type: 'video/mp4'})); }, setCaps: function(a){ fill('txt', a[0] || ''); fill('cap2', a[1] || ''); fill('cap3', a[2] || ''); } };
+  window.__techaFrame = { setTpl: function(id){ S.tpl = id; draw(); }, setKind: setKind, make: make, mime: VIDEO_MIME, codec: webcodecsCodec, setText: function(t){ fill('txt',t); }, openVideoFile: async function(u){ var b = await (await fetch(u)).blob(); return openVideo(new File([b], 'test.mp4', {type: 'video/mp4'})); }, setCaps: function(a){ applyCaptionValues({txt:a[0]||'',cap2:a[1]||'',cap3:a[2]||''}); } };
 
   Promise.all([TechaFrame.loadFonts(), loadImg('/assets/icons/techa-wordmark.png')]).then(function(r){ S.logo = r[1]; if(S.photos.length){ buildGrid(); draw(); } });
 })();
