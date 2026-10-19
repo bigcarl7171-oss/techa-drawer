@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<title>받은 꽃 사진 꾸미기 · 테차 꽃공방</title>
+<title>꽃 사진 꾸미기 · 테차 꽃공방</title>
 <meta name="description" content="꽃을 선물한 순간과 받은 날의 사진을 틀 15가지로 꾸며 저장하고 공유할 수 있어요. 사진·영상은 서버로 전송하지 않고 이 기기 안에서 처리해요.">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -30,18 +30,19 @@ h1{font-family:'Gowun Batang',serif;font-size:27px;line-height:1.35;color:var(--
 .note a{color:var(--blue);text-underline-offset:2px}
 canvas{max-width:100%;height:auto}
 
-/* 첫 화면 */
-.eyebrow{font-size:14px;font-weight:600;color:var(--blue);margin:22px 0 0}
-#s1 h1{margin-top:6px}
-.samples{display:flex;gap:10px;margin:4px 0 6px}
-.samples button{flex:1;min-width:0;padding:0;border:0;background:none;cursor:pointer;text-align:center;color:var(--body);font:500 12px Pretendard}
-.samples img{width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;display:block;border-radius:10px;box-shadow:0 6px 18px rgba(58,50,43,.16);background:#eee8de}
-.samples span{display:block;margin-top:6px}
-.samplenote{font-size:12px;color:var(--muted);text-align:center;margin:4px 0 18px}
-.steps{list-style:none;padding:0;margin:0 0 14px;display:flex;flex-direction:column;gap:8px}
-.steps li{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--hair);border-radius:12px;padding:12px 14px;font-size:15px;color:var(--ink)}
-.steps b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--blue-soft);color:var(--blue);font-size:13px;display:flex;align-items:center;justify-content:center}
-.steps small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+/* 첫 화면: 도구 이름과 실제 완성 예시를 먼저 */
+.eyebrow{font-size:14px;font-weight:600;color:var(--body);margin:18px 0 0}
+#s1 h1{margin-top:6px;font-size:30px}
+#s1 .lead{margin-bottom:16px}
+.samples{display:flex;gap:12px;margin:0 -2px 6px;padding:4px 2px 10px;overflow-x:auto;scroll-snap-type:x proximity}
+.samples button{flex:0 0 clamp(118px,19.125dvh,186px);min-width:0;padding:0;border:0;background:none;cursor:pointer;text-align:center;color:var(--body);font:500 13px Pretendard;scroll-snap-align:center}
+.samples img{width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;display:block;border-radius:10px;box-shadow:0 4px 12px rgba(58,50,43,.16);background:#eee8de}
+.samples span{display:block;margin-top:8px;min-height:24px}
+.samplenote{font-size:13px;line-height:1.55;color:var(--body);margin:0 0 18px}
+.steps{list-style:none;padding:14px 0;margin:0 0 14px;display:flex;gap:12px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.steps li{display:flex;align-items:flex-start;gap:7px;flex:1;font-size:13px;line-height:1.5;color:var(--ink)}
+.steps b{flex:0 0 20px;height:20px;border-radius:50%;background:var(--blue-soft);color:var(--ink);font-size:12px;display:flex;align-items:center;justify-content:center}
+.toolLimits{font-size:13px;line-height:1.6;color:var(--body);margin:0 0 10px}
 .safe{display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.55;color:var(--muted);margin:0 2px}
 .pick{display:block;width:100%;padding:16px;border:0;border-radius:12px;background:var(--amber);color:var(--amber-ink);font:700 17px Pretendard,sans-serif;cursor:pointer}
 .pick small{display:block;font:500 12px Pretendard;color:var(--amber-ink);opacity:.8;margin-top:2px}
@@ -56,10 +57,13 @@ body.editing header{margin-bottom:8px}
 body.editing header{flex:0 0 auto}
 #s2:not(.hidden){display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
 .stage{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
-.preview{position:relative;touch-action:none;display:flex;justify-content:center;flex:1 1 auto;min-height:100px;overflow:hidden}
+.preview{position:relative;touch-action:none;display:flex;align-items:center;justify-content:center;flex:1 1 auto;min-height:100px;overflow:hidden}
 .preview canvas{height:100%;width:auto;max-width:100%;aspect-ratio:9/16;display:block;border-radius:10px;box-shadow:0 6px 20px rgba(58,50,43,.16);background:#eee8de}
+.previewTools{position:absolute;top:4px;right:4px;z-index:2}
+.previewTools button{min-height:44px;padding:8px 12px;border:1px solid var(--hair);border-radius:10px;background:var(--card);color:var(--ink);font:600 13px Pretendard;cursor:pointer;touch-action:manipulation;box-shadow:0 2px 8px rgba(58,50,43,.08)}
 .controls{flex:0 0 auto;display:flex;flex-direction:column;min-height:0}
-.panels{max-height:30vh;max-height:clamp(174px,30dvh,270px);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 2px 10px;overscroll-behavior:contain}
+.panels{max-height:23vh;max-height:clamp(148px,23dvh,200px);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 2px 8px;overscroll-behavior:contain}
+body.previewExpanded .controls,body.previewExpanded .kindLabel,body.previewExpanded .seg,body.previewExpanded .kindNote{display:none}
 .hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);background:rgba(58,50,43,.72);color:#fff;font-size:12px;padding:4px 10px;border-radius:999px;pointer-events:none;white-space:nowrap;transition:opacity .4s}
 .hint.fade{opacity:0}
 body.editing header span{display:none}
@@ -68,9 +72,9 @@ body.editing header .fb{display:inline}
 .feedback{margin:14px 2px 0;padding:14px;border:1px solid var(--hair);border-radius:12px;background:var(--card);font-size:13px;line-height:1.65;color:var(--body)}
 .feedback a{display:inline-block;margin-top:6px;font-weight:700;color:var(--blue);text-underline-offset:3px}
 .strip{flex:0 0 auto;display:flex;gap:8px;overflow-x:auto;padding:8px 2px 2px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
-.strip button{flex:0 0 74px;scroll-snap-align:start;padding:0;border:0;background:none;cursor:pointer;text-align:center;color:var(--body);font:500 11px/1.3 Pretendard}
-.strip canvas{width:74px;height:132px;display:block;border-radius:8px;border:2px solid transparent;background:#eee8de}
-.strip.sq canvas{height:74px;border-radius:50%}
+.strip button{flex:0 0 56px;scroll-snap-align:start;padding:0;border:0;background:none;cursor:pointer;text-align:center;color:var(--body);font:500 11px/1.3 Pretendard}
+.strip canvas{width:56px;height:100px;display:block;border-radius:8px;border:2px solid transparent;background:#eee8de}
+.strip.sq canvas{height:56px;border-radius:50%}
 .preview.sq canvas{aspect-ratio:1/1;border-radius:50%}
 .inapp{background:#fff7e6;border:1px solid #f0dca8;border-radius:12px;padding:12px 14px;margin:0 0 12px;font-size:13px;line-height:1.55;color:var(--amber-ink)}
 .inapp button{margin-top:8px;border:0;background:var(--amber);color:var(--amber-ink);border-radius:999px;padding:8px 14px;font:700 13px Pretendard;cursor:pointer}
@@ -111,6 +115,36 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 .repick{margin-top:10px;border:1px solid var(--hair);background:#fff;border-radius:10px;padding:10px 14px;font:600 14px Pretendard;color:var(--ink);cursor:pointer}
 .pickbtn{width:100%;margin-top:10px;border:1px solid var(--blue);background:var(--blue-soft);color:var(--ink);border-radius:10px;padding:12px 14px;font:600 15px Pretendard;cursor:pointer}
 .picker{margin-top:10px;border:1px solid var(--hair);border-radius:12px;background:#fff;padding:12px}
+.captionActions{display:flex;gap:8px;padding-top:4px}
+.captionActions button{min-height:44px;margin:0;padding:10px 12px;font-size:14px}
+.captionActions .pickbtn{flex:1}
+.captionActions .repick{flex:0 0 auto}
+.phraseFeedback{display:flex;align-items:center;gap:8px;min-height:38px;margin:4px 0 0}
+.phraseFeedback p{flex:1;margin:0;font-size:13px;line-height:1.5;color:var(--body)}
+.phraseFeedback button{flex:0 0 auto}
+.captionCount{font-size:12px;font-weight:400;color:var(--body)}
+.phraseSheet{position:fixed;inset:0;z-index:45;display:flex;align-items:flex-end;justify-content:center;background:rgba(58,50,43,.45);padding:20px 12px 0}
+.phraseBox{width:min(560px,100%);height:min(720px,90vh);height:min(720px,90dvh);display:flex;flex-direction:column;min-height:0;background:var(--canvas);border-radius:18px 18px 0 0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));box-shadow:0 -6px 24px rgba(58,50,43,.12)}
+.phraseHead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:0 0 auto}
+.phraseHead h2{font:700 21px/1.4 'Gowun Batang',serif;color:var(--ink);margin:0}
+.phraseHead .quietbtn{padding-right:0}
+.phraseBox .picker{display:flex;flex:1 1 auto;flex-direction:column;min-height:0;margin:0;padding:0;border:0;background:none}
+.phraseTarget{display:flex;gap:6px;margin:4px 0 8px;flex:0 0 auto}
+.phraseTarget button{flex:1;min-height:44px;border:1px solid var(--hair);border-radius:10px;padding:8px;background:var(--card);color:var(--ink);font:600 14px Pretendard;cursor:pointer}
+.phraseTarget button.on{background:var(--blue-soft);border-color:var(--blue)}
+.phraseBox .tabs{flex:0 0 auto;margin:8px 0 0}
+.phraseBox label{margin:6px 0 4px;font-size:13px}
+.phraseBox .note{color:var(--body);margin:6px 0}
+.phraseBox select{flex:0 0 auto;min-height:44px;margin:0 0 6px}
+.phraseBox .plist{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:2px 2px 12px}
+.phraseBox .plist button{flex:0 0 auto;min-height:48px;padding:13px 12px}
+.phraseBox .plist button[aria-pressed=true]{border-color:var(--blue);background:var(--blue-soft)}
+.phraseBox .plist button:disabled{opacity:1;color:var(--muted);cursor:not-allowed}
+.phraseBox .plist .sub{color:var(--body);margin:8px 0 2px}
+.phraseLoad,.phraseError{font-size:14px;line-height:1.6;color:var(--ink);padding:16px 0}
+.phraseError button{display:block;min-height:44px;margin:12px 0 0;border:1px solid var(--hair);border-radius:10px;padding:10px 16px;background:var(--card);color:var(--ink);font:600 14px Pretendard;cursor:pointer}
+.phraseFoot{flex:0 0 auto;display:flex;gap:8px;align-items:center;border-top:1px solid var(--hair);padding-top:6px}
+.phraseFoot p{flex:1;font-size:12px;line-height:1.5;margin:0;color:var(--body)}
 .tabs{display:flex;gap:6px;margin-bottom:10px}
 .tabs button{flex:1;border:1px solid var(--hair);background:#fff;border-radius:10px;padding:9px 6px;font:600 13px Pretendard;color:var(--body);cursor:pointer}
 .tabs button.on{background:var(--blue-soft);border-color:var(--blue);color:var(--ink)}
@@ -194,7 +228,23 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 .sheetbtns{display:flex;flex-direction:column;gap:10px;width:min(320px,86vw)}
 .sheetbtns .btn{flex:none;width:100%}
 .seg button,.ptabs button,.tabs button,.chips button,.lens button{min-height:44px}
-@media(max-height:650px){.rprev video,.rprev img{max-height:30vh}.vs video{max-height:25vh}.busy{padding:16px;gap:8px}.panels{max-height:174px}}
+@media(min-width:900px){
+  body.editing .wrap{max-width:1120px;padding-left:24px;padding-right:24px}
+  #s2:not(.hidden){display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:28px}
+  .stage{min-width:0}
+  .controls{border:1px solid var(--hair);border-radius:14px;background:var(--card);padding:12px;overflow:hidden}
+  .ptabs{margin-top:0;flex:0 0 auto}
+  .panels{max-height:none;flex:1 1 auto;padding-top:8px}
+  .strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;overflow:visible}
+  .strip canvas{width:100%;height:auto;aspect-ratio:9/16}
+  .strip.sq canvas{height:auto;aspect-ratio:1}
+  body.previewExpanded #s2{grid-template-columns:minmax(0,1fr)}
+  #bar .in{max-width:1072px;justify-content:flex-end}
+  #bar .btn{flex:0 1 175px}
+}
+@media(max-height:650px){.rprev video,.rprev img{max-height:30vh}.vs video{max-height:25vh}.busy{padding:16px;gap:8px}}
+@media(max-width:899px) and (max-height:650px){.panels{max-height:148px}}
+@media(max-height:520px){.phraseBox{height:96vh;height:96dvh;overflow-y:auto}.phraseBox .picker{flex:none;min-height:220px}.phraseBox .plist{flex:none;overflow:visible}.phraseFoot{margin-top:8px}}
 @media(max-height:500px){body.editing .wrap{height:auto;min-height:calc(100dvh - 76px);padding-bottom:90px}#s2:not(.hidden){flex:none;min-height:520px}.stage{min-height:250px}.preview{min-height:150px}.panels{max-height:200px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
@@ -207,20 +257,21 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 
   <!-- 첫 화면 -->
   <section id="s1">
-    <p class="eyebrow">테차 꽃을 받으셨나요?</p>
-    <h1>꽃 사진을<br>예쁘게 꾸며 드려요</h1>
-    <p class="lead">받은 꽃 사진을 고르면 이렇게 바뀌어요. 인스타 스토리와 카톡에 바로 올릴 수 있어요.</p>
-    <div class="samples">
+    <p class="eyebrow">테차 무료 사진 도구</p>
+    <h1>꽃 사진 꾸미기</h1>
+    <p class="lead">내 사진·영상에 틀과 문구를 더하고, 완성한 파일을 저장하거나 공유할 수 있어요.</p>
+    <div class="samples" role="group" aria-label="직접 만들 수 있는 완성 예시">
       <button type="button" data-tpl="polaroid"><img src="/frame/samples/polaroid.webp" alt="폴라로이드 틀 예시" width="360" height="640"><span>폴라로이드</span></button>
       <button type="button" data-tpl="fourcut"><img src="/frame/samples/fourcut.webp" alt="네 컷 틀 예시" width="360" height="640"><span>네 컷</span></button>
       <button type="button" data-tpl="night"><img src="/frame/samples/night.webp" alt="무드등 밤 틀 예시" width="360" height="640"><span>무드등 밤</span></button>
     </div>
-    <p class="samplenote">마음에 드는 예시를 누르면 그 틀로 시작해요 · 틀은 모두 15가지</p>
+    <p class="samplenote">이렇게 만들 수 있어요. 마음에 드는 예시를 누르면 그 틀로 시작해요.</p>
     <ol class="steps">
-      <li><b>1</b><div>사진·동영상 고르기<small>사진은 8장까지, 찍은 동영상도 한 편(최대 8초)</small></div></li>
-      <li><b>2</b><div>틀과 문구 고르기<small>어울리는 문구도 골라 드려요</small></div></li>
-      <li><b>3</b><div>저장하고 공유하기<small>완성된 모습을 확인한 뒤 인스타·카톡에서 올려요</small></div></li>
+      <li><b>1</b><span>내 사진 고르기</span></li>
+      <li><b>2</b><span>틀·문구 꾸미기</span></li>
+      <li><b>3</b><span>저장·공유하기</span></li>
     </ol>
+    <p class="toolLimits">세로 틀 15가지 · 카톡 프사 틀 3가지<br>사진은 8장까지, 동영상은 한 편에서 최대 8초까지 넣을 수 있어요. 일부 휴대폰에서는 영상 넣기가 어려울 수 있어요.</p>
     <p class="safe">사진·영상·문구는 서버로 전송하지 않고 이 기기 안에서 꾸며요. 직접 공유하기를 누르기 전에는 다른 앱으로 보내지 않아요.</p>
     <details class="photoTips"><summary>꽃이 잘 보이게 찍는 요령</summary><ul><li>직사광선보다 부드러운 창가 빛에서 찍어 보세요.</li><li>배경을 간단히 정리하고 꽃을 눌러 초점을 맞춰 주세요.</li><li>전체 모습과 가까이 찍은 모습을 함께 골라 보세요.</li></ul></details>
   </section>
@@ -236,10 +287,10 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
         <button type="button" data-k="square" role="radio" aria-checked="false" tabindex="-1">카톡 프사</button>
       </div>
       <p class="kindNote" id="kindNote">움직이지 않는 사진으로 만들어요.</p>
-      <div class="preview" id="pv"><canvas id="main" role="img" aria-label="꾸민 꽃 사진 미리보기"></canvas><div class="hint" id="hint">끌어서 위치 조정</div><div class="motion hidden" id="motion">움직임 미리보기</div></div>
+      <div class="preview" id="pv"><canvas id="main" role="img" aria-label="꾸민 꽃 사진 미리보기"></canvas><div class="previewTools"><button type="button" id="expandPreview" aria-expanded="false" aria-controls="pv" aria-label="미리보기 크게 보기">크게 보기</button></div><div class="hint" id="hint">끌어서 위치 조정</div><div class="motion hidden" id="motion">움직임 미리보기</div></div>
     </div>
 
-    <div class="controls">
+    <div class="controls" id="editorControls">
     <div class="ptabs" role="tablist" aria-label="꾸미기 도구">
       <button type="button" id="tabTpl" data-p="pTpl" class="on" role="tab" aria-selected="true" aria-controls="pTpl">틀</button>
       <button type="button" id="tabText" data-p="pText" role="tab" aria-selected="false" aria-controls="pText" tabindex="-1">문구</button>
@@ -253,21 +304,16 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
       <div class="strip" id="grid" aria-label="틀 고르기"></div>
     </div>
     <div class="panel hidden" id="pText" role="tabpanel" aria-labelledby="tabText">
+      <div class="captionActions"><button type="button" class="pickbtn" id="pickPhrase" aria-haspopup="dialog" aria-controls="phraseSheet" aria-expanded="false">문구 골라 넣기</button><button type="button" class="repick" id="editPhrase">직접 쓰기</button></div>
+      <div class="phraseFeedback"><p id="phraseStatus" role="status" aria-live="polite">고른 문구는 미리보기에 바로 들어가요.</p><button type="button" id="undoPhrase" class="quietbtn hidden" aria-label="방금 문구 선택 되돌리기">되돌리기</button></div>
       <label class="noCaption"><input id="noCaption" type="checkbox">문구 없이 만들기</label>
       <div id="textFields">
       <label for="txt"><span id="capLabel">문구</span> <span id="cnt" style="font-weight:400;color:var(--muted);font-size:13px">0/60 · 20자 안팎이 가장 예뻐요</span></label>
       <textarea id="txt" maxlength="60" placeholder="오늘, 꽃이 도착했어요"></textarea>
       <div id="moreCaps" class="hidden">
-        <input id="cap2" class="capin" type="text" maxlength="40" placeholder="문구 2 (선택)">
-        <input id="cap3" class="capin" type="text" maxlength="40" placeholder="문구 3 (선택)">
+        <label for="cap2">문구 2 (선택) <span class="captionCount" id="cnt2">0/40</span></label><input id="cap2" class="capin" type="text" maxlength="40" placeholder="두 번째로 보여 줄 문구">
+        <label for="cap3">문구 3 (선택) <span class="captionCount" id="cnt3">0/40</span></label><input id="cap3" class="capin" type="text" maxlength="40" placeholder="세 번째로 보여 줄 문구">
         <p class="note">영상·GIF에서는 문구가 차례로 하나씩 나와요. 하나만 쓰면 계속 보여요.</p>
-      </div>
-      <button type="button" class="pickbtn" id="pickPhrase">어울리는 문구 고르기</button>
-      <div class="picker hidden" id="picker">
-        <div class="tabs"><button type="button" data-src="mine" class="on">추천 문구</button><button type="button" data-src="card">카드 문구</button></div>
-        <select id="occ" aria-label="상황 고르기"></select>
-        <div class="plist" id="plist"></div>
-        <p class="note" id="pickNote">누르면 지금 고른 칸에 들어가요.</p>
       </div>
       </div>
       <details id="metaFields"><summary>이름·날짜 설정</summary><div class="row">
@@ -308,13 +354,29 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 </div>
 
 <div class="bar" id="introBar"><div class="in" style="flex-direction:column;gap:6px">
-  <button class="pick" id="pickBtn" type="button">사진 고르기<small>사진은 차례로 눌러 여러 장, 동영상도 한 편 넣을 수 있어요</small></button>
+  <button class="pick" id="pickBtn" type="button">내 사진·영상 고르기<small>사진 8장까지 · 동영상 한 편, 최대 8초</small></button>
 </div></div>
 <div class="bar hidden" id="bar"><div class="in">
   <button class="btn sub" id="saveBtn" type="button">저장</button>
   <button class="btn cta" id="shareBtn" type="button">공유하기</button>
 </div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="phraseSheet hidden" id="phraseSheet" role="dialog" aria-modal="true" aria-labelledby="phraseTitle" aria-describedby="pickNote" tabindex="-1">
+  <div class="phraseBox">
+    <div class="phraseHead"><h2 id="phraseTitle">문구 골라 넣기</h2><button type="button" id="phraseClose" class="quietbtn">닫기</button></div>
+    <p class="note" id="pickNote">문구를 누르면 바로 적용돼요.</p>
+    <div class="phraseTarget hidden" id="pickerTarget" role="group" aria-label="문구를 넣을 칸"><button type="button" data-target="txt" class="on" aria-pressed="true">문구 1</button><button type="button" data-target="cap2" aria-pressed="false">문구 2</button><button type="button" data-target="cap3" aria-pressed="false">문구 3</button></div>
+    <div class="picker" id="picker">
+      <div class="tabs" role="group" aria-label="문구 모음"><button type="button" data-src="mine" class="on" aria-pressed="true">사진 문구</button><button type="button" data-src="card" aria-pressed="false">카드 문구</button></div>
+      <p class="note" id="phraseSourceNote">꽃 사진과 함께 남길 문구예요.</p>
+      <label for="occ">상황 고르기</label><select id="occ" aria-label="상황 고르기"></select>
+      <div class="phraseLoad hidden" id="phraseLoading" role="status">문구를 불러오고 있어요.</div>
+      <div class="phraseError hidden" id="phraseError" role="status"><span id="phraseErrorText">문구를 불러오지 못했어요. 직접 쓴 문구는 그대로 있어요.</span><button type="button" id="retryPhrases">다시 불러오기</button></div>
+      <div class="plist" id="plist"></div>
+    </div>
+    <div class="phraseFoot"><p>문구를 고른 뒤에도 직접 고치거나 되돌릴 수 있어요.</p><button type="button" id="phraseWrite" class="quietbtn">직접 쓰기</button></div>
+  </div>
+</div>
 <div class="busy hidden" id="ready" role="dialog" aria-modal="true" aria-labelledby="readyMsg" tabindex="-1"><div id="readyMsg">다 만들었어요</div>
   <div class="rprev" id="rprev"></div>
   <p class="resultMeta" id="resultMeta"></p>
