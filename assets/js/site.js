@@ -31,7 +31,7 @@
     { slug: "char-counter", name: "글자수 세기", emoji: "🔤", cat: "text",
       desc: "공백 포함/제외·바이트·단어수", status: "live", path: "/ko/char-counter/" },
     { slug: "lotto", name: "로또 번호 추첨기", emoji: "🎱", cat: "fun",
-      desc: "1~45 랜덤 6개+보너스, 제외수 옵션", status: "live", path: "/ko/lotto/" },
+      desc: "번호 6개·포함·제외·번호함·이미지 저장", status: "live", path: "/ko/lotto/" },
     { slug: "ladder", name: "사다리 타기", emoji: "🪜", cat: "fun",
       desc: "내기·순서 정하기 랜덤 사다리", status: "live", path: "/ko/ladder/" },
     { slug: "menu-roulette", name: "오늘 뭐 먹지? 메뉴 룰렛", emoji: "🍽️", cat: "fun",

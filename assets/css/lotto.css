@@ -1,4 +1,5 @@
 /* 로또 도구 전용: 공통 메뉴와 다른 도구의 디자인에는 영향을 주지 않는다. */
+.lotto-saved-shortcut{display:flex;justify-content:flex-end}.lotto-saved-shortcut button{font:inherit;font-size:13px;background:none;border:0;color:#344f42;cursor:pointer;padding:10px 2px;min-height:44px}.lotto-saved-shortcut span{display:inline-block;background:#e0e8dc;border-radius:12px;padding:1px 8px;margin:0 5px}.saved-tickets{scroll-margin-top:90px}
 .lotto-page {
   --lotto-green: #344f42;
   --lotto-green-soft: #e9eee6;
@@ -148,3 +149,15 @@
   .game-top .st { font-size: 11px; }
   .game-top .acts button { width: 30px; }
 }
+
+.lotto-page [hidden]{display:none!important}
+.balls{--bs:min(50px,calc((100cqi - 30px)/6))}
+.ticket-actions,.pick-modes{display:flex;gap:8px;flex-wrap:wrap}
+.pick-modes{margin:12px 0}.pick-modes button{font:inherit;font-size:13px;border:1px solid #d5dccc;background:#faf8f3;border-radius:10px;padding:10px 12px;cursor:pointer}.pick-modes button[aria-pressed="true"]{background:#344f42;color:white}
+.selected-numbers{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.selected-numbers button{border:1px solid #d0d9cb;border-radius:20px;padding:7px 10px;background:#edf2e8;color:#344f42;cursor:pointer}
+.saved-tickets{margin:0 30px 24px;border:1px solid #ded8cc;border-radius:16px;padding:18px;background:#faf8f2}.saved-tickets>summary{cursor:pointer;font-weight:700;color:#344f42;min-height:30px}.saved-tickets summary span{background:#e0e8dc;border-radius:12px;padding:2px 9px;margin-left:6px;font-size:12px}
+.saved-entry{padding:14px 0;border-top:1px solid #e4ddd1}.saved-entry p{font-size:13px;line-height:1.8;margin:6px 0;white-space:pre-line}.saved-entry .saved-actions{display:flex;gap:8px;flex-wrap:wrap}.saved-entry time{font-size:12px;color:#736959}
+.lotto-page button:focus-visible{outline:2px solid #344f42;outline-offset:3px}.ticket-actions .btn{min-height:44px}.game-top .acts button{min-width:40px;min-height:40px}.lotto-card #storage-status{width:100%;margin:0}
+@media(max-width:680px){.lotto-hero{min-height:130px;padding:18px 20px}.lotto-hero h2{font-size:23px}.lotto-hero h2 br{display:none}.lotto-hero-copy{max-width:85%}.lotto-hero-copy>p:last-child{margin-top:8px;max-width:230px}.lotto-bouquet{width:150px;height:140px;right:-35px;opacity:.35}.lotto-kicker{font-size:9px;margin-bottom:6px}.lotto-layout{padding:18px 16px}.balls{--bs:min(48px,calc((100cqi - 30px)/6))}.saved-tickets{margin:0 16px 20px;padding:15px}.ticket-actions{display:grid;grid-template-columns:repeat(3,1fr);width:100%}.ticket-actions .btn{font-size:12px;padding:10px 6px}.game-top .st{font-size:10px}}
+
+@media(max-width:680px){.lotto-hero{min-height:90px;padding:14px 18px}.lotto-hero-copy>p:last-child{display:none}.lotto-hero h2{font-size:21px}.lotto-hero-copy{max-width:90%}.draw-info{display:flex;flex-wrap:wrap;align-items:center;padding:9px 11px;gap:4px 8px}.draw-info .round{font-size:12px}.draw-info .left{font-size:10px;margin-left:auto}.lotto-section-label{margin-bottom:9px}.lotto-page #page-head .page-head{padding-top:8px;padding-bottom:0}.board-wrap{margin-top:15px}.lotto-controls>.btn-primary{margin-top:16px}}

@@ -4,6 +4,7 @@
 node_modules
 /docs
 /scripts
+/tests
 /data
 *.md
 build.js
