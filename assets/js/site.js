@@ -22,6 +22,8 @@
   // ---------- 앱 레지스트리 ----------
   // status: "live" | "soon"  /  cat: 카테고리 키
   var APPS = [
+    { slug: "milestone-age", name: "환갑·칠순·팔순 계산기", emoji: "🎉", cat: "date",
+      desc: "출생 연도로 잔치 해·몇 년생인지 확인", status: "live", path: "/ko/milestone-age/" },
     { slug: "age-calculator", name: "만 나이 계산기", emoji: "🎂", cat: "date",
       desc: "생년월일로 만 나이·연 나이 계산", status: "live", path: "/ko/age-calculator/" },
     { slug: "dday", name: "D-Day 계산기", emoji: "📅", cat: "date",

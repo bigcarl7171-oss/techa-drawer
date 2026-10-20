@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/icons/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>환갑·칠순·팔순 계산기: 출생 연도로 잔치 해 확인 | 테차 꽃공방</title>
+<meta name="description" content="출생 연도로 환갑·칠순·팔순을 맞는 해를 계산하고, 잔치 연도로 몇 년생인지 확인하세요. 진갑·희수·미수·구순도 함께 안내합니다.">
+<link rel="canonical" href="https://www.techa.kr/ko/milestone-age/">
+<meta property="og:image" content="https://www.techa.kr/assets/og/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.techa.kr/assets/og/og-default.png">
+<link rel="alternate" hreflang="ko" href="https://www.techa.kr/ko/milestone-age/">
+<link rel="alternate" hreflang="x-default" href="https://www.techa.kr/ko/milestone-age/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="환갑·칠순·팔순 계산기 | 테차 꽃공방">
+<meta property="og:description" content="환갑은 만 60세, 칠순·팔순은 세는 나이 기준으로 잔치 해를 확인하세요.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/age-tools.css">
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"WebApplication","name":"환갑·칠순·팔순 계산기",
+  "applicationCategory":"UtilitiesApplication","operatingSystem":"Any",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"} }
+</script>
+<style>
+.milestone-table { width:100%; border-collapse:collapse; font-size:15px; }
+.milestone-table th,.milestone-table td { padding:12px 8px; border-bottom:1px solid var(--hairline,#e7e1d6); text-align:left; }
+.milestone-table caption { text-align:left; font-weight:700; margin:16px 0 8px; }
+.milestone-table th { white-space:nowrap; }
+.milestone-result { margin-top:20px; }
+.milestone-result .answer { font-size:24px; color:var(--blue,#6E82A6); font-weight:700; margin:0 0 8px; }
+.milestone-result .upcoming { background:var(--blue-soft,#eef1f6); }
+.milestone-error { color:#8a3828; min-height:1.5em; }
+.milestone-actions { margin-top:16px; }
+@media(max-width:520px) { .milestone-table { font-size:13px; } .milestone-table th,.milestone-table td { padding:10px 4px; } }
+</style>
+</head>
+
+<body class="age-tools">
+<header id="site-header">
+  <!-- BEGIN site-header (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
+  <div class="wrap">
+    <a class="brand-lock" href="/" aria-label="TECHA 꽃 공방 홈"><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="287" height="90"><span class="brand-descriptor">꽃 공방</span></a>
+    <nav class="header-nav" aria-label="주요 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a></nav>
+    <div class="header-search">
+      <button type="button" class="header-search-toggle" id="header-search-toggle" aria-label="도구·매거진 검색" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+      <div class="header-search-panel" id="header-search-panel">
+        <input type="text" id="header-search-input" placeholder="도구·매거진 검색..." autocomplete="off">
+        <div class="header-search-results" id="header-search-results"></div>
+      </div>
+    </div>
+    <a class="header-shop-link" href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a>
+    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a></nav></details>
+  </div>
+  <!-- END site-header -->
+</header>
+<div id="page-head">
+  <!-- BEGIN page-head (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
+  <div class="wrap">
+    <div class="breadcrumb"><a href="/">홈</a> › <a href="/#cat-date">날짜와 일정을 확인할 때</a> › <span>환갑·칠순·팔순 계산기</span></div>
+    <div class="page-head"><h1>환갑·칠순·팔순 계산기</h1><p class="lead">출생 연도로 잔치 해를, 잔치 연도로 몇 년생인지 확인해 보세요.</p></div>
+  </div>
+  <!-- END page-head -->
+</div>
+<main class="wrap">
+  <nav class="age-nav" aria-label="나이 계산기 선택"><a href="/ko/age-calculator/">만 나이 계산</a><a href="/ko/milestone-age/" aria-current="page">환갑·칠순·팔순 계산</a></nav>
+  <div class="age-mode" role="group" aria-label="잔치 연도 찾는 방법">
+    <button type="button" data-mode="birth" aria-pressed="true">출생 연도로 찾기</button>
+    <button type="button" data-mode="year" aria-pressed="false">잔치 연도로 찾기</button>
+  </div>
+  <section class="card" id="birth-panel" aria-labelledby="birth-title">
+<div class="age-intro"><div><p class="age-kicker">A YEAR WORTH CELEBRATING</p><h2 id="birth-title">소중한 생신을,<br>놓치지 않도록.</h2><p>태어난 연도 하나로 확인하는<br>부모님의 환갑·칠순·팔순.</p></div><svg class="age-flower" viewBox="0 0 64 80" fill="none" aria-hidden="true"><path d="M32 76V40M32 65C16 65 13 55 13 55c12-1 19 5 19 10ZM32 56c15-1 19-12 19-12-12 0-19 6-19 12Z" stroke="#87967b" stroke-width="1.5" stroke-linecap="round"/><path d="M32 30C12 11 31 1 32 20c1-19 20-9 0 10Zm0 0c8-25 25-12 9-3 19-7 24 13 0 10 17 8 4 23-9 3-13 20-26 5-9-3-24 3-19-17 0-10-16-9 1-22 9 3Z" fill="#e3d7bf" stroke="#bba478" stroke-width="1.3"/><circle cx="32" cy="31" r="5" fill="#b9a06b"/></svg></div>
+    <div class="age-examples" aria-labelledby="milestone-examples-title">
+      <p class="age-examples-title" id="milestone-examples-title">우리 가족과 닮은 예시를 눌러 보세요</p>
+      <div class="age-example-grid three" id="milestone-examples"></div>
+    </div>
+    <form id="birth-form">
+      <label class="field" for="birth-year">태어난 연도</label>
+      <input type="number" id="birth-year" name="birthYear" min="1800" max="9999" step="1" inputmode="numeric" placeholder="예: 1957" required aria-describedby="birth-hint birth-error">
+      <p class="hint" id="birth-hint">출생 연도만으로 잔치 해를 계산합니다. 생신의 월·일은 입력하지 않아도 돼요.</p>
+      <div class="age-actions"><button class="btn btn-primary" type="submit">잔치 해 확인하기 →</button><button type="button" class="age-reset" data-reset="birth">초기화</button></div>
+    </form>
+    <p class="age-privacy">환갑은 만 60세 · 칠순·팔순은 세는 나이 기준</p>
+    <p class="milestone-error" id="birth-error" role="alert"></p>
+    <div id="birth-result" class="milestone-result" aria-live="polite"></div>
+  </section>
+
+  <section class="card" id="year-panel" aria-labelledby="year-title" hidden>
+    <div class="age-intro"><div><p class="age-kicker">FIND BY YEAR</p><h2 id="year-title">이 해에는 누가 주인공일까요?</h2><p>잔치를 준비하는 해로 출생 연도를 찾아보세요.</p></div></div>
+    <form id="year-form">
+      <label class="field" for="celebration-year">잔치를 확인할 연도</label>
+      <input type="number" id="celebration-year" name="celebrationYear" min="1900" max="9999" step="1" inputmode="numeric" required aria-describedby="year-error">
+      <div class="age-year-shortcuts" role="group" aria-label="연도 빠른 선택"><button type="button" data-year="0">올해</button><button type="button" data-year="1">내년</button></div><div class="age-actions"><button class="btn btn-primary" type="submit">몇 년생인지 확인하기 →</button><button type="button" class="age-reset" data-reset="year">초기화</button></div>
+    </form>
+    <p class="milestone-error" id="year-error" role="alert"></p>
+    <div id="year-result" class="milestone-result" aria-live="polite"></div>
+  </section>
+
+  <article class="article">
+    <div class="note">표의 만 나이는 <b>그해 생신에 되는 나이</b>입니다. 생신 전의 현재 만 나이와는 한 살 차이 날 수 있어요. 잔치 연도는 관습에 따른 계산이므로, 집안에서 정한 기준도 함께 확인해 주세요.</div>
+    <h2>환갑·칠순·팔순은 어떻게 계산하나요?</h2>
+    <p>환갑은 출생 연도에 60을, 칠순은 69를, 팔순은 79를 더하면 됩니다. 반대로 잔치 연도에서 같은 수를 빼면 해당 출생 연도가 나옵니다.</p>
+    <p>예를 들어 1957년생은 2017년에 환갑, 2026년에 칠순, 2036년에 팔순을 맞습니다. 2027년에는 1967년생이 환갑, 1958년생이 칠순, 1948년생이 팔순을 맞아요.</p>
+    <h2>환갑은 60세인가요, 61세인가요?</h2>
+    <p>만 60세 생신이 환갑입니다. 같은 해를 세는 나이로 부르면 61세예요. 세는 나이는 태어날 때 한 살로 시작해 해가 바뀔 때마다 한 살씩 더합니다.</p>
+    <h2>만 나이 통일 뒤에도 칠순은 세는 나이로 하나요?</h2>
+    <p>법제처는 칠순·팔순을 한국식 나이로 지내는 관습을 강제로 바꾸는 것은 아니라고 안내했습니다. 이 계산기는 그 관습에 맞춰 칠순을 세는 나이 70세, 팔순을 80세로 계산합니다. 가족이 만 나이로 챙기기로 했다면 해당 생신을 기준으로 정하셔도 됩니다.</p>
+    <h2>진갑·희수·미수·구순도 확인할 수 있나요?</h2>
+    <p>진갑은 환갑 다음 해인 만 61세 생신으로 계산합니다. 희수·미수·구순은 이 도구에서 각각 세는 나이 77세·88세·90세 기준으로 안내합니다.</p>
+    <h2>백수와 음력 생신은 어떻게 확인하나요?</h2>
+    <p>백수는 99세를 이르는 말이지만 세는 방법은 집안의 관습을 확인하는 편이 좋아요. 이 계산기의 결과표에는 포함하지 않았습니다. 음력 생신의 양력 날짜나 잔칫날은 출생 연도만으로 정할 수 없으니 <a href="/ko/lunar-converter/">음력 양력 변환기</a>로 따로 확인해 주세요.</p>
+    <h2>계산 기준과 참고 자료</h2>
+    <p><a href="https://www.korea.kr/news/policyNewsView.do?newsId=148916510" target="_blank" rel="noopener">대한민국 정책브리핑 · 만 나이 통일 FAQ(2023.6.23), Q3</a>와 <a href="https://encykorea.aks.ac.kr/Article/E0064949" target="_blank" rel="noopener">한국민족문화대백과사전 · 환갑</a>을 참고했습니다.</p>
+    <p class="hint">입력한 연도와 계산 결과는 브라우저 안에서만 처리하며 서버에 저장하지 않습니다.</p>
+
+    <!-- BEGIN tool-products (생성: scripts/build-tool-products.js — 직접 고치지 말 것) -->
+    <section class="tool-products" aria-labelledby="tool-products-title">
+      <p class="tool-products-kicker">TECHA PICKS</p>
+      <h2 id="tool-products-title">이 도구를 쓰신 김에, 테차의 선물</h2>
+      <div class="tool-products-grid">
+        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241caf" target="_blank" rel="noopener noreferrer"><span><b>용돈케이크 머니박스</b><small>생신·환갑·칠순에 현금과 축하 장면을 함께 준비할 때</small></span><strong>상품 보기 →</strong></a>
+        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/6aacecf4eeb8b60d4188eac3" target="_blank" rel="noopener noreferrer"><span><b>카네이션장미 꽃다발</b><small>부모님께 감사와 축하의 마음을 꽃으로 전할 때</small></span><strong>상품 보기 →</strong></a>
+        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/68d23a99021d603e940b6e82" target="_blank" rel="noopener noreferrer"><span><b>장미 돈꽃다발</b><small>현금의 실용성과 꽃다발의 정성을 함께 전할 때</small></span><strong>상품 보기 →</strong></a>
+      </div>
+      <p class="tool-products-note">색상·크기·최종 가격은 스마트스토어 상품 페이지에서 확인해 주세요.</p>
+    </section>
+    <!-- END tool-products -->
+
+    <div id="techa-cta" data-text="부모님 생신에 전할 꽃 선물도 함께 준비해 보세요."></div>
+  </article>
+  <div id="related" class="related">
+    <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
+    <h2>관련 도구</h2>
+    <div class="related-list"><a href="/ko/age-calculator/">🎂 만 나이 계산기</a><a href="/ko/lunar-converter/">🌙 음력 양력 변환기</a><a href="/ko/dday/">📅 D-Day 계산기</a><a href="/ko/gift-finder/">🎁 상황별 선물 큐레이션</a></div>
+    <!-- END related -->
+  </div>
+</main>
+<footer id="site-footer">
+  <!-- BEGIN site-footer (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
+  <div class="wrap">
+    <div class="sf-brand">
+      <div><p class="sf-logo"><img src="/assets/icons/techa-wordmark.png" alt="TECHA" width="287" height="90"><span class="brand-descriptor">꽃 공방</span></p><p class="sf-tagline">시들지 않는 꽃으로 오래 남는 마음을 전합니다.</p><p class="sf-brand-family">테차(TECHA)는 고양시 덕양구에서 시들지 않는 꽃 선물을 만드는 꽃공방 브랜드입니다. 차 이야기는 <a href="https://techa.co.kr/" target="_blank" rel="noopener">TECHA Tea ↗</a>에서 나눕니다.</p></div>
+      <nav class="sf-sns" aria-label="테차 채널"><a href="https://www.instagram.com/techa_flower/" target="_blank" rel="noopener">인스타그램</a><a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡 상담</a><a href="https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C" target="_blank" rel="noopener">유튜브</a><a href="https://www.facebook.com/techagongbang/" target="_blank" rel="noopener">페이스북</a><a href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a></nav>
+    </div>
+    <div class="sf-cols">
+      <div><p class="sf-h">고객 상담</p><p><a class="sf-big" href="tel:031-817-3147">031-817-3147</a><br>상담 시간 09:00 – 18:00<br><a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡으로 문의하기 →</a></p></div>
+      <div><p class="sf-h">공방 방문 · 방문 수령</p><p>경기도 고양시 덕양구 은빛로 53<br>코스미온빌 301호<br>맞춤 제작 상담과 플라워 클래스도 공방에서 함께합니다.</p></div>
+      <div><p class="sf-h">기업·단체 주문</p><p>10개부터 수백 개까지 목적과 예산에 맞춰 제작합니다.<br>행사일 일주일 전까지 문의해 주세요.</p><a class="sf-cta" href="/contact/#contact-form">단체 주문 상담하기 →</a></div>
+    </div>
+    <nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>
+    <div class="sf-biz">
+      <p><span>상호 테차(TECHA)</span><span>대표 임광진</span><span>사업자등록번호 196-01-02121</span></p>
+      <p><span>통신판매업 제2025-고양덕양구-1847호</span><span>개인정보보호책임자 김은진</span></p>
+      <p><span>경기도 고양시 덕양구 은빛로 53 코스미온빌 301호</span><span><a href="mailto:bigcarl@naver.com">bigcarl@naver.com</a></span></p>
+      <p class="sf-legal"><a href="/privacy/">개인정보처리방침</a><a href="/terms/">이용약관</a></p>
+    </div>
+    <div class="disclaimer">본 사이트의 계산 결과는 참고용이며, 정확한 판단이 필요한 경우 전문가·공식기관에 확인하세요. © <span id="footer-year"></span> 테차 꽃공방</div>
+  </div>
+  <!-- END site-footer -->
+</footer>
+<script src="/assets/js/site.js"></script>
+<script>
+TECHA.initPage({
+  title: "환갑·칠순·팔순 계산기",
+  desc: "출생 연도로 잔치 해를, 잔치 연도로 몇 년생인지 확인해 보세요.",
+  category: "date",
+  slug: "milestone-age",
+  related: ["age-calculator", "lunar-converter", "dday", "gift-finder"]
+});
+</script>
+<script src="/assets/js/milestone-age.js"></script>
+<script src="/assets/js/age-tools-ui.js"></script>
+</body>
+</html>
