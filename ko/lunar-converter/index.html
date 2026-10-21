@@ -61,7 +61,7 @@
 <main class="wrap">
   <div class="ad-slot"></div>
 
-<section class="lunar-intro" aria-labelledby="lunar-intro-title"><div><p class="lunar-kicker">A DATE WORTH REMEMBERING</p><h2 id="lunar-intro-title">달력은 달라도,<br>소중한 날은 하나니까.</h2><p>부모님의 음력 생신부터 우리 가족의 기념일까지.<br>한국 음력으로 확인하고, 마음을 준비하세요.</p><span class="lunar-intro-tag">한국 음력 기준 <i>·</i> 윤달 반영 <i>·</i> 가입 없이 바로</span></div><div class="lunar-orbit" aria-hidden="true"><div class="orbit-ring"></div><div class="orbit-moon"></div><span class="orbit-dot"></span><span class="orbit-note">Different calendars.<br>The same precious day.</span></div></section>
+<section class="lunar-intro" aria-labelledby="lunar-intro-title"><div><p class="lunar-kicker">A DATE WORTH REMEMBERING</p><h2 id="lunar-intro-title">달력은 달라도,<br>소중한 날은 하나니까.</h2><p>부모님의 음력 생신부터 우리 가족의 기념일까지.<br>한국 음력으로 확인하고, 마음을 준비하세요.</p><span class="lunar-intro-tag">한국 음력 기준 <i>·</i> 윤달 반영 <i>·</i> 가입 없이 바로</span></div><div class="lunar-orbit" role="img" aria-label="선택한 날짜의 달" id="moon-figure"><div class="orbit-ring"></div><div class="orbit-moon"><svg id="moon-svg" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#625b4c"/><path id="moon-light" data-moon-light fill="#d9c58d"/><circle cx="50" cy="50" r="48" fill="none" stroke="#b5a788" stroke-width="0.5"/></svg></div><span class="orbit-dot"></span><span class="orbit-note" id="moon-caption" aria-live="polite">날짜를 고르면 달도 함께 바뀌어요.</span></div></section>
 <section class="lunar-calculator" aria-label="음양력 날짜 변환"><div class="lunar-input">
     <p class="lunar-kicker">01 · 날짜 입력</p><h2>어떤 날짜가 궁금하세요?</h2><p class="lunar-input-lead">변환 방향을 고른 뒤 날짜를 입력해 주세요.</p><div class="mode-tabs" role="group" aria-label="변환 방향">
       <button type="button" id="mode-s2l" aria-pressed="true">양력 → 음력</button>
@@ -69,21 +69,24 @@
     </div>
 
     <div id="pane-s2l">
-      <label class="field" for="sdate">양력 날짜</label>
-      <input type="date" id="sdate" min="1000-02-13" max="2050-12-31">
+      <p class="lunar-date-label">바꿀 양력 날짜</p>
+      <div class="row date-parts"><div><label class="field" for="sy">연도</label><input type="number" inputmode="numeric" id="sy" min="1000" max="2050" aria-describedby="date-input-help"></div><div><label class="field" for="sm">월</label><select id="sm"></select></div><div><label class="field" for="sd">일</label><select id="sd"></select></div></div>
+      <input type="hidden" id="sdate">
     </div>
 
-    <div id="pane-l2s" hidden>
+    <div id="pane-l2s" hidden><p class="lunar-date-label">바꿀 음력 날짜</p>
       <div class="row">
-        <div><label class="field" for="ly">음력 연도</label><input type="number" id="ly" min="1000" max="2050" placeholder="예: 1975"></div>
-        <div><label class="field" for="lm">월</label><input type="number" id="lm" min="1" max="12" placeholder="1~12"></div>
-        <div><label class="field" for="ld">일</label><input type="number" id="ld" min="1" max="30" placeholder="1~30"></div>
+        <div><label class="field" for="ly">음력 연도</label><input type="number" inputmode="numeric" id="ly" min="1000" max="2050" placeholder="예: 1975"></div>
+        <div><label class="field" for="lm">월</label><select id="lm"></select></div>
+        <div><label class="field" for="ld">일</label><select id="ld"></select></div>
       </div>
       <label class="field leap-row is-off" id="leapRow">
         <input type="checkbox" id="leap" style="width:auto;margin-right:6px;vertical-align:middle">윤달로 계산
         <span class="hint" id="leapHint">— 그 해에 윤달이 있을 때만 켤 수 있어요</span></label>
     </div>
 
+    <div class="date-navigation" role="group" aria-label="날짜 빠른 이동"><button type="button" id="date-prev">← 하루 전</button><button type="button" id="date-today">오늘</button><button type="button" id="date-next">다음 날 →</button></div>
+    <p id="date-input-help" role="status">연도는 직접 입력하고, 월·일은 목록에서 고르세요.</p>
     <p class="lunar-example-label">처음이라면, 예시로 시작해 보세요</p><div class="lunar-shortcuts" role="group" aria-label="날짜 입력 예시">
       <button type="button" id="example-today">오늘의 음력</button>
       <button type="button" id="example-seollal">2028년 설날 예시</button>
@@ -95,7 +98,7 @@
       <a class="btn btn-primary" id="lunar-dday" href="/ko/dday/">이 날짜로 D-Day 계산 →</a>
       <button class="btn" type="button" id="copy-lunar">변환 결과 복사</button>
     </div>
-    <p id="lunar-status" role="status"></p>
+    <p id="lunar-status" role="status"></p><div class="moon-settings"><div class="moon-inline-preview" role="img" id="moon-inline" aria-label="선택한 날짜의 달"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#625b4c"/><path data-moon-light fill="#d9c58d"/></svg><span id="moon-inline-caption"></span></div><p class="moon-settings-title">이 날짜의 달 그림 기준</p><div class="moon-controls"><div><label for="moon-city">지역</label><select id="moon-city"><option value="seoul">서울</option><option value="busan">부산</option><option value="jeju">제주</option></select></div><div><label for="moon-time">한국 시각</label><input type="time" id="moon-time" value="21:00" required></div></div><p id="moon-visibility" aria-live="polite"></p><details><summary>달 그림은 어떻게 표시하나요?</summary><p>선택한 양력 날짜·지역·한국 시각으로 밝은 면과 지평선에 대한 기울기를 근사 계산합니다. 실제 달 표면 사진이나 관측 예보는 아니며, 날씨·지형·가림은 반영하지 않아요. 지평선 아래일 때도 달의 모양을 보여줍니다. <a href="https://github.com/mourner/suncalc/tree/v1.9.0#moon-illumination" target="_blank" rel="noopener">계산 기준 ↗</a></p></details></div>
     <div class="sub-grid" id="subs" style="display:none">
       <div class="stat"><div class="n" id="s-gapja">-</div><div class="l">간지</div></div>
       <div class="stat"><div class="n" id="s-dow">-</div><div class="l">요일</div></div>
@@ -249,6 +252,8 @@
 </footer>
 
 <script src="/assets/js/korean-lunar.js"></script>
+<script src="/assets/js/vendor/suncalc.js"></script>
+<script src="/assets/js/lunar-moon.js"></script>
 <script src="/assets/js/site.js"></script>
 <script>
 TECHA.initPage({
@@ -259,134 +264,7 @@ TECHA.initPage({
   related: ["dday", "age-calculator", "birth-flower"]
 });
 
-(function () {
-  var K = window.KoreanLunarCalendar;
-  var ZODIAC = { "자":"쥐", "축":"소", "인":"호랑이", "묘":"토끼", "진":"용", "사":"뱀",
-                 "오":"말", "미":"양", "신":"원숭이", "유":"닭", "술":"개", "해":"돼지" };
-  var DOW = ["일", "월", "화", "수", "목", "금", "토"];
-
-  var btnS = document.getElementById("mode-s2l"), btnL = document.getElementById("mode-l2s");
-  var paneS = document.getElementById("pane-s2l"), paneL = document.getElementById("pane-l2s");
-  var sdate = document.getElementById("sdate");
-  var ly = document.getElementById("ly"), lm = document.getElementById("lm"), ld = document.getElementById("ld");
-  var leap = document.getElementById("leap"), leapRow = document.getElementById("leapRow"), leapHint = document.getElementById("leapHint");
-  var result = document.getElementById("result"), subs = document.getElementById("subs");
-  var gapjaEl = document.getElementById("s-gapja"), dowEl = document.getElementById("s-dow"), zodEl = document.getElementById("s-zodiac");
-
-  var mode = "s2l";
-  var resultText = "";
-  var actions = document.getElementById("lunar-actions");
-  var status = document.getElementById("lunar-status");
-  function koreaToday() { return new Intl.DateTimeFormat("sv-SE", {timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()); }
-  function integerValue(el) { return /^\d+$/.test(el.value) ? Number(el.value) : NaN; }
-
-
-  function setMode(next) {
-    mode = next;
-    var isS = mode === "s2l";
-    btnS.setAttribute("aria-pressed", String(isS));
-    btnL.setAttribute("aria-pressed", String(!isS));
-    paneS.hidden = !isS;
-    paneL.hidden = isS;
-    calc();
-  }
-  btnS.addEventListener("click", function () { setMode("s2l"); });
-  btnL.addEventListener("click", function () { setMode("l2s"); });
-
-  function empty(msg) {
-    actions.hidden = true;
-    resultText = "";
-    status.textContent = "";
-    result.className = "result empty";
-    result.textContent = msg;
-    subs.style.display = "none";
-  }
-
-  // 그 해에 윤달이 있는지, 있다면 몇 월인지
-  function leapMonthOf(year) {
-    for (var m = 1; m <= 12; m++) {
-      var c = new K();
-      if (c.setLunarDate(year, m, 1, true) && c.getLunarCalendar().intercalation) return m;
-    }
-    return 0;
-  }
-
-  function syncLeap() {
-    var y = integerValue(ly);
-    if (!y) { leapRow.classList.add("is-off"); leap.disabled = true; leap.checked = false;
-      leapHint.textContent = "— 그 해에 윤달이 있을 때만 켤 수 있어요"; return; }
-    var lmo = leapMonthOf(y);
-    if (!lmo) {
-      leapRow.classList.add("is-off"); leap.disabled = true; leap.checked = false;
-      leapHint.textContent = "— " + y + "년에는 윤달이 없습니다";
-    } else if (integerValue(lm) !== lmo) {
-      leapRow.classList.add("is-off"); leap.disabled = true; leap.checked = false;
-      leapHint.textContent = "— " + y + "년은 윤" + lmo + "월만 있습니다. 해당 월을 선택하면 켤 수 있어요";
-    } else {
-      leapRow.classList.remove("is-off"); leap.disabled = false;
-      leapHint.textContent = "— " + y + "년은 윤" + lmo + "월이 있습니다";
-    }
-  }
-
-  function show(sol, lun, gapja) {
-    var d = new Date(sol.year, sol.month - 1, sol.day);
-    var solText = sol.year + "년 " + sol.month + "월 " + sol.day + "일";
-    var lunText = lun.year + "년 " + (lun.intercalation ? "윤" : "") + lun.month + "월 " + lun.day + "일";
-
-    result.className = "result";
-    var primary = mode === "s2l" ? lun : sol;
-    var primaryLeap = mode === "s2l" && lun.intercalation ? "윤" : "";
-    result.innerHTML = '<span class="lunar-result-label">' + (mode === "s2l" ? '음력으로는' : '양력으로는') + '</span>' +
-      '<div class="lunar-result-year">' + primary.year + '년</div>' +
-      '<div class="lunar-result-day">' + primaryLeap + primary.month + '<small>월</small> ' + primary.day + '<small>일</small></div>' +
-      '<div class="lunar-result-source">' + (mode === "s2l" ? '양력 ' + solText : '음력 ' + lunText) + ' 기준</div>';
-
-    gapjaEl.textContent = gapja || "-";
-    dowEl.textContent = DOW[d.getDay()] + "요일";
-    var branch = gapja ? gapja.charAt(1) : "";
-    zodEl.textContent = ZODIAC[branch] ? ZODIAC[branch] + "띠" : "-";
-    subs.style.display = "";
-    resultText = "양력 " + solText + " ↔ 음력 " + lunText;
-    document.getElementById("lunar-dday").href = "/ko/dday/#date=" + sol.year + "-" + String(sol.month).padStart(2,"0") + "-" + String(sol.day).padStart(2,"0");
-    document.getElementById("lunar-dday").hidden = sol.year < 1900;
-    actions.hidden = false;
-    status.textContent = "";
-  }
-
-  function calc() {
-    if (mode === "s2l") {
-      if (!sdate.value) return empty("양력 날짜를 선택해 주세요.");
-      var p = sdate.value.split("-");
-      var c = new K();
-      if (!c.setSolarDate(+p[0], +p[1], +p[2])) return empty("변환할 수 있는 범위를 벗어났습니다 (1000년 2월 13일 ~ 2050년 12월 31일).");
-      show(c.getSolarCalendar(), c.getLunarCalendar(), c.getKoreanGapja().year);
-    } else {
-      var y = integerValue(ly), m = integerValue(lm), d = integerValue(ld);
-      if (!y || !m || !d) return empty("음력 연도·월·일을 모두 입력해 주세요.");
-      var k = new K();
-      if (!k.setLunarDate(y, m, d, leap.checked && !leap.disabled)) {
-        return empty(leap.checked
-          ? "그 해 윤" + m + "월에는 " + d + "일이 없습니다. 날짜를 확인해 주세요."
-          : "음력 " + y + "년 " + m + "월 " + d + "일은 없는 날짜입니다. 작은달은 29일까지입니다.");
-      }
-      show(k.getSolarCalendar(), k.getLunarCalendar(), k.getKoreanGapja().year);
-    }
-  }
-
-  sdate.addEventListener("input", calc);
-  ld.addEventListener("input", calc);
-  lm.addEventListener("input", function () { syncLeap(); calc(); });
-  ly.addEventListener("input", function () { syncLeap(); calc(); });
-  leap.addEventListener("change", calc);
-
-  document.getElementById("example-today").addEventListener("click", function () { sdate.value = koreaToday(); setMode("s2l"); });
-  document.getElementById("example-seollal").addEventListener("click", function () { ly.value="2028"; lm.value="1"; ld.value="1"; leap.checked=false; syncLeap(); setMode("l2s"); });
-  document.getElementById("example-birthday").addEventListener("click", function () { ly.value=koreaToday().slice(0,4); lm.value="8"; ld.value="10"; leap.checked=false; syncLeap(); setMode("l2s"); });
-  document.getElementById("copy-lunar").addEventListener("click", async function () { if(!resultText) return; try { await navigator.clipboard.writeText(resultText); status.textContent="변환 결과를 복사했어요."; } catch (_) { status.textContent="브라우저의 복사 권한을 확인해 주세요."; } });
-  sdate.value = koreaToday();
-  syncLeap();
-  calc();
-})();
 </script>
+<script src="/assets/js/lunar-converter.js"></script>
 </body>
 </html>

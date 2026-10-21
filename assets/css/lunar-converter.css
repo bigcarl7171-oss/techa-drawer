@@ -100,3 +100,39 @@ body.lunar-enhanced { background:#faf7f0; }
   .lunar-reference .article { padding:0 20px 20px; }
 }
 @media(max-width:380px) { .lunar-orbit { display:none; }.lunar-how { grid-template-columns:1fr;gap:20px; }.lunar-how h3 { margin:5px 0; }.lunar-how span { float:right; } }
+
+/* Calendar controls and date-linked lunar disk. */
+.orbit-moon:after { display:none; }
+.orbit-moon { background:transparent; }
+.orbit-moon svg { display:block;width:100%;height:100%; }
+.orbit-note { font:12px/1.7 "Pretendard",sans-serif;bottom:3px;left:15px;right:0;text-align:center; }
+.lunar-date-label { font-size:12px;color:#7b694e;margin:0 0 12px; }
+.lunar-input select { width:100%;height:50px;padding:0 12px;border:1px solid #ddd2c0;border-radius:5px;background:#fffefa;color:#56452f;font:15px "Pretendard",sans-serif; }
+.lunar-input .date-parts input { width:100%; }
+.date-navigation { display:flex;gap:8px;margin-top:18px; }
+.date-navigation button { flex:1;min-height:42px;padding:9px 5px;border:1px solid #ddd0b8;background:#f7f0e3;color:#7c6541;font:12px "Pretendard",sans-serif;border-radius:5px;cursor:pointer; }
+.date-navigation button:hover { background:#e8dcc3; }
+#date-input-help { font-size:11px;line-height:1.7;color:#927d5c;min-height:1.7em;margin:9px 0 0; }
+.moon-settings { order:4;z-index:1;width:100%;max-width:320px;border-top:1px solid #d8ccb5;padding-top:18px;margin-top:9px; }
+.moon-settings-title { font-size:11px;color:#766143;text-align:center;margin:0 0 12px; }
+.moon-controls { display:grid;grid-template-columns:1fr 1.3fr;gap:10px; }
+.moon-controls label { display:block;font-size:10px;color:#8b7657;margin-bottom:5px; }
+.moon-controls select,.moon-controls input { width:100%;box-sizing:border-box;height:40px;min-width:0;font:12px "Pretendard",sans-serif;padding:7px;border:1px solid #cebd9f;border-radius:4px;color:#6e5938;background:#fffdf57a; }
+#moon-visibility { font-size:10px;color:#887356;line-height:1.8;margin:10px 0; }
+.moon-settings details { font-size:10px;color:#8f7b5b;line-height:1.9; }
+.moon-settings summary { cursor:pointer; }
+.moon-settings details p { font-size:10px;margin:7px 0; }
+.moon-settings a { text-decoration:underline; }
+.lunar-input select:focus-visible,.moon-controls select:focus-visible,.moon-controls input:focus-visible { outline:2px solid #8e764c;outline-offset:3px; }
+@media(max-width:700px) {
+ .orbit-note { font-size:10px;left:-12px;right:-8px;bottom:0; }
+ .lunar-orbit { height:175px; }
+ .lunar-input .row { gap:8px; }
+ .lunar-input select { padding:0 7px; }
+}
+@media(max-width:380px) {
+ .lunar-orbit { display:block;width:100px;height:170px; }
+ .lunar-intro { flex-wrap:wrap; }
+ .lunar-orbit { margin:0 auto; }
+}
+.moon-inline-preview{display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:15px}.moon-inline-preview svg{width:62px;height:62px;flex:none}.moon-inline-preview span{font-size:11px;color:#806a45}.moon-settings-title{text-align:left}
