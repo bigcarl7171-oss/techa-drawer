@@ -75,7 +75,7 @@
     <div class="stat-grid" style="margin-top:16px">
       <div class="stat"><div class="n" id="withSpace">0</div><div class="l">공백 포함</div></div>
       <div class="stat"><div class="n" id="noSpace">0</div><div class="l">공백 제외</div></div>
-      <div class="stat"><div class="n" id="bytes">0</div><div class="l">바이트</div></div>
+      <div class="stat"><div class="n" id="bytes">0</div><div class="l">UTF-8 바이트</div></div>
       <div class="stat"><div class="n" id="words">0</div><div class="l">단어</div></div>
       <div class="stat"><div class="n" id="lines">0</div><div class="l">줄</div></div>
     </div>
@@ -97,7 +97,7 @@
     <ul>
       <li><b>공백 포함</b>: 띄어쓰기·줄바꿈을 모두 센 값. 대부분의 자기소개서 글자수 제한이 이 기준입니다.</li>
       <li><b>공백 제외</b>: 순수 글자만 센 값. 일부 서식에서 요구합니다.</li>
-      <li><b>바이트</b>: 한글 1자를 보통 2~3바이트로 계산(UTF-8 기준)합니다. 이름 입력란 등 바이트 제한이 있을 때 확인하세요.</li>
+      <li><b>바이트</b>: 완성형 한글 음절은 UTF-8에서 3바이트로 계산합니다. EUC-KR 등 다른 인코딩의 제한과는 구분하세요. 이름 입력란 등 바이트 제한이 있을 때 확인하세요.</li>
     </ul>
 
     <h3>예시</h3>
@@ -114,25 +114,10 @@
 
     <h2>바이트(byte)는 왜 중요한가요?</h2>
     <p>일부 시스템(옛 게시판, 일부 회원가입 폼)은 글자 수가 아니라 <b>바이트 수</b>로 길이를 제한합니다.
-       UTF-8 인코딩에서 영어·숫자는 1바이트, 한글은 보통 3바이트, 이모지는 4바이트를 차지합니다.
+       UTF-8 인코딩에서 영어·숫자는 1바이트, 완성형 한글 음절은 3바이트입니다. 보충 평면의 이모지 코드 포인트는 4바이트이며, 조합 이모지는 더 큽니다.
        그래서 "10바이트 제한"이면 영어는 10자지만 한글은 약 3자밖에 못 넣습니다. 이 도구는 정확한 바이트 수도 함께 알려줍니다.</p>
 
-    <h2>어디는 몇 자까지 되나요</h2>
-    <p>자주 걸리는 제한을 모았습니다. 서비스 정책은 바뀔 수 있으니 중요한 제출물은 해당 사이트의
-       입력란에서 한 번 더 확인해 주세요.</p>
-    <table class="compare-table">
-      <thead><tr><th>쓰는 곳</th><th>대체로 이 정도</th><th>기준</th></tr></thead>
-      <tbody>
-        <tr><td>자기소개서 문항</td><td>500 · 1,000 · 1,500자</td><td>대개 공백 포함</td></tr>
-        <tr><td>인스타그램 캡션</td><td>2,200자</td><td>글자 수</td></tr>
-        <tr><td>X(트위터) 게시글</td><td>280자</td><td>한글은 1자를 2로 세는 경우가 있음</td></tr>
-        <tr><td>네이버 블로그 제목</td><td>100자</td><td>글자 수</td></tr>
-        <tr><td>검색 결과 설명문(메타)</td><td>80~120자 권장</td><td>넘으면 뒤가 잘림</td></tr>
-        <tr><td>유튜브 제목</td><td>100자</td><td>글자 수</td></tr>
-        <tr><td>문자(SMS)</td><td>90바이트</td><td>넘으면 장문(LMS)으로 전환</td></tr>
-        <tr><td>닉네임·아이디</td><td>10~20바이트</td><td>한글은 글자당 3바이트</td></tr>
-      </tbody>
-    </table>
+    <h2>제출처의 기준도 함께 확인하세요</h2><p>채용 사이트·SNS·문자 서비스마다 공백·줄바꿈·이모지·인코딩을 세는 방식과 제한이 다릅니다. 이 도구의 글자 수는 UTF-16 코드 단위 기준이며, UTF-8 바이트 수는 문자(SMS)의 발송 바이트 제한과 다를 수 있습니다. 최종 제출 화면의 자체 카운터를 함께 확인하세요.</p>
 
     <h2>자기소개서 글자수, 이렇게 맞추면 편합니다</h2>
     <p>제한에 딱 맞춰 쓰는 것보다 <b>조금 남기는 편</b>이 안전합니다. 복사해 붙여넣을 때 줄바꿈이
@@ -154,8 +139,7 @@
     <p>세는 기준이 달라서입니다. 워드는 기본이 '공백 포함'이고 줄바꿈 처리 방식도 조금 다릅니다.
        제출처가 요구하는 기준(공백 포함인지 제외인지)을 먼저 확인하고 그 값을 보시면 됩니다.</p>
     <h3>Q. 이모지는 몇 글자로 세나요?</h3>
-    <p>글자 수로는 보통 1~2자, 바이트로는 4바이트 이상을 차지합니다. 피부색이나 조합이 들어간 이모지는
-       더 커지기도 합니다. 바이트 제한이 있는 입력란에서는 이모지 하나가 한글 두 자보다 무거울 수 있습니다.</p>
+    <p>이 도구는 JavaScript의 UTF-16 코드 단위로 셉니다. 예를 들어 😀는 2자·UTF-8 4바이트입니다. 가족·피부색 등 여러 코드 포인트를 조합한 이모지는 화면에 하나로 보여도 더 많이 셉니다.</p>
 
     <div class="note">입력한 내용은 서버로 전송되지 않고 브라우저 안에서만 계산됩니다. 개인정보가 담긴 글도 안심하고 사용하세요.</div>
 
@@ -216,16 +200,7 @@ TECHA.initPage({
   var ids = ["withSpace","noSpace","bytes","words","lines"].reduce(function(o,k){o[k]=document.getElementById(k);return o;},{});
 
   function byteLen(s) {
-    // UTF-8 바이트 수
-    var b = 0;
-    for (var i = 0; i < s.length; i++) {
-      var c = s.charCodeAt(i);
-      if (c <= 0x7f) b += 1;
-      else if (c <= 0x7ff) b += 2;
-      else if (c >= 0xd800 && c <= 0xdbff) { b += 4; i++; } // 서로게이트 페어(이모지 등)
-      else b += 3;
-    }
-    return b;
+    return new TextEncoder().encode(s).length;
   }
 
   function update() {

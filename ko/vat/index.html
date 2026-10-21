@@ -107,9 +107,7 @@
   <section class="card">
     <h3>② 간이과세자 납부세액 계산기</h3>
     <div style="margin-bottom:14px;padding:10px 14px;border-radius:var(--radius-sm);background:var(--gold-soft);color:var(--gold-strong-ink);font-size:13px">
-      ⚠️ 변호사·세무사·의사·약사 등 전문직, 부동산매매업, 도매업 등은 매출 규모와 무관하게
-      <b>간이과세자가 될 수 없습니다</b>(항상 일반과세자). 제조업은 일부 예외가 있으니, 해당
-      여부가 궁금하면 세무서·홈택스에서 확인하세요.
+      간이과세 적용 여부는 매출액뿐 아니라 업종·사업장 조건에 따라 달라집니다. 전문직 등 배제 업종과 면세 여부는 별개이므로 세무서·홈택스에서 확인하세요.
     </div>
     <label class="field" for="siYearSales">연간 매출액 (공급대가, 원)</label>
     <input type="text" inputmode="numeric" id="siYearSales" value="50,000,000">
@@ -117,16 +115,17 @@
     <label class="field" for="siType" style="margin-top:14px">업종</label>
     <select id="siType">
       <option value="15">소매업·음식점업·재생용재료 수집판매업 (부가가치율 15%)</option>
-      <option value="20">제조업·농림어업·숙박업·전기가스증기수도업 (20%)</option>
-      <option value="30">건설업·운수업·창고업·통신업 (30%)</option>
-      <option value="40">금융보험·전문과학기술·부동산임대업 등 (40%)</option>
+      <option value="20">제조업·농림어업·소화물 전문 운송업 (20%)</option>
+      <option value="25">숙박업 (25%)</option>
+      <option value="30">건설·운수창고(소화물 제외)·정보통신·그 밖의 서비스업 (30%)</option>
+      <option value="40">금융보험 관련 서비스·전문과학기술(일부 제외)·부동산 관련업 등 (40%)</option>
       <option value="custom">직접 입력</option>
     </select>
     <label class="field" for="siRate" style="margin-top:14px">부가가치율 (%)</label>
     <input type="number" id="siRate" value="15" step="any">
 
     <div class="row" style="margin-top:12px">
-      <div><label class="field" for="siPurchase">세금계산서 수취 매입액</label><input type="text" inputmode="numeric" id="siPurchase" value="0"></div>
+      <div><label class="field" for="siPurchase">공제 대상 매입액 (부가세 포함)</label><input type="text" inputmode="numeric" id="siPurchase" value="0"></div>
       <div><label class="field" for="siCard">신용카드매출전표 발급액 <span class="hint">(연 1,000만원 한도 1.3% 공제 · 소매업·음식점업 등 소비자 대상 업종만 해당)</span></label><input type="text" inputmode="numeric" id="siCard" value="0"></div>
     </div>
     <p class="hint" style="margin-top:6px">⚠️ 이 공제는 소매업·음식점업·숙박업·미용업 등 <b>소비자를 직접 상대하는 업종</b>만 받을 수 있습니다.
@@ -140,7 +139,7 @@
   </section>
 
   <section class="card">
-    <h3>③ 가산세 계산기</h3>
+    <h3>③ 자진 납부 시 가산세 참고 계산</h3><p class="hint">고지 전 자진 납부를 가정합니다. 고지 후 체납 가산세는 포함하지 않습니다. 기한 후 신고 감면은 일반 무신고에만 적용합니다.</p>
     <label class="field" for="gsTax">미납·과소신고 세액 (원)</label>
     <input type="text" inputmode="numeric" id="gsTax" value="1,000,000">
 
@@ -153,7 +152,7 @@
           <option value="fraud">부정 무신고·과소신고</option>
         </select>
       </div>
-      <div><label class="field" for="gsMonths">미납 경과 개월 수</label><input type="number" id="gsMonths" value="1" step="1"></div>
+      <div><label class="field" for="gsMonths">납부기한 다음 날부터 경과일 수</label><input type="number" id="gsMonths" value="30" min="0" step="1"></div>
     </div>
     <label class="field" for="gsReduction" style="margin-top:14px">자진 기한후신고 감면</label>
     <select id="gsReduction">
@@ -180,86 +179,27 @@
   <div class="ad-slot"></div>
 
   <article class="article">
-    <h2>부가가치세 계산기 사용법</h2>
-    <p>이 계산기는 4가지를 한 번에 제공합니다. <b>① 공급가↔합계 변환</b>(일반과세 10%), <b>② 간이과세자
-       납부세액 계산</b>(업종별 부가가치율 반영), <b>③ 가산세 계산</b>(무신고·과소신고·납부지연), 그리고
-       <b>④ 2026년 신고기한</b> 확인까지 자영업자에게 필요한 부가세 계산을 이 페이지에서 끝낼 수 있습니다.</p>
-
-    <h2>일반과세자 vs 간이과세자</h2>
-    <ul>
-      <li><b>일반과세자</b>: 매출세액(매출×10%) − 매입세액(매입×10%)을 신고·납부. 연 2회(예정·확정) 신고.</li>
-      <li><b>간이과세자</b>: 직전연도 공급대가 <b>1억 400만원 미만</b>이면 해당 (2024-07-01부터 상향 적용,
-         기존 8천만원). 단 <b>부동산임대업·과세유흥장소는 4,800만원 미만</b> 기준 유지. 매출액 × 업종별
-         부가가치율 × 10%로 세액을 계산하며, 연 1회만 신고합니다.</li>
-      <li><b>납부의무 면제</b>: 간이과세자의 연간 공급대가가 <b>4,800만원 미만</b>이면 납부 의무 자체가
-         면제됩니다(신고는 해야 함).</li>
-    </ul>
-
-    <h2>간이과세자 업종별 부가가치율표</h2>
-    <table class="compare-table">
-      <thead><tr><th>부가가치율</th><th>실효세율</th><th>해당 업종</th></tr></thead>
-      <tbody>
-        <tr><td>15%</td><td>1.5%</td><td>소매업, 음식점업, 재생용재료 수집·판매업</td></tr>
-        <tr><td>20%</td><td>2%</td><td>제조업, 농림어업, 숙박업, 전기·가스·증기·수도사업</td></tr>
-        <tr><td>30%</td><td>3%</td><td>건설업, 운수업, 창고업, 통신업</td></tr>
-        <tr><td>40%</td><td>4%</td><td>금융·보험서비스업, 전문·과학·기술서비스업, 사업시설관리·지원서비스업, 부동산임대업</td></tr>
-      </tbody>
-    </table>
-    <div class="note">실효세율 = 부가가치율 × 10%. 세금계산서를 발급받은 매입액이 있으면 그 금액의 0.5%를
-       추가로 공제받을 수 있고, <b>소매업·음식점업·숙박업·미용업 등 소비자 대상 업종</b>이라면 신용카드매출전표
-       발급액의 1.3%(연 1,000만원 한도, 2026-12-31까지 적용)도 공제받을 수 있습니다. 도매업·제조업(일부
-       예외 제외)·법인사업자는 이 카드 공제 대상이 아닙니다.</div>
-
-    <h2>가산세 종류와 세율</h2>
-    <ul>
-      <li><b>무신고가산세</b>: 일반 20%, 부정(이중장부·허위기재·자산은닉 등) 40%</li>
-      <li><b>과소신고가산세</b>: 일반 10%, 부정 40%</li>
-      <li><b>납부지연가산세</b>: 미납세액의 3%(기본) + 미납 기간에 대한 이자 성격 가산세.
-         <b>2026년 7월 1일부터</b> 이 이자 부분이 "1일당 10만분의 22(연 약 8.03%)"에서
-         <b>"1개월당 0.67%"</b>로, 일 단위에서 월 단위 계산으로 바뀌었습니다.</li>
-      <li><b>자진 기한후신고 감면</b>: 법정기한이 지난 뒤라도 스스로 신고하면 가산세를 감면받습니다.
-         1개월 이내 50%, 3개월 이내 30%, 6개월 이내 20%.</li>
-    </ul>
-
-    <h2>2026년 신고기한 표</h2>
-    <table class="compare-table">
-      <thead><tr><th>구분</th><th>대상 기간</th><th>신고·납부 기한</th></tr></thead>
-      <tbody>
-        <tr><td>1기 예정신고</td><td>1~3월분</td><td>4월 25일</td></tr>
-        <tr><td>1기 확정신고</td><td>1~6월분</td><td>7월 27일 <span class="hint">(25일이 토요일이라 연장)</span></td></tr>
-        <tr><td>2기 예정신고</td><td>7~9월분</td><td>10월 25일</td></tr>
-        <tr><td>2기 확정신고</td><td>7~12월분</td><td>익년 1월 25일</td></tr>
-        <tr><td>간이과세자</td><td>연간</td><td>익년 1월 25일 (연 1회)</td></tr>
-      </tbody>
-    </table>
-    <div class="note">⚠️ <b>개인사업자·소규모법인(직전 과세기간 매출 1억 5천만원 미만)은 위 "예정신고"를 직접 하지
-       않아도 됩니다.</b> 국세청이 직전 납부세액의 절반을 미리 고지하는 <b>예정고지</b>서를 받아 그 금액만
-       납부하면 되고(고지세액이 30만원 미만이면 고지 자체가 생략), 실제 예정"신고" 의무는 매출 1억 5천만원
-       이상인 법인사업자에게만 있습니다. 다만 사업이 부진하거나 조기환급을 받고 싶다면 예정고지 대신 예정신고를
-       선택할 수 있습니다. 고환율 피해 중소·중견기업, 청년 창업자, 매출이 급감한 소상공인 등은 별도 신청 없이
-       2개월 연장(1기 확정신고 기준 9월 28일까지)이 적용될 수 있습니다. 대상 여부는 홈택스 공지사항에서 확인하세요.</div>
-
-    <h2>자주 묻는 질문 (FAQ)</h2>
-    <h3>Q. "부가세 별도"와 "부가세 포함"의 차이는?</h3>
-    <p>부가세 별도는 표시금액이 공급가액이라 결제 시 10%가 추가됩니다. 부가세 포함은 표시금액에 이미 세금이 들어 있어
-       추가 금액이 없습니다. 계약·견적 시 반드시 확인해야 분쟁을 피할 수 있습니다.</p>
-    <h3>Q. 간이과세자도 세금계산서를 발급하나요?</h3>
-    <p>연간 공급대가 4,800만원 이상인 간이과세자는 세금계산서 발급 의무가 있습니다. 4,800만원 미만이면
-       발급 의무가 없고 영수증만 발급합니다.</p>
-    <h3>Q. 영세율과 면세는 뭐가 다른가요?</h3>
-    <p>둘 다 매출세액이 0원이라는 점은 같지만, <b>영세율</b>은 과세사업자에게 적용되며 매입 시 낸 부가세를
-       그대로 환급받고 부가세 신고 의무도 있습니다(주로 수출 등). <b>면세</b>는 부가가치세 자체가 면제되는
-       것이라 매입세액을 환급받지 못하고, 부가세 신고 의무도 없습니다(다만 사업장현황신고는 별도로 해야 합니다).</p>
-    <h3>Q. 매입세액공제를 못 받는 경우도 있나요?</h3>
-    <p>사업과 관련 없는 지출, 비영업용 소형승용차의 구입·유지 관련 매입세액, 접대비 관련 매입세액,
-       면세사업 관련 매입세액, 세금계산서를 받지 않았거나 부실기재된 경우 등은 매입세액을 공제받을 수 없습니다.</p>
-    <h3>Q. 세금계산서 발행 시 금액은 어떻게 적나요?</h3>
-    <p>공급가액과 세액을 나누어 기재합니다. 이 계산기로 공급가·부가세를 정확히 나눈 값을 그대로 활용하면 됩니다.</p>
-
-    <div class="note">일반과세 10%, 간이과세자 업종별 부가가치율, 가산세율, 신고기한 등은 2026-07 기준으로
-       여러 자료를 교차 확인해 정리했습니다. 세법은 개정이 잦으니 실제 신고 전 홈택스 또는 세무 전문가를 통해
-       최신 기준을 다시 확인하세요.</div>
-
+    <h2>부가가치세 계산 기준</h2>
+    <p>①은 일반과세 10%의 공급가액과 합계금액을 변환합니다. ②는 1년 내내 사업한 간이과세자의 공급대가를 기준으로 한 추정치입니다. 신규·폐업 사업자의 연 환산, 겸업, 부동산임대업 등 별도 기준은 반영하지 않습니다. 결과는 원 단위로 반올림하므로 실제 신고 시 단수 처리와 다를 수 있습니다.</p>
+    <h2>간이과세자의 업종별 부가가치율</h2>
+    <table class="compare-table"><thead><tr><th>부가가치율</th><th>업종</th></tr></thead><tbody>
+    <tr><td>15%</td><td>소매업·재생용 재료 수집판매업·음식점업</td></tr>
+    <tr><td>20%</td><td>제조업·농림어업·소화물 전문 운송업</td></tr>
+    <tr><td>25%</td><td>숙박업</td></tr>
+    <tr><td>30%</td><td>건설업·운수 및 창고업(소화물 전문 운송업 제외)·정보통신업·그 밖의 서비스업</td></tr>
+    <tr><td>40%</td><td>금융·보험 관련 서비스업, 전문·과학·기술서비스업(인물사진·행사영상 촬영업 제외), 사업시설관리·사업지원·임대서비스업, 부동산 관련 서비스업·부동산임대업</td></tr></tbody></table>
+    <p>매출세액 = 공급대가 × 업종별 부가가치율 × 10%. 공제 대상 매입액(공급대가)의 0.5%와 입력한 카드 발급액의 공제액을 차감합니다. 공제 요건을 충족하는 소비자 상대 개인사업자의 카드 발급 세액공제는 2026년까지 1.3%, 연 1,000만원 한도로 계산합니다. 공제로 환급이 발생하지는 않습니다.</p>
+    <p>간이과세 기준은 원칙적으로 직전 연도 공급대가 1억 400만원 미만이며, 배제 업종·지역과 부동산임대업 등에는 예외가 있습니다. 해당 과세기간 공급대가가 4,800만원 미만이면 납부의무 면제 대상이 될 수 있지만 신고 의무는 별개입니다.</p>
+    <h2>신고·납부 일정</h2>
+    <p>일반과세 개인사업자는 통상 연 2회 확정신고하고, 법인사업자는 통상 예정·확정신고를 합쳐 연 4회 신고합니다. 예정고지 대상 등 예외가 있습니다. 간이과세자는 통상 연 1회 신고하며, 상반기 세금계산서 발급 등 요건에 따라 7월 신고가 필요할 수 있습니다.</p>
+    <table class="compare-table"><thead><tr><th>2026년 일반 신고 구분</th><th>기한</th></tr></thead><tbody>
+    <tr><td>1기 예정</td><td>4월 27일 (25일 토요일)</td></tr><tr><td>1기 확정</td><td>7월 27일 (25일 토요일)</td></tr><tr><td>2기 예정</td><td>10월 26일 (25일 일요일)</td></tr><tr><td>2기 확정</td><td>2027년 1월 25일</td></tr></tbody></table>
+    <p>직권 연장·개별 연장 여부와 본인의 예정고지·신고 대상 여부는 홈택스 안내에서 확인하세요.</p>
+    <h2>가산세는 어떤 경우를 계산하나요?</h2>
+    <p>일반 무신고 20%, 일반 과소신고 10%, 부정 무신고·과소신고 40%를 단순 적용합니다. 국제거래 등 특례는 제외합니다. 일반 무신고의 자진 기한 후 신고 감면은 1개월 이내 50%, 1개월 초과 3개월 이내 30%, 3개월 초과 6개월 이내 20%로 계산하며, 세무조사를 미리 아는 등 감면 배제 사유가 있으면 적용되지 않습니다. 수정신고 감면은 계산하지 않습니다.</p>
+    <p>고지 전 납부지연가산세는 미납세액 × 경과일 수 × 0.022%입니다. 예를 들어 100만원을 30일 늦게 자진 납부하면 납부지연분은 6,600원입니다. <b>2026년 7월부터의 월 0.67% 변경은 고지 후 체납 단계에 관한 안내</b>이므로 이 계산에 기본 3%와 함께 일괄 적용하지 않습니다.</p>
+    <h2>영세율과 면세는 다른가요?</h2><p>영세율은 과세 거래에 0%를 적용하며 요건에 따라 매입세액 공제가 가능합니다. 면세 거래는 관련 매입세액을 원칙적으로 공제하지 않습니다. 거래별 증빙·공제 요건은 국세청 안내를 확인하세요.</p>
+    <p class="hint">확인 기준: 2026.10.21 · <a href="https://d.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7693&mi=2401" target="_blank" rel="noopener noreferrer">국세청 부가가치세 안내 ↗</a></p><p class="hint">확인 기준: 2026.10.21 · <a href="https://www.nts.go.kr/nts/na/ntt/selectNttInfo.do?mi=2207&nttSn=1352858" target="_blank" rel="noopener noreferrer">국세청 체납 가산세 변경 안내 ↗</a></p>
 
     <!-- BEGIN tool-products (생성: scripts/build-tool-products.js — 직접 고치지 말 것) -->
     <section class="tool-brandline" aria-label="테차 소개">
@@ -388,11 +328,11 @@ TECHA.initPage({ title:"부가가치세 계산기", desc:"공급가↔합계, �
   var GS_RATES = { none: 0.2, under: 0.1, fraud: 0.4 };
 
   function gsCalc(){
-    var tax=num(gsTax), months=num(gsMonths), reduction=num(gsReduction.value);
+    var tax=num(gsTax), months=num(gsMonths), reduction=num(gsReduction);
     if (tax<=0){ gsResult.className="result empty"; gsResult.textContent="세액을 입력하세요."; gsBrk.style.display="none"; return; }
     var rate = GS_RATES[gsType.value];
-    var penalty1 = tax * rate * (1-reduction);
-    var penalty2 = tax*0.03 + tax*Math.max(0,months)*0.0067;
+    var penalty1 = tax * rate * (1-(gsType.value === "none" ? reduction : 0));
+    var penalty2 = tax * Math.max(0,Math.floor(months)) * 0.00022;
     var totalPenalty = penalty1 + penalty2;
 
     gsResult.className="result";
@@ -407,16 +347,16 @@ TECHA.initPage({ title:"부가가치세 계산기", desc:"공급가↔합계, �
 
   // ---------- ④ 2026년 신고기한 D-day ----------
   var DEADLINES = [
-    { label: "1기 예정신고", date: "2026-04-25" },
+    { label: "1기 예정신고", date: "2026-04-27" },
     { label: "1기 확정신고", date: "2026-07-27" },
-    { label: "2기 예정신고", date: "2026-10-25" },
+    { label: "2기 예정신고", date: "2026-10-26" },
     { label: "2기 확정신고 (익년)", date: "2027-01-25" }
   ];
   var today = new Date(); today.setHours(0,0,0,0);
   var deadlinesEl = document.getElementById("deadlines");
   var nextFound = false;
   deadlinesEl.innerHTML = DEADLINES.map(function(d){
-    var dt = new Date(d.date);
+    var dt = new Date(d.date+"T00:00:00");
     var diff = Math.round((dt-today)/86400000);
     var isNext = !nextFound && diff >= 0;
     if (isNext) nextFound = true;

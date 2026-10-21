@@ -120,15 +120,9 @@
     <div class="row">
       <div>
         <label class="field" for="peType">대출 종류</label>
-        <select id="peType">
-          <option value="0.75">부동산담보대출 · 고정형 (0.75%)</option>
-          <option value="0.55">부동산담보대출 · 변동형 (0.55%)</option>
-          <option value="0.18">신용대출 · 고정형 (0.18%)</option>
-          <option value="0.11">신용대출 · 변동형 (0.11%)</option>
-          <option value="custom">직접 입력</option>
-        </select>
+        <select id="peType"><option value="custom">약정 수수료율 직접 입력</option><option value="0">수수료 면제 (0%)</option><option value="0.5">계산 예시 (0.5%)</option><option value="1">계산 예시 (1%)</option></select>
       </div>
-      <div><label class="field" for="peRate">수수료율 (%)</label><input type="number" id="peRate" value="0.75" step="any"></div>
+      <div><label class="field" for="peRate">수수료율 (%)</label><input type="number" id="peRate" value="0" step="any"></div>
     </div>
     <div class="row" style="margin-top:12px">
       <div><label class="field" for="peAmount">중도상환 금액 (원)</label><input type="text" inputmode="numeric" id="peAmount" value="10,000,000"></div>
@@ -136,10 +130,7 @@
     </div>
 
     <div class="result empty" id="peResult" style="margin-top:16px">값을 입력하면 계산됩니다.</div>
-    <p class="hint" style="margin-top:10px">대출 후 3년(1,095일)이 지나면 수수료가 없습니다. "매년 원금 10%
-      이내 면제" 특약은 <b>주로 주택담보대출</b>에 있고 신용대출엔 없는 경우가 많으니 약정서를 확인하세요.
-      인터넷전문은행 신용대출은 수수료 자체가 없는 경우도 많습니다. 다만 2026년 1월부터 일부 시중은행이
-      주택담보대출 중도상환수수료율을 다시 인상하는 추세이니, 최신 요율은 반드시 은행에서 확인하세요.</p>
+    <p class="hint" style="margin-top:10px">3년을 1,095일로 보고 선형 차감하는 예시입니다. 약정 수수료율을 직접 입력하세요. 실제 면제 기간·일수·연간 면제 한도는 약정서에 따라 다릅니다.</p>
   </section>
 
   <section class="card">
@@ -152,19 +143,12 @@
     </div>
     <label class="field" for="dsrLimit" style="margin-top:12px">적용 한도</label>
     <select id="dsrLimit">
-      <option value="40">은행권 (40%)</option>
-      <option value="50">비은행권 (50%)</option>
+      <option value="40">참고 기준 40% (은행권 일반 기준)</option>
+      <option value="50">참고 기준 50% (비은행권 일반 기준)</option>
     </select>
 
     <div class="result empty" id="dsrResult" style="margin-top:16px">값을 입력하면 계산됩니다.</div>
-    <p class="hint" style="margin-top:10px">2025-07 시행된 스트레스 DSR 3단계부터는 자동차 할부·학자금 등
-      모든 대출을 합산하고, 미래 금리 상승분(가산금리)까지 반영해 더 보수적으로 계산됩니다. 2025년 10월
-      15일 대책 이후 수도권·규제지역은 가산금리가 3.0%p로 더 높아졌습니다. 정확한 한도는
-      금융기관에서 확인하세요.
-      ⚠️ 또한 실제 DSR 심사에서는 <b>실제 상환액이 아니라 대출종류·상환방식별로 표준화된 방식</b>으로
-      환산해 반영합니다(예: 만기일시상환 대출도 표준화된 분할상환 기준으로 환산). 따라서 "이 대출의 연간
-      원리금상환액"에는 위 ①에서 계산한 실제 상환액을 그대로 넣기보다, 금융기관이 안내하는 DSR 반영 금액을
-      확인해서 넣는 것이 더 정확합니다.</p>
+    <p class="hint" style="margin-top:10px">입력한 연간 원리금의 단순 비율입니다. 스트레스 금리·대출 종류별 환산·DSR 제외 대출은 자동 반영하지 않습니다. 실제 심사용 원리금과 적용 규제는 금융기관에서 확인하세요.</p>
   </section>
 
   <div class="ad-slot"></div>
@@ -197,38 +181,11 @@
     <p>여기서 월이율 = 연이율 ÷ 12 ÷ 100 입니다. 거치기간이 있으면 거치 동안은 이자만 계산하고, 남은
        기간(전체 기간 − 거치기간)에 대해 위 공식을 적용합니다.</p>
 
-    <h2>중도상환수수료 계산 방법</h2>
-    <p><b>수수료 = 상환금액 × 수수료율 × (잔여일수 ÷ 1,095일)</b>. 대출 후 날짜가 지날수록 수수료가
-       매일 조금씩 줄어드는 슬라이딩 방식입니다. 2026년 기준 수수료율은 부동산담보대출 변동형 0.55%/고정형
-       0.75%, 신용대출 변동형 0.11%/고정형 0.18% 수준이며, 상품·은행마다 다를 수 있습니다.</p>
-
-    <h2>DSR(총부채원리금상환비율)이란</h2>
-    <p>DSR = (모든 대출의 연간 원리금상환액 합계) ÷ 연 소득 × 100. 은행권은 40%, 비은행권은 50%가 일반적인
-       한도입니다. 2025-07 시행된 <b>스트레스 DSR 3단계</b>부터는 미래 금리 상승분을 가산금리로 얹어 더
-       보수적으로 계산합니다. 시행 초기에는 전국 일괄 약 1.5%p였지만, <b>2025년 10월 15일 발표된 주택
-       시장 안정화 대책</b>에 따라 <b>수도권·규제지역 주택담보대출은 가산금리가 3.0%p로 상향</b>되고
-       비규제지역(지방)은 0.75%p로 낮아지는 등 지역별로 나뉘었습니다. 그 결과 실제 대출 한도가 수도권
-       기준으로 이전보다 15~30% 정도 줄어드는 경우가 많습니다.</p>
-
-    <h2>참고: 2026년 시장금리 예시 (변동성 큰 정보)</h2>
-    <table class="compare-table">
-      <thead><tr><th>대출 종류</th><th>금리대(예시)</th></tr></thead>
-      <tbody>
-        <tr><td>주택담보대출 (혼합형)</td><td>연 4.1~6.3%</td></tr>
-        <tr><td>신용대출 (1년 만기)</td><td>연 4.0~5.4%</td></tr>
-      </tbody>
-    </table>
-    <div class="note">시장금리는 매주 바뀌는 정보라 위 표는 참고 예시일 뿐입니다. 정확한 최신 금리는
-       전국은행연합회 소비자포털(portal.kfb.or.kr)에서 은행별로 비교하세요.</div>
-
-    <h2>정책서민금융상품 (햇살론, 2026년 개편)</h2>
-    <p>저신용·저소득자를 위한 정책 대출도 참고할 만합니다. 2026년부터 <b>일반보증(저신용자)</b>과
-       <b>특례보증(최저신용자)</b> 2종으로 통합됐습니다.</p>
-    <ul>
-      <li><b>대상</b>: 연소득 3,500만원 이하(신용점수 무관), 또는 연소득 4,500만원 이하이면서 신용점수 하위 20%</li>
-      <li><b>한도·금리</b>: 최대 1,500만원, 연 10% 이내, 최대 5년</li>
-      <li><b>중도상환수수료 없음</b>: 여유가 생기면 언제든 부담 없이 갚을 수 있습니다</li>
-    </ul>
+    <h2>중도상환수수료 계산의 가정</h2>
+    <p>중도상환금액 × 약정 수수료율 × (1,095 − 경과일 수) ÷ 1,095로 계산하며, 경과일 수가 1,095일 이상이면 0원으로 표시합니다. 실제 약정은 대출 기간·면제 한도·윤년 처리 등이 다를 수 있습니다. 2025년 금융위원회 자료의 0.55~0.75%p는 일부 담보대출 수수료율의 <b>인하 폭</b>이며, 모든 상품에 적용되는 현재 수수료율이 아닙니다.</p>
+    <h2>DSR 참고 비율</h2><p>DSR 참고 비율 = 입력한 기존·신규 대출의 연간 원리금상환액 합계 ÷ 연 소득 × 100. 이 도구는 스트레스 DSR 심사나 대출 가능 금액을 계산하지 않습니다. 규제 대상·제외 대출·환산 만기·지역별 요건은 금융기관의 최신 심사 기준을 확인하세요.</p>
+    <h2>금리·정책 대출을 비교하려면</h2><p>실제 적용 금리는 신용도·담보·우대 조건·실행 시점에 따라 다릅니다. 은행연합회 소비자포털의 대출금리 비교와 해당 은행의 상품 설명서를 확인하고, 정책서민금융의 자격·한도는 서민금융진흥원에서 확인하세요.</p>
+    <p class="hint">확인 기준: 2026.10.21 · <a href="https://fsc.go.kr/no010101/83833" target="_blank" rel="noopener noreferrer">금융위원회 중도상환수수료 안내 ↗</a></p>
 
     <h2>이자를 줄이는 팁</h2>
     <ul>
@@ -250,10 +207,7 @@
     <p>원금이 만기까지 전혀 줄지 않고 그대로 유지되기 때문에, 매달 내는 이자가 항상 "원금 전액 기준"으로
        계산됩니다. 원금균등·원리금균등은 갚아나갈수록 이자가 붙는 원금이 줄어들어 총 이자가 더 적습니다.</p>
     <h3>Q. DSR에 포함되지 않는 대출도 있나요?</h3>
-    <p>네, 다음은 개인별 DSR 산정에서 제외되는 대표적인 경우입니다: <b>무주택자의 전세자금대출</b>(1주택자가
-       추가로 받는 전세대출은 포함), 분양주택 <b>중도금대출</b>, 재건축·재개발 <b>이주비대출</b>, <b>주택연금
-       (역모기지론)</b>, <b>300만원 이하 소액 신용대출</b>, 새희망홀씨 등 <b>서민금융상품</b>. 정확한 포함
-       여부는 대출 심사 시 금융기관에서 최종 안내받으세요.</p>
+    <p>네. 정책서민금융·일부 소액대출 등 별도 취급되는 대출이 있습니다. 제외 여부는 상품·차주 조건과 시행 규정에 따라 달라지므로 금융기관에 확인하세요. 이 도구에서는 제외 대출을 자동으로 구분하지 않습니다.</p>
 
     <div class="note">실제 대출은 중도상환수수료·우대금리·거치기간·DSR 산정 방식 등에 따라 달라질 수
        있습니다. 참고용으로 활용하고 정확한 조건은 금융기관에 확인하세요.</div>
@@ -346,7 +300,7 @@ TECHA.initPage({ title:"대출 이자 계산기", desc:"거치기간·중도상�
     var annual=parseFloat(document.getElementById("r").value);
     var n=parseInt(document.getElementById("y").value);
     var grace=Math.max(0, parseInt(document.getElementById("grace").value)||0);
-    if(!P||!n||n<1||isNaN(annual)){ result.className="result empty"; result.textContent="값을 정확히 입력하세요."; brk.style.display="none"; return; }
+    if(!P||!n||n<1||annual<0||isNaN(annual)){ result.className="result empty"; result.textContent="값을 정확히 입력하세요."; brk.style.display="none"; return; }
     var i=annual/12/100;
     var totalInterest;
 
@@ -396,7 +350,7 @@ TECHA.initPage({ title:"대출 이자 계산기", desc:"거치기간·중도상�
     peCalc();
   });
   function peCalc(){
-    var amount=num(peAmount), days=num(peDays), rate=num(peRate);
+    var amount=num(peAmount), days=Math.max(0,num(peDays)), rate=Math.max(0,num(peRate));
     if (amount<=0){ peResult.className="result empty"; peResult.textContent="중도상환 금액을 입력하세요."; return; }
     var remainDays = Math.max(0, 1095-days);
     var fee = amount * rate/100 * (remainDays/1095);
@@ -418,7 +372,7 @@ TECHA.initPage({ title:"대출 이자 계산기", desc:"거치기간·중도상�
     var dsr = (other+thisLoan)/income*100;
     var over = dsr > limit;
     dsrResult.className="result"+(over?" over":"");
-    dsrResult.innerHTML = '<div class="big">DSR '+(Math.round(dsr*10)/10)+'%</div><div class="sub">'+(over ? "⚠️ 한도("+limit+"%) 초과" : "한도("+limit+"%) 이내")+'</div>';
+    dsrResult.innerHTML = '<div class="big">DSR '+(Math.round(dsr*10)/10)+'%</div><div class="sub">'+(over ? "참고 기준("+limit+"%) 초과" : "참고 기준("+limit+"%) 이내")+'</div>';
     flash(dsrResult);
   }
   [dsrIncome,dsrOther,dsrThis,dsrLimit].forEach(function(el){ el.addEventListener("input", dsrCalc); el.addEventListener("change", dsrCalc); });
