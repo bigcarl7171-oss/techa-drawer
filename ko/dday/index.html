@@ -29,8 +29,9 @@
   "applicationCategory":"UtilitiesApplication","operatingSystem":"Any",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"} }
 </script>
+<link rel="stylesheet" href="/assets/css/dday.css">
 </head>
-<body>
+<body class="dday-enhanced">
 <header id="site-header">
   <!-- BEGIN site-header (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
   <div class="wrap">
@@ -57,142 +58,29 @@
   <!-- END page-head -->
 </div>
 
-<main class="wrap">
-  <div class="ad-slot"></div>
+<main class="dday-page">
 
-  <section class="card">
-    <label class="field" for="target">목표 날짜 <span class="hint">(D-Day를 셀 기준일)</span></label>
-    <input type="date" id="target">
-
-    <label class="field"><input type="checkbox" id="incl" style="width:auto;margin-right:6px;vertical-align:middle">시작일(오늘)을 1일째로 포함 <span class="hint">(연애 100일 방식)</span></label>
-
-    <div style="margin-top:16px">
-      <button class="btn btn-primary btn-block" id="calc">D-Day 계산하기</button>
-    </div>
-
-    <div class="result empty" id="result">목표 날짜를 선택해 주세요.</div>
-
+<section class="intro"><div><p class="eyebrow">A LITTLE COUNTDOWN, A LOT OF LOVE</p><h2 class="hero-title">소중한 날을 세고,<br>마음을 준비해요.</h2><p class="intro-copy">우리의 100일, 기다리던 여행, 잊지 못할 기념일.<br>날짜를 고르면 그날까지의 시간이 한눈에 보여요.</p><div class="intro-tags"><span>가입 없이 바로</span><i>·</i><span>100일부터 1주년까지</span><i>·</i><span>브라우저 안에서 계산</span></div></div><div class="hero-photo"><img src="/assets/images/home/pinkpeach-bouquet.jpg" alt="테차의 핑크피치 프리저브드 꽃다발"><span>Every day, a little closer.</span></div></section>
+<section class="calculator" aria-labelledby="calc-title"><div class="calc-input"><div class="section-top"><h2 id="calc-title">D-Day 계산기</h2><span id="today-label"></span></div><div class="mode-switch" role="group" aria-label="계산 방식"><button class="active" type="button" data-mode="dday" aria-pressed="true">그날까지 D-Day</button><button type="button" data-mode="anniversary" aria-pressed="false">우리의 기념일</button></div><form id="calc-form"><label for="event-name">어떤 날을 기다리나요? <small>선택</small></label><input id="event-name" maxlength="40" placeholder="예: 우리의 100일, 첫 여행"><div class="date-label"><label for="target" id="date-label">기다리는 날짜</label><button type="button" id="today-btn" class="text-btn">오늘로 선택</button></div><input id="target" type="date" min="1900-01-01" max="9990-12-31" required><div class="quick"><span>바로 해보기</span><button type="button" data-example="couple">♡ 연애 100일</button><button type="button" data-example="christmas">크리스마스</button><button type="button" data-example="trip">30일 뒤 여행</button></div><label class="include" id="include-wrap" hidden><input type="checkbox" id="include" checked><span>처음 만난 날을 1일째로 세기<small>100일 = 시작일 + 99일</small></span></label><button class="calculate-btn" type="submit">날짜 계산하기 <span>↗</span></button><p class="privacy">입력한 날짜와 이름은 서버에 저장하지 않아요.</p></form></div><div class="calc-result" aria-live="polite"><span class="result-kicker" id="result-kicker">기다리는 순간까지</span><h3 id="result-name">크리스마스</h3><div class="big-result" id="result-number">—</div><p id="result-description"></p><div class="result-date" id="result-date"></div><div class="result-actions"><button type="button" id="copy">결과 복사 <span>⧉</span></button><button type="button" id="calendar">달력에 추가 <span>＋</span></button></div><span class="result-foot" id="result-foot">오늘은 제외하고 날짜의 차이를 계산해요.</span><div class="result-flower" aria-hidden="true">✳</div></div></section>
+<div id="notice" role="status"></div>
+<section class="milestone-section" aria-labelledby="milestone-title"><div class="heading-row"><div><p class="eyebrow">OUR LITTLE MILESTONES</p><h2 id="milestone-title">함께 챙기고 싶은 날들</h2><p id="milestone-caption">처음 만난 날을 선택하면 기념일이 펼쳐져요.</p></div><span class="small-pill" id="milestone-basis">기념일 예시</span></div><div class="milestone-grid" id="milestones"></div><p class="subnote">주년은 다음 해 같은 월·일로 계산해요. 2월 29일의 평년 주년은 2월 28일로 표시합니다.</p></section>
+<section class="examples"><div><p class="eyebrow">HOW IT WORKS</p><h2>이렇게 세면 쉬워요.</h2><p>헷갈리는 하루 차이,<br>예시로 알아보세요.</p></div><div class="example-list"><button type="button" data-example="couple"><span class="example-icon">♡</span><span><b>1월 1일에 만났다면, 100일은?</b><small>2026. 01. 01 → 2026. 04. 10 · 첫날 포함</small></span><span>↗</span></button><button type="button" data-example="trip"><span class="example-icon">↗</span><span><b>오늘부터 30일 뒤 떠나는 여행</b><small>출발일까지 D-30 · 오늘은 제외</small></span><span>↗</span></button><div class="example-static"><span class="example-icon">✧</span><span><b>1주년은 365일째와 달라요</b><small>2026. 01. 01 → 2027. 01. 01 · 같은 날짜</small></span></div></div></section>
     <!-- BEGIN tool-products (생성: scripts/build-tool-products.js — 직접 고치지 말 것) -->
-    <section class="tool-products" aria-labelledby="tool-products-title">
-      <p class="tool-products-kicker">TECHA PICKS</p>
-      <h2 id="tool-products-title">이 도구를 쓰신 김에, 테차의 선물</h2>
-      <div class="tool-products-grid">
-        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/68d23a99713c156d9f530c33" target="_blank" rel="noopener noreferrer"><span><b>장미수국 꽃다발</b><small>기념일·졸업·승진처럼 받는 순간이 중요한 자리</small></span><strong>상품 보기 →</strong></a>
-        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241cb1" target="_blank" rel="noopener noreferrer"><span><b>유리돔 무드등</b><small>낮에는 꽃, 밤에는 조명으로 남는 선물</small></span><strong>상품 보기 →</strong></a>
-        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/6aacecf4907c4216e6afb00c" target="_blank" rel="noopener noreferrer"><span><b>꽃엽서카드</b><small>부담 없이 짧은 마음과 꽃을 함께 전할 때</small></span><strong>상품 보기 →</strong></a>
-      </div>
-      <p class="tool-products-note">색상·크기·최종 가격은 스마트스토어 상품 페이지에서 확인해 주세요.</p>
-    </section>
+<section class="gift-section" aria-labelledby="gift-title"><div class="heading-row"><div><p class="eyebrow">A DAY TO REMEMBER, A GIFT TO KEEP</p><h2 id="gift-title">날짜는 지나도, 마음은 오래.</h2><p>다가오는 기념일에 시들지 않는 꽃을 더해보세요.</p></div><a class="arrow-link" href="/ko/gift-finder/?occasion=기념일">내게 맞는 선물 찾기 ↗</a></div><div class="gift-grid"><a class="gift-card" href="https://mkt.shopping.naver.com/link/68d23a99713c156d9f530c33" target="_blank" rel="noopener noreferrer"><div class="gift-image"><img src="/assets/images/home/rose-hydrangea-bouquet.jpg" alt="테차 장미수국 꽃다발" loading="lazy"><span>100일 · 기념일</span></div><div class="gift-info"><h3>장미수국 꽃다발 <span>↗</span></h3><p>만나는 순간, 두 팔 가득 전하는 마음.</p><small>상품 보러가기</small></div></a><a class="gift-card" href="https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241cb1" target="_blank" rel="noopener noreferrer"><div class="gift-image"><img src="/blog/glass-dome-mood-lamp-review/cover.jpg" alt="테차 매거진의 유리돔 꽃 무드등 연출" loading="lazy"><span>1주년 · 프러포즈</span></div><div class="gift-info"><h3>유리돔 무드등 <span>↗</span></h3><p>낮에는 꽃으로, 밤에는 따뜻한 빛으로.</p><small>상품 보러가기</small></div></a><div class="message-card"><span class="postmark">TECHA<br>with love</span><p class="eyebrow">A NOTE FOR YOU</p><blockquote>너와 함께한 날들이<br>내가 가장 좋아하는<br>계절이 되었어.</blockquote><p>꽃 옆에, 당신의 한 문장.</p><a href="/message/">기념일 카드 문구 찾기 ↗</a><a class="card-product" href="https://mkt.shopping.naver.com/link/6aacecf4907c4216e6afb00c" target="_blank" rel="noopener noreferrer">꽃엽서카드 보러가기 →</a></div></div><p class="subnote">테차 상품·매거진 사진을 사용했습니다. 연출 이미지와 실제 구매 옵션은 다를 수 있어요. 색상·구성·가격·배송 일정은 상품 페이지에서 확인해 주세요.</p></section>
     <!-- END tool-products -->
+<section class="prep"><div><p class="eyebrow">GET READY FOR THE DAY</p><h2 id="prep-title">설레는 그날, 여유롭게 준비해요.</h2><p>선물 고르기부터 마지막 한 문장까지.</p></div><div class="prep-steps"><div><span>D-10</span><b>마음을 고르는 날</b><p>선물과 옵션을 고르고<br>제작·배송 일정을 확인해요.</p><small id="prep-10"></small></div><div><span>D-5</span><b>꽃을 기다리는 날</b><p>수령일을 여유 있게 잡고<br>포장과 구성을 확인해요.</p><small id="prep-5"></small></div><div><span>D-1</span><b>한 문장을 더하는 날</b><p>둘만의 기억을 담아<br>짧은 카드를 써보세요.</p><small id="prep-1"></small></div></div><p class="subnote">준비 일정은 제안이에요. 실제 제작·출고·도착일을 보장하지 않으며, 연휴 전에는 더 여유롭게 준비해 주세요.</p></section>
+<section class="faq"><div><p class="eyebrow">GOOD TO KNOW</p><h2>자주 묻는 질문</h2></div><div><details><summary>D-Day와 사귄 지 며칠째는 어떻게 다른가요?</summary><p>D-Day는 오늘과 목표일의 차이를 세요. 내일은 D-1, 오늘은 D-Day, 어제는 D+1입니다. 연애 기념일은 처음 만난 날을 1일째로 세므로 첫날부터 1일째가 됩니다.</p></details><details><summary>100일은 시작일에서 100일을 더하면 되나요?</summary><p>첫날을 1일째로 세면 99일을 더해요. 예를 들어 2026년 1월 1일에 만났다면 100일은 4월 10일이에요. 첫날 포함을 끄면 100일 후인 4월 11일로 계산합니다.</p></details><details><summary>윤년과 1주년도 반영하나요?</summary><p>날짜 차이는 실제 달력으로 계산해 윤년을 반영합니다. 주년은 다음 해 같은 월·일이며, 2월 29일은 평년에 2월 28일로 표시해요.</p></details><details><summary>오늘 날짜는 어떤 시간을 기준으로 하나요?</summary><p>한국 시간(Asia/Seoul)을 기준으로 날짜를 계산해요. 날짜만 비교하기 때문에 같은 날에는 시간에 따라 결과가 바뀌지 않아요. 자정이 지나면 오늘 날짜도 갱신됩니다.</p></details><details><summary>입력한 날짜가 저장되거나 공유되나요?</summary><p>계산은 브라우저 안에서만 이뤄지고 입력값을 서버에 저장하지 않아요. 결과 복사를 누르면 문구를 복사하고, 달력에 추가하면 기기에 일정 파일을 내려받습니다.</p></details></div></section>
 
-    <div id="techa-cta" data-text="다가오는 그날, 시들지 않는 꽃으로 마음을 전해보세요"></div>
-  </section>
-
-  <div class="ad-slot"></div>
-
-  <section class="card" id="milestone-card" style="display:none">
-    <h3 style="margin:0 0 8px">시작일 기준 기념일</h3>
-    <p class="hint" style="margin:0 0 12px">위 '목표 날짜'를 <b>시작일</b>로 보고 100일·1000일 등이 언제인지 알려드립니다.</p>
-    <div id="milestones"></div>
-  </section>
-
-  <article class="article">
-    <h2>D-Day 계산기 사용법</h2>
-    <p>목표 날짜를 선택하면 오늘로부터 남은 날(D-n) 또는 지난 날(D+n)을 계산합니다.
-       연애·결혼 기념일처럼 시작한 날을 1일째로 세는 방식이 필요하면 '시작일 포함'을 체크하세요.
-       시험·전역·기념일·프로젝트 마감 등 어떤 날짜에도 사용할 수 있습니다.</p>
-
-    <h2>D-Day 표기 방법</h2>
-    <ul>
-      <li><b>D-30</b>: 목표일까지 30일 남음</li>
-      <li><b>D-DAY</b>: 오늘이 바로 그날</li>
-      <li><b>D+15</b>: 목표일이 15일 지남</li>
-    </ul>
-
-    <h3>100일·1000일은 왜 다르게 세나요?</h3>
-    <p>연애 기념일은 보통 <b>만난 날을 1일째</b>로 세기 때문에, 100일은 시작일로부터 99일 뒤가 됩니다.
-       이 계산기의 기념일 표는 이 방식(시작일=1일째)으로 100·200·300·500·1000·2000일을 자동 계산해,
-       각 기념일이 정확히 며칠(요일 포함)인지, 오늘 기준 며칠 남았는지를 보여줍니다.
-       커플 기념일뿐 아니라 아기 100일, 개업 1000일 등 다양한 기념일에 활용할 수 있습니다.</p>
-
-    <h2>이럴 때 쓰면 좋아요</h2>
-    <ul>
-      <li><b>시험·수능·자격증</b>까지 남은 날을 세어 공부 계획을 세울 때</li>
-      <li><b>전역·제대</b>, 입대일까지 카운트다운</li>
-      <li><b>결혼기념일·생일·기념일</b> 챙기기</li>
-      <li><b>프로젝트·계약 마감일</b> 관리</li>
-      <li><b>여행·콘서트·이벤트</b>까지 설레는 D-day 세기</li>
-    </ul>
-
-    <h2>2027학년도 대학수학능력시험 D-Day</h2>
-    <p><b>2027학년도 대학수학능력시험은 2026년 11월 19일(목) 시행</b>이 교육부에서 이미 확정·발표됐습니다
-       (2025년 8월 발표 기준). 위 목표 날짜에 <b>2026-11-19</b>를 입력하면 수능까지 남은 날을 바로 확인할 수 있습니다.
-       수능일은 관례적으로 <b>매년 11월 셋째 주 목요일</b>에 열리므로, 다음 학년도 수능일도 이 규칙으로 대략 가늠할 수 있습니다.</p>
-
-    <h2>기념일 선물, 며칠 전에 준비해야 할까</h2>
-    <p>D-Day를 세는 이유가 선물 때문이라면, 날짜보다 <b>주문 마감일</b>을 먼저 잡는 편이 안전합니다.
-       당일에 맞춰 주문하면 배송 하루 지연으로 기념일을 넘기는 일이 생깁니다.</p>
-    <table class="compare-table">
-      <thead><tr><th>준비하는 것</th><th>D-며칠에</th><th>왜</th></tr></thead>
-      <tbody>
-        <tr><td>택배로 받는 선물</td><td>D-4 ~ D-5</td><td>도착 후 열어 확인할 하루를 남겨 둡니다</td></tr>
-        <tr><td>주문 제작·각인</td><td>D-7 ~ D-10</td><td>제작 기간이 따로 붙습니다</td></tr>
-        <tr><td>생화 꽃다발</td><td>D-2 ~ D-3</td><td>너무 일찍 받으면 당일에 상태가 떨어집니다</td></tr>
-        <tr><td>시들지 않는 꽃</td><td>D-5 이상 언제든</td><td>미리 받아 두어도 그대로입니다</td></tr>
-        <tr><td>손편지·카드</td><td>D-1</td><td>마지막에 쓰는 편이 마음이 담깁니다</td></tr>
-      </tbody>
-    </table>
-    <p>연휴나 명절이 끼면 택배가 하루 이틀 더 걸립니다. 기념일이 연휴 직후라면
-       위 기준에서 <b>이틀쯤 더 앞당겨</b> 잡으세요.</p>
-    <p>꽃 선물을 택배로 보낸다면 몇 시까지 주문해야 그날 발송되는지, 상자 안은 어떻게 싸서 보내는지를
-       <a href="/blog/flower-gift-parcel-packing/">꽃다발 택배 포장, 상품마다 에어캡을 다르게 쓰는 이유</a>에 정리했습니다.</p>
-    <p>해마다 돌아오는 기념일이라 무엇을 고를지가 더 어려우시다면
-       <a href="/blog/wife-birthday-gift/">해마다 비교되지 않는 선물을 고르는 기준</a>도 함께 보세요.</p>
-    <p>수능 D-day를 세고 있다면 응원 선물을 건네기 좋은 시점과 엿·찹쌀떡에 담긴 뜻을 정리한
-       <a href="/blog/suneung-cheer-gift/">수능 선물 언제 줄까, 엿·찹쌀떡의 뜻과 시험 끝난 날의 꽃</a>도 참고하세요.</p>
-    <p>친구 결혼식까지 남은 날을 세고 있다면, 신혼여행에서 돌아오는 날에 맞춰 선물을 보내는 법을 정리한
-       <a href="/blog/friend-wedding-gift/">친구 결혼 축하 선물, 식장보다 신혼집으로 보내는 이유</a>도 함께 보세요.</p>
-    <p>빼빼로데이(11월 11일)까지 며칠 남았는지 세고 있다면, 빼빼로 옆에 곁들이기 좋은 작은 꽃 선물과 이날의 유래를 정리한
-       <a href="/blog/pepero-day-flower-gift/">빼빼로데이 선물, 빼빼로 옆에 꽃 한 송이를 더하는 법</a>도 참고하세요.
-       올해 11월 11일은 수요일이라 준비가 전날 밤으로 당겨지니, 꽃과 빼빼로 상자를 함께 묶는 순서는
-       <a href="/blog/pepero-day-wrapping/">빼빼로데이 포장, 꽃 한 송이를 리본으로 같이 묶는 네 단계</a>에 따로 정리했어요.</p>
-
-    <h2>기념일 계산에서 자주 틀리는 것: "1주년 = 365일"이 아니다</h2>
-    <p>많은 사람이 1주년을 "시작일 + 365일"로 계산하는데, 실제로는 <b>시작일과 같은 날짜가 돌아오는 다음 해</b>가
-       1주년입니다. 이 사이에 2월 29일(윤년)이 껴 있으면 366일이 지나야 1주년이 되고, 안 껴 있으면 365일 만에
-       1주년이 됩니다. 즉 1주년까지 며칠인지는 해마다 조금씩 달라질 수 있어, "+365일"로 손으로 계산하면
-       하루씩 어긋나는 경우가 생깁니다. 정확한 날짜는 시작일을 목표 날짜란에 그대로 넣고 위 기념일 표에서
-       확인하는 것이 가장 정확합니다.</p>
-    <p>결혼기념일이라면 햇수마다 붙는 이름도 있습니다. 1주년 지혼식부터 50주년 금혼식까지의
-       <a href="/blog/wedding-anniversary-gift/">결혼기념일 연차별 이름과 장미 색깔별 꽃말</a>을 함께 보세요.</p>
-
-    <h2>자주 묻는 질문 (FAQ)</h2>
-    <h3>Q. 오늘이 목표일이면 어떻게 표시되나요?</h3>
-    <p>D-DAY로 표시됩니다. 하루 전은 D-1, 하루 뒤는 D+1입니다.</p>
-    <h3>Q. '시작일 포함'은 언제 체크하나요?</h3>
-    <p>숙박 일수나 연애 100일처럼 <b>첫날을 1일째로 세야 할 때</b> 체크합니다. 체크하면 세는 값이 1 늘어납니다.
-       순수하게 남은 날만 알고 싶다면 체크하지 마세요.</p>
-    <h3>Q. 지난 날짜(과거)도 셀 수 있나요?</h3>
-    <p>네. 과거 날짜를 넣으면 며칠이 지났는지 D+n으로 알려줍니다. 기념일이 며칠 됐는지 확인할 때 유용합니다.</p>
-    <h3>Q. 1주년은 정확히 며칠 뒤인가요?</h3>
-    <p>보통 365일 뒤지만, 시작일과 1주년 사이에 2월 29일(윤년)이 껴 있으면 366일 뒤입니다.
-       "+365일"로 암산하지 말고, 시작일을 그대로 입력해 확인하는 것이 정확합니다.</p>
-    <h3>Q. 윤년이 있는 해는 계산이 달라지나요?</h3>
-    <p>네, 이 계산기는 윤년(2월 29일)을 자동으로 반영해 정확한 일수를 계산하므로 따로 신경 쓰지 않아도 됩니다.</p>
-    <h3>Q. 수능 D-Day는 언제 기준으로 계산하나요?</h3>
-    <p>2027학년도 수능(2026-11-19) 기준으로 계산하려면 목표 날짜에 해당 날짜를 입력하세요.
-       그 이후 학년도는 아직 공식 발표 전이라면 "11월 셋째 주 목요일"로 대략 가늠할 수 있습니다.</p>
-
-    <div class="note">두 날짜 사이의 정확한 일수만 필요하다면 <a href="/ko/date-diff/">두 날짜 사이 일수 계산기</a>가 더 편리합니다.</div>
-  </article>
-
-  <div id="related" class="related">
+<noscript><p>계산기를 사용하려면 JavaScript를 켜주세요. 첫날을 포함한 100일은 시작일 + 99일, D-Day는 목표일 − 오늘로 계산합니다.</p></noscript>
+<div id="related" class="related">
     <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
     <h2>관련 도구</h2>
     <div class="related-list"><a href="/ko/date-diff/">🗓️ 두 날짜 사이 일수</a><a href="/ko/gift-finder/">🎁 상황별 선물 큐레이션</a><a href="/ko/age-calculator/">🎂 만 나이 계산기</a></div>
     <!-- END related -->
   </div>
 </main>
+
+
 
 <footer id="site-footer">
   <!-- BEGIN site-footer (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
@@ -228,112 +116,7 @@ TECHA.initPage({
   related: ["date-diff", "gift-finder", "age-calculator"]
 });
 
-(function () {
-  var target = document.getElementById("target");
-  var incl = document.getElementById("incl");
-  var result = document.getElementById("result");
-  var msCard = document.getElementById("milestone-card");
-  var msEl = document.getElementById("milestones");
-
-  function today0() { var d = new Date(); d.setHours(0,0,0,0); return d; }
-
-  // ---------- 상황별 진입 (홈의 "이런 날 챙기고 계신가요?"에서 넘어옴) ----------
-  // 날짜가 고정된 기념일은 올해(지났으면 내년) 날짜를 미리 채워둔다.
-  // hint 안의 {y}는 실제 계산된 연도로 바뀐다. 올해 날짜가 이미 지났으면
-  // 내년으로 넘어가므로 "올해"라고 못 박으면 틀린 안내가 된다.
-  // 각 상황은 실제로 뭔가를 자동으로 해줘야 카드로 둘 값어치가 있다.
-  // 날짜만 직접 입력하게 하고 문구만 바뀌는 상황은 그냥 기본 화면과 같으므로 두지 않는다.
-  var SITUATIONS = {
-    "parents-day":  { label:"어버이날", month:5, day:8, hint:"{y}년 어버이날까지 남은 날이에요.",
-      cta:"어버이날 선물 미리 준비하기" },
-    "teachers-day": { label:"스승의날", month:5, day:15, hint:"{y}년 스승의날까지 남은 날이에요.",
-      cta:"감사를 오래 전하는 선물 보기" },
-    "couple":       { label:"100일·1주년", incl:true, hint:"처음 만난 날을 넣으면 100일·1000일을 알려드려요.",
-      cta:"그날을 오래 남기는 선물 보기" }
-  };
-
-  function pad2(n){ return (n<10?"0":"")+n; }
-
-  var forKey = new URLSearchParams(location.search).get("for");
-  var situation = SITUATIONS[forKey];
-  if (situation) {
-    // 날짜가 고정된 기념일은 미리 채워준다 (올해가 지났으면 내년으로)
-    var targetYear = null;
-    if (situation.month) {
-      var now = today0();
-      var y = now.getFullYear();
-      var d = new Date(y, situation.month - 1, situation.day);
-      if (d < now) d = new Date(y + 1, situation.month - 1, situation.day);
-      targetYear = d.getFullYear();
-      target.value = targetYear + "-" + pad2(d.getMonth()+1) + "-" + pad2(d.getDate());
-    }
-    if (situation.incl) incl.checked = true;
-
-    // 안내 문구를 그 상황(과 실제 연도)에 맞게
-    var lead = document.querySelector("#page-head .lead");
-    if (lead) {
-      lead.textContent = situation.label + " · " +
-        situation.hint.replace("{y}", targetYear === null ? "" : targetYear);
-    }
-
-    // 선물 CTA 문구도 상황에 맞게 (탄생화·탄생석과 같은 방식)
-    var ctaEl = document.getElementById("techa-cta");
-    if (ctaEl) { ctaEl.setAttribute("data-text", situation.cta); TECHA.renderShopCTA(); }
-  }
-  function fmt(d) { return d.getFullYear() + "." + pad(d.getMonth()+1) + "." + pad(d.getDate()) + " (" + "일월화수목금토"[d.getDay()] + ")"; }
-  function pad(n) { return (n < 10 ? "0" : "") + n; }
-
-  function calc() {
-    if (!target.value) {
-      result.className = "result empty";
-      result.textContent = "목표 날짜를 선택해 주세요.";
-      msCard.style.display = "none";
-      return;
-    }
-    var t = new Date(target.value); t.setHours(0,0,0,0);
-    var now = today0();
-    var diff = Math.round((t - now) / 86400000);
-    if (incl.checked && diff >= 0) diff += 1; // 시작일 포함(1일째)
-
-    var label, sub;
-    if (!incl.checked) {
-      if (diff > 0) { label = "D-" + diff; sub = "목표일까지 " + diff + "일 남았어요"; }
-      else if (diff === 0) { label = "D-DAY"; sub = "바로 오늘이에요! 🎉"; }
-      else { label = "D+" + Math.abs(diff); sub = Math.abs(diff) + "일 지났어요"; }
-    } else {
-      label = diff + "일째";
-      sub = "오늘을 1일째로 세면 " + diff + "일째 되는 날이에요";
-    }
-
-    result.className = "result";
-    result.innerHTML = '<div class="big">' + label + '</div><div class="sub">' + sub +
-      '</div><div class="sub">' + fmt(t) + '</div>';
-
-    renderMilestones(new Date(target.value));
-  }
-
-  function renderMilestones(start) {
-    start.setHours(0,0,0,0);
-    var points = [100, 200, 300, 500, 1000, 2000];
-    var now = today0();
-    var rows = points.map(function (p) {
-      var d = new Date(start.getTime() + (p - 1) * 86400000); // 시작일=1일째
-      var left = Math.round((d - now) / 86400000);
-      var status = left > 0 ? "D-" + left : (left === 0 ? "오늘" : "지남");
-      return '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)">' +
-        '<b>' + p + '일</b><span>' + fmt(d) + '</span><span style="color:var(--muted)">' + status + '</span></div>';
-    }).join("");
-    msEl.innerHTML = rows;
-    msCard.style.display = "block";
-  }
-
-  document.getElementById("calc").addEventListener("click", calc);
-  target.addEventListener("change", calc);
-  incl.addEventListener("change", calc);
-
-  // 상황별 진입으로 날짜가 미리 채워졌다면 바로 계산해서 보여준다
-  if (target.value) calc();
-})();
 </script>
+<script src="/assets/js/dday.js"></script>
 </body>
 </html>

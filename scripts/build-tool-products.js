@@ -77,6 +77,18 @@ function brandMarkup(storeHome) {
     `    ${END}`;
 }
 
+// D-Day keeps its photo-led gift layout while product destinations still come
+// from store-links.json. Regeneration must not replace it with generic cards.
+function ddayMarkup(products) {
+  const template = fs.readFileSync(path.join(__dirname, 'templates', 'dday-products.html'), 'utf8').trim();
+  const body = template.replace(/\{\{([a-z-]+)\.link\}\}/g, (_, line) => {
+    const product = products.find(p => p.line === line);
+    if (!product) throw new Error(`dday: missing product '${line}'`);
+    return esc(product.link);
+  });
+  return `    ${BEGIN}\n${body}\n    ${END}`;
+}
+
 function insert(html, block, eol) {
   const begin = html.indexOf(BEGIN);
   if (begin !== -1) {
@@ -133,7 +145,7 @@ function main() {
       }).filter(Boolean);
       if (products.length !== lines.length) continue;
       productTotal += products.length;
-      block = giftMarkup(products);
+      block = slug === 'dday' ? ddayMarkup(products) : giftMarkup(products);
     } else if (brand.has(slug)) {
       block = brandMarkup(store.store_home);
     } else {
