@@ -26,7 +26,9 @@ function clearOccasion(){ $('occasion-select').value='';document.querySelectorAl
 $('target').addEventListener('input',clearOccasion);$('event-name').addEventListener('input',clearOccasion);document.querySelectorAll('[data-example],[data-mode]').forEach(button=>button.addEventListener('click',clearOccasion));$('today-btn').addEventListener('click',clearOccasion);
 
 let lastToday=today();function refresh(){const current=today();$('today-label').textContent='오늘 '+current.replaceAll('-','. ');if(current!==lastToday){lastToday=current;renderOccasions();if(parse($('target').value))calculate()}}refresh();setInterval(refresh,30000);document.addEventListener('visibilitychange',refresh);const situation=new URLSearchParams(location.search).get('for');
-if(situation==='couple'){setMode('anniversary');$('target').value='';$('event-name').value='';$('result-name').textContent='우리의 첫날은 언제인가요?';$('result-number').textContent='♡';$('result-description').textContent='처음 만난 날짜를 골라주세요.';$('result-date').textContent='100일과 1주년을 함께 알려드려요.';}
+const handoff=parse(new URLSearchParams(location.hash.slice(1)).get('date')||'');
+if(handoff&&handoff.getUTCFullYear()>=1900&&handoff.getUTCFullYear()<=9990){setMode('dday');$('target').value=iso(handoff);$('event-name').value='음양력 변환한 날짜';calculate();}
+else if(situation==='couple'){setMode('anniversary');$('target').value='';$('event-name').value='';$('result-name').textContent='우리의 첫날은 언제인가요?';$('result-number').textContent='♡';$('result-description').textContent='처음 만난 날짜를 골라주세요.';$('result-date').textContent='100일과 1주년을 함께 알려드려요.';}
 else if(TechaOccasions.occasions.some(item=>item.key===situation))chooseOccasion(situation);
 else example('christmas');
 milestones(parse('2026-01-01'),true);

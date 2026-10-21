@@ -36,3 +36,4 @@ docs/drafts/images/
 # 상세페이지·카드뉴스 작업용 원본 사진 (웹에 올리는 파생본만 커밋)
 assets/*.png
 !assets/icons/
+scripts/.unused-photos-cache.json
