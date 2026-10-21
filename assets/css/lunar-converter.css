@@ -1,0 +1,102 @@
+/* Page-only styles: the shared TECHA header, footer and generated blocks remain intact. */
+body.lunar-enhanced { background:#faf7f0; }
+.lunar-enhanced main.wrap,.lunar-enhanced #page-head>.wrap { max-width:1120px; }
+.lunar-enhanced #page-head .page-head { margin:12px 0 0; }
+.lunar-enhanced #page-head h1 { font-size:20px; margin-bottom:0; }
+.lunar-enhanced #page-head .lead { font-size:12px; color:#897d6c; margin-top:6px; }
+.lunar-kicker { color:#8b724d; font-size:10px; font-weight:600; letter-spacing:2px; margin:0 0 16px; }
+.lunar-intro { display:flex;justify-content:space-between;align-items:center;padding:30px 0 40px;gap:35px; }
+.lunar-intro h2 { font-family:"Gowun Batang",serif;font-size:39px;font-weight:400;line-height:1.55;letter-spacing:-1.4px;margin:0 0 15px; }
+.lunar-intro p:not(.lunar-kicker) { color:#7d7161;font-size:14px;line-height:1.9;margin:0 0 20px; }
+.lunar-intro-tag { font-size:10px;color:#8b7c65; }
+.lunar-intro-tag i { font-style:normal;margin:0 12px;color:#b09b76; }
+.lunar-orbit { position:relative;flex:none;width:290px;height:230px;margin-right:45px; }
+.orbit-ring { position:absolute;width:195px;height:195px;left:40px;top:0;border:1px solid #d5c6a8;border-radius:50%; }
+.orbit-ring:before { content:"";position:absolute;inset:15px;border:1px dashed #e1d6c1;border-radius:50%; }
+.orbit-moon { position:absolute;width:110px;height:110px;background:#cbb888;left:84px;top:42px;border-radius:50%;overflow:hidden;box-shadow:0 0 50px #d6c59125; }
+.orbit-moon:after { content:"";position:absolute;inset:-7px -29px 18px 25px;background:#faf7f0;border-radius:50%; }
+.orbit-dot { position:absolute;left:57px;top:28px;width:10px;height:10px;background:#a18a56;border-radius:50%;outline:7px solid #faf7f0; }
+.orbit-note { position:absolute;bottom:0;right:15px;color:#a08a63;font:italic 15px/1.6 Georgia,serif; }
+.lunar-calculator { display:grid;grid-template-columns:1fr 1fr;border:1px solid #e1d8c8;background:#fffdf8;border-radius:12px;overflow:hidden;box-shadow:0 14px 40px #4c351108;margin:0 0 35px; }
+.lunar-input { padding:32px; }
+.lunar-input h2 { font-family:"Gowun Batang",serif;font-size:22px;font-weight:400;letter-spacing:-.6px;margin:0 0 8px; }
+.lunar-input-lead { font-size:12px;color:#887a68;margin:0 0 24px; }
+.lunar-enhanced .mode-tabs { display:flex;gap:4px;padding:4px;background:#f0ece3;border-radius:6px;margin-bottom:28px; }
+.lunar-enhanced .mode-tabs button { flex:1;padding:12px 8px;border:0;border-radius:4px;background:transparent;color:#837463;font:600 13px "Pretendard",sans-serif;cursor:pointer; }
+.lunar-enhanced .mode-tabs button[aria-pressed=true] { background:#fffdf8;color:#5f4d32;box-shadow:0 1px 5px #3a2c1115; }
+.lunar-input .field { font-size:12px;color:#5b4e3d;margin:0 0 8px; }
+.lunar-input input:not([type=checkbox]) { border:1px solid #ddd2c0;border-radius:5px;background:#fffefa;height:50px;font-size:15px;box-sizing:border-box;min-width:0; }
+.lunar-input .row { display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px; }
+.lunar-input .row>div { min-width:0; }
+.lunar-enhanced .leap-row { border:1px solid #e4dbc9;background:#f6f0e3;border-radius:5px;padding:12px;margin:15px 0 0;line-height:1.8; }
+.lunar-enhanced .leap-row input { accent-color:#8b754e; }
+.lunar-enhanced .leap-row .hint { font-size:11px;display:block;margin-left:24px; }
+.lunar-enhanced .leap-row.is-off { background:#f5f3ed;border-color:#e7e1d6; }
+.lunar-example-label { font-size:11px;color:#8e7a5c;border-top:1px solid #e9e0d1;padding-top:20px;margin:25px 0 10px; }
+.lunar-enhanced .lunar-shortcuts { display:flex;flex-wrap:wrap;gap:7px; }
+.lunar-enhanced .lunar-shortcuts button { font:inherit;font-size:11px;padding:8px 10px;border:1px solid #ddcfb7;border-radius:20px;background:#fffaf0;color:#806a47;cursor:pointer; }
+.lunar-shortcuts button:hover { background:#eee2cb; }
+.lunar-input>.hint { font-size:10px;line-height:1.8;color:#938574;margin:12px 0 0; }
+.lunar-output { position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;background:#eee8db;overflow:hidden; }
+.lunar-output>.lunar-kicker { font-size:9px;z-index:1; }
+.lunar-result-symbol { position:absolute;font-family:Georgia,serif;font-size:300px;line-height:1;right:-65px;bottom:-50px;color:#bca98115;pointer-events:none; }
+.lunar-output #result { background:none;border:0;box-shadow:none;padding:0;margin:8px 0 0!important;width:100%;text-align:center;z-index:1; }
+.lunar-result-label { font-size:12px;color:#87755a; }
+.lunar-result-year { font-family:"Gowun Batang",serif;font-size:20px;margin:15px 0 2px;color:#78613d; }
+.lunar-result-day { font-family:Georgia,"Gowun Batang",serif;font-size:57px;line-height:1.4;letter-spacing:-2px;color:#765c32;white-space:nowrap; }
+.lunar-result-day small { font-family:"Gowun Batang",serif;font-size:21px;letter-spacing:0;margin-left:3px; }
+.lunar-result-source { font-size:11px;color:#85745c;border-top:1px solid #d7cbb5;margin:15px auto 0;padding-top:15px;max-width:300px; }
+.lunar-output .sub-grid { display:grid;grid-template-columns:repeat(3,1fr);order:1;gap:0;width:100%;max-width:300px;margin-top:23px;z-index:1; }
+.lunar-output .stat { text-align:center;border-right:1px solid #d8cdb8; }
+.lunar-output .stat:last-child { border:0; }
+.lunar-output .stat .n { font-size:15px;font-family:"Gowun Batang",serif;color:#6f5a3a;margin-bottom:4px; }
+.lunar-output .stat .l { font-size:10px;color:#96846a; }
+.lunar-enhanced .lunar-actions { display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:25px;order:2;z-index:1; }
+.lunar-enhanced .lunar-actions .btn { padding:10px 13px;border:1px solid #c9b895;border-radius:4px;font-size:11px;background:transparent;color:#735d39;box-shadow:none; }
+.lunar-enhanced .lunar-actions .btn-primary { background:#8b754e;color:#fffdf6;border-color:#8b754e; }
+.lunar-enhanced .lunar-actions[hidden],.lunar-enhanced .lunar-actions [hidden] { display:none; }
+.lunar-output #lunar-status { order:3;font-size:11px;min-height:1.6em;color:#867457;margin:9px 0 0;z-index:1; }
+.lunar-output #result.empty { font-size:14px;line-height:1.9;color:#7d6c53; }
+.lunar-how { display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin:35px 0; }
+.lunar-how>div { border-top:1px solid #dcd0bb;padding-top:16px; }
+.lunar-how span { font:italic 20px Georgia,serif;color:#b39b70; }
+.lunar-how h3 { font-size:13px;font-weight:500;margin:12px 0 9px; }
+.lunar-how p { font-size:11px;line-height:1.9;color:#897a67;margin:0; }
+.lunar-reference { margin:35px 0;border:1px solid #e3dacb;border-radius:7px;background:#fffdf7; }
+.lunar-reference>summary { display:flex;justify-content:space-between;align-items:center;list-style:none;padding:22px 25px;font-family:"Gowun Batang",serif;font-size:18px;cursor:pointer;gap:15px; }
+.lunar-reference summary small { display:block;font:11px "Pretendard",sans-serif;color:#9c8a70;margin-top:7px; }
+.reference-toggle { color:#aa946b;font-size:22px; }
+.lunar-reference[open] .reference-toggle { transform:rotate(45deg); }
+.lunar-reference .article { margin:0;padding:0 25px 25px; }
+.lunar-reference .article h2 { font-size:20px;margin-top:30px; }
+.lunar-enhanced main>.tool-products { margin:35px 0; }
+.lunar-enhanced main>.tool-products .tool-product-card { background:#fffdf7; }
+.lunar-enhanced main>.tool-products h2 { font-family:"Gowun Batang",serif;font-weight:400; }
+.lunar-enhanced button:focus-visible,.lunar-enhanced a:focus-visible,.lunar-enhanced summary:focus-visible { outline:2px solid #8e764c;outline-offset:3px; }
+@media(max-width:700px) {
+  .lunar-intro { gap:15px;padding:25px 0 30px; }
+  .lunar-intro h2 { font-size:29px;letter-spacing:-1px; }
+  .lunar-intro p:not(.lunar-kicker) { font-size:11px; }
+  .lunar-intro .lunar-kicker { font-size:8px;letter-spacing:1px; }
+  .lunar-intro-tag { font-size:9px; }
+  .lunar-intro-tag i { margin:0 6px; }
+  .lunar-orbit { width:115px;height:165px;margin-right:0; }
+  .orbit-ring { width:110px;height:110px;left:0;top:10px; }
+  .orbit-ring:before { inset:10px; }
+  .orbit-moon { width:65px;height:65px;left:24px;top:34px; }
+  .orbit-moon:after { inset:-5px -17px 10px 14px; }
+  .orbit-dot { left:4px;top:33px;width:7px;height:7px;outline-width:4px; }
+  .orbit-note { bottom:0;right:0;font-size:10px; }
+  .lunar-calculator { grid-template-columns:1fr; }
+  .lunar-input { padding:25px 22px; }
+  .lunar-output { padding:27px 20px 18px; }
+  .lunar-output>.lunar-kicker { margin-bottom:10px; }
+  .lunar-result-day { font-size:53px; }
+  .lunar-how { gap:15px; }
+  .lunar-how h3 { font-size:12px;line-height:1.8; }
+  .lunar-how p { font-size:10px; }
+  .lunar-how p br { display:none; }
+  .lunar-reference>summary { font-size:16px;padding:20px; }
+  .lunar-reference .article { padding:0 20px 20px; }
+}
+@media(max-width:380px) { .lunar-orbit { display:none; }.lunar-how { grid-template-columns:1fr;gap:20px; }.lunar-how h3 { margin:5px 0; }.lunar-how span { float:right; } }

@@ -29,29 +29,9 @@
   "applicationCategory":"UtilitiesApplication","operatingSystem":"Any",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"} }
 </script>
-<style>
-  .mode-tabs { display:flex; gap:8px; margin-bottom:16px; }
-  .mode-tabs button {
-    flex:1; padding:11px 8px; border:1px solid var(--line); border-radius:var(--radius-sm);
-    background:var(--white); color:var(--muted); font-size:14px; font-weight:600; cursor:pointer;
-    transition:border-color 140ms ease, color 140ms ease, background-color 140ms ease;
-  }
-  .mode-tabs button[aria-pressed="true"] { border-color:var(--gold-deep); background:var(--gold-soft); color:var(--gold-strong-ink); }
-  .sub-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:10px; margin-top:14px; }
-  .sub-grid .stat { background:var(--sage-soft); border-radius:var(--radius-sm); padding:12px; text-align:center; }
-  .sub-grid .n { font-family:"Gowun Batang",serif; font-size:19px; font-weight:700; color:var(--gold-deep); }
-  .sub-grid .l { font-size:12px; color:var(--muted); }
-  .leap-row { margin-top:12px; }
-  .leap-row.is-off { opacity:.45; }
-  .lunar-shortcuts,.lunar-actions { display:flex;flex-wrap:wrap;gap:8px;margin-top:16px; }
-  .lunar-shortcuts button { border:1px solid var(--line);background:var(--paper);color:var(--brown);border-radius:20px;padding:8px 12px;cursor:pointer;font:inherit;font-size:12px; }
-  .lunar-actions .btn { font-size:13px; }
-  .lunar-actions[hidden], .lunar-actions [hidden] { display:none; }
-  #lunar-status { min-height:1.6em;margin:8px 0 0;font-size:12px;color:var(--muted); }
-
-</style>
+<link rel="stylesheet" href="/assets/css/lunar-converter.css">
 </head>
-<body>
+<body class="lunar-enhanced">
 <header id="site-header">
   <!-- BEGIN site-header (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
   <div class="wrap">
@@ -81,8 +61,9 @@
 <main class="wrap">
   <div class="ad-slot"></div>
 
-  <section class="card">
-    <div class="mode-tabs" role="group" aria-label="변환 방향">
+<section class="lunar-intro" aria-labelledby="lunar-intro-title"><div><p class="lunar-kicker">A DATE WORTH REMEMBERING</p><h2 id="lunar-intro-title">달력은 달라도,<br>소중한 날은 하나니까.</h2><p>부모님의 음력 생신부터 우리 가족의 기념일까지.<br>한국 음력으로 확인하고, 마음을 준비하세요.</p><span class="lunar-intro-tag">한국 음력 기준 <i>·</i> 윤달 반영 <i>·</i> 가입 없이 바로</span></div><div class="lunar-orbit" aria-hidden="true"><div class="orbit-ring"></div><div class="orbit-moon"></div><span class="orbit-dot"></span><span class="orbit-note">Different calendars.<br>The same precious day.</span></div></section>
+<section class="lunar-calculator" aria-label="음양력 날짜 변환"><div class="lunar-input">
+    <p class="lunar-kicker">01 · 날짜 입력</p><h2>어떤 날짜가 궁금하세요?</h2><p class="lunar-input-lead">변환 방향을 고른 뒤 날짜를 입력해 주세요.</p><div class="mode-tabs" role="group" aria-label="변환 방향">
       <button type="button" id="mode-s2l" aria-pressed="true">양력 → 음력</button>
       <button type="button" id="mode-l2s" aria-pressed="false">음력 → 양력</button>
     </div>
@@ -103,13 +84,13 @@
         <span class="hint" id="leapHint">— 그 해에 윤달이 있을 때만 켤 수 있어요</span></label>
     </div>
 
-    <div class="lunar-shortcuts" role="group" aria-label="날짜 입력 예시">
+    <p class="lunar-example-label">처음이라면, 예시로 시작해 보세요</p><div class="lunar-shortcuts" role="group" aria-label="날짜 입력 예시">
       <button type="button" id="example-today">오늘의 음력</button>
       <button type="button" id="example-seollal">2028년 설날 예시</button>
       <button type="button" id="example-birthday">올해 음력 생일 예시</button>
     </div>
-    <p class="hint">생일 예시는 음력 8월 10일입니다. 본인의 월·일로 바꿔 사용하세요.</p>
-    <div class="result empty" id="result" aria-live="polite" style="margin-top:16px">날짜를 입력해 주세요.</div>
+    <p class="hint">생일 예시의 음력 8월 10일을 본인의 월·일로 바꿔보세요.</p>
+</div><div class="lunar-output"><p class="lunar-kicker">02 · 변환 결과</p><span class="lunar-result-symbol" aria-hidden="true">☾</span>    <div class="result empty" id="result" aria-live="polite" style="margin-top:16px">날짜를 입력해 주세요.</div>
     <div class="lunar-actions" id="lunar-actions" hidden>
       <a class="btn btn-primary" id="lunar-dday" href="/ko/dday/">이 날짜로 D-Day 계산 →</a>
       <button class="btn" type="button" id="copy-lunar">변환 결과 복사</button>
@@ -120,11 +101,12 @@
       <div class="stat"><div class="n" id="s-dow">-</div><div class="l">요일</div></div>
       <div class="stat"><div class="n" id="s-zodiac">-</div><div class="l">띠</div></div>
     </div>
-  </section>
+</div></section>
+<section class="lunar-how" aria-label="변환기 사용 안내"><div><span>01</span><h3>생신은 ‘음력 → 양력’</h3><p>확인할 연도와 음력 생일을 넣으면<br>달력에 표시할 날짜가 나와요.</p></div><div><span>02</span><h3>윤달인지 한 번 더 확인</h3><p>같은 달이 두 번 있는 해에는<br>평달과 윤달을 구분해 주세요.</p></div><div><span>03</span><h3>날짜를 알았다면, 준비해요</h3><p>결과를 복사하거나 D-Day로 연결해<br>소중한 날까지 남은 시간을 세어보세요.</p></div></section>
 
   <div class="ad-slot"></div>
 
-  <article class="article">
+  <details class="lunar-reference"><summary><span>음력과 윤달, 더 알아볼까요?<small>계산 기준 · 명절 날짜표 · 자주 묻는 질문</small></span><span class="reference-toggle" aria-hidden="true">＋</span></summary><article class="article">
     <h2>음력 양력 변환기 사용법</h2>
     <p>위에서 방향을 고르고 날짜를 넣으면 바로 변환됩니다. <b>양력 → 음력</b>은 달력 날짜를 음력으로,
        <b>음력 → 양력</b>은 음력 날짜가 실제 달력의 며칠인지 알려줍니다. 요일과 간지, 띠도 함께 나옵니다.</p>
@@ -218,6 +200,9 @@
     <div class="note">입력한 날짜는 서버로 전송되지 않고 브라우저 안에서만 계산됩니다.</div>
 
 
+
+  </article></details>
+
     <!-- BEGIN tool-products (생성: scripts/build-tool-products.js — 직접 고치지 말 것) -->
     <section class="tool-products" aria-labelledby="tool-products-title">
       <p class="tool-products-kicker">TECHA PICKS</p>
@@ -230,7 +215,6 @@
       <p class="tool-products-note">색상·크기·최종 가격은 스마트스토어 상품 페이지에서 확인해 주세요.</p>
     </section>
     <!-- END tool-products -->
-  </article>
 
   <div id="related" class="related">
     <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
@@ -350,9 +334,12 @@ TECHA.initPage({
     var lunText = lun.year + "년 " + (lun.intercalation ? "윤" : "") + lun.month + "월 " + lun.day + "일";
 
     result.className = "result";
-    result.innerHTML = mode === "s2l"
-      ? '<div class="big">음력 ' + lunText + '</div><div class="sub">양력 ' + solText + '</div>'
-      : '<div class="big">양력 ' + solText + '</div><div class="sub">음력 ' + lunText + '</div>';
+    var primary = mode === "s2l" ? lun : sol;
+    var primaryLeap = mode === "s2l" && lun.intercalation ? "윤" : "";
+    result.innerHTML = '<span class="lunar-result-label">' + (mode === "s2l" ? '음력으로는' : '양력으로는') + '</span>' +
+      '<div class="lunar-result-year">' + primary.year + '년</div>' +
+      '<div class="lunar-result-day">' + primaryLeap + primary.month + '<small>월</small> ' + primary.day + '<small>일</small></div>' +
+      '<div class="lunar-result-source">' + (mode === "s2l" ? '양력 ' + solText : '음력 ' + lunText) + ' 기준</div>';
 
     gapjaEl.textContent = gapja || "-";
     dowEl.textContent = DOW[d.getDay()] + "요일";
