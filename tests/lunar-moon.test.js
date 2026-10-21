@@ -11,6 +11,8 @@ test('known 2024 eclipse dates show new and full moon',()=>{
   // April 8 solar eclipse near 18 UTC; March 25 lunar eclipse near 07 UTC.
   assert.ok(view('2024-04-09','03:00','seoul').fraction<.002);
   assert.ok(view('2024-03-25','16:00','seoul').fraction>.998);
+  assert.equal(view('2024-03-25','16:00','seoul').fullMoon,true);
+  assert.equal(view('2024-04-09','03:00','seoul').fullMoon,false);
 });
 test('illumination shape has the expected projected area',()=>{
   for(const date of ['2026-10-11','2026-10-18','2026-10-21','2026-10-26','2026-11-02']){

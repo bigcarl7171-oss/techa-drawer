@@ -30,6 +30,8 @@
   "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"} }
 </script>
 <link rel="stylesheet" href="/assets/css/lunar-converter.css">
+<link rel="stylesheet" href="/assets/css/tool-inputs.css">
+<script src="/assets/js/tool-inputs.js" defer></script>
 </head>
 <body class="lunar-enhanced">
 <header id="site-header">
@@ -52,7 +54,7 @@
 <div id="page-head">
   <!-- BEGIN page-head (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
   <div class="wrap">
-    <div class="breadcrumb"><a href="/">홈</a> › <a href="/#cat-date">날짜와 일정을 확인할 때</a> › <span>음력 양력 변환기</span></div>
+    <div class="tool-page-trail"><div class="breadcrumb"><a href="/">홈</a> › <a href="/#cat-date">날짜와 일정을 확인할 때</a> › <span>음력 양력 변환기</span></div><a class="tool-hub-link" href="/ko/"><span aria-hidden="true">▦</span> 전체 도구 모음 <span aria-hidden="true">↗</span></a></div>
     <div class="page-head"><h1>음력 양력 변환기</h1><p class="lead">한국천문연구원 기준으로 양력·음력을 서로 바꿉니다. 윤달과 간지도 함께 보여드립니다.</p></div>
   </div>
   <!-- END page-head -->
@@ -61,7 +63,7 @@
 <main class="wrap">
   <div class="ad-slot"></div>
 
-<section class="lunar-intro" aria-labelledby="lunar-intro-title"><div><p class="lunar-kicker">A DATE WORTH REMEMBERING</p><h2 id="lunar-intro-title">달력은 달라도,<br>소중한 날은 하나니까.</h2><p>부모님의 음력 생신부터 우리 가족의 기념일까지.<br>한국 음력으로 확인하고, 마음을 준비하세요.</p><span class="lunar-intro-tag">한국 음력 기준 <i>·</i> 윤달 반영 <i>·</i> 가입 없이 바로</span></div><div class="lunar-orbit" role="img" aria-label="선택한 날짜의 달" id="moon-figure"><div class="orbit-ring"></div><div class="orbit-moon"><svg id="moon-svg" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#625b4c"/><path id="moon-light" data-moon-light fill="#d9c58d"/><circle cx="50" cy="50" r="48" fill="none" stroke="#b5a788" stroke-width="0.5"/></svg></div><span class="orbit-dot"></span><span class="orbit-note" id="moon-caption" aria-live="polite">날짜를 고르면 달도 함께 바뀌어요.</span></div></section>
+<section class="lunar-intro" aria-labelledby="lunar-intro-title"><div><p class="lunar-kicker">A DATE WORTH REMEMBERING</p><h2 id="lunar-intro-title">달력은 달라도,<br>소중한 날은 하나니까.</h2><p>부모님의 음력 생신부터 우리 가족의 기념일까지.<br>한국 음력으로 확인하고, 마음을 준비하세요.</p><span class="lunar-intro-tag">한국 음력 기준 <i>·</i> 윤달 반영 <i>·</i> 가입 없이 바로</span></div><div class="lunar-orbit" role="img" aria-label="선택한 날짜의 달" id="moon-figure"><div class="orbit-ring"></div><div class="orbit-moon"><svg id="moon-svg" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#625b4c"/><path id="moon-light" data-moon-light fill="#d9c58d"/><g class="fullmoon-craters" fill="#9c8858"><circle cx="35" cy="32" r="7"/><circle cx="63" cy="62" r="11"/><circle cx="31" cy="64" r="4"/><circle cx="65" cy="30" r="4"/><circle cx="43" cy="77" r="3"/></g><circle cx="50" cy="50" r="48" fill="none" stroke="#b5a788" stroke-width="0.5"/></svg></div><span class="orbit-dot"></span><span class="orbit-note" id="moon-caption" aria-live="polite">날짜를 고르면 달도 함께 바뀌어요.</span></div></section>
 <section class="lunar-calculator" aria-label="음양력 날짜 변환"><div class="lunar-input">
     <p class="lunar-kicker">01 · 날짜 입력</p><h2>어떤 날짜가 궁금하세요?</h2><p class="lunar-input-lead">변환 방향을 고른 뒤 날짜를 입력해 주세요.</p><div class="mode-tabs" role="group" aria-label="변환 방향">
       <button type="button" id="mode-s2l" aria-pressed="true">양력 → 음력</button>
@@ -98,7 +100,7 @@
       <a class="btn btn-primary" id="lunar-dday" href="/ko/dday/">이 날짜로 D-Day 계산 →</a>
       <button class="btn" type="button" id="copy-lunar">변환 결과 복사</button>
     </div>
-    <p id="lunar-status" role="status"></p><div class="moon-settings"><div class="moon-inline-preview" role="img" id="moon-inline" aria-label="선택한 날짜의 달"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#625b4c"/><path data-moon-light fill="#d9c58d"/></svg><span id="moon-inline-caption"></span></div><p class="moon-settings-title">이 날짜의 달 그림 기준</p><div class="moon-controls"><div><label for="moon-city">지역</label><select id="moon-city"><option value="seoul">서울</option><option value="busan">부산</option><option value="jeju">제주</option></select></div><div><label for="moon-time">한국 시각</label><input type="time" id="moon-time" value="21:00" required></div></div><p id="moon-visibility" aria-live="polite"></p><details><summary>달 그림은 어떻게 표시하나요?</summary><p>선택한 양력 날짜·지역·한국 시각으로 밝은 면과 지평선에 대한 기울기를 근사 계산합니다. 실제 달 표면 사진이나 관측 예보는 아니며, 날씨·지형·가림은 반영하지 않아요. 지평선 아래일 때도 달의 모양을 보여줍니다. <a href="https://github.com/mourner/suncalc/tree/v1.9.0#moon-illumination" target="_blank" rel="noopener">계산 기준 ↗</a></p></details></div>
+    <p id="lunar-status" role="status"></p><div class="moon-settings"><div class="moon-inline-preview" role="img" id="moon-inline" aria-label="선택한 날짜의 달"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#625b4c"/><path data-moon-light fill="#d9c58d"/><g class="fullmoon-craters" fill="#9c8858"><circle cx="35" cy="32" r="7"/><circle cx="63" cy="62" r="11"/><circle cx="31" cy="64" r="4"/><circle cx="65" cy="30" r="4"/><circle cx="43" cy="77" r="3"/></g></svg><span id="moon-inline-caption"></span></div><p class="moon-settings-title">이 날짜의 달 그림 기준</p><div class="moon-controls"><div><label for="moon-city">지역</label><select id="moon-city"><option value="seoul">서울</option><option value="busan">부산</option><option value="jeju">제주</option></select></div><div><label for="moon-time">한국 시각</label><input type="time" id="moon-time" value="21:00" required></div></div><p id="moon-visibility" aria-live="polite"></p><details><summary>달 그림은 어떻게 표시하나요?</summary><p>선택한 양력 날짜·지역·한국 시각으로 밝은 면과 지평선에 대한 기울기를 근사 계산합니다. 실제 달 표면 사진이나 관측 예보는 아니며, 날씨·지형·가림은 반영하지 않아요. 지평선 아래일 때도 달의 모양을 보여줍니다. <a href="https://github.com/mourner/suncalc/tree/v1.9.0#moon-illumination" target="_blank" rel="noopener">계산 기준 ↗</a></p></details></div>
     <div class="sub-grid" id="subs" style="display:none">
       <div class="stat"><div class="n" id="s-gapja">-</div><div class="l">간지</div></div>
       <div class="stat"><div class="n" id="s-dow">-</div><div class="l">요일</div></div>

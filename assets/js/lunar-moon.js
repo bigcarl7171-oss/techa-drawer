@@ -17,7 +17,7 @@
     const points=[],r=48,c=50,steps=96;
     for(let i=0;i<=steps;i++){const y=-r+2*r*i/steps;points.push([c+Math.sqrt(Math.max(0,r*r-y*y)),c+y]);}
     for(let i=steps;i>=0;i--){const y=-r+2*r*i/steps;points.push([c+(1-2*illumination.fraction)*Math.sqrt(Math.max(0,r*r-y*y)),c+y]);}
-    return {name,fraction:illumination.fraction,phase,rotation,altitude:position.altitude*180/Math.PI,aboveHorizon:position.altitude>0,city:place.name,date,time,path:'M'+points.map(p=>p.map(n=>n.toFixed(3)).join(',')).join('L')+'Z'};
+    return {name,fullMoon:phase>=.465&&phase<=.535&&illumination.fraction>=.985,fraction:illumination.fraction,phase,rotation,altitude:position.altitude*180/Math.PI,aboveHorizon:position.altitude>0,city:place.name,date,time,path:'M'+points.map(p=>p.map(n=>n.toFixed(3)).join(',')).join('L')+'Z'};
   }
   global.TechaMoon = Object.freeze({view,places});
 })(typeof window!=='undefined'?window:this);

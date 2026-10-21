@@ -123,7 +123,7 @@ function readPageOpts(html) {
     const mm = body.match(new RegExp(k + '\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"'));
     return mm ? mm[1] : null;
   };
-  return { title: str('title'), desc: str('desc'), category: str('category') };
+  return { title: str('title'), desc: str('desc'), category: str('category'), slug: str('slug') };
 }
 
 function headerMarkup(shopUrl) {
@@ -201,7 +201,7 @@ function pageHeadMarkup(opts, cats, isBlogPost) {
   return [
     HEAD_BEGIN,
     '  <div class="wrap">',
-    '    <div class="breadcrumb">' + crumb + '</div>',
+    (opts.slug ? '    <div class="tool-page-trail">' : '    ') + '<div class="breadcrumb">' + crumb + '</div>' + (opts.slug ? '<a class="tool-hub-link" href="/ko/"><span aria-hidden="true">▦</span> 전체 도구 모음 <span aria-hidden="true">↗</span></a></div>' : ''),
     '    <div class="page-head"><h1>' + esc(opts.title) + '</h1>' +
       (opts.desc ? '<p class="lead">' + esc(opts.desc) + '</p>' : '') + '</div>',
     '  </div>',
@@ -261,6 +261,13 @@ function main() {
     const html = fs.readFileSync(file, 'utf8');
     const eol = eolOf(html);
     let next = html;
+
+    // Tool-wide input enhancement and return navigation use a shared asset pair.
+    // Include them statically so they stay discoverable and work without bundles.
+    if (rel.startsWith('ko/') && rel !== 'ko/index.html' && readPageOpts(html)?.slug) {
+      if (!next.includes('href="/assets/css/tool-inputs.css"')) next = next.replace('</head>', '<link rel="stylesheet" href="/assets/css/tool-inputs.css">\n</head>');
+      if (!next.includes('src="/assets/js/tool-inputs.js"')) next = next.replace('</head>', '<script src="/assets/js/tool-inputs.js" defer></script>\n</head>');
+    }
 
     let r = fill(next, 'header', 'site-header', HEADER_BEGIN, HEADER_END, headerMarkup(shopUrl), eol);
     if (r.found) { next = r.html; headers++; }
