@@ -332,5 +332,10 @@
     "topiary-moodlamp",
     "hydrangea-moodlamp",
     "rose-hydrangea-bouquet"
+  ],
+  "autumn-bouquet-colors": [
+    "superior-rose",
+    "carnation-rose-bouquet",
+    "sunflower-bouquet"
   ]
 }
