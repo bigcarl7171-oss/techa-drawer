@@ -566,28 +566,51 @@
     mark(ctx, o, SQ / 2, 950, 76, C.cream, 'center');
   }});
 
-  // 2. 크림 여백 — 사진 아래 한 줄
-  Q.push({ id: 'sq-mat', name: '크림 여백', photos: 1, draw: function (ctx, o) {
-    ctx.fillStyle = '#F6F0E6'; ctx.fillRect(0, 0, SQ, SQ); grain(ctx, 0, 0, SQ, SQ, 0.05, 61, 'multiply');
-    var x = 120, y = 90, w = 840, h = 740;
-    ctx.save(); shadow(ctx, 30, 12, 0.18); ctx.fillStyle = '#fff'; ctx.beginPath(); rr(ctx, x, y, w, h, 22); ctx.fill(); ctx.restore();
-    photo(ctx, o, 0, x, y, w, h, function (c) { c.beginPath(); rr(c, x, y, w, h, 22); });
-    var z = fit(ctx, o.text, halfW(900) * 2 - 120, 42, F.serif, 700);
-    text(ctx, o.text, SQ / 2, 900, z, F.serif, C.ink, 'center', 700);
-    text(ctx, dDot(o.received), SQ / 2, 946, 24, F.sans, C.muted, 'center', 500);
-    mark(ctx, o, SQ / 2, 966, 70, C.ink, 'center');
+  // 2. 아이보리 매트 (2026-10-24 다시 그림 — 크림 바탕에 사진만 얹은 판이 밋밋하다는 사장님 의견)
+  //    갤러리 액자처럼: 결이 있는 아이보리 바탕 → 흰 매트 → 금박 안쪽 선 → 사진. 아래 작은 장식 선과 글귀·날짜·로고.
+  Q.push({ id: 'sq-mat', name: '매트 액자', photos: 1, draw: function (ctx, o) {
+    var g = ctx.createLinearGradient(0, 0, 0, SQ); g.addColorStop(0, '#FBF7F0'); g.addColorStop(1, '#ECE2D2');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, SQ, SQ); grain(ctx, 0, 0, SQ, SQ, 0.05, 61, 'multiply');
+    var s = 580, x = (SQ - s) / 2, y = 150, m = 40;
+    ctx.save(); shadow(ctx, 44, 18, 0.2); ctx.fillStyle = '#FFFDF8'; ctx.fillRect(x - m, y - m, s + m * 2, s + m * 2); ctx.restore();
+    var mg = ctx.createLinearGradient(x - m, y - m, x + s + m, y + s + m); mg.addColorStop(0, '#FFFFFF'); mg.addColorStop(1, '#F6F0E6');
+    ctx.fillStyle = mg; ctx.fillRect(x - m, y - m, s + m * 2, s + m * 2);
+    var gl = ctx.createLinearGradient(x - m, y - m, x + s + m, y + s + m); gl.addColorStop(0, '#E8D49C'); gl.addColorStop(0.5, C.goldDeep); gl.addColorStop(1, '#E3CC8E');
+    ctx.strokeStyle = gl; ctx.lineWidth = 2; ctx.strokeRect(x - 15, y - 15, s + 30, s + 30);
+    photo(ctx, o, 0, x, y, s, s);
+    ctx.strokeStyle = 'rgba(58,50,43,0.22)'; ctx.lineWidth = 1.5; ctx.strokeRect(x - 0.75, y - 0.75, s + 1.5, s + 1.5);
+    var oy = y + s + m + 34;
+    ctx.strokeStyle = gl; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(SQ / 2 - 74, oy); ctx.lineTo(SQ / 2 - 14, oy); ctx.moveTo(SQ / 2 + 14, oy); ctx.lineTo(SQ / 2 + 74, oy); ctx.stroke();
+    ctx.save(); ctx.translate(SQ / 2, oy); ctx.rotate(Math.PI / 4); ctx.fillStyle = C.gold; ctx.fillRect(-5, -5, 10, 10); ctx.restore();
+    var ty = oy + 58, z = fit(ctx, o.text, halfW(ty) * 2 - 140, 40, F.serif, 700);
+    text(ctx, o.text, SQ / 2, ty, z, F.serif, C.ink, 'center', 700);
+    text(ctx, dDot(o.received) + (o.from ? '  ·  ' + from(o) : ''), SQ / 2, ty + 42, 25, F.latin, C.goldDeep, 'center', 500, 'italic');
+    mark(ctx, o, SQ / 2, ty + 66, 62, C.ink, 'center');
   }});
 
-  // 3. 금빛 원 — 동그란 사진 + 금선, 글귀만 작게
-  Q.push({ id: 'sq-ring', name: '금빛 원', photos: 1, draw: function (ctx, o) {
-    ctx.fillStyle = '#F7EEEA'; ctx.fillRect(0, 0, SQ, SQ); grain(ctx, 0, 0, SQ, SQ, 0.05, 63, 'multiply');
-    var cx = SQ / 2, cy = 470, r = 380;
-    ctx.save(); shadow(ctx, 40, 14, 0.2); ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.fill(); ctx.restore();
-    photo(ctx, o, 0, cx - r, cy - r, r * 2, r * 2, function (c) { c.beginPath(); c.arc(cx, cy, r, 0, 7); });
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(cx, cy, r + 18, 0, 7); ctx.stroke();
-    ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, r + 28, 0, 7); ctx.stroke();
-    var z = fit(ctx, o.text, halfW(940) * 2 - 100, 40, F.serif, 700);
-    text(ctx, o.text, cx, 940, z, F.serif, C.ink, 'center', 700);
+  // 3. 골드 메달리온 (2026-10-24 다시 그림 — 분홍빛 바탕의 얇은 금선이 가볍다는 사장님 의견)
+  //    짙은 밤색 바탕에 금박 테두리(그라데이션) + 구슬 장식 원, 동그란 사진. 카톡 동그라미 프사에서 가장 또렷하다.
+  Q.push({ id: 'sq-ring', name: '골드 메달', photos: 1, draw: function (ctx, o) {
+    var bg = ctx.createRadialGradient(SQ / 2, 440, 80, SQ / 2, 520, 720); bg.addColorStop(0, '#3B2F26'); bg.addColorStop(0.6, '#241C16'); bg.addColorStop(1, '#14100D');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, SQ, SQ); grain(ctx, 0, 0, SQ, SQ, 0.06, 63, 'overlay');
+    var cx = SQ / 2, cy = 452, r = 318;
+    var gg = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+    gg.addColorStop(0, '#F6E7BC'); gg.addColorStop(0.35, '#D2B26C'); gg.addColorStop(0.6, '#A88A45'); gg.addColorStop(0.85, '#E9D59F'); gg.addColorStop(1, '#C9A961');
+    ctx.save(); shadow(ctx, 60, 0, 0, 'rgba(214,180,108,0.32)'); ctx.strokeStyle = gg; ctx.lineWidth = 16; ctx.beginPath(); ctx.arc(cx, cy, r + 18, 0, 7); ctx.stroke(); ctx.restore();
+    ctx.strokeStyle = gg; ctx.lineWidth = 16; ctx.beginPath(); ctx.arc(cx, cy, r + 18, 0, 7); ctx.stroke();
+    ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, r + 40, 0, 7); ctx.stroke();
+    for (var k = 0; k < 72; k++) {
+      var an = k / 72 * Math.PI * 2, big = k % 6 === 0, rd = r + 56;
+      ctx.fillStyle = big ? '#E3CC8E' : 'rgba(214,190,130,0.55)';
+      ctx.beginPath(); ctx.arc(cx + Math.cos(an) * rd, cy + Math.sin(an) * rd, big ? 3.4 : 1.8, 0, 7); ctx.fill();
+    }
+    ctx.fillStyle = '#1A1410'; ctx.beginPath(); ctx.arc(cx, cy, r + 2, 0, 7); ctx.fill();
+    photo(ctx, o, 0, cx - r, cy - r, r * 2, r * 2, function (c2) { c2.beginPath(); c2.arc(cx, cy, r, 0, 7); });
+    ctx.strokeStyle = 'rgba(246,231,188,0.75)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, r - 1, 0, 7); ctx.stroke();
+    var ty = 892, z = fit(ctx, o.text, halfW(ty) * 2 - 150, 40, F.serif, 700);
+    text(ctx, o.text, cx, ty, z, F.serif, '#F6EEDD', 'center', 700);
+    text(ctx, dDot(o.received) + (o.from ? '  ·  ' + from(o) : ''), cx, ty + 44, 25, F.latin, '#D9C28A', 'center', 500, 'italic');
+    mark(ctx, o, cx, ty + 68, 58, '#E9DDC4', 'center');
   }});
 
   // 도장은 따로 그린 뒤 잉크 번짐(구멍)을 도장에만 낸다 — 아래 사진은 건드리지 않음

@@ -259,7 +259,7 @@
       var b = document.createElement('button'); b.type='button'; b.setAttribute('aria-pressed', String(t.id===S.tpl)); if (t.id===S.tpl) b.className='on';
       var c = document.createElement('canvas'); var s = document.createElement('span'); s.textContent = t.name; b.title = (i+1) + '. ' + t.name + (t.photos > 1 ? ' (사진 ' + t.photos + '장)' : '');
       b.appendChild(c); b.appendChild(s); g.appendChild(b);
-      b.onclick = function(){ S.tpl=t.id; [].forEach.call(g.children,function(x){x.className='';x.setAttribute('aria-pressed',String(x===b))}); b.className='on'; draw(); b.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'}); };
+      b.onclick = function(){ S.tpl=t.id; [].forEach.call(g.children,function(x){x.className='';x.setAttribute('aria-pressed',String(x===b))}); b.className='on'; draw(); updateAdjust(); b.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'}); };
       setTimeout(function(){ thumb(t.id, c); }, 30*i);
     });
     // 고른 틀이 줄 가운데 보이게 (예시를 눌러 들어온 경우 등)
@@ -320,19 +320,30 @@
     $('motion').classList.toggle('hidden', k !== 'video' && k !== 'gif');
     $('moreCaps').classList.toggle('hidden', still()); $('capLabel').textContent = still() ? '문구' : '문구 1';
     setCaptionTarget(target);
-    draw();
+    draw(); updateAdjust();
     requestAnimationFrame(fitPreview);
   }
   $('kind').setAttribute('role','radiogroup');
   [].forEach.call($('kind').querySelectorAll('button[data-k]'), function(b){ b.setAttribute('role','radio'); b.setAttribute('aria-checked',String(b.dataset.k===S.kind)); b.tabIndex=b.dataset.k===S.kind?0:-1; b.onclick = function(){ setKind(b.dataset.k); }; });
   $('kind').addEventListener('keydown', function(e){ if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].indexOf(e.key)<0)return; var bs=[].filter.call(this.querySelectorAll('button'),function(b){return !b.disabled&&!b.classList.contains('hidden')});var i=bs.indexOf(document.activeElement);if(i<0)return;e.preventDefault();var next=e.key==='Home'?0:e.key==='End'?bs.length-1:(i+(/Left|Up/.test(e.key)?-1:1)+bs.length)%bs.length;bs[next].click();bs[next].focus(); });
 
-  function buildWhich(){
-    var w = $('which'); w.innerHTML='';
-    S.photos.forEach(function(p,i){ var b=document.createElement('button'); b.type='button'; b.textContent='사진 '+(i+1);b.setAttribute('aria-pressed',String(i===S.sel)); if(i===S.sel) b.className='on';
-      b.onclick=function(){S.sel=i; buildWhich(); $('zoom').value=S.photos[i].adj.zoom;}; w.appendChild(b); });
-    $('whichWrap').classList.toggle('hidden', S.photos.length < 2);
+  // 2026-10-24: '사진 1·2·3' 칩을 없앴다 — 썸네일 누르기(첫 번째로)와 칩(위치 옮길 사진)이 따로 놀아 헷갈렸고,
+  // 한 장짜리 틀에서 2번 사진을 고르면 안 보이는 사진이 움직여 "적용이 안 된다"로 보였다.
+  // 이제 썸네일을 누르면 그 사진이 선택되고, 아래 상자에서 그 사진의 위치·크기를 맞춘다. 순서는 '첫 번째로' 버튼으로만.
+  function buildWhich(){ updateAdjust(); }
+  function shownSlots(){ if (!still()) return S.photos.length; var t = list().filter(function(x){ return x.id === S.tpl; })[0]; return Math.max(1, Math.min(t ? t.photos : 1, S.photos.length)); }
+  function updateAdjust(){
+    if (!$('adjTitle') || !S.photos.length) return;
+    S.sel = Math.max(0, Math.min(S.sel, S.photos.length - 1));
+    var p = S.photos[S.sel], vis = shownSlots(), off = S.sel >= vis;
+    $('adjTitle').textContent = (S.photos.length > 1 ? (S.sel + 1) + '번 사진' : '사진') + ' 위치·크기';
+    $('toFirst').classList.toggle('hidden', S.sel === 0);
+    $('selWarn').classList.toggle('hidden', !off);
+    if (off) $('selWarn').textContent = '지금 틀에는 사진이 ' + vis + '장만 들어가서 ' + (S.sel + 1) + '번 사진은 보이지 않아요. 이 사진을 쓰려면 [이 사진을 첫 번째로]를 눌러 주세요.';
+    $('adjControls').classList.toggle('dim', off);
+    $('zoom').value = p.adj.zoom;
   }
+  function selectPhoto(i){ S.sel = i; buildThumbs(); updateAdjust(); }
 
   var MAXP = 8;
   function disposePhoto(p){if(p&&!p.isVideo&&p.ownedURL)URL.revokeObjectURL(p.ownedURL)}
@@ -341,23 +352,24 @@
     var th = $('thumbs'); th.innerHTML='';
     S.photos.forEach(function(p,i){
       var tile = document.createElement('div'); tile.className = 'tile';
-      var b=document.createElement('button'); b.type='button'; b.title= i===0 ? '첫 번째 사진' : '이 사진을 첫 번째로';
+      var b=document.createElement('button'); b.type='button'; b.title=(i+1)+'번 사진 고르기'; b.setAttribute('aria-pressed',String(i===S.sel));
       var im=document.createElement('img'); im.src=p.poster || p.img.src; var n=document.createElement('i'); n.textContent=i+1;
-      b.appendChild(im); b.appendChild(n); if(i===0) b.className='on';
+      b.appendChild(im); b.appendChild(n); if(i===S.sel){ b.className='on'; if(S.photos.length>1){ var sl=document.createElement('span'); sl.className='sel'; sl.textContent='선택'; b.appendChild(sl); } }
       if (p.isVideo) { var vb = document.createElement('span'); vb.className = 'vbadge'; vb.textContent = '▶ ' + S.clip.len.toFixed(0) + '초'; b.appendChild(vb); }
-      b.onclick=function(){ if(i===0) return; S.photos.unshift(S.photos.splice(i,1)[0]); S.sel=0; photosChanged(); };
+      b.onclick=function(){ selectPhoto(i); };
       tile.appendChild(b);
       if (S.photos.length > 1) { var x=document.createElement('button'); x.type='button'; x.className='x'; x.textContent='×'; x.setAttribute('aria-label', (i+1)+'번 사진 빼기');
         x.onclick=function(){ var gone = S.photos.splice(i,1)[0]; if (gone && gone.isVideo) dropClip();else disposePhoto(gone); photosChanged(); toast(gone && gone.isVideo ? '영상을 뺐어요' : '사진을 뺐어요'); }; tile.appendChild(x); }
       th.appendChild(tile); });
-    if (S.photos.length < MAXP) { var a=document.createElement('button'); a.type='button'; a.className='add'; a.innerHTML='<b>+</b>더하기';
+    if (S.photos.length < MAXP) { var a=document.createElement('button'); a.type='button'; a.className='add'; a.innerHTML='<b>+</b>' + (MAXP - S.photos.length) + '장 더'; a.setAttribute('aria-label', '사진 더하기, ' + (MAXP - S.photos.length) + '장 더 넣을 수 있어요');
       a.onclick=function(){ S.adding = true; $('file').click(); }; th.appendChild(a); }
     else { var f=document.createElement('div'); f.className='full'; f.textContent='8장이 꽉 찼어요'; th.appendChild(f); }
-    $('pcount').textContent = S.photos.length + '/' + MAXP + ' · 누르면 첫 번째 사진이 돼요';
+    $('pcount').textContent = S.photos.length + '/' + MAXP + '장' + (S.photos.length > 1 ? ' · 사진을 누르면 아래에서 위치를 맞춰요' : '');
     $('thumbNote').textContent = S.photos.length>1 ? '여러 장을 쓰는 틀(폴라로이드·필름·네 컷·스크랩)은 순서대로 들어가고, 영상·GIF에서는 모든 사진이 차례로 바뀌어요.' : '사진을 더하면 영상·GIF에서 사진이 차례로 바뀌어요.';
   }
 
   $('pickBtn').onclick = function(){ S.adding = false; $('file').click(); };
+  $('toFirst').onclick = function(){ if (S.sel <= 0) return; S.photos.unshift(S.photos.splice(S.sel, 1)[0]); S.sel = 0; photosChanged(); toast('첫 번째 사진으로 옮겼어요'); };
   [].forEach.call(document.querySelectorAll('.samples [data-tpl]'), function(b){ b.onclick = function(){ S.tpl = b.dataset.tpl; S.adding = false; $('file').click(); }; });
   $('pickBtn2').onclick = function(){ S.adding = false; $('file').click(); };
   /* ---------- 보정: 필터(한 번 누르기) + 직접 조정 ---------- */
@@ -425,7 +437,7 @@
   async function usePhotos(srcs, add){
     var room = add ? MAXP - S.photos.length : MAXP;
     if (room <= 0) { dialog('사진은 ' + MAXP + '장까지예요', '이미 ' + MAXP + '장이 들어 있어요. 사진을 빼고(×) 다시 더해 주세요.'); return; }
-    if (srcs.length > room) dialog('사진은 ' + MAXP + '장까지예요', srcs.length + '장을 고르셔서 앞의 ' + room + '장만 넣었어요. 다른 사진으로 바꾸려면 사진 칸에서 빼고(×) 다시 더해 주세요.');
+    if (srcs.length > room) toast('사진은 ' + MAXP + '장까지라 앞의 ' + room + '장만 넣었어요');
     var list = [];
     var chosen=srcs.slice(0,room),failed=0;
     for (var s of chosen){ var im = await loadImg(s), small=im?await shrink(im):null; if(small) list.push({img:small,ownedURL:small===im&&/^blob:/.test(s)?s:'',adj:{zoom:1,dx:0,dy:0}});else failed++;if(/^blob:/.test(s)&&(!small||small!==im))URL.revokeObjectURL(s); }
@@ -684,7 +696,7 @@
 
   // 미리보기에서 끌어서 사진 위치 옮기기
   var drag=null;
-  $('pv').addEventListener('pointerdown', function(e){ var p=S.photos[S.sel]; if(!p||e.target!==$('main')||e.button>0) return; var r=$('main').getBoundingClientRect();drag={x:e.clientX,y:e.clientY,dx:p.adj.dx,dy:p.adj.dy,w:Math.max(1,r.width)}; $('hint').classList.add('hidden'); $('pv').setPointerCapture(e.pointerId); });
+  $('pv').addEventListener('pointerdown', function(e){ if(S.photos.length&&S.sel>=shownSlots()){ S.sel=0; buildThumbs(); updateAdjust(); } var p=S.photos[S.sel]; if(!p||e.target!==$('main')||e.button>0) return; var r=$('main').getBoundingClientRect();drag={x:e.clientX,y:e.clientY,dx:p.adj.dx,dy:p.adj.dy,w:Math.max(1,r.width)}; $('hint').classList.add('hidden'); $('pv').setPointerCapture(e.pointerId); });
   $('pv').addEventListener('pointermove', function(e){ if(!drag) return; var p=S.photos[S.sel], k=2.4/drag.w;
     p.adj.dx=Math.max(-1,Math.min(1,drag.dx-(e.clientX-drag.x)*k)); p.adj.dy=Math.max(-1,Math.min(1,drag.dy-(e.clientY-drag.y)*k)); draw(); });
   ['pointerup','pointercancel'].forEach(function(ev){ $('pv').addEventListener(ev, function(){ if(drag){drag=null; buildGrid();} }); });

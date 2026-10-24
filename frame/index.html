@@ -23,7 +23,7 @@ button:disabled{opacity:.5;cursor:default}
 .hidden{display:none !important}
 .wrap{max-width:560px;margin:0 auto;padding:16px 16px 120px}
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-header img{height:24px;display:block} .homeLogo{display:block} .hnav{display:flex;align-items:center;gap:14px} .hnav a{font-size:13px;color:var(--body);text-underline-offset:3px} .hnav .homeText{font-weight:600;color:var(--ink)} .samplehead{font-size:14px;font-weight:700;color:var(--ink);margin:4px 0 8px} .ptabs .tn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin-right:5px;border-radius:50%;background:var(--blue-soft);color:var(--ink);font:700 11px Pretendard;font-style:normal;vertical-align:1px} .nextStep{display:flex;flex-direction:column;gap:8px;margin:16px 0 4px;padding-top:12px;border-top:1px solid var(--hair)} .nextBtn{align-self:flex-start;border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:999px;padding:10px 16px;font:700 14px Pretendard,sans-serif;cursor:pointer} .nextBtn.sub{border-color:var(--hair);font-weight:600;color:var(--body)} .doneHint{margin:0;font-size:13px;line-height:1.55;color:var(--body)} .tplHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 0} .nextBtn.mini{flex:0 0 auto;align-self:center;padding:7px 12px;font-size:13px}
+header img{height:24px;display:block} .homeLogo{display:block} .hnav{display:flex;align-items:center;gap:14px} .hnav a{font-size:13px;color:var(--body);text-underline-offset:3px} .hnav .homeText{font-weight:600;color:var(--ink)} .samplehead{font-size:14px;font-weight:700;color:var(--ink);margin:4px 0 8px} .ptabs .tn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;margin-right:5px;border-radius:50%;background:var(--blue-soft);color:var(--ink);font:700 11px Pretendard;font-style:normal;vertical-align:1px} .nextStep{display:flex;flex-direction:column;gap:8px;margin:16px 0 4px;padding-top:12px;border-top:1px solid var(--hair)} .nextBtn{align-self:flex-start;border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:999px;padding:10px 16px;font:700 14px Pretendard,sans-serif;cursor:pointer} .nextBtn.sub{border-color:var(--hair);font-weight:600;color:var(--body)} .doneHint{margin:0;font-size:13px;line-height:1.55;color:var(--body)} .photoHead{margin:2px 0 0;font-size:15px;color:var(--ink)} .photoHead span{font-size:13px;color:var(--muted)} .thumbs button.on{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft)} .thumbs .sel{position:absolute;left:0;right:0;bottom:0;background:rgba(110,130,166,.92);color:#fff;font:700 11px Pretendard;text-align:center;padding:2px 0} .adjust{margin-top:14px;padding:14px;border:1px solid var(--hair);border-radius:12px;background:#fff} .adjHead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap} .adjHead b{font-size:15px;color:var(--ink)} #toFirst{border:1px solid var(--blue);background:var(--blue-soft);border-radius:999px;padding:7px 12px;font:600 13px Pretendard;color:var(--ink);cursor:pointer} .selWarn{margin:10px 0 0;padding:10px 12px;border-radius:8px;background:#FBF3E4;color:var(--body);font-size:13px;line-height:1.55} #adjControls.dim{opacity:.4;pointer-events:none} .moveRow{margin-top:10px} .moveRow #resetPhoto{flex:1} .tplHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 0} .nextBtn.mini{flex:0 0 auto;align-self:center;padding:7px 12px;font-size:13px}
 header span{font-size:13px;color:var(--muted)}
 h1{font-family:'Gowun Batang',serif;font-size:27px;line-height:1.35;color:var(--ink);margin:28px 0 10px}
 .lead{font-size:15px;line-height:1.65;margin:0 0 22px}
@@ -327,19 +327,24 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
     </div>
 
     <div class="panel hidden" id="pPhoto" role="tabpanel" aria-labelledby="tabPhoto">
-      <label>고른 사진 <span id="pcount" style="font-weight:400;color:var(--muted);font-size:13px"></span></label>
+      <p class="photoHead"><b>고른 사진</b> <span id="pcount"></span></p>
       <div class="thumbs" id="thumbs"></div>
       <p class="note" id="thumbNote"></p>
+      <div class="adjust" id="adjustBox">
+        <div class="adjHead"><b id="adjTitle">사진 위치·크기</b><button type="button" id="toFirst" class="hidden">이 사진을 첫 번째로</button></div>
+        <p class="selWarn hidden" id="selWarn" role="status"></p>
+        <div id="adjControls">
+          <p class="note" style="margin:4px 0 10px">미리보기에서 사진을 손가락으로 끌면 위치가 옮겨져요.</p>
+          <label for="zoom">크기</label><input id="zoom" type="range" min="1" max="2.5" step="0.01" value="1">
+          <div class="adjustActions moveRow" role="group" aria-label="선택한 사진 이동"><button type="button" data-move="left" aria-label="사진 왼쪽으로 이동">←</button><button type="button" data-move="up" aria-label="사진 위로 이동">↑</button><button type="button" data-move="down" aria-label="사진 아래로 이동">↓</button><button type="button" data-move="right" aria-label="사진 오른쪽으로 이동">→</button><button type="button" id="resetPhoto">처음으로</button></div>
+        </div>
+      </div>
       <div class="again hidden" id="again">
         <button type="button" id="againStill">동영상에서 장면 더 고르기</button>
         <button type="button" id="againClip" class="hidden">영상 구간 바꾸기</button>
       </div>
-      <button type="button" class="repick" id="pickBtn2">처음부터 다시 고르기</button>
-      <div id="whichWrap"><label>위치를 옮길 사진</label><div class="chips" id="which"></div></div>
-      <label for="zoom">확대</label><input id="zoom" type="range" min="1" max="2.5" step="0.01" value="1">
-      <div class="adjustActions"><button type="button" id="resetPhoto">선택한 사진 위치 처음으로</button></div>
-      <details id="movePhoto"><summary>버튼으로 위치 조정</summary><div class="adjustActions" role="group" aria-label="선택한 사진 이동"><button type="button" data-move="left" aria-label="사진 왼쪽으로 이동">←</button><button type="button" data-move="right" aria-label="사진 오른쪽으로 이동">→</button><button type="button" data-move="up" aria-label="사진 위로 이동">↑</button><button type="button" data-move="down" aria-label="사진 아래로 이동">↓</button></div></details>
-      <p class="note">미리보기에서 사진을 손가락으로 끌면 위치가 옮겨져요.</p>
+      <div id="whichWrap" style="display:none"><div id="which"></div></div>
+      <button type="button" class="repick" id="pickBtn2">사진 처음부터 다시 고르기</button>
       <div class="nextStep"><p class="doneHint">다 됐으면 맨 아래 <b>저장</b> 또는 <b>공유하기</b>를 눌러 주세요.</p><button type="button" class="nextBtn sub" data-next="pTone">색감 보정하기 →</button></div>
     </div>
 
@@ -431,7 +436,7 @@ body.drop::after{content:'여기에 사진을 놓으세요';position:fixed;inset
 </div></div>
 <div class="busy hidden" id="busy" role="status" aria-live="polite"><div id="busyMsg">만드는 중…</div><div class="track"><div class="fill" id="busyFill"></div></div><p class="note" id="busyNote">완성될 때까지 이 화면을 열어 두세요.</p><button type="button" id="cancelExport" class="quietbtn">만들기 취소</button></div>
 
-<script src="/frame/frame-templates.js"></script>
-<script src="/frame/frame-app.js"></script>
+<script src="/frame/frame-templates.js?v=20261024"></script>
+<script src="/frame/frame-app.js?v=20261024"></script>
 </body>
 </html>
