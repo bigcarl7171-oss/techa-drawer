@@ -128,6 +128,17 @@
   .msg-readability.is-long { border-left-color:#943F33; color:#943F33; }
   .msg-item.is-preview { border-left:2px solid #9E8551; padding-left:10px; }
   .msg-editor { margin:20px 0 0; padding:18px 0 0; border-top:1px solid var(--line); }
+  .msg-shop { margin:20px 0 0; padding:18px 0 0; border-top:1px solid var(--line); }
+  .msg-shop-title { margin:0 0 10px; font-weight:700; font-size:14px; }
+  .msg-shop-list { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+  .msg-shop-list a { display:grid; grid-template-columns:56px minmax(0,1fr); gap:12px; align-items:center; padding:8px; border:1px solid var(--line); border-radius:2px; background:#FFFDF9; color:var(--brown); text-decoration:none; }
+  .msg-shop-list a:hover { border-color:var(--brown); text-decoration:none; }
+  .msg-shop-list img { width:56px; height:56px; object-fit:cover; border-radius:2px; background:var(--paper-2, #F3EEE6); }
+  .msg-shop-list b { display:block; font-size:14px; line-height:1.4; }
+  .msg-shop-list small { display:block; margin-top:2px; font-size:12px; line-height:1.5; color:var(--muted); }
+  .msg-shop-note { margin:10px 0 0; font-size:12.5px; line-height:1.6; color:var(--muted); }
+  .msg-shop-links { display:flex; flex-wrap:wrap; gap:6px 14px; margin:8px 0 0; font-size:13px; }
+  .msg-shop-links a { color:var(--brown); font-weight:700; }
   .msg-editor label { display:block; margin:0 0 5px; font-weight:700; font-size:14px; }
   .msg-editor-help { margin:0 0 10px; font-size:12.5px; line-height:1.6; color:var(--muted); }
   #messageEditor { display:block; box-sizing:border-box; width:100%; min-height:94px; padding:11px 12px; border:1px solid var(--line); border-radius:2px; background:#FFFDF9; color:var(--brown); font-family:inherit; font-size:15px; font-weight:500; line-height:1.6; resize:vertical; }
@@ -182,7 +193,7 @@
       </div>
     </div>
     <a class="header-shop-link" href="https://mkt.shopping.naver.com/link/68d237dc713c156d9f530c28" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a>
-    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a></nav></details>
+    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/frame/">꽃 사진 꾸미기</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav></details>
   </div>
   <!-- END site-header -->
 </header>
@@ -617,6 +628,12 @@
       <p id="copyStatus" role="status" aria-live="polite"></p>
       <button class="msg-restore" id="restoreDraft" type="button" hidden>고친 문구 되돌리기</button>
     </div>
+    <div class="msg-shop" id="msgShop" data-track-area="message-shop" hidden>
+      <p class="msg-shop-title">이 문구와 어울리는 테차 꽃</p>
+      <ul class="msg-shop-list" id="msgShopList"></ul>
+      <p class="msg-shop-note">고른 문구는 주문할 때 <b>배송 요청란</b>에 적어 주시면 카드에 그대로 넣어 드려요.</p>
+      <p class="msg-shop-links"><a id="msgShopMore" href="/ko/gift-finder/">받는 분·상황으로 더 찾아보기 →</a><a id="msgShopB2B" href="/contact/" hidden>여러 개·단체 주문 상담 →</a></p>
+    </div>
     </div>
   </aside>
   </div>
@@ -697,7 +714,7 @@
       <div><p class="sf-h">공방 방문 · 방문 수령</p><p>경기도 고양시 덕양구 은빛로 53<br>코스미온빌 301호<br>맞춤 제작 상담과 플라워 클래스도 공방에서 함께합니다.</p></div>
       <div><p class="sf-h">기업·단체 주문</p><p>10개부터 수백 개까지 목적과 예산에 맞춰 제작합니다.<br>행사일 일주일 전까지 문의해 주세요.</p><a class="sf-cta" href="/contact/#contact-form">단체 주문 상담하기 →</a></div>
     </div>
-    <nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>
+    <nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/frame/">꽃 사진 꾸미기</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>
     <div class="sf-biz">
       <p><span>상호 테차(TECHA)</span><span>대표 임광진</span><span>사업자등록번호 196-01-02121</span></p>
       <p><span>통신판매업 제2025-고양덕양구-1847호</span><span>개인정보보호책임자 김은진</span></p>
@@ -844,7 +861,65 @@ TECHA.initPage({ title:"꽃 선물 메시지", desc:"꽃 선물 상황과 말투
     } else {
       selectPhrase(document.querySelector(".msg-group:not([hidden]) .msg-item:not([hidden])"), false);
     }
+    renderShop();
   }
+
+  // ---------- 상황별 상품 연결 (2026-10-24) ----------
+  // 문구를 고르는 자리에서 바로 상품으로 이어지게 한다. 상품 정보의 단일 출처는 선물 추천과 같은
+  // /assets/data/gift-finder-products.json(이름·사진·스토어 링크). 여기서는 상황마다 어떤 상품을 보일지만 정한다.
+  // 상품 태그(occasions)에 근거가 있는 것만 넣었다. 출산·임직처럼 맞는 태그가 없는 상황은 무난한 꽃으로 둔다.
+  var SHOP_PICKS = {
+    popular: ["rose-hydrangea-bouquet", "hydrangea-moodlamp", "flower-postcard"],
+    birthday: ["pinkpeach-bouquet", "rose-hydrangea-bouquet", "cup-moodlamp-single"],
+    milestone: ["carnation-money-bouquet", "money-cake", "carnation-rose-bouquet"],
+    parents: ["carnation-rose-bouquet", "rose-money-bouquet", "premium-window-money-box"],
+    graduation: ["rose-soap-bouquet", "rose-hydrangea-bouquet", "kinderjoy-doll-bouquet"],
+    job: ["rose-hydrangea-bouquet", "sunflower-bouquet", "superior-rose"],
+    teacher: ["carnation-rose-bouquet", "single-stem-soap-box", "flower-postcard"],
+    recital: ["kinderjoy-doll-bouquet", "character-doll-bouquet", "rebony-trophy-doll-bouquet"],
+    promotion: ["sunflower-frame", "superior-rose", "ionantha-moodlamp"],
+    church: ["rose-hydrangea-bouquet", "hydrangea-bouquet", "flower-postcard"],
+    farewell: ["rose-hydrangea-bouquet", "single-stem-soap-box", "flower-postcard"],
+    retirement: ["superior-rose", "rose-hydrangea-bouquet", "sunflower-frame"],
+    opening: ["sunflower-frame", "ionantha-moodlamp", "centerpiece"],
+    wedding: ["sunflower-frame", "topiary-moodlamp", "blackwhite-rose-moodlamp"],
+    "wedding-anniv": ["superior-rose", "rose-hydrangea-bouquet", "hydrangea-moodlamp"],
+    anniversary: ["rose-hydrangea-bouquet", "hydrangea-moodlamp", "blackwhite-rose-moodlamp"],
+    baby: ["hydrangea-bouquet", "cup-moodlamp-single", "flower-postcard"],
+    cheer: ["hydrangea-bouquet", "cup-moodlamp-single", "flower-postcard"],
+    thanks: ["single-stem-soap-box", "flower-postcard", "hydrangea-bouquet"],
+    recovery: ["hydrangea-bouquet", "cup-moodlamp-single", "superior-rose"],
+    business: ["rose-soap-bouquet", "rose-hydrangea-bouquet", "single-stem-soap-box"]
+  };
+  var SHOP_B2B = { retirement: 1, business: 1, promotion: 1, opening: 1 };
+  var shopBox = document.getElementById("msgShop");
+  var shopList = document.getElementById("msgShopList");
+  var shopMore = document.getElementById("msgShopMore");
+  var shopB2B = document.getElementById("msgShopB2B");
+  var shopCatalog = null, shopShown = "";
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function renderShop() {
+    if (!shopCatalog || !shopBox) return;
+    var ids = SHOP_PICKS[occ] || SHOP_PICKS.popular;
+    var items = ids.map(function (id) { return shopCatalog[id]; }).filter(function (p) { return p && p.shopUrl; });
+    if (!items.length) { shopBox.hidden = true; return; }
+    shopList.innerHTML = items.map(function (p) {
+      return '<li><a href="' + esc(p.shopUrl) + '" target="_blank" rel="noopener" data-msg-product="' + esc(p.id) + '">' +
+        (p.image1 ? '<img src="' + esc(p.image1) + '" alt="" width="56" height="56" loading="lazy">' : '<span></span>') +
+        '<span><b>' + esc(p.name) + ' ↗</b><small>' + esc(p.situation || "") + '</small></span></a></li>';
+    }).join("");
+    var occBtn = occWrap.querySelector('[data-occasion="' + occ + '"]');
+    shopMore.href = "/ko/gift-finder/" + (occBtn ? "?from=message" : "");
+    shopB2B.hidden = !SHOP_B2B[occ];
+    shopBox.hidden = false;
+    if (shopShown !== occ && window.TECHA && TECHA.track) TECHA.track("message_shop_view", { occasion: occ });
+    shopShown = occ;
+  }
+  fetch("/assets/data/gift-finder-products.json").then(function (r) { return r.json(); }).then(function (d) {
+    shopCatalog = {};
+    (d.products || []).forEach(function (p) { shopCatalog[p.id] = p; });
+    renderShop();
+  }).catch(function () { /* 상품을 못 불러와도 문구 기능은 그대로 */ });
   function chooseOcc(key) {
     if (!validOcc(key)) return;
     occ = key;
@@ -903,6 +978,7 @@ TECHA.initPage({ title:"꽃 선물 메시지", desc:"꽃 선물 상황과 말투
     copyText(phrase).then(function () {
       flash(b, "복사됨", "복사");
       rowStatus.textContent = "문구를 복사했습니다: " + phrase;
+      if (window.TECHA && TECHA.track) TECHA.track("message_copy", { occasion: occ, tone: li.dataset.tone || "", edited: false });
     }).catch(function () { flash(b, "복사 실패", "복사"); rowStatus.textContent = "복사하지 못했습니다. 문구를 선택해 직접 복사해 주세요."; });
   });
   editor.addEventListener("input", function () { edited = true; draft = ""; restoreBtn.hidden = true; status.textContent = ""; updateCard(); });
@@ -918,7 +994,10 @@ TECHA.initPage({ title:"꽃 선물 메시지", desc:"꽃 선물 상황과 말투
   previewToggle.addEventListener("click", function () { setPreviewOpen(previewToggle.getAttribute("aria-expanded") !== "true"); });
   document.getElementById("copyEdited").addEventListener("click", function () {
     if (!editor.value.trim()) { status.textContent = "문구를 먼저 입력해 주세요."; editor.focus(); return; }
-    copyText(editor.value).then(function () { status.textContent = "수정한 문구를 복사했습니다."; })
+    copyText(editor.value).then(function () {
+      status.textContent = "수정한 문구를 복사했습니다. 주문할 때 배송 요청란에 붙여 넣어 주세요.";
+      if (window.TECHA && TECHA.track) TECHA.track("message_copy", { occasion: occ, tone: tone || "", edited: true });
+    })
       .catch(function () { status.textContent = "복사할 수 없었습니다. 문구를 길게 눌러 직접 복사해 주세요."; });
   });
 

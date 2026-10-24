@@ -141,7 +141,7 @@ function headerMarkup(shopUrl) {
     '      </div>',
     '    </div>',
     '    <a class="header-shop-link" href="' + esc(shopUrl) + '" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a>',
-    '    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a></nav></details>',
+    '    <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/frame/">꽃 사진 꾸미기</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav></details>',
     '  </div>',
     '  ' + HEADER_END
   ].join('\n');
@@ -171,7 +171,7 @@ function footerMarkup(isTool, shopUrl) {
     '      <div><p class="sf-h">기업·단체 주문</p><p>10개부터 수백 개까지 목적과 예산에 맞춰 제작합니다.<br>행사일 일주일 전까지 문의해 주세요.</p>' +
       '<a class="sf-cta" href="/contact/#contact-form">단체 주문 상담하기 →</a></div>',
     '    </div>',
-    '    <nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a>' +
+    '    <nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/frame/">꽃 사진 꾸미기</a>' +
       '<a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a>' +
       '<a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>',
     '    <div class="sf-biz">',

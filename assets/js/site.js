@@ -251,7 +251,7 @@
       '    </div>' +
       '  </div>' +
       '  <a class="header-shop-link" href="' + SITE.shopUrl + '" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a>' +
-      '  <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a></nav></details>' +
+      '  <details class="header-menu"><summary><span class="header-menu-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="header-menu-label">메뉴</span></summary><nav aria-label="전체 메뉴"><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/frame/">꽃 사진 꾸미기</a><a href="/blog/">매거진</a><a href="/space/">공간 스타일링</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav></details>' +
       '</div>';
     initHeaderSearch();
   }
@@ -402,7 +402,7 @@
       '<div><p class="sf-h">공방 방문 · 방문 수령</p><p>경기도 고양시 덕양구 은빛로 53<br>코스미온빌 301호<br>맞춤 제작 상담과 플라워 클래스도 공방에서 함께합니다.</p></div>' +
       '<div><p class="sf-h">기업·단체 주문</p><p>10개부터 수백 개까지 목적과 예산에 맞춰 제작합니다.<br>행사일 일주일 전까지 문의해 주세요.</p><a class="sf-cta" href="/contact/#contact-form">단체 주문 상담하기 →</a></div>' +
       '</div>' +
-      '<nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>' +
+      '<nav class="sf-nav" aria-label="사이트 메뉴"><a href="/">홈</a><a href="/ko/gift-finder/">선물 추천</a><a href="/message/">꽃 선물 메시지</a><a href="/frame/">꽃 사진 꾸미기</a><a href="/space/">공간 스타일링·구독</a><a href="/contact/">기업·단체 주문</a><a href="/about/">공방 소개·방문</a><a href="/blog/">테차 매거진</a><a href="/care/">꽃 관리법</a><a href="/ko/">일상 도구</a></nav>' +
       '<div class="sf-biz">' +
       '<p><span>상호 테차(TECHA)</span><span>대표 임광진</span><span>사업자등록번호 196-01-02121</span></p>' +
       '<p><span>통신판매업 제2025-고양덕양구-1847호</span><span>개인정보보호책임자 김은진</span></p>' +
@@ -463,7 +463,10 @@
   //   situation_click   상황 카드 클릭        { situation }
   //   care_view         관리법 조회           { product }
   //   news_signup_click 알림받기 유도 클릭    { situation }
-  //   shop_click        스마트스토어 이동     { placement }
+  //   shop_click        스마트스토어 이동     { placement, link_area, link_text } — 사이트 전체 클릭 감지(아래)
+  //   talk_click        네이버 톡톡 문의 이동 { placement, link_area }
+  //   message_copy      메시지 문구 복사      { occasion, tone, edited } — message/index.html
+  //   message_shop_view 메시지 옆 상품 노출   { occasion } — message/index.html
   //   gift_finder_filter        선물 큐레이션 필터 변경   { recipient, occasion, price }
   //   gift_finder_product_click 선물 큐레이션 구매 링크 클릭 { line }
   function track(name, params) {
@@ -471,6 +474,32 @@
       if (typeof window.gtag === "function") window.gtag("event", name, params || {});
     } catch (e) { /* 측정 실패가 기능을 막지 않도록 무시 */ }
   }
+
+  // 2026-10-24: 스토어·톡톡으로 나가는 클릭을 사이트 전체에서 한 번에 잰다.
+  // 전에는 renderShopCTA 상자 한 곳만 shop_click 을 보냈고, 홈 상품 카드·매거진 상품 카드·헤더 버튼은 기록이 없어
+  // GA 주요 이벤트가 전부 0이었다. 링크마다 손대지 않고 문서 클릭 하나로 잡는다.
+  //   shop_click  { placement: 페이지 경로, link_area: 가장 가까운 영역 이름, link_text }
+  //   talk_click  { placement, link_area }  — 네이버 톡톡 문의
+  // renderShopCTA 처럼 따로 기록하는 링크는 data-tracked 를 달아 두 번 세지 않는다.
+  var STORE_HOST = /(^|\.)(mkt\.shopping\.naver\.com|smartstore\.naver\.com|naver\.me)$/;
+  function linkArea(a) {
+    var box = a.closest("[data-track-area],section[id],section[class],header,footer,aside,nav");
+    if (!box) return "";
+    return box.getAttribute("data-track-area") || box.id || (box.className && String(box.className).split(" ")[0]) || box.tagName.toLowerCase();
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a || a.hasAttribute("data-tracked")) return;
+    var url;
+    try { url = new URL(a.href, location.href); } catch (err) { return; }
+    var params = { placement: document.body && document.body.dataset.placement || location.pathname, link_area: linkArea(a) };
+    if (STORE_HOST.test(url.hostname)) {
+      params.link_text = (a.textContent || "").replace(/\s+/g, " ").trim().slice(0, 60);
+      track("shop_click", params);
+    } else if (url.hostname === "talk.naver.com") {
+      track("talk_click", params);
+    }
+  }, true);
 
   // ---------- 공통 초기화 ----------
   function initPage(opts) {
@@ -533,6 +562,7 @@
       // 오버라이드 링크는 스토어 이동이 아니므로 shop_click 이 아니라 contact_click 으로 구분한다
       // shop_click은 스토어 이동 전용 이벤트이므로 문의 이동과 섞지 않는다.
       var link = el.querySelector("a");
+      if (link) link.setAttribute("data-tracked", "");
       if (link) link.addEventListener("click", function () {
         track(overrideHref ? "contact_click" : "shop_click", { placement: document.body.dataset.placement || location.pathname });
       });
