@@ -24,13 +24,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/birth-guide.css">
 <script type="application/ld+json">
 { "@context":"https://schema.org","@type":"WebApplication","name":"월별 탄생석",
   "applicationCategory":"LifestyleApplication","operatingSystem":"Any",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"} }
 </script>
 </head>
-<body>
+<body class="birth-guide-page">
 <header id="site-header">
   <!-- BEGIN site-header (생성: scripts/build-chrome.js — 직접 고치지 말 것) -->
   <div class="wrap">
@@ -57,114 +58,32 @@
   <!-- END page-head -->
 </div>
 
-<main class="wrap">
-  <div class="ad-slot"></div>
-
-  <section class="card">
-    <label class="field" for="month">태어난 달</label>
-    <select id="month"></select>
-    <div class="result empty" id="result" style="margin-top:16px">태어난 달을 선택하세요.</div>
-    <div id="stone-detail"></div>
-
-    <!-- BEGIN tool-products (생성: scripts/build-tool-products.js — 직접 고치지 말 것) -->
-    <section class="tool-products" aria-labelledby="tool-products-title">
-      <p class="tool-products-kicker">TECHA PICKS</p>
-      <h2 id="tool-products-title">이 도구를 쓰신 김에, 테차의 선물</h2>
-      <div class="tool-products-grid">
-        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241cb1" target="_blank" rel="noopener noreferrer"><span><b>유리돔 무드등</b><small>낮에는 꽃, 밤에는 조명으로 남는 선물</small></span><strong>상품 보기 →</strong></a>
-        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/6aacecf4e9427b0d1c00c6ed" target="_blank" rel="noopener noreferrer"><span><b>수국꽃무드등</b><small>은은한 색감과 조명을 오래 두고 보고 싶을 때</small></span><strong>상품 보기 →</strong></a>
-        <a class="tool-product-card" href="https://mkt.shopping.naver.com/link/68d238ffe3e6b36891764446" target="_blank" rel="noopener noreferrer"><span><b>수페리어 장미</b><small>꽃 자체의 존재감이 필요한 기념일과 격식 있는 자리</small></span><strong>상품 보기 →</strong></a>
-      </div>
-      <p class="tool-products-note">색상·크기·최종 가격은 스마트스토어 상품 페이지에서 확인해 주세요.</p>
-    </section>
-    <!-- END tool-products -->
-
-    <div id="techa-cta" data-text="탄생석의 컬러를 담은 프리저브드 플라워 선물은 어떠세요?"></div>
-  </section>
-
-  <div class="ad-slot"></div>
-
-  <article class="article">
-    <h2>탄생석 찾는 법</h2>
-    <p>위에서 태어난 달을 고르면 그 달의 탄생석과 색, 의미와 어원이 함께 나옵니다.
-       날짜는 필요 없고 <b>달만</b> 알면 됩니다. 설치나 로그인 없이 바로 쓸 수 있습니다.</p>
-    <p>선물을 고르는 중이라면 보석 자체보다 <b>그 달의 색</b>을 먼저 보셔도 좋습니다.
-       보석은 가격대가 부담스러울 때가 많은데, 같은 색을 담은 다른 선물로도 같은 의미가 전해집니다.</p>
-
-    <h2>월별 탄생석이란?</h2>
-    <p>탄생석은 각 달을 상징하는 보석으로, 저마다 <b>이름의 어원과 행운의 의미</b>를 담고 있습니다.
-       기원은 구약 성경의 판결 흉패에 박힌 12가지 보석, 신약 성경 요한계시록의 새 예루살렘 성벽을 이룬
-       12가지 보석에서 비롯됐다고 전해지며, 이를 열두 달과 연결해 의미를 부여하는 풍습이 퍼진 것은
-       <b>18세기 유럽</b>부터입니다. 자신의 탄생석을 지니면 병과 재해를 막고 행운이 따른다고 여겨져
-       지금도 생일 선물과 주얼리로 큰 사랑을 받습니다.</p>
-
-    <h2>탄생석 이름은 어디서 왔을까?</h2>
-    <p>많은 탄생석의 이름에는 <b>어원과 전설</b>이 함께 담겨 있습니다.
-       가넷은 석류 씨앗을 닮아 라틴어로 '씨앗'을 뜻하는 단어에서, 자수정은 '취하지 않다'라는
-       그리스어에서, 아쿠아마린은 '바다의 물'이라는 라틴어에서 이름이 유래했습니다.
-       터키석은 오스만 제국(튀르키예)을 거쳐 유럽에 전해지며 이름이 붙었습니다.
-       이런 이야기를 알고 나면 같은 보석도 다르게 보입니다.</p>
-
-    <h2>탄생석 선물 팁</h2>
-    <ul>
-      <li>탄생석 컬러에 맞춘 꽃·소품을 함께 선물하면 조화롭습니다.</li>
-      <li>보석의 의미와 유래를 카드에 적어 진심을 전해 보세요.</li>
-      <li>주얼리가 부담스럽다면 탄생석 <b>색감의 꽃 선물</b>도 좋은 대안입니다.</li>
-    </ul>
-
-    <h2>같은 달의 다른 대체 보석</h2>
-    <p>1912년 미국보석상협회가 제정한 현대 탄생석 목록은 달마다 대표 보석 외에 <b>대체 보석</b>도
-       함께 인정합니다. 위 목록은 각 달의 대표 보석이고, 아래는 같은 달에 함께 쓰이는 대체 보석입니다.</p>
-    <table class="compare-table">
-      <thead><tr><th>월</th><th>대표 보석(위 목록)</th><th>대체 보석</th></tr></thead>
-      <tbody>
-        <tr><td>3월</td><td>아쿠아마린</td><td>블러드스톤</td></tr>
-        <tr><td>6월</td><td>진주</td><td>문스톤, 알렉산드라이트</td></tr>
-        <tr><td>8월</td><td>페리도트</td><td>스피넬, 사도닉스</td></tr>
-        <tr><td>10월</td><td>오팔</td><td>투르말린</td></tr>
-        <tr><td>11월</td><td>토파즈</td><td>시트린</td></tr>
-        <tr><td>12월</td><td>터키석</td><td>지르콘, 탄자나이트</td></tr>
-      </tbody>
-    </table>
-    <h2>탄생석 색으로 선물 고르기</h2>
-    <p>보석이 부담스러울 때 가장 쉬운 방법은 <b>색을 가져오는 것</b>입니다.
-       같은 색의 꽃이나 소품을 고르고 카드에 "당신의 달의 색"이라고 적으면 의미가 그대로 살아납니다.</p>
-    <table class="compare-table">
-      <thead><tr><th>달</th><th>탄생석</th><th>대표 색</th><th>같은 색으로 고를 만한 것</th></tr></thead>
-      <tbody>
-        <tr><td>1월</td><td>가넷</td><td>깊은 붉은색</td><td>버건디 장미</td></tr>
-        <tr><td>2월</td><td>자수정</td><td>보라</td><td>보라 장미, 라벤더빛 수국</td></tr>
-        <tr><td>3월</td><td>아쿠아마린</td><td>맑은 하늘빛</td><td>하늘색 수국</td></tr>
-        <tr><td>4월</td><td>다이아몬드</td><td>투명·백색</td><td>흰 장미, 유리돔 소품</td></tr>
-        <tr><td>5월</td><td>에메랄드</td><td>초록</td><td>초록 잎을 살린 구성</td></tr>
-        <tr><td>6월</td><td>진주</td><td>아이보리</td><td>아이보리 장미</td></tr>
-        <tr><td>7월</td><td>루비</td><td>선명한 빨강</td><td>붉은 장미</td></tr>
-        <tr><td>8월</td><td>페리도트</td><td>연둣빛 초록</td><td>연둣빛 소재를 섞은 구성</td></tr>
-        <tr><td>9월</td><td>사파이어</td><td>짙은 파랑</td><td>블루 계열 수국</td></tr>
-        <tr><td>10월</td><td>오팔</td><td>여러 빛이 도는 색</td><td>파스텔을 섞은 구성</td></tr>
-        <tr><td>11월</td><td>토파즈</td><td>노랑·주황</td><td>노란 장미, 해바라기</td></tr>
-        <tr><td>12월</td><td>터키석</td><td>청록</td><td>민트빛 소재를 섞은 구성</td></tr>
-      </tbody>
-    </table>
-
-    <h2>자주 묻는 질문 (FAQ)</h2>
-    <h3>Q. 자료마다 탄생석이 다른 이유가 뭔가요?</h3>
-    <p>기준이 하나가 아니기 때문입니다. 지금 널리 쓰이는 목록은 1912년 미국보석상협회가 정한 것이고,
-       이후에도 보석이 추가되거나 대체 보석이 인정된 경우가 있습니다. 나라별 전통 목록은 또 다릅니다.
-       어느 쪽이 틀린 것이 아니라 <b>여러 기준이 함께 쓰이는 것</b>으로 보시면 됩니다.</p>
-    <h3>Q. 대체 보석을 선물해도 괜찮나요?</h3>
-    <p>괜찮습니다. 대체 보석도 같은 달의 공식 목록에 들어 있습니다. 대표 보석이 비싸거나 구하기 어려울 때
-       대체 보석을 고르는 것은 흔한 선택입니다.</p>
-    <h3>Q. 탄생석과 탄생화를 함께 준비해도 되나요?</h3>
-    <p>잘 어울리는 조합입니다. 보통 보석은 오래 남는 쪽, 꽃은 그날의 분위기를 만드는 쪽을 맡습니다.
-       둘 다 준비하기 어렵다면 <b>탄생석 색을 꽃으로 표현</b>하는 방법이 위 표에 정리돼 있습니다.</p>
-
-    <div class="note">탄생석은 나라·협회·전통에 따라 조금씩 다를 수 있습니다. 본 내용은 위키백과·보석
-       전문 자료를 교차 확인해 널리 알려진 대표 보석과 의미를 정리한 것이며, 대체 보석 표는 이번
-       세션에서 실시간 재검증하지 않고 일반적으로 알려진 자료를 바탕으로 작성했습니다. 정확한
-       인용이 필요하시면 GIA(gia.edu) 등에서 한 번 더 확인해 주세요.</div>
-  </article>
-
+<main class="wrap birth-guide" data-birth-guide="stone">
+<!-- BEGIN birth-guide (생성: scripts/build-birth-guides.js) -->
+<nav class="birth-switch" aria-label="생일의 꽃과 보석"><a data-guide-switch href="/ko/birth-flower/?month=10">탄생화·꽃말</a><a data-guide-switch href="/ko/birth-stone/?month=10" aria-current="page">탄생석·색</a></nav>
+<section class="birth-selector" id="birth-month-picker" aria-labelledby="birth-month-title"><h2 id="birth-month-title">생일이 있는 달을 골라보세요</h2><nav class="birth-months" aria-label="월 선택"><a data-birth-month="1" href="#month-1-summary" aria-current="false">1월</a><a data-birth-month="2" href="#month-2-summary" aria-current="false">2월</a><a data-birth-month="3" href="#month-3-summary" aria-current="false">3월</a><a data-birth-month="4" href="#month-4-summary" aria-current="false">4월</a><a data-birth-month="5" href="#month-5-summary" aria-current="false">5월</a><a data-birth-month="6" href="#month-6-summary" aria-current="false">6월</a><a data-birth-month="7" href="#month-7-summary" aria-current="false">7월</a><a data-birth-month="8" href="#month-8-summary" aria-current="false">8월</a><a data-birth-month="9" href="#month-9-summary" aria-current="false">9월</a><a data-birth-month="10" href="#month-10-summary" aria-current="true">10월</a><a data-birth-month="11" href="#month-11-summary" aria-current="false">11월</a><a data-birth-month="12" href="#month-12-summary" aria-current="false">12월</a></nav><p class="birth-small">한 달에 여러 탄생석이 있을 수 있습니다. 이름과 색을 함께 살펴보세요.</p></section>
+<div id="birth-content"><section class="birth-result" aria-labelledby="birth-result-title"><figure class="birth-photo"><img src="/assets/images/birth-guide/stone-10.webp" alt="오팔 자료사진" width="800" height="535" fetchpriority="high"><figcaption>오팔 자료사진 · <a href="https://commons.wikimedia.org/wiki/File%3AOpal_%28GeoDIL_number_-_2737%29.jpg" target="_blank" rel="noopener noreferrer">Darla Sondrol / GeoDIL / CC0 1.0</a></figcaption></figure><div class="birth-result-copy"><p class="birth-label">10월의 탄생석</p><h2 id="birth-result-title" tabindex="-1">오팔</h2><p class="birth-english" lang="en">Opal</p><p class="birth-meaning">선물에 담아 볼 마음 · 희망 · 다채로운 가능성</p><p class="birth-intro">10월에는 오팔과 투르말린을 함께 소개합니다. 오팔의 여러 빛과 투르말린의 다양한 색에서 좋아하는 분위기를 골라 보세요.</p><p class="birth-also"><b>같은 달에 함께 소개되는 보석</b><br>투르말린</p><a class="birth-cross" data-month-cross href="/ko/birth-flower/?month=10">10월의 탄생화도 보기<br><span>메리골드·코스모스 →</span></a></div></section><div class="birth-actions"><button type="button" data-birth-share>결과 공유하기</button><button type="button" data-birth-save>결과 이미지 저장</button><a href="#birthday-messages">생일 카드 문구 보기 ↓</a></div><section class="birth-section birth-reading" aria-labelledby="birth-story-title"><div><p class="birth-label">조금 더 알아보기</p><h2 id="birth-story-title">보석의 색과 이야기</h2><p>일부 오팔에서는 보는 각도에 따라 여러 색이 반짝이는 유색 효과를 볼 수 있습니다. 투르말린도 다양한 색을 지닌 보석으로 알려져 있어요. 두 보석을 함께 살펴보고 좋아하는 색을 꽃에 옮겨 보세요.</p><p class="birth-small"><a href="https://www.gia.edu/birthstones/october-birthstones" target="_blank" rel="noopener noreferrer">GIA · 10월 탄생석 ↗</a> · <a href="https://www.americangemsociety.org/birthstones/" target="_blank" rel="noopener noreferrer">미국보석학회(AGS) · 월별 탄생석 ↗</a></p></div><div><h3>선물하기 전에 알아둘 점</h3><p>탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.</p><ul class="birth-palette" aria-label="꽃 선물에 참고할 색"><li><span class="birth-swatch" style="background:#e3bdc4" aria-hidden="true"></span>연분홍</li><li><span class="birth-swatch" style="background:#a6cad4" aria-hidden="true"></span>옅은 파랑</li></ul><p class="birth-small">꽃 선물에 참고할 색입니다. 꽃과 보석의 실제 색은 다양합니다.</p></div></section><section class="birth-section" id="birthday-messages" aria-labelledby="birth-message-title"><p class="birth-label">마음을 전하는 한 줄</p><h2 id="birth-message-title">10월 생일 카드에 적어 보세요</h2><p class="birth-small">테차가 새로 쓴 예시 문구입니다. 받는 분에 맞게 고쳐 쓰셔도 좋아요.</p><ul class="birth-messages"><li><div><span class="birth-small">짧고 담백하게</span><p>너의 달의 색을 골랐어. 생일 축하해.</p></div><button type="button" data-birth-copy="0" aria-label="짧고 담백하게 문구 복사">복사</button></li><li><div><span class="birth-small">다정하게</span><p>10월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어.</p></div><button type="button" data-birth-copy="1" aria-label="다정하게 문구 복사">복사</button></li><li><div><span class="birth-small">정중하게</span><p>태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다.</p></div><button type="button" data-birth-copy="2" aria-label="정중하게 문구 복사">복사</button></li></ul><a class="birth-text-link" href="/message/">더 많은 생일·생신 카드 문구 찾기 →</a></section><section class="birth-section birth-gifts" aria-labelledby="tool-products-title"><p class="birth-label">테차의 꽃 선물</p><h2 id="tool-products-title">여러 빛에서 골라낸 부드러운 색</h2><p>탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.</p><div class="birth-product-grid"><a class="birth-product" data-birth-product="hydrangea-bouquet" href="https://mkt.shopping.naver.com/link/6aacecf4e8f0b735ed17d84d" target="_blank" rel="noopener noreferrer"><img src="/assets/images/home/hydrangea-pink.jpg" alt="수국 꽃다발 디자인 참고 사진" width="640" height="640" loading="lazy"><div><span class="birth-small">프리저브드</span><h3>수국 꽃다발</h3><p>프리저브드 수국을 담았습니다. 핑크·화이트·블루 옵션에서 좋아하는 분위기를 골라 보세요.</p><span class="birth-product-link">색상·구성 보기 ↗</span></div></a><a class="birth-product" data-birth-product="hydrangea-moodlamp" href="https://mkt.shopping.naver.com/link/6aacecf4e9427b0d1c00c6ed" target="_blank" rel="noopener noreferrer"><img src="/assets/images/home/hydrangea-moodlamp-shelf.jpg" alt="수국꽃무드등 디자인 참고 사진" width="640" height="640" loading="lazy"><div><span class="birth-small">프리저브드+포트+LED등+투명박스</span><h3>수국꽃무드등</h3><p>스카이블루·펄화이트·소프트핑크 색상을 비교해 고르는 수국 꽃 무드등입니다.</p><span class="birth-product-link">색상·구성 보기 ↗</span></div></a></div><p class="birth-small">테차 상품의 디자인 참고 사진입니다. 소개한 색상은 상품 옵션에서 확인해 주세요. 최종 가격·크기·제작 가능 여부는 스마트스토어에서 안내합니다.</p><a class="birth-text-link" href="/ko/gift-finder/">받는 분과 선물할 상황으로 더 골라보기 →</a></section><section class="birth-section birth-next"><h2>생일 선물, 조금 더 살펴볼까요?</h2><a href="/blog/birthday-flower-gift-choice/">꽃다발과 꽃 무드등, 건네는 장면으로 고르기 →</a><a href="/blog/flower-material-difference/">프리저브드·비누꽃·실크플라워의 차이 →</a><a href="/care/">선물 받은 시들지 않는 꽃 관리법 →</a></section></div>
+<p class="birth-status" id="birth-status" role="status" aria-live="polite" aria-atomic="true"></p><textarea hidden id="birth-copy-fallback" class="birth-copy-fallback" readonly aria-label="복사할 내용"></textarea>
+<section class="birth-section" aria-labelledby="birth-overview-title"><p class="birth-label">열두 달 한눈에 보기</p><h2 id="birth-overview-title">다른 달의 보석도 궁금하다면</h2><p class="birth-small">각 달에 함께 소개되는 보석을 모았습니다. 사진은 그중 한 보석의 표본을 보여줍니다.</p><ul class="birth-overview"><li id="month-1-summary"><a data-birth-month="1" href="#birth-month-picker"><b>1월</b><span><strong>가넷</strong><small>우정 · 변치 않는 마음</small></span></a></li>
+<li id="month-2-summary"><a data-birth-month="2" href="#birth-month-picker"><b>2월</b><span><strong>자수정</strong><small>평온 · 절제</small></span></a></li>
+<li id="month-3-summary"><a data-birth-month="3" href="#birth-month-picker"><b>3월</b><span><strong>아쿠아마린 · 블러드스톤</strong><small>차분한 마음 · 용기</small></span></a></li>
+<li id="month-4-summary"><a data-birth-month="4" href="#birth-month-picker"><b>4월</b><span><strong>다이아몬드</strong><small>변치 않는 마음 · 사랑</small></span></a></li>
+<li id="month-5-summary"><a data-birth-month="5" href="#birth-month-picker"><b>5월</b><span><strong>에메랄드</strong><small>새로운 시작 · 희망</small></span></a></li>
+<li id="month-6-summary"><a data-birth-month="6" href="#birth-month-picker"><b>6월</b><span><strong>진주 · 문스톤 · 알렉산드라이트</strong><small>순수한 마음 · 축복</small></span></a></li>
+<li id="month-7-summary"><a data-birth-month="7" href="#birth-month-picker"><b>7월</b><span><strong>루비</strong><small>사랑 · 열정</small></span></a></li>
+<li id="month-8-summary"><a data-birth-month="8" href="#birth-month-picker"><b>8월</b><span><strong>페리도트 · 스피넬 · 사도닉스</strong><small>화합 · 따뜻한 마음</small></span></a></li>
+<li id="month-9-summary"><a data-birth-month="9" href="#birth-month-picker"><b>9월</b><span><strong>사파이어</strong><small>진실한 마음 · 성실</small></span></a></li>
+<li id="month-10-summary"><a data-birth-month="10" href="#birth-month-picker"><b>10월</b><span><strong>오팔 · 투르말린</strong><small>희망 · 다채로운 가능성</small></span></a></li>
+<li id="month-11-summary"><a data-birth-month="11" href="#birth-month-picker"><b>11월</b><span><strong>토파즈 · 시트린</strong><small>우정 · 따뜻한 축복</small></span></a></li>
+<li id="month-12-summary"><a data-birth-month="12" href="#birth-month-picker"><b>12월</b><span><strong>터키석 · 탄자나이트 · 지르콘</strong><small>축복 · 새로운 길</small></span></a></li></ul></section>
+<section class="birth-section birth-faq" aria-labelledby="birth-faq-title"><h2 id="birth-faq-title">자주 묻는 질문</h2><details><summary>한 달에 탄생석이 여러 개인가요?</summary><p>GIA와 AGS가 안내하는 목록에는 3월·6월·8월·10월·11월·12월처럼 여러 보석을 함께 소개하는 달이 있습니다. 이 페이지는 이들 보석을 함께 보여줍니다.</p></details>
+<details><summary>탄생석의 색이 사진이나 사이트마다 다른 이유는 무엇인가요?</summary><p>같은 이름의 보석에도 여러 색이 있을 수 있고, 사진은 특정 표본을 보여주기 때문입니다. 아래 팔레트는 꽃 선물에 참고할 색의 예이며 보석의 색 범위 전체를 뜻하지 않습니다.</p></details>
+<details><summary>보석을 지니면 행운이 오거나 건강에 도움이 되나요?</summary><p>행운이나 보호에 관한 이야기는 옛 믿음과 상징입니다. 이 페이지는 생일에 의미를 더하는 문화 이야기로 소개하며, 실제 효능을 뜻하지 않습니다.</p></details>
+<details><summary>소개한 꽃 상품에 탄생석이 포함되나요?</summary><p>포함되지 않습니다. 탄생석에서 떠올린 색이나 분위기를 꽃으로 표현하는 제안입니다. 상품에 사용된 실제 소재와 구성은 스마트스토어에서 확인해 주세요.</p></details>
+<details><summary>생일의 달보다 좋아하는 색으로 골라도 되나요?</summary><p>좋습니다. 탄생석은 선물을 고르는 실마리로 활용하시고, 받는 분의 취향과 놓아둘 공간을 함께 살펴보세요.</p></details></section>
+<section class="birth-section birth-sources" aria-labelledby="birth-sources-title"><h2 id="birth-sources-title">참고 자료와 안내</h2><p class="birth-small">GIA와 AGS의 월별 안내를 참고했습니다. 탄생석의 상징은 전통과 해석에 따른 것이며, 성격이나 운명·건강을 판단하는 기준이 아닙니다. 카드 문구와 꽃 색 조합은 테차가 제안한 예시입니다.</p><ul><li><a href="https://www.gia.edu/birthstones" target="_blank" rel="noopener noreferrer">미국보석연구원(GIA) · 탄생석 ↗</a></li><li><a href="https://www.americangemsociety.org/birthstones/" target="_blank" rel="noopener noreferrer">미국보석학회(AGS) · 월별 탄생석 ↗</a></li></ul><details><summary>자료사진의 출처 보기</summary><ul><li>가넷 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3AOval_cut_Garnet.JPG" target="_blank" rel="noopener noreferrer">Michelle Jo / Public domain ↗</a></li><li>자수정 자료사진 — <a href="https://commons.wikimedia.org/wiki/File:Amethystvb.jpg" target="_blank" rel="noopener noreferrer">Gelber21 at English Wikipedia / Public domain ↗</a></li><li>아쿠아마린 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3AAquamarine_%28GeoDIL_number_-_2244%29.jpg" target="_blank" rel="noopener noreferrer">Darla Sondrol / GeoDIL / CC0 1.0 ↗</a></li><li>다이아몬드 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3ADiamond-1128734.jpg" target="_blank" rel="noopener noreferrer">Jerry Cone / Public domain ↗</a></li><li>에메랄드 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3ACut_Emerald.jpg" target="_blank" rel="noopener noreferrer">Gaumania / CC0 1.0 ↗</a></li><li>진주 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3APearl_II.jpg" target="_blank" rel="noopener noreferrer">Hiyotada / CC0 1.0 ↗</a></li><li>루비 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3ACut_Ruby.jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons · 원문 저작자 정보 / Public domain ↗</a></li><li>페리도트 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3APeridotgem.JPG" target="_blank" rel="noopener noreferrer">Michelle Jo / Public domain ↗</a></li><li>여러 색의 사파이어 원석 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3ASapphire_%28GeoDIL_number_-_1432%29.jpg" target="_blank" rel="noopener noreferrer">Nessa Eull / GeoDIL / CC0 1.0 ↗</a></li><li>오팔 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3AOpal_%28GeoDIL_number_-_2737%29.jpg" target="_blank" rel="noopener noreferrer">Darla Sondrol / GeoDIL / CC0 1.0 ↗</a></li><li>토파즈 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3ATopazgem.JPG" target="_blank" rel="noopener noreferrer">Michelle Jo / Public domain ↗</a></li><li>터키석 자료사진 — <a href="https://commons.wikimedia.org/wiki/File%3ATurquoise_with_quartz.jpg" target="_blank" rel="noopener noreferrer">Aram Dulyan (Aramgutang) / Public domain ↗</a></li></ul></details><p class="birth-small">정보·사진 이용 조건 검토: <time datetime="2026-10-26">2026.10.26</time></p></section>
+<script type="application/json" id="birth-guide-data">{"kind":"stone","entries":[{"month":1,"name":"가넷","english":"Garnet","others":[],"meanings":["우정","변치 않는 마음"],"intro":"가넷은 붉은색으로 친숙하지만 여러 색이 있는 보석입니다. 깊은 붉은빛은 선물 색을 고를 때 참고할 수 있는 한 가지 예예요.","story":"가넷의 이름은 붉은 석류 씨앗을 닮은 모습에서 유래했다고 GIA와 AGS가 설명합니다. 가넷은 하나의 색만 있는 보석이 아니라 여러 광물로 이루어진 그룹이에요. 붉은색 외에도 주황·초록 등 다양한 색을 만날 수 있습니다.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"버건디","hex":"#793543"},{"name":"빨강","hex":"#ae4e58"}],"giftTitle":"깊은 붉은빛에 담은 축하","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["glassdome-moodlamp","cup-moodlamp-single"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"1월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-01","photoLabel":"가넷 자료사진","sourceUrl":"https://www.gia.edu/birthstones/january-birthstones","sourceName":"GIA · 1월 탄생석","crossName":"카네이션","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"]},{"month":2,"name":"자수정","english":"Amethyst","others":[],"meanings":["평온","절제"],"intro":"자수정의 보라는 연한 라벤더부터 짙은 보라까지 폭이 넓습니다. 아래 색은 꽃 선물을 고르기 위한 참고 팔레트예요.","story":"자수정은 보랏빛을 띠는 석영입니다. 연한 라일락색부터 짙은 보라까지 색의 폭이 있고, 같은 돌 안에서도 색이 고르게 보이지 않을 수 있어요. GIA와 AGS의 설명을 읽고 사진의 보랏빛과 꽃의 색을 비교해 보세요.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"보라","hex":"#705583"},{"name":"라벤더","hex":"#cbbcd9"}],"giftTitle":"자수정에서 떠올린 보랏빛","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["rose-hydrangea-bouquet","superior-rose"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"2월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-02","photoLabel":"자수정 자료사진","sourceUrl":"https://www.gia.edu/birthstones/february-birthstones","sourceName":"GIA · 2월 탄생석","crossName":"제비꽃","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"]},{"month":3,"name":"아쿠아마린","english":"Aquamarine","others":["블러드스톤"],"meanings":["차분한 마음","용기"],"intro":"3월에는 아쿠아마린과 블러드스톤이 함께 소개됩니다. 맑은 파랑부터 녹색을 띤 파랑까지 보이는 아쿠아마린은 하늘빛 꽃의 실마리가 됩니다.","story":"아쿠아마린이라는 이름은 라틴어로 바닷물을 뜻하는 말에서 왔습니다. 옛 항해자들이 안전한 항해를 바랐다는 이야기도 전해집니다. 같은 3월의 블러드스톤은 붉은 점이 있는 짙은 초록빛으로 알려져, 두 보석의 모습이 서로 다릅니다.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"하늘빛","hex":"#a6cad4"},{"name":"옅은 청록","hex":"#8bbfbd"}],"giftTitle":"맑은 하늘빛을 꽃으로","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["hydrangea-bouquet","hydrangea-moodlamp"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"3월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-03","photoLabel":"아쿠아마린 자료사진","sourceUrl":"https://www.gia.edu/birthstones/march-birthstones","sourceName":"GIA · 3월 탄생석","crossName":"수선화","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"]},{"month":4,"name":"다이아몬드","english":"Diamond","others":[],"meanings":["변치 않는 마음","사랑"],"intro":"다이아몬드는 무색의 반짝임으로 친숙하지만 다양한 색도 있습니다. 꽃 선물에서는 투명한 소재와 화이트 톤을 하나의 표현으로 활용해 보세요.","story":"다이아몬드의 이름은 ‘정복할 수 없다’는 뜻의 그리스어 adamas에서 왔다고 소개됩니다. 단단한 성질이 변치 않는 사랑의 상징과 연결되어 왔어요. 무색뿐 아니라 다른 색의 다이아몬드도 있어, 화이트 톤은 선물에 활용할 색의 한 예입니다.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"화이트","hex":"#eee5d6"},{"name":"크림","hex":"#dedbd5"}],"giftTitle":"밝고 깨끗한 색으로 전하는 마음","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["hydrangea-bouquet","hydrangea-moodlamp"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"4월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-04","photoLabel":"다이아몬드 자료사진","sourceUrl":"https://www.gia.edu/birthstones/april-birthstones","sourceName":"GIA · 4월 탄생석","crossName":"데이지","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"],"productImages":{"hydrangea-bouquet":"/assets/images/home/hydrangea-cream.jpg"}},{"month":5,"name":"에메랄드","english":"Emerald","others":[],"meanings":["새로운 시작","희망"],"intro":"에메랄드는 초록빛 보석입니다. 꽃 선물에서는 꽃잎을 초록으로 맞추기보다 잎과 초록 소재를 함께 살피는 방법도 있습니다.","story":"에메랄드는 베릴 계열의 초록빛 보석입니다. 같은 베릴 계열에는 푸른빛의 아쿠아마린도 있어요. 보석의 이름과 색을 함께 살펴보면 꽃 색을 고르는 재미가 더해집니다.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"초록","hex":"#4c7e65"},{"name":"세이지","hex":"#9aab8e"}],"giftTitle":"초록이 있는 작은 공간의 선물","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["ionantha-moodlamp","flower-postcard"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"5월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-05","photoLabel":"에메랄드 자료사진","sourceUrl":"https://www.gia.edu/birthstones/may-birthstones","sourceName":"GIA · 5월 탄생석","crossName":"은방울꽃","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"]},{"month":6,"name":"진주","english":"Pearl","others":["문스톤","알렉산드라이트"],"meanings":["순수한 마음","축복"],"intro":"6월에는 진주·문스톤·알렉산드라이트가 함께 소개됩니다. 진주의 밝은 색뿐 아니라, 다른 두 보석의 서로 다른 빛도 선택지가 됩니다.","story":"진주는 조개 같은 연체동물의 몸 안에서 만들어지는 유기질 보석입니다. 자연적으로 생긴 천연 진주와 사람이 형성 과정에 관여한 양식 진주가 있습니다. GIA와 AGS는 문스톤·알렉산드라이트도 6월의 탄생석으로 함께 안내합니다.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"아이보리","hex":"#eee5d6"},{"name":"부드러운 분홍","hex":"#e3c9c3"}],"giftTitle":"진주에서 떠올린 은은한 색","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["hydrangea-moodlamp","hydrangea-bouquet"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"6월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-06","photoLabel":"진주 자료사진","sourceUrl":"https://www.gia.edu/birthstones/june-birthstones","sourceName":"GIA · 6월 탄생석","crossName":"장미","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"],"productImages":{"hydrangea-bouquet":"/assets/images/home/hydrangea-cream.jpg"}},{"month":7,"name":"루비","english":"Ruby","others":[],"meanings":["사랑","열정"],"intro":"7월의 루비는 붉은색으로 알려져 있습니다. 같은 빨강 안에서도 밝기와 진하기가 다르듯, 꽃 선물도 받는 분이 좋아하는 붉은빛으로 골라 보세요.","story":"루비의 이름은 빨강을 뜻하는 라틴어 ruber에서 유래했습니다. 루비와 사파이어는 모두 커런덤 계열이며, 붉은 보석을 루비라고 부릅니다. 선물에서는 그 붉은빛을 사랑과 열정의 상징으로 풀어볼 수 있어요.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"루비 레드","hex":"#ac4152"},{"name":"딥 레드","hex":"#803542"}],"giftTitle":"루비에서 떠올린 붉은 장미","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["glassdome-moodlamp","cup-moodlamp-single"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"7월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-07","photoLabel":"루비 자료사진","sourceUrl":"https://www.gia.edu/birthstones/july-birthstones","sourceName":"GIA · 7월 탄생석","crossName":"라크스퍼","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"]},{"month":8,"name":"페리도트","english":"Peridot","others":["스피넬","사도닉스"],"meanings":["화합","따뜻한 마음"],"intro":"8월에는 페리도트·스피넬·사도닉스가 함께 소개됩니다. 연둣빛은 페리도트에서 떠올릴 수 있는 색의 예이며, 다른 보석에는 다른 색이 있습니다.","story":"페리도트는 노랑을 띤 초록에서 초록을 띤 노랑까지 보이는 보석입니다. GIA는 지구 깊은 곳에서 올라온 용암과 운석에서도 발견되는 점을 소개합니다. 스피넬·사도닉스도 8월의 탄생석으로 함께 안내되므로 취향에 맞게 비교해 보세요.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"연두","hex":"#b6bd70"},{"name":"초록","hex":"#839c74"}],"giftTitle":"초록의 분위기를 곁에 두고","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["ionantha-moodlamp","flower-postcard"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"8월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-08","photoLabel":"페리도트 자료사진","sourceUrl":"https://www.gia.edu/birthstones/august-birthstones","sourceName":"GIA · 8월 탄생석","crossName":"글라디올러스","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"]},{"month":9,"name":"사파이어","english":"Sapphire","others":[],"meanings":["진실한 마음","성실"],"intro":"사파이어는 짙은 파랑으로 친숙하지만 분홍·노랑 등 여러 색도 있습니다. 파랑은 꽃 선물을 위한 하나의 선택지로 살펴보세요.","story":"사파이어는 파랑으로 친숙하지만 노랑·분홍 등 여러 색도 있습니다. 사진은 여러 색의 사파이어 원석을 보여줍니다. 루비와 같은 커런덤 계열에 속하며, 이 페이지의 푸른 팔레트는 꽃 선물을 위한 한 가지 제안입니다.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"파랑","hex":"#5777a2"},{"name":"짙은 파랑","hex":"#384f7d"}],"giftTitle":"사파이어에서 떠올린 푸른빛","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["rose-hydrangea-bouquet","hydrangea-moodlamp"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"9월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-09","photoLabel":"여러 색의 사파이어 원석 자료사진","sourceUrl":"https://www.gia.edu/birthstones/september-birthstones","sourceName":"GIA · 9월 탄생석","crossName":"아스터","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"]},{"month":10,"name":"오팔","english":"Opal","others":["투르말린"],"meanings":["희망","다채로운 가능성"],"intro":"10월에는 오팔과 투르말린을 함께 소개합니다. 오팔의 여러 빛과 투르말린의 다양한 색에서 좋아하는 분위기를 골라 보세요.","story":"일부 오팔에서는 보는 각도에 따라 여러 색이 반짝이는 유색 효과를 볼 수 있습니다. 투르말린도 다양한 색을 지닌 보석으로 알려져 있어요. 두 보석을 함께 살펴보고 좋아하는 색을 꽃에 옮겨 보세요.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"연분홍","hex":"#e3bdc4"},{"name":"옅은 파랑","hex":"#a6cad4"}],"giftTitle":"여러 빛에서 골라낸 부드러운 색","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["hydrangea-bouquet","hydrangea-moodlamp"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"10월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-10","photoLabel":"오팔 자료사진","sourceUrl":"https://www.gia.edu/birthstones/october-birthstones","sourceName":"GIA · 10월 탄생석","crossName":"메리골드·코스모스","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"],"productImages":{"hydrangea-bouquet":"/assets/images/home/hydrangea-pink.jpg"}},{"month":11,"name":"토파즈","english":"Topaz","others":["시트린"],"meanings":["우정","따뜻한 축복"],"intro":"11월에는 토파즈와 시트린을 소개합니다. 토파즈는 여러 색이 있고, 시트린은 노랑에서 주황빛 계열로 소개됩니다.","story":"시트린은 노랑에서 갈색을 띤 주황빛을 보이는 석영입니다. 토파즈와 색이 비슷해 보일 수 있지만 서로 다른 보석이에요. 토파즈에는 무색·파랑·분홍 등도 있으므로, 이 페이지의 노란 팔레트는 시트린에서 떠올린 색으로 안내합니다.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"노랑","hex":"#e2bf55"},{"name":"따뜻한 주황","hex":"#d58f5d"}],"giftTitle":"시트린에서 떠올린 따뜻한 노란빛","giftIntro":"시트린의 노랑에서 떠올린 꽃 선물입니다. 실제 탄생석이 포함되어 있지 않습니다.","products":["sunflower-bouquet","sunflower-frame"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"11월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-11","photoLabel":"토파즈 자료사진","sourceUrl":"https://www.gia.edu/birthstones/november-birthstones","sourceName":"GIA · 11월 탄생석","crossName":"국화","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"]},{"month":12,"name":"터키석","english":"Turquoise","others":["탄자나이트","지르콘"],"meanings":["축복","새로운 길"],"intro":"12월에는 터키석·탄자나이트·지르콘을 함께 소개합니다. 청록, 파랑, 보랏빛 등 보석마다 다른 색을 비교해 보세요.","story":"탄자나이트는 산지인 탄자니아에서 이름을 얻은 보석으로 파랑부터 보랏빛까지 보입니다. 터키석은 파랑과 초록, 지르콘은 다양한 색으로 만날 수 있어요. 같은 달의 세 보석을 하나의 청록색으로만 설명하지 않고 함께 소개합니다.","tip":"탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.","palette":[{"name":"청록","hex":"#75b6b8"},{"name":"파랑","hex":"#6686ad"}],"giftTitle":"겨울 생일에 전하는 맑은 파랑","giftIntro":"탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.","products":["hydrangea-bouquet","rose-hydrangea-bouquet"],"messages":[{"tone":"짧고 담백하게","text":"너의 달의 색을 골랐어. 생일 축하해."},{"tone":"다정하게","text":"12월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."},{"tone":"정중하게","text":"태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."}],"photo":"stone-12","photoLabel":"터키석 자료사진","sourceUrl":"https://www.gia.edu/birthstones/december-birthstones","sourceName":"GIA · 12월 탄생석","crossName":"수선화·호랑가시나무","related":["/blog/birthday-flower-gift-choice/","/blog/flower-material-difference/"]}],"defaultMonth":10,"sources":{"almanac":{"name":"The Old Farmer’s Almanac · 월별 탄생화","url":"https://www.almanac.com/content/birth-month-flowers-and-their-meanings"},"interflora":{"name":"Interflora · 탄생화 가이드","url":"https://www.interflora.co.uk/blog/flower-guides/birth-flowers"},"rhs":{"name":"영국왕립원예협회(RHS) · 꽃말의 역사","url":"https://www.rhs.org.uk/education-learning/libraries-at-rhs/articles/the-language-of-flowers"},"nihhs":{"name":"국립원예특작과학원 · 꽃말사전","url":"https://www.nihhs.go.kr/usr/persnal/Flower_library.do"},"gia":{"name":"미국보석연구원(GIA) · 탄생석","url":"https://www.gia.edu/birthstones"},"ags":{"name":"미국보석학회(AGS) · 월별 탄생석","url":"https://www.americangemsociety.org/birthstones/"}},"credits":{"stone-02":{"source":"https://commons.wikimedia.org/wiki/File:Amethystvb.jpg","author":"Gelber21 at English Wikipedia","license":"Public domain","checkedAt":"2026-10-26","width":614,"height":461,"derivative":"Resized and converted to WebP"},"flower-01":{"source":"https://commons.wikimedia.org/wiki/File%3ACarnation_%2854028429090%29.jpg","author":"Mustang Joe","license":"CC0 1.0","checkedAt":"2026-10-26","width":641,"height":960,"derivative":"Resized and converted to WebP"},"flower-02":{"source":"https://commons.wikimedia.org/wiki/File%3A20130407Viola_odorata1.jpg","author":"AnRo0002","license":"CC0 1.0","checkedAt":"2026-10-26","width":720,"height":960,"derivative":"Resized and converted to WebP"},"flower-03":{"source":"https://commons.wikimedia.org/wiki/File%3ADaffodils_bloom.jpg","author":"C. E. Price","license":"Public domain","checkedAt":"2026-10-26","width":750,"height":536,"derivative":"Licensed preview screenshot; browser controls excluded; resized and converted to WebP"},"flower-04":{"source":"https://commons.wikimedia.org/wiki/File%3ADaisy_flower_2024.jpg","author":"BRKOSLAV SEVERNÍ","license":"CC0 1.0","checkedAt":"2026-10-26","width":800,"height":536,"derivative":"Licensed preview screenshot; browser controls excluded; resized and converted to WebP"},"flower-05":{"source":"https://commons.wikimedia.org/wiki/File%3ALily_of_the_valley%2C_near_Abbot%27s_Palace%2C_Oliwa.jpg","author":"Gerda Arendt","license":"CC0 1.0","checkedAt":"2026-10-26","width":960,"height":720,"derivative":"Resized and converted to WebP"},"flower-06":{"source":"https://commons.wikimedia.org/wiki/File%3ARose_rosa.jpg","author":"Rillke","license":"CC0 1.0","checkedAt":"2026-10-26","width":960,"height":900,"derivative":"Resized and converted to WebP"},"flower-07":{"source":"https://commons.wikimedia.org/wiki/File%3AFile-Delphinium_glaucum-NPS_Jacob_W._Frank_%28fc6e5b47-1dd8-b71c-07e7-da068b7510cb%29.jpg","author":"Jacob W. Frank / U.S. National Park Service","license":"Public domain","checkedAt":"2026-10-26","width":640,"height":960,"derivative":"Resized and converted to WebP"},"flower-08":{"source":"https://commons.wikimedia.org/wiki/File%3AGladiolus_%27Mantovani%27_-_Chelsea_Flower_Show_2024_-_DSC02413.jpg","author":"Daderot","license":"CC0 1.0","checkedAt":"2026-10-26","width":960,"height":716,"derivative":"Resized and converted to WebP"},"flower-09":{"source":"https://commons.wikimedia.org/wiki/File%3AAster_novi-belgii_IP.jpg","author":"Leo Michels","license":"CC0 1.0","checkedAt":"2026-10-26","width":414,"height":535,"derivative":"Licensed preview screenshot; browser controls excluded; resized and converted to WebP"},"flower-10":{"source":"https://commons.wikimedia.org/wiki/File%3AWhite_and_Pink_Cosmos.jpg","author":"Kaldari","license":"CC0 1.0","checkedAt":"2026-10-26","width":800,"height":536,"derivative":"Licensed preview screenshot; browser controls excluded; resized and converted to WebP"},"flower-11":{"source":"https://commons.wikimedia.org/wiki/File%3APink_Chrysanthemum_flower_in_Flowering_plant_market.jpg","author":"Umarxon III","license":"CC0 1.0","checkedAt":"2026-10-26","width":721,"height":960,"derivative":"Resized and converted to WebP"},"stone-01":{"source":"https://commons.wikimedia.org/wiki/File%3AOval_cut_Garnet.JPG","author":"Michelle Jo","license":"Public domain","checkedAt":"2026-10-26","width":933,"height":622,"derivative":"Resized and converted to WebP"},"stone-03":{"source":"https://commons.wikimedia.org/wiki/File%3AAquamarine_%28GeoDIL_number_-_2244%29.jpg","author":"Darla Sondrol / GeoDIL","license":"CC0 1.0","checkedAt":"2026-10-26","width":440,"height":292,"derivative":"Resized and converted to WebP"},"stone-04":{"source":"https://commons.wikimedia.org/wiki/File%3ADiamond-1128734.jpg","author":"Jerry Cone","license":"Public domain","checkedAt":"2026-10-26","width":960,"height":612,"derivative":"Resized and converted to WebP"},"stone-05":{"source":"https://commons.wikimedia.org/wiki/File%3ACut_Emerald.jpg","author":"Gaumania","license":"CC0 1.0","checkedAt":"2026-10-26","width":958,"height":960,"derivative":"Resized and converted to WebP"},"stone-06":{"source":"https://commons.wikimedia.org/wiki/File%3APearl_II.jpg","author":"Hiyotada","license":"CC0 1.0","checkedAt":"2026-10-26","width":600,"height":486,"derivative":"Resized and converted to WebP"},"stone-07":{"source":"https://commons.wikimedia.org/wiki/File%3ACut_Ruby.jpg","author":"Wikimedia Commons · 원문 저작자 정보","license":"Public domain","checkedAt":"2026-10-26","width":380,"height":336,"derivative":"Resized and converted to WebP"},"stone-08":{"source":"https://commons.wikimedia.org/wiki/File%3APeridotgem.JPG","author":"Michelle Jo","license":"Public domain","checkedAt":"2026-10-26","width":942,"height":960,"derivative":"Resized and converted to WebP"},"stone-09":{"source":"https://commons.wikimedia.org/wiki/File%3ASapphire_%28GeoDIL_number_-_1432%29.jpg","author":"Nessa Eull / GeoDIL","license":"CC0 1.0","checkedAt":"2026-10-26","width":800,"height":469,"derivative":"Licensed preview screenshot; browser controls excluded; resized and converted to WebP"},"stone-10":{"source":"https://commons.wikimedia.org/wiki/File%3AOpal_%28GeoDIL_number_-_2737%29.jpg","author":"Darla Sondrol / GeoDIL","license":"CC0 1.0","checkedAt":"2026-10-26","width":800,"height":535,"derivative":"Licensed preview screenshot; browser controls excluded; resized and converted to WebP"},"stone-11":{"source":"https://commons.wikimedia.org/wiki/File%3ATopazgem.JPG","author":"Michelle Jo","license":"Public domain","checkedAt":"2026-10-26","width":259,"height":232,"derivative":"Resized and converted to WebP"},"stone-12":{"source":"https://commons.wikimedia.org/wiki/File%3ATurquoise_with_quartz.jpg","author":"Aram Dulyan (Aramgutang)","license":"Public domain","checkedAt":"2026-10-26","width":833,"height":503,"derivative":"Resized and converted to WebP"}},"products":{"superior-rose":{"line":"superior-rose","name":"수페리어 장미","link":"https://mkt.shopping.naver.com/link/68d238ffe3e6b36891764446","image":"/assets/images/gift-finder/superior-rose-02.webp","alt":"수페리어 장미 디자인 참고 사진","material":"프리저브드","reason":"프리저브드 장미를 중심으로 고르고 싶을 때 살펴볼 상품입니다."},"flower-postcard":{"line":"flower-postcard","name":"꽃엽서카드","link":"https://mkt.shopping.naver.com/link/6aacecf4907c4216e6afb00c","image":"/assets/images/gift-finder/flower-postcard-02.webp","alt":"꽃엽서카드 디자인 참고 사진","material":"프리저브드+엽서","reason":"프리저브드 꽃과 짧은 카드 문구를 함께 전할 수 있는 꽃엽서입니다."},"hydrangea-moodlamp":{"line":"hydrangea-moodlamp","name":"수국꽃무드등","link":"https://mkt.shopping.naver.com/link/6aacecf4e9427b0d1c00c6ed","image":"/assets/images/home/hydrangea-moodlamp-shelf.jpg","alt":"수국꽃무드등 디자인 참고 사진","material":"프리저브드+포트+LED등+투명박스","reason":"스카이블루·펄화이트·소프트핑크 색상을 비교해 고르는 수국 꽃 무드등입니다."},"rose-hydrangea-bouquet":{"line":"rose-hydrangea-bouquet","name":"장미수국 꽃다발","link":"https://mkt.shopping.naver.com/link/68d23a99713c156d9f530c33","image":"/assets/images/home/rose-hydrangea-bouquet.jpg","alt":"장미수국 꽃다발 디자인 참고 사진","material":"프리저브드","reason":"프리저브드 장미와 수국을 함께 담은 꽃다발입니다. 파랑·보라·레드 등 판매 색상을 비교해 보세요."},"carnation-rose-bouquet":{"line":"carnation-rose-bouquet","name":"카네이션장미 꽃다발","link":"https://mkt.shopping.naver.com/link/6aacecf4eeb8b60d4188eac3","image":"/assets/images/gift-finder/carnation-rose-bouquet-02.webp","alt":"카네이션장미 꽃다발 디자인 참고 사진","material":"비누꽃송이+프리저브드필러","reason":"비누꽃 송이에 프리저브드 필러를 더한 꽃다발입니다. 원하는 색과 구성을 상품 옵션에서 확인하세요."},"single-stem-soap-box":{"line":"single-stem-soap-box","name":"비누꽃 한송이·두송이 박스","link":"https://mkt.shopping.naver.com/link/6aacecf4d271a234a563f236","image":"/assets/images/gift-finder/single-stem-soap-box-02.webp","alt":"비누꽃 한송이·두송이 박스 디자인 참고 사진","material":"비누꽃+소형투명꽃박스","reason":"비누꽃 한두 송이를 투명 상자에 담은 작은 선물입니다."},"sunflower-frame":{"line":"sunflower-frame","name":"해바라기 액자","link":"https://mkt.shopping.naver.com/link/6aacecf4e9427b0d1c00c6ef","image":"/assets/images/gift-finder/sunflower-frame-02.webp","alt":"해바라기 액자 디자인 참고 사진","material":"프리저브드+액자","reason":"프리저브드 해바라기를 액자에 담았습니다. 꽃다발을 건넨 뒤 둘 자리가 고민될 때 살펴보세요."},"glassdome-moodlamp":{"line":"glassdome-moodlamp","name":"유리돔 무드등","link":"https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241cb1","image":"/assets/images/home/glassdome-rose.jpg","alt":"유리돔 무드등 디자인 참고 사진","material":"프리저브드+유리돔무드등","reason":"꽃을 건넨 뒤에도 조명으로 곁에 둘 수 있는 유리돔 무드등입니다."},"hydrangea-bouquet":{"line":"hydrangea-bouquet","name":"수국 꽃다발","link":"https://mkt.shopping.naver.com/link/6aacecf4e8f0b735ed17d84d","image":"/assets/images/home/hydrangea-blue.jpg","alt":"수국 꽃다발 디자인 참고 사진","material":"프리저브드","reason":"프리저브드 수국을 담았습니다. 핑크·화이트·블루 옵션에서 좋아하는 분위기를 골라 보세요."},"sunflower-bouquet":{"line":"sunflower-bouquet","name":"해바라기 꽃다발","link":"https://mkt.shopping.naver.com/link/68d23a99fe7739510568c980","image":"/assets/images/home/sunflower-bouquet.jpg","alt":"해바라기 꽃다발 디자인 참고 사진","material":"비누꽃송이+프리저브드필러","reason":"비누꽃 해바라기에 프리저브드 필러를 더한 노란 꽃다발입니다."},"cup-moodlamp-single":{"line":"cup-moodlamp-single","name":"프리저브드 꽃 무드등 한송이","link":"https://mkt.shopping.naver.com/link/6aacecf43fe92e212e241cb0","image":"/assets/images/gift-finder/cup-moodlamp-single-02.webp","alt":"프리저브드 꽃 무드등 한송이 디자인 참고 사진","material":"프리저브드+컵무드등","reason":"장미 한 송이와 빛을 담은 작은 꽃 선물입니다. 파랑·레드·핑크 등 색상을 살펴보세요."},"ionantha-moodlamp":{"line":"ionantha-moodlamp","name":"이오난사 스칸디아모스 무드등","link":"https://mkt.shopping.naver.com/link/6aacecf4e8f0b735ed17d84c","image":"/assets/images/gift-finder/ionantha-moodlamp-02.webp","alt":"이오난사 스칸디아모스 무드등 디자인 참고 사진","material":"이오난사+스칸디아모스+컵무드등","reason":"이오난사와 스칸디아모스의 초록을 담은 소품입니다. 잎과 초록의 분위기를 좋아하는 분께 살펴보세요."}},"reviewedAt":"2026-10-26"}</script>
+<!-- END birth-guide -->
   <div id="related" class="related">
     <!-- BEGIN related (생성: scripts/build-related.js — 직접 고치지 말 것) -->
     <h2>관련 도구</h2>
@@ -198,77 +117,7 @@
 </footer>
 
 <script src="/assets/js/site.js"></script>
-<script>
-TECHA.initPage({ title:"월별 탄생석", desc:"태어난 달의 탄생석과 의미를 확인합니다.", category:"fortune", slug:"birth-stone", related: ["birth-flower", "gift-finder", "zodiac-love"], share:"#result" });
-(function(){
-  var STONES={
-    1:{n:"가넷",e:"🔴",m:"변치 않는 사랑과 우정, 보호",
-       o:"석류(라틴어 granatus) 씨앗을 닮은 모양에서 이름이 유래했습니다. 로마 시대부터 여행자를 지켜주는 부적으로 몸에 지녔다고 전해져, 이별하는 사람들이 '우정이 변치 않기를' 바라며 주고받았습니다.",
-       t:"오랜 우정을 소중히 여기는 사람, 한번 맺은 인연을 오래 지키는 이에게 어울려요.",
-       c:"가넷의 붉은빛처럼, 레드 프리저브드 플라워로 변치 않는 마음을 전해보세요"},
-    2:{n:"자수정",e:"💜",m:"평화, 절제, 마음의 안정",
-       o:"'취하지 않다'라는 그리스어 '아메티스토스(amethystos)'에서 이름이 왔습니다. 술의 신 디오니소스에게 쫓기던 요정이 여신 아르테미스의 도움으로 흰 돌이 되었고, 이를 본 디오니소스가 뉘우치며 부은 포도주에 물들어 보랏빛이 되었다는 그리스 신화가 전해집니다.",
-       t:"차분하고 안정적인 사람, 마음의 평화를 소중히 여기는 이에게 잘 맞아요.",
-       c:"자수정의 보랏빛을 담은 보라 톤 프리저브드 꽃다발은 어떠세요"},
-    3:{n:"아쿠아마린",e:"💠",m:"침착, 용기, 총명",
-       o:"라틴어 '아쿠아(물)'와 '마리나(바다)'가 합쳐진 이름으로, 투명한 청록빛이 바다를 닮았습니다. 옛 뱃사람들은 이 돌을 인어의 보물이라 여기며 항해의 안전을 지켜주는 부적으로 지니고 다녔습니다.",
-       t:"침착하고 지혜로운 사람, 여행·바다를 사랑하는 이에게 어울려요.",
-       c:"아쿠아마린의 청록빛, 블루 수국 프리저브드 꽃무드등으로 담아보세요"},
-    4:{n:"다이아몬드",e:"💎",m:"영원한 사랑, 순결, 불변",
-       o:"'정복할 수 없다'는 뜻의 그리스어 '아다마스(adamas)'에서 이름이 유래했습니다. 지구상에서 가장 단단한 광물이라는 특성 그대로 '변하지 않는 완전한 사랑'을 상징하게 되어, 오늘날까지 약혼·결혼 반지의 대명사로 쓰입니다.",
-       t:"한번 정한 마음은 끝까지 지키는 사람, 확고한 신념을 지닌 이에게 어울려요.",
-       c:"다이아몬드처럼 변치 않는 마음, 시들지 않는 프리저브드 플라워로 전해보세요"},
-    5:{n:"에메랄드",e:"💚",m:"행복, 행운, 새로운 시작",
-       o:"고대부터 미와 사랑의 여신에게 바쳐진 보석으로 여겨졌으며, 클레오파트라가 유독 사랑한 보석으로도 유명합니다. 짙은 초록빛이 봄의 새싹을 닮아 '새로운 시작'의 의미를 함께 지닙니다.",
-       t:"긍정적이고 생기 넘치는 사람, 새 출발을 앞둔 이에게 잘 어울려요.",
-       c:"에메랄드의 새로운 시작, 프리저브드 플라워 선물로 축하해보세요"},
-    6:{n:"진주",e:"🤍",m:"부귀, 건강, 순수",
-       o:"보석 중 유일하게 광물이 아닌 조개(생물)가 만들어내며, 건강한 조개에서만 자연적으로 생겨나는 희소성 때문에 예로부터 부와 지위의 상징이었습니다. 그리스 신화에서는 사랑의 여신이 바다 거품에서 태어날 때 떨어진 물방울이 진주가 되었다는 이야기가 전해집니다.",
-       t:"은은하고 품격 있는 사람, 순수하고 진실한 마음을 지닌 이에게 어울려요.",
-       c:"진주의 은은한 화이트 빛, 펄화이트 유리돔 무드등은 어떠세요"},
-    7:{n:"루비",e:"❤️",m:"사랑, 열정, 생명력",
-       o:"산스크리트어로 '보석의 왕'이라 불릴 만큼 예로부터 최고의 보석으로 대접받았습니다. 짙은 붉은빛이 피를 닮아 예부터 생명력과 용기를 지켜주는 돌로 여겨져, 전사들이 몸에 지니고 전쟁터에 나갔다는 이야기가 전해집니다.",
-       t:"열정적이고 당당한 사람, 뜨거운 사랑을 표현하고 싶은 이에게 어울려요.",
-       c:"루비의 열정처럼, 레드 장미 프리저브드 꽃다발로 마음을 전해보세요"},
-    8:{n:"페리도트",e:"💛",m:"부부의 행복, 화합",
-       o:"화산 활동으로 생겨나는 보석으로, 하와이 전설에서는 불의 여신 펠레가 흘린 눈물이 페리도트가 되었다고 전해집니다. 고대 이집트에서는 '태양의 보석'이라 불리며 어둠을 물리치는 돌로 여겨졌습니다.",
-       t:"밝고 화합을 중시하는 사람, 관계의 조화를 소중히 하는 이에게 어울려요.",
-       c:"페리도트의 화합처럼, 해바라기 액자로 밝은 마음을 전해보세요"},
-    9:{n:"사파이어",e:"💙",m:"진실, 성실, 지혜",
-       o:"라틴어로 '파랑'을 뜻하는 '사피루스(sapphirus)'에서 이름이 유래했습니다. 성직자와 왕족의 반지에 즐겨 쓰이며 '하늘의 축복'과 진실함을 상징해 왔고, 중세 유럽에서는 성실한 맹세의 증표로 여겨졌습니다.",
-       t:"신중하고 성실한 사람, 진실한 관계를 중요하게 여기는 이에게 어울려요.",
-       c:"사파이어의 진실한 파랑, 블루 수국 프리저브드 꽃다발은 어떠세요"},
-    10:{n:"오팔",e:"🌈",m:"희망, 순수, 창의",
-       o:"'색이 변하는 것을 보다'라는 그리스어 '오팔리오스(opallios)'에서 이름이 왔습니다. 보는 각도에 따라 무지갯빛으로 반짝이는 독특한 성질 때문에 '모든 보석의 색을 담은 돌'이라 불리며 희망과 다채로운 가능성을 상징합니다.",
-       t:"개성 있고 창의적인 사람, 다채로운 매력을 지닌 이에게 잘 어울려요.",
-       c:"오팔의 다채로움처럼, 여러 컬러의 프리저브드 플라워를 함께 담아보세요"},
-    11:{n:"토파즈",e:"🟡",m:"우정, 희망, 결백",
-       o:"인도에서는 황금빛 토파즈가 태양신 '라'를 상징할 만큼 신성하게 여겨졌습니다. 중세 유럽에서는 이 돌을 손가락에 끼고 자면 급작스러운 화를 막아준다고 믿어, 몸을 보호하는 부적처럼 지니고 다녔습니다.",
-       t:"밝고 희망적인 사람, 우정을 소중히 여기는 이에게 어울려요.",
-       c:"토파즈의 황금빛, 옐로우 유리돔 무드등으로 우정을 전해보세요"},
-    12:{n:"터키석",e:"🩵",m:"성공, 번영, 여행자의 수호석",
-       o:"시나이반도에서 나던 이 보석이 오스만 제국(튀르키예)의 무역로를 거쳐 유럽에 전해지며 '터키석'이라는 이름이 붙었습니다. 고대 페르시아와 이집트에서부터 여행자와 전사를 지켜주는 수호석으로 귀하게 여겨졌습니다.",
-       t:"도전을 즐기는 사람, 여행과 새로운 경험을 사랑하는 이에게 어울려요.",
-       c:"터키석의 청록빛, 블루 톤 프리저브드 플라워로 축하를 전해보세요"}
-  };
-  var sel=document.getElementById("month"), result=document.getElementById("result"),
-      detail=document.getElementById("stone-detail");
-  for(var m=1;m<=12;m++) sel.appendChild(new Option(m+"월",m));
-  var now=new Date(); sel.value=now.getMonth()+1;
-  function show(){
-    var s=STONES[sel.value];
-    result.className="result";
-    result.innerHTML='<div class="big">'+s.e+' '+s.n+'</div><div class="sub">의미 · '+s.m+'</div>';
-    detail.innerHTML='<div style="text-align:left;margin-top:14px;padding:16px;border:1px solid var(--line);border-radius:var(--radius-md);background:var(--paper)">'+
-      '<div style="font-weight:700;color:var(--gold-deep);margin-bottom:4px">💎 이름의 유래와 이야기</div>'+
-      '<div style="color:var(--body-text);font-size:15px;line-height:1.65;margin-bottom:12px">'+s.o+'</div>'+
-      '<div style="font-weight:700;color:var(--gold-deep);margin-bottom:4px">💝 이런 분께 어울려요</div>'+
-      '<div style="color:var(--body-text);font-size:15px;line-height:1.65">'+s.t+'</div></div>';
-    var ctaEl=document.getElementById("techa-cta");
-    if(ctaEl){ ctaEl.setAttribute("data-text",s.c); TECHA.renderShopCTA(); }
-  }
-  sel.addEventListener("change",show); show();
-})();
-</script>
+<script>TECHA.initPage({title:"월별 탄생석",desc:"태어난 달의 탄생석과 의미를 확인합니다.",category:"fortune",slug:"birth-stone",related:["birth-flower","gift-finder","zodiac-love"]});</script>
+<script src="/assets/js/birth-guide.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,1339 @@
+{
+  "reviewedAt": "2026-10-26",
+  "defaultMonth": 10,
+  "sources": {
+    "almanac": {
+      "name": "The Old Farmer’s Almanac · 월별 탄생화",
+      "url": "https://www.almanac.com/content/birth-month-flowers-and-their-meanings"
+    },
+    "interflora": {
+      "name": "Interflora · 탄생화 가이드",
+      "url": "https://www.interflora.co.uk/blog/flower-guides/birth-flowers"
+    },
+    "rhs": {
+      "name": "영국왕립원예협회(RHS) · 꽃말의 역사",
+      "url": "https://www.rhs.org.uk/education-learning/libraries-at-rhs/articles/the-language-of-flowers"
+    },
+    "nihhs": {
+      "name": "국립원예특작과학원 · 꽃말사전",
+      "url": "https://www.nihhs.go.kr/usr/persnal/Flower_library.do"
+    },
+    "gia": {
+      "name": "미국보석연구원(GIA) · 탄생석",
+      "url": "https://www.gia.edu/birthstones"
+    },
+    "ags": {
+      "name": "미국보석학회(AGS) · 월별 탄생석",
+      "url": "https://www.americangemsociety.org/birthstones/"
+    }
+  },
+  "flower": [
+    {
+      "month": 1,
+      "name": "카네이션",
+      "english": "Carnation",
+      "others": [
+        "스노드롭"
+      ],
+      "meanings": [
+        "사랑",
+        "애정"
+      ],
+      "intro": "카네이션은 1월의 탄생화로 소개됩니다. 스노드롭을 함께 꼽는 자료도 있어요. 꽃의 의미에 받는 분을 향한 마음을 한 줄 더해 보세요.",
+      "story": "카네이션은 색에 따라 꽃말이 달라집니다. 알마낙과 Interflora는 분홍 카네이션을 어머니의 사랑과 연결하며, 성모 마리아의 눈물에서 꽃이 피었다는 기독교 전설도 소개합니다. 전설은 역사적 사실과 구분해 읽어 주세요.",
+      "tip": "감사한 분께 드릴 때는 좋아하시는 색을 먼저 살펴보세요. 탄생화는 의미를 더하는 실마리이고, 취향이 선물의 기준이 되어도 좋습니다.",
+      "palette": [
+        {
+          "name": "분홍",
+          "hex": "#ddb4ba"
+        },
+        {
+          "name": "크림",
+          "hex": "#eee5d6"
+        }
+      ],
+      "giftTitle": "카네이션의 마음을 오래 곁에",
+      "giftIntro": "카네이션장미 꽃다발은 비누꽃 송이에 프리저브드 필러를 더한 구성입니다. 실제 생화 카네이션과 소재가 다르다는 점도 함께 살펴보세요.",
+      "products": [
+        "carnation-rose-bouquet",
+        "flower-postcard"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "1월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-01",
+      "photoLabel": "카네이션 자료사진",
+      "sourceUrl": "https://www.almanac.com/content/january-birth-flowers",
+      "sourceName": "알마낙 · 1월 탄생화",
+      "crossName": "가넷",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 2,
+      "name": "제비꽃",
+      "english": "Violet",
+      "others": [
+        "프리뮬러"
+      ],
+      "meanings": [
+        "겸손",
+        "성실"
+      ],
+      "intro": "작고 조용한 제비꽃과 프리뮬러를 2월의 꽃으로 소개하는 목록이 있습니다. 보랏빛을 좋아하는 분의 생일에 색을 고르는 실마리로 삼아 보세요.",
+      "story": "영어권 자료에서는 제비꽃을 겸손과 충실한 마음에 연결합니다. 국립원예특작과학원 꽃말사전에는 ‘나를 생각해 주세요, 순진한 사랑’으로 소개되어, 자료별 해석의 차이도 볼 수 있어요.",
+      "tip": "제비꽃을 직접 담기 어렵다면 보라 장미로 색을 표현해 보세요. 이때는 제비꽃이 들어 있는 꽃다발이라는 설명보다, 제비꽃에서 떠올린 보랏빛이라고 전하면 정확합니다.",
+      "palette": [
+        {
+          "name": "보라",
+          "hex": "#705583"
+        },
+        {
+          "name": "라벤더",
+          "hex": "#cbbcd9"
+        }
+      ],
+      "giftTitle": "보랏빛으로 전하는 생일 축하",
+      "giftIntro": "제비꽃 자체를 사용한 상품이 아니라, 보랏빛에서 영감을 받아 고른 테차의 꽃 선물입니다.",
+      "products": [
+        "rose-hydrangea-bouquet",
+        "superior-rose"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "2월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-02",
+      "photoLabel": "제비꽃 자료사진",
+      "sourceUrl": "https://www.almanac.com/content/february-birth-flowers",
+      "sourceName": "알마낙 · 2월 탄생화",
+      "crossName": "자수정",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 3,
+      "name": "수선화",
+      "english": "Daffodil",
+      "others": [
+        "존퀼(수선화의 한 종류)"
+      ],
+      "meanings": [
+        "새로운 시작",
+        "재생"
+      ],
+      "intro": "3월의 수선화는 새로운 시작과 연결해 소개됩니다. 생일과 함께 입학·취업·새 출발을 축하할 때도 이야기를 곁들여 보세요.",
+      "story": "알마낙과 Interflora는 수선화를 새로운 시작과 재생의 상징으로 소개합니다. 사진의 가운데 돌출된 부분과 바깥 꽃잎 모양을 함께 살펴보세요. 수선화류인 존퀼을 별도 이름으로 함께 적는 자료도 있습니다.",
+      "tip": "노란색이 마음에 든다면 노란 꽃으로 축하의 분위기를 표현해도 좋아요. 수선화가 들어 있지 않은 상품에는 ‘수선화의 색을 떠올린 꽃 선물’이라고 적어 주세요.",
+      "palette": [
+        {
+          "name": "노랑",
+          "hex": "#e2bf55"
+        },
+        {
+          "name": "아이보리",
+          "hex": "#eee5d6"
+        }
+      ],
+      "giftTitle": "새 출발을 응원하는 노란빛",
+      "giftIntro": "수선화를 사용한 상품이 아니라, 밝은 노란빛을 표현한 꽃 선물입니다.",
+      "products": [
+        "sunflower-bouquet",
+        "single-stem-soap-box"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "3월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-03",
+      "photoLabel": "노란 수선화류 자료사진",
+      "sourceUrl": "https://www.almanac.com/content/march-birth-flower",
+      "sourceName": "알마낙 · 3월 탄생화",
+      "crossName": "아쿠아마린 · 블러드스톤",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 4,
+      "name": "데이지",
+      "english": "Daisy",
+      "others": [
+        "스위트피"
+      ],
+      "meanings": [
+        "순수",
+        "감사"
+      ],
+      "intro": "4월의 꽃으로 데이지와 스위트피를 함께 소개합니다. 데이지의 순수함, 스위트피에 담긴 감사의 마음을 선물 문구에 활용해 보세요.",
+      "story": "영어 이름 daisy는 ‘day’s eye’에서 왔다고 소개됩니다. 햇빛에 꽃을 열고 닫는 모습에 빗댄 이름이에요. 데이지의 순수함과 스위트피의 감사라는 뜻은, 생일 카드에서 서로 다른 인사로 풀어낼 수 있습니다.",
+      "tip": "하얀색만 고집할 필요는 없어요. 화이트 수국이나 부드러운 분홍빛 구성으로 받는 분이 좋아할 분위기를 먼저 골라 보세요.",
+      "palette": [
+        {
+          "name": "화이트",
+          "hex": "#eee5d6"
+        },
+        {
+          "name": "연분홍",
+          "hex": "#e3bdc4"
+        }
+      ],
+      "giftTitle": "순수한 마음을 부드러운 색으로",
+      "giftIntro": "데이지나 스위트피를 사용한 상품이 아니라, 밝고 부드러운 색을 참고해 고른 구성입니다.",
+      "products": [
+        "hydrangea-bouquet",
+        "hydrangea-moodlamp"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "4월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-04",
+      "photoLabel": "데이지 자료사진",
+      "sourceUrl": "https://www.almanac.com/content/april-birth-flowers",
+      "sourceName": "알마낙 · 4월 탄생화",
+      "crossName": "다이아몬드",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ],
+      "productImages": {
+        "hydrangea-bouquet": "/assets/images/home/hydrangea-cream.jpg"
+      }
+    },
+    {
+      "month": 5,
+      "name": "은방울꽃",
+      "english": "Lily of the Valley",
+      "others": [
+        "산사나무 꽃"
+      ],
+      "meanings": [
+        "행복",
+        "희망"
+      ],
+      "intro": "5월의 은방울꽃은 행복의 의미와 함께 소개됩니다. 작은 종처럼 달린 흰 꽃이 어떤 모습인지 사진으로 살펴보세요.",
+      "story": "작은 종처럼 아래로 달린 흰 꽃이 은방울꽃의 눈에 띄는 모습입니다. Interflora는 ‘돌아온 행복’, 알마낙은 행복과 순수한 마음을 연결합니다. 국내 어버이날의 카네이션과 월별 탄생화는 서로 다른 관습이에요.",
+      "tip": "은방울꽃이 들어 있는지 확인하고 구매하세요. 다른 꽃으로 고른다면 흰색이나 초록의 조합을 활용하고, 카네이션은 감사의 마음을 전하는 별도의 선택으로 소개하면 좋습니다.",
+      "palette": [
+        {
+          "name": "화이트",
+          "hex": "#eee5d6"
+        },
+        {
+          "name": "잎사귀 초록",
+          "hex": "#9aab8e"
+        }
+      ],
+      "giftTitle": "행복을 바라는 마음을 꽃에 담아",
+      "giftIntro": "은방울꽃을 사용한 상품이 아니라, 깨끗한 화이트 톤에서 떠올린 꽃 선물입니다.",
+      "products": [
+        "hydrangea-bouquet",
+        "hydrangea-moodlamp"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "5월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-05",
+      "photoLabel": "은방울꽃 자료사진",
+      "sourceUrl": "https://www.almanac.com/content/may-birth-flowers",
+      "sourceName": "알마낙 · 5월 탄생화",
+      "crossName": "에메랄드",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ],
+      "productImages": {
+        "hydrangea-bouquet": "/assets/images/home/hydrangea-cream.jpg"
+      }
+    },
+    {
+      "month": 6,
+      "name": "장미",
+      "english": "Rose",
+      "others": [
+        "인동덩굴 꽃"
+      ],
+      "meanings": [
+        "사랑",
+        "애정"
+      ],
+      "intro": "6월에는 장미와 인동덩굴 꽃을 소개합니다. 장미는 테차 상품에서도 직접 만날 수 있어, 꽃의 의미와 실제 소재를 함께 살펴보기 좋습니다.",
+      "story": "장미는 사랑의 상징이지만 색별 해석은 다릅니다. 영어권 자료에서 빨강은 사랑, 분홍은 감사와 애정, 노랑은 우정에 연결됩니다. 국내 꽃말사전이나 오래된 꽃말에서는 다른 뜻도 볼 수 있으니 카드에 내가 전하려는 마음을 적어 주세요.",
+      "tip": "장미의 모양이 같아도 프리저브드 장미와 비누꽃 장미는 소재가 다릅니다. 천연 꽃을 보존 가공한 구성을 원하는지, 비누꽃 송이에 프리저브드 필러를 더한 구성을 원하는지 확인하세요.",
+      "palette": [
+        {
+          "name": "분홍",
+          "hex": "#ddb4ba"
+        },
+        {
+          "name": "빨강",
+          "hex": "#a84855"
+        }
+      ],
+      "giftTitle": "6월의 장미를 오래 곁에",
+      "giftIntro": "아래 두 상품은 프리저브드 장미를 사용합니다. 디자인과 색상은 각 상품 페이지에서 비교해 보세요.",
+      "products": [
+        "rose-hydrangea-bouquet",
+        "superior-rose"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "6월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-06",
+      "photoLabel": "장미 자료사진",
+      "sourceUrl": "https://www.almanac.com/june-birth-flowers",
+      "sourceName": "알마낙 · 6월 탄생화",
+      "crossName": "진주 · 문스톤 · 알렉산드라이트",
+      "related": [
+        "/blog/rose-color-meaning/",
+        "/blog/birthday-flower-gift-choice/"
+      ]
+    },
+    {
+      "month": 7,
+      "name": "라크스퍼",
+      "english": "Larkspur",
+      "others": [
+        "수련"
+      ],
+      "meanings": [
+        "밝은 마음",
+        "순수"
+      ],
+      "intro": "알마낙은 7월의 꽃으로 라크스퍼와 수련을 소개합니다. 다른 자료에서는 델피니움이 등장하기도 하므로, 이름과 사진을 함께 살펴보세요.",
+      "story": "라크스퍼는 줄기를 따라 꽃이 길게 달리는 모습이 눈에 띕니다. 알마낙은 밝고 열린 마음과 애정에, 함께 소개하는 수련은 순수와 새로운 시작에 연결합니다. 사진은 라크스퍼류 한 종의 예이며, 자료에 따라 델피니움이 소개되기도 합니다.",
+      "tip": "푸른 꽃을 고른다면 라크스퍼가 실제로 포함되는지 확인하세요. 테차에서는 같은 꽃 대신 블루 장미나 수국으로 차분한 색감을 표현할 수 있습니다.",
+      "palette": [
+        {
+          "name": "파랑",
+          "hex": "#6686ad"
+        },
+        {
+          "name": "보라",
+          "hex": "#a594bd"
+        }
+      ],
+      "giftTitle": "여름의 푸른빛을 오래 두고",
+      "giftIntro": "라크스퍼나 수련을 사용한 상품이 아니라, 파랑·보라의 색감을 참고한 꽃 선물입니다.",
+      "products": [
+        "rose-hydrangea-bouquet",
+        "hydrangea-moodlamp"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "7월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-07",
+      "photoLabel": "라크스퍼류(Delphinium glaucum) 자료사진",
+      "sourceUrl": "https://www.almanac.com/content/july-birth-flowers",
+      "sourceName": "알마낙 · 7월 탄생화",
+      "crossName": "루비",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 8,
+      "name": "글라디올러스",
+      "english": "Gladiolus",
+      "others": [
+        "포피(양귀비류)"
+      ],
+      "meanings": [
+        "강인함",
+        "기억"
+      ],
+      "intro": "8월의 꽃으로 글라디올러스와 포피를 소개합니다. 길게 뻗은 꽃의 모습과 함께, 응원과 기억의 의미를 살펴보세요.",
+      "story": "글라디올러스는 칼을 닮은 잎 때문에 영어로 ‘sword lily’라고도 불립니다. 알마낙과 Interflora는 강인함과 사랑의 의미를 소개합니다. 같은 달의 포피는 기억과 추모에 연결되기도 하므로 전하려는 뜻에 맞게 골라 보세요.",
+      "tip": "키가 큰 꽃의 형태보다 전하고 싶은 응원의 마음을 살려도 좋습니다. 좋아하는 색의 꽃다발에 짧은 응원 문구를 더해 주세요.",
+      "palette": [
+        {
+          "name": "분홍",
+          "hex": "#ddb4ba"
+        },
+        {
+          "name": "보라",
+          "hex": "#a594bd"
+        }
+      ],
+      "giftTitle": "잘해 온 마음에 건네는 응원",
+      "giftIntro": "글라디올러스나 포피를 사용한 상품이 아니라, 응원의 마음과 색의 분위기로 고른 구성입니다.",
+      "products": [
+        "carnation-rose-bouquet",
+        "superior-rose"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "8월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-08",
+      "photoLabel": "글라디올러스 자료사진",
+      "sourceUrl": "https://www.almanac.com/content/august-birth-flowers",
+      "sourceName": "알마낙 · 8월 탄생화",
+      "crossName": "페리도트 · 스피넬 · 사도닉스",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 9,
+      "name": "아스터",
+      "english": "Aster",
+      "others": [
+        "나팔꽃"
+      ],
+      "meanings": [
+        "사랑",
+        "애정"
+      ],
+      "intro": "9월에는 아스터와 나팔꽃이 함께 소개됩니다. 이 페이지의 사진은 숙근 아스터류의 한 예로, 꽃 이름과 모습을 함께 살펴보세요.",
+      "story": "아스터의 이름에는 별을 뜻하는 그리스어가 담겨 있습니다. 작은 꽃잎이 가운데를 둘러싼 모습을 별에 빗댄 이름이에요. 알마낙은 나팔꽃도 9월에 함께 소개하고, Interflora는 아스터를 사랑의 마음과 연결합니다.",
+      "tip": "꽃의 이름보다 보라·분홍의 분위기가 마음에 들 수도 있어요. 다른 꽃으로 고를 때는 아스터가 들어 있는 구성인지, 색을 참고한 구성인지 구분해서 전해 주세요.",
+      "palette": [
+        {
+          "name": "보라",
+          "hex": "#a594bd"
+        },
+        {
+          "name": "분홍",
+          "hex": "#ddb4ba"
+        }
+      ],
+      "giftTitle": "가을의 색으로 전하는 축하",
+      "giftIntro": "아스터나 나팔꽃을 사용한 상품이 아니라, 보라·분홍의 분위기를 참고한 꽃 선물입니다.",
+      "products": [
+        "rose-hydrangea-bouquet",
+        "hydrangea-bouquet"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "9월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-09",
+      "photoLabel": "아스터 자료사진",
+      "sourceUrl": "https://www.almanac.com/september-birth-flowers",
+      "sourceName": "알마낙 · 9월 탄생화",
+      "crossName": "사파이어",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ],
+      "productImages": {
+        "hydrangea-bouquet": "/assets/images/home/hydrangea-pink.jpg"
+      }
+    },
+    {
+      "month": 10,
+      "name": "메리골드·코스모스",
+      "english": "Marigold & Cosmos",
+      "others": [],
+      "meanings": [
+        "열정",
+        "조화"
+      ],
+      "intro": "알마낙은 10월의 꽃으로 메리골드와 코스모스를 소개합니다. 사진은 코스모스입니다. 국화를 10월의 꽃으로 소개하는 자료와는 기준이 다릅니다.",
+      "story": "코스모스의 이름은 질서와 조화를 뜻하는 그리스어 kosmos에서 왔다고 소개됩니다. 메리골드의 따뜻한 색과 코스모스의 가벼운 모습에서 선물의 분위기를 떠올려 보세요. 메리골드와 금잔화는 이름이 혼용되기도 하므로 사진과 식물 이름을 함께 확인해 주세요.",
+      "tip": "코스모스의 분홍빛을 살리거나 따뜻한 노란빛으로 가을의 분위기를 표현해 보세요. 아래 상품은 두 탄생화 자체를 사용한 구성은 아닙니다.",
+      "palette": [
+        {
+          "name": "분홍",
+          "hex": "#ddb4ba"
+        },
+        {
+          "name": "노랑",
+          "hex": "#e2bf55"
+        }
+      ],
+      "giftTitle": "가을 생일에 어울리는 꽃의 색",
+      "giftIntro": "코스모스의 분홍빛과 가을의 노란빛에서 영감을 받아 고른 상품입니다.",
+      "products": [
+        "hydrangea-bouquet",
+        "sunflower-bouquet"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "10월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-10",
+      "photoLabel": "코스모스 자료사진",
+      "sourceUrl": "https://www.almanac.com/october-birth-flowers",
+      "sourceName": "알마낙 · 10월 탄생화",
+      "crossName": "오팔 · 투르말린",
+      "related": [
+        "/blog/october-birth-flower/",
+        "/blog/birthday-flower-gift-choice/"
+      ],
+      "productImages": {
+        "hydrangea-bouquet": "/assets/images/home/hydrangea-pink.jpg"
+      }
+    },
+    {
+      "month": 11,
+      "name": "국화",
+      "english": "Chrysanthemum",
+      "others": [],
+      "meanings": [
+        "우정",
+        "성실"
+      ],
+      "intro": "11월의 국화는 우정과 성실한 마음에 연결됩니다. 색과 꽃의 형태가 다양하므로, 국화라는 이름만으로 선물 분위기를 정할 필요는 없어요.",
+      "story": "국화는 분홍·노랑·빨강·하양 등 여러 색으로 만날 수 있습니다. 알마낙은 우정과 기쁨, Interflora는 우정과 안녕을 바라는 마음에 연결합니다. 색과 문화에 따라 다른 뜻도 있으므로, 밝은 축하의 뜻은 카드에 직접 적어 주세요.",
+      "tip": "받는 분이 국화의 이미지를 부담스러워한다면 좋아하는 색의 장미나 수국을 골라도 괜찮아요. 탄생화의 이야기를 참고하면서 취향을 먼저 살펴보세요.",
+      "palette": [
+        {
+          "name": "분홍",
+          "hex": "#ddb4ba"
+        },
+        {
+          "name": "크림",
+          "hex": "#eee5d6"
+        }
+      ],
+      "giftTitle": "오래 이어온 마음을 꽃에 담아",
+      "giftIntro": "국화를 사용한 상품이 아니라, 부드러운 색과 오래 두고 보는 쓰임으로 고른 구성입니다.",
+      "products": [
+        "hydrangea-bouquet",
+        "glassdome-moodlamp"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "11월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-11",
+      "photoLabel": "국화 자료사진",
+      "sourceUrl": "https://www.almanac.com/content/november-birth-flowers",
+      "sourceName": "알마낙 · 11월 탄생화",
+      "crossName": "토파즈 · 시트린",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ],
+      "productImages": {
+        "hydrangea-bouquet": "/assets/images/home/hydrangea-pink.jpg"
+      }
+    },
+    {
+      "month": 12,
+      "name": "수선화·호랑가시나무",
+      "english": "Narcissus & Holly",
+      "others": [],
+      "meanings": [
+        "희망",
+        "새로운 시작"
+      ],
+      "intro": "12월의 꽃으로 수선화와 호랑가시나무를 소개합니다. 수선화류 중 페이퍼화이트를 안내하는 자료도 있습니다. 사진은 수선화류의 예입니다.",
+      "story": "알마낙과 Interflora는 12월에 수선화와 호랑가시나무를 함께 소개합니다. 알마낙은 특히 페이퍼화이트 수선화를 안내합니다. 이 페이지의 사진은 노란 수선화류의 예로, 페이퍼화이트 품종의 사진은 아닙니다.",
+      "tip": "연말의 붉은색이나 수선화의 밝은 색을 선물에 활용해 보세요. 호랑가시나무나 수선화가 실제로 들어가는 상품인지는 따로 확인해야 합니다.",
+      "palette": [
+        {
+          "name": "화이트",
+          "hex": "#eee5d6"
+        },
+        {
+          "name": "빨강",
+          "hex": "#a84855"
+        }
+      ],
+      "giftTitle": "한 해의 끝에서 전하는 축하",
+      "giftIntro": "수선화나 호랑가시나무를 사용한 상품이 아니라, 밝은 색과 연말의 분위기로 고른 구성입니다.",
+      "products": [
+        "hydrangea-moodlamp",
+        "cup-moodlamp-single"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "12월의 꽃처럼, 너의 오늘도 환하게 피어나길."
+        },
+        {
+          "tone": "다정하게",
+          "text": "너의 달을 상징하는 꽃 이야기를 보다가 네가 생각났어. 생일 축하해."
+        },
+        {
+          "tone": "정중하게",
+          "text": "생신을 진심으로 축하드립니다. 좋아하시는 꽃처럼 기쁜 날이 오래 이어지길 바랍니다."
+        }
+      ],
+      "photo": "flower-03",
+      "photoLabel": "노란 수선화류 자료사진",
+      "sourceUrl": "https://www.almanac.com/content/december-birth-flowers",
+      "sourceName": "알마낙 · 12월 탄생화",
+      "crossName": "터키석 · 탄자나이트 · 지르콘",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    }
+  ],
+  "stone": [
+    {
+      "month": 1,
+      "name": "가넷",
+      "english": "Garnet",
+      "others": [],
+      "meanings": [
+        "우정",
+        "변치 않는 마음"
+      ],
+      "intro": "가넷은 붉은색으로 친숙하지만 여러 색이 있는 보석입니다. 깊은 붉은빛은 선물 색을 고를 때 참고할 수 있는 한 가지 예예요.",
+      "story": "가넷의 이름은 붉은 석류 씨앗을 닮은 모습에서 유래했다고 GIA와 AGS가 설명합니다. 가넷은 하나의 색만 있는 보석이 아니라 여러 광물로 이루어진 그룹이에요. 붉은색 외에도 주황·초록 등 다양한 색을 만날 수 있습니다.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "버건디",
+          "hex": "#793543"
+        },
+        {
+          "name": "빨강",
+          "hex": "#ae4e58"
+        }
+      ],
+      "giftTitle": "깊은 붉은빛에 담은 축하",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "glassdome-moodlamp",
+        "cup-moodlamp-single"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "1월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-01",
+      "photoLabel": "가넷 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/january-birthstones",
+      "sourceName": "GIA · 1월 탄생석",
+      "crossName": "카네이션",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 2,
+      "name": "자수정",
+      "english": "Amethyst",
+      "others": [],
+      "meanings": [
+        "평온",
+        "절제"
+      ],
+      "intro": "자수정의 보라는 연한 라벤더부터 짙은 보라까지 폭이 넓습니다. 아래 색은 꽃 선물을 고르기 위한 참고 팔레트예요.",
+      "story": "자수정은 보랏빛을 띠는 석영입니다. 연한 라일락색부터 짙은 보라까지 색의 폭이 있고, 같은 돌 안에서도 색이 고르게 보이지 않을 수 있어요. GIA와 AGS의 설명을 읽고 사진의 보랏빛과 꽃의 색을 비교해 보세요.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "보라",
+          "hex": "#705583"
+        },
+        {
+          "name": "라벤더",
+          "hex": "#cbbcd9"
+        }
+      ],
+      "giftTitle": "자수정에서 떠올린 보랏빛",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "rose-hydrangea-bouquet",
+        "superior-rose"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "2월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-02",
+      "photoLabel": "자수정 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/february-birthstones",
+      "sourceName": "GIA · 2월 탄생석",
+      "crossName": "제비꽃",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 3,
+      "name": "아쿠아마린",
+      "english": "Aquamarine",
+      "others": [
+        "블러드스톤"
+      ],
+      "meanings": [
+        "차분한 마음",
+        "용기"
+      ],
+      "intro": "3월에는 아쿠아마린과 블러드스톤이 함께 소개됩니다. 맑은 파랑부터 녹색을 띤 파랑까지 보이는 아쿠아마린은 하늘빛 꽃의 실마리가 됩니다.",
+      "story": "아쿠아마린이라는 이름은 라틴어로 바닷물을 뜻하는 말에서 왔습니다. 옛 항해자들이 안전한 항해를 바랐다는 이야기도 전해집니다. 같은 3월의 블러드스톤은 붉은 점이 있는 짙은 초록빛으로 알려져, 두 보석의 모습이 서로 다릅니다.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "하늘빛",
+          "hex": "#a6cad4"
+        },
+        {
+          "name": "옅은 청록",
+          "hex": "#8bbfbd"
+        }
+      ],
+      "giftTitle": "맑은 하늘빛을 꽃으로",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "hydrangea-bouquet",
+        "hydrangea-moodlamp"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "3월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-03",
+      "photoLabel": "아쿠아마린 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/march-birthstones",
+      "sourceName": "GIA · 3월 탄생석",
+      "crossName": "수선화",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 4,
+      "name": "다이아몬드",
+      "english": "Diamond",
+      "others": [],
+      "meanings": [
+        "변치 않는 마음",
+        "사랑"
+      ],
+      "intro": "다이아몬드는 무색의 반짝임으로 친숙하지만 다양한 색도 있습니다. 꽃 선물에서는 투명한 소재와 화이트 톤을 하나의 표현으로 활용해 보세요.",
+      "story": "다이아몬드의 이름은 ‘정복할 수 없다’는 뜻의 그리스어 adamas에서 왔다고 소개됩니다. 단단한 성질이 변치 않는 사랑의 상징과 연결되어 왔어요. 무색뿐 아니라 다른 색의 다이아몬드도 있어, 화이트 톤은 선물에 활용할 색의 한 예입니다.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "화이트",
+          "hex": "#eee5d6"
+        },
+        {
+          "name": "크림",
+          "hex": "#dedbd5"
+        }
+      ],
+      "giftTitle": "밝고 깨끗한 색으로 전하는 마음",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "hydrangea-bouquet",
+        "hydrangea-moodlamp"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "4월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-04",
+      "photoLabel": "다이아몬드 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/april-birthstones",
+      "sourceName": "GIA · 4월 탄생석",
+      "crossName": "데이지",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ],
+      "productImages": {
+        "hydrangea-bouquet": "/assets/images/home/hydrangea-cream.jpg"
+      }
+    },
+    {
+      "month": 5,
+      "name": "에메랄드",
+      "english": "Emerald",
+      "others": [],
+      "meanings": [
+        "새로운 시작",
+        "희망"
+      ],
+      "intro": "에메랄드는 초록빛 보석입니다. 꽃 선물에서는 꽃잎을 초록으로 맞추기보다 잎과 초록 소재를 함께 살피는 방법도 있습니다.",
+      "story": "에메랄드는 베릴 계열의 초록빛 보석입니다. 같은 베릴 계열에는 푸른빛의 아쿠아마린도 있어요. 보석의 이름과 색을 함께 살펴보면 꽃 색을 고르는 재미가 더해집니다.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "초록",
+          "hex": "#4c7e65"
+        },
+        {
+          "name": "세이지",
+          "hex": "#9aab8e"
+        }
+      ],
+      "giftTitle": "초록이 있는 작은 공간의 선물",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "ionantha-moodlamp",
+        "flower-postcard"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "5월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-05",
+      "photoLabel": "에메랄드 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/may-birthstones",
+      "sourceName": "GIA · 5월 탄생석",
+      "crossName": "은방울꽃",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 6,
+      "name": "진주",
+      "english": "Pearl",
+      "others": [
+        "문스톤",
+        "알렉산드라이트"
+      ],
+      "meanings": [
+        "순수한 마음",
+        "축복"
+      ],
+      "intro": "6월에는 진주·문스톤·알렉산드라이트가 함께 소개됩니다. 진주의 밝은 색뿐 아니라, 다른 두 보석의 서로 다른 빛도 선택지가 됩니다.",
+      "story": "진주는 조개 같은 연체동물의 몸 안에서 만들어지는 유기질 보석입니다. 자연적으로 생긴 천연 진주와 사람이 형성 과정에 관여한 양식 진주가 있습니다. GIA와 AGS는 문스톤·알렉산드라이트도 6월의 탄생석으로 함께 안내합니다.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "아이보리",
+          "hex": "#eee5d6"
+        },
+        {
+          "name": "부드러운 분홍",
+          "hex": "#e3c9c3"
+        }
+      ],
+      "giftTitle": "진주에서 떠올린 은은한 색",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "hydrangea-moodlamp",
+        "hydrangea-bouquet"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "6월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-06",
+      "photoLabel": "진주 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/june-birthstones",
+      "sourceName": "GIA · 6월 탄생석",
+      "crossName": "장미",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ],
+      "productImages": {
+        "hydrangea-bouquet": "/assets/images/home/hydrangea-cream.jpg"
+      }
+    },
+    {
+      "month": 7,
+      "name": "루비",
+      "english": "Ruby",
+      "others": [],
+      "meanings": [
+        "사랑",
+        "열정"
+      ],
+      "intro": "7월의 루비는 붉은색으로 알려져 있습니다. 같은 빨강 안에서도 밝기와 진하기가 다르듯, 꽃 선물도 받는 분이 좋아하는 붉은빛으로 골라 보세요.",
+      "story": "루비의 이름은 빨강을 뜻하는 라틴어 ruber에서 유래했습니다. 루비와 사파이어는 모두 커런덤 계열이며, 붉은 보석을 루비라고 부릅니다. 선물에서는 그 붉은빛을 사랑과 열정의 상징으로 풀어볼 수 있어요.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "루비 레드",
+          "hex": "#ac4152"
+        },
+        {
+          "name": "딥 레드",
+          "hex": "#803542"
+        }
+      ],
+      "giftTitle": "루비에서 떠올린 붉은 장미",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "glassdome-moodlamp",
+        "cup-moodlamp-single"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "7월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-07",
+      "photoLabel": "루비 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/july-birthstones",
+      "sourceName": "GIA · 7월 탄생석",
+      "crossName": "라크스퍼",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 8,
+      "name": "페리도트",
+      "english": "Peridot",
+      "others": [
+        "스피넬",
+        "사도닉스"
+      ],
+      "meanings": [
+        "화합",
+        "따뜻한 마음"
+      ],
+      "intro": "8월에는 페리도트·스피넬·사도닉스가 함께 소개됩니다. 연둣빛은 페리도트에서 떠올릴 수 있는 색의 예이며, 다른 보석에는 다른 색이 있습니다.",
+      "story": "페리도트는 노랑을 띤 초록에서 초록을 띤 노랑까지 보이는 보석입니다. GIA는 지구 깊은 곳에서 올라온 용암과 운석에서도 발견되는 점을 소개합니다. 스피넬·사도닉스도 8월의 탄생석으로 함께 안내되므로 취향에 맞게 비교해 보세요.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "연두",
+          "hex": "#b6bd70"
+        },
+        {
+          "name": "초록",
+          "hex": "#839c74"
+        }
+      ],
+      "giftTitle": "초록의 분위기를 곁에 두고",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "ionantha-moodlamp",
+        "flower-postcard"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "8월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-08",
+      "photoLabel": "페리도트 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/august-birthstones",
+      "sourceName": "GIA · 8월 탄생석",
+      "crossName": "글라디올러스",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 9,
+      "name": "사파이어",
+      "english": "Sapphire",
+      "others": [],
+      "meanings": [
+        "진실한 마음",
+        "성실"
+      ],
+      "intro": "사파이어는 짙은 파랑으로 친숙하지만 분홍·노랑 등 여러 색도 있습니다. 파랑은 꽃 선물을 위한 하나의 선택지로 살펴보세요.",
+      "story": "사파이어는 파랑으로 친숙하지만 노랑·분홍 등 여러 색도 있습니다. 사진은 여러 색의 사파이어 원석을 보여줍니다. 루비와 같은 커런덤 계열에 속하며, 이 페이지의 푸른 팔레트는 꽃 선물을 위한 한 가지 제안입니다.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "파랑",
+          "hex": "#5777a2"
+        },
+        {
+          "name": "짙은 파랑",
+          "hex": "#384f7d"
+        }
+      ],
+      "giftTitle": "사파이어에서 떠올린 푸른빛",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "rose-hydrangea-bouquet",
+        "hydrangea-moodlamp"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "9월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-09",
+      "photoLabel": "여러 색의 사파이어 원석 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/september-birthstones",
+      "sourceName": "GIA · 9월 탄생석",
+      "crossName": "아스터",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 10,
+      "name": "오팔",
+      "english": "Opal",
+      "others": [
+        "투르말린"
+      ],
+      "meanings": [
+        "희망",
+        "다채로운 가능성"
+      ],
+      "intro": "10월에는 오팔과 투르말린을 함께 소개합니다. 오팔의 여러 빛과 투르말린의 다양한 색에서 좋아하는 분위기를 골라 보세요.",
+      "story": "일부 오팔에서는 보는 각도에 따라 여러 색이 반짝이는 유색 효과를 볼 수 있습니다. 투르말린도 다양한 색을 지닌 보석으로 알려져 있어요. 두 보석을 함께 살펴보고 좋아하는 색을 꽃에 옮겨 보세요.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "연분홍",
+          "hex": "#e3bdc4"
+        },
+        {
+          "name": "옅은 파랑",
+          "hex": "#a6cad4"
+        }
+      ],
+      "giftTitle": "여러 빛에서 골라낸 부드러운 색",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "hydrangea-bouquet",
+        "hydrangea-moodlamp"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "10월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-10",
+      "photoLabel": "오팔 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/october-birthstones",
+      "sourceName": "GIA · 10월 탄생석",
+      "crossName": "메리골드·코스모스",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ],
+      "productImages": {
+        "hydrangea-bouquet": "/assets/images/home/hydrangea-pink.jpg"
+      }
+    },
+    {
+      "month": 11,
+      "name": "토파즈",
+      "english": "Topaz",
+      "others": [
+        "시트린"
+      ],
+      "meanings": [
+        "우정",
+        "따뜻한 축복"
+      ],
+      "intro": "11월에는 토파즈와 시트린을 소개합니다. 토파즈는 여러 색이 있고, 시트린은 노랑에서 주황빛 계열로 소개됩니다.",
+      "story": "시트린은 노랑에서 갈색을 띤 주황빛을 보이는 석영입니다. 토파즈와 색이 비슷해 보일 수 있지만 서로 다른 보석이에요. 토파즈에는 무색·파랑·분홍 등도 있으므로, 이 페이지의 노란 팔레트는 시트린에서 떠올린 색으로 안내합니다.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "노랑",
+          "hex": "#e2bf55"
+        },
+        {
+          "name": "따뜻한 주황",
+          "hex": "#d58f5d"
+        }
+      ],
+      "giftTitle": "시트린에서 떠올린 따뜻한 노란빛",
+      "giftIntro": "시트린의 노랑에서 떠올린 꽃 선물입니다. 실제 탄생석이 포함되어 있지 않습니다.",
+      "products": [
+        "sunflower-bouquet",
+        "sunflower-frame"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "11월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-11",
+      "photoLabel": "토파즈 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/november-birthstones",
+      "sourceName": "GIA · 11월 탄생석",
+      "crossName": "국화",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    },
+    {
+      "month": 12,
+      "name": "터키석",
+      "english": "Turquoise",
+      "others": [
+        "탄자나이트",
+        "지르콘"
+      ],
+      "meanings": [
+        "축복",
+        "새로운 길"
+      ],
+      "intro": "12월에는 터키석·탄자나이트·지르콘을 함께 소개합니다. 청록, 파랑, 보랏빛 등 보석마다 다른 색을 비교해 보세요.",
+      "story": "탄자나이트는 산지인 탄자니아에서 이름을 얻은 보석으로 파랑부터 보랏빛까지 보입니다. 터키석은 파랑과 초록, 지르콘은 다양한 색으로 만날 수 있어요. 같은 달의 세 보석을 하나의 청록색으로만 설명하지 않고 함께 소개합니다.",
+      "tip": "탄생석의 색을 참고해 고른 꽃 선물이며, 실제 보석이 포함된 상품은 아닙니다. 화면의 색과 실제 꽃 색에는 차이가 있으니 상품 사진과 옵션을 함께 확인해 주세요.",
+      "palette": [
+        {
+          "name": "청록",
+          "hex": "#75b6b8"
+        },
+        {
+          "name": "파랑",
+          "hex": "#6686ad"
+        }
+      ],
+      "giftTitle": "겨울 생일에 전하는 맑은 파랑",
+      "giftIntro": "탄생석의 색과 분위기를 참고한 꽃 선물입니다. 실제 보석이 포함되어 있지 않습니다.",
+      "products": [
+        "hydrangea-bouquet",
+        "rose-hydrangea-bouquet"
+      ],
+      "messages": [
+        {
+          "tone": "짧고 담백하게",
+          "text": "너의 달의 색을 골랐어. 생일 축하해."
+        },
+        {
+          "tone": "다정하게",
+          "text": "12월의 보석에서 떠올린 색에, 네가 늘 행복하길 바라는 마음을 담았어."
+        },
+        {
+          "tone": "정중하게",
+          "text": "태어나신 달의 색을 참고해 준비했습니다. 생신을 진심으로 축하드립니다."
+        }
+      ],
+      "photo": "stone-12",
+      "photoLabel": "터키석 자료사진",
+      "sourceUrl": "https://www.gia.edu/birthstones/december-birthstones",
+      "sourceName": "GIA · 12월 탄생석",
+      "crossName": "수선화·호랑가시나무",
+      "related": [
+        "/blog/birthday-flower-gift-choice/",
+        "/blog/flower-material-difference/"
+      ]
+    }
+  ]
+}
