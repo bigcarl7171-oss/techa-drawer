@@ -7,7 +7,7 @@ const {data,context,view} = require('./lib/birth-guide');
 const check = process.argv.includes('--check');
 const BEGIN = '<!-- BEGIN birth-guide (생성: scripts/build-birth-guides.js) -->';
 const END = '<!-- END birth-guide -->';
-const source = x => `<a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.name)} ↗</a>`;
+const source = x => esc(x.name);
 function faq(kind) {
   const flower = [
     ['자료마다 탄생화가 다른 이유는 무엇인가요?','탄생화는 세계 공통으로 정해진 하나의 목록이 아닙니다. 이 페이지는 알마낙의 월별 목록을 기본으로, Interflora의 가이드와 함께 살폈습니다. 자료에 따라 같은 달에 다른 꽃이 소개될 수 있습니다.'],

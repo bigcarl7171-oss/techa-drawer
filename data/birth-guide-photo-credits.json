@@ -90,13 +90,13 @@
     "derivative": "Licensed preview screenshot; browser controls excluded; resized and converted to WebP"
   },
   "flower-10": {
-    "source": "https://commons.wikimedia.org/wiki/File%3AWhite_and_Pink_Cosmos.jpg",
-    "author": "Kaldari",
+    "source": "https://commons.wikimedia.org/wiki/File:Tagetes_erecta_(flowers)_02.jpg",
+    "author": "Kryesmin",
     "license": "CC0 1.0",
     "checkedAt": "2026-10-26",
     "width": 800,
-    "height": 536,
-    "derivative": "Licensed preview screenshot; browser controls excluded; resized and converted to WebP"
+    "height": 600,
+    "derivative": "Resized and converted to WebP"
   },
   "flower-11": {
     "source": "https://commons.wikimedia.org/wiki/File%3APink_Chrysanthemum_flower_in_Flowering_plant_market.jpg",
@@ -117,12 +117,12 @@
     "derivative": "Resized and converted to WebP"
   },
   "stone-03": {
-    "source": "https://commons.wikimedia.org/wiki/File%3AAquamarine_%28GeoDIL_number_-_2244%29.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Aquamarine_(GeoDIL_number_-_2731).jpg",
     "author": "Darla Sondrol / GeoDIL",
     "license": "CC0 1.0",
     "checkedAt": "2026-10-26",
-    "width": 440,
-    "height": 292,
+    "width": 960,
+    "height": 565,
     "derivative": "Resized and converted to WebP"
   },
   "stone-04": {
@@ -204,6 +204,15 @@
     "checkedAt": "2026-10-26",
     "width": 833,
     "height": 503,
+    "derivative": "Resized and converted to WebP"
+  },
+  "flower-12": {
+    "source": "https://commons.wikimedia.org/wiki/File:Holly_berries,_Nienburg.jpg",
+    "author": "Gerda Arendt",
+    "license": "CC0 1.0",
+    "checkedAt": "2026-10-26",
+    "width": 800,
+    "height": 600,
     "derivative": "Resized and converted to WebP"
   }
 }
