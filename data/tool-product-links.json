@@ -3,19 +3,10 @@
   "_why": "네이버 웹문서 유입의 본체가 도구 페이지인데 상품 링크가 22개 전부 0건이었다 (docs/naver-webmaster-2026-09-20.md). 다만 노출 크기 순서가 아니라 '선물 의도' 순서로 붙인다 — 사다리타기 하러 온 사람에게 프리저브드를 밀지 않는다.",
   "_tiers": {
     "gift": "선물 맥락이 분명한 도구. 상품 3개를 카드로 보여준다.",
-    "brand": "선물과 상관없는 도구. 상품을 밀지 않고 테차가 무엇을 만드는지 한 줄만 둔다."
+    "brand": "선물과 상관없는 도구. 상품을 밀지 않고 테차가 무엇을 만드는지 한 줄만 둔다.",
+    "monthly": "월별 콘텐츠와 상품을 scripts/build-birth-guides.js에서 함께 생성하는 탄생화·탄생석 페이지."
   },
   "gift": {
-    "birth-flower": [
-      "hydrangea-bouquet",
-      "cup-moodlamp-single",
-      "rose-hydrangea-bouquet"
-    ],
-    "birth-stone": [
-      "glassdome-moodlamp",
-      "hydrangea-moodlamp",
-      "superior-rose"
-    ],
     "dday": [
       "rose-hydrangea-bouquet",
       "glassdome-moodlamp",
@@ -76,5 +67,9 @@
     "unit-converter",
     "vat",
     "workdays"
+  ],
+  "monthly": [
+    "birth-flower",
+    "birth-stone"
   ]
 }

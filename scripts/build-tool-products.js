@@ -105,20 +105,32 @@ function main() {
 
   const gift = map.gift || {};
   const brand = new Set(map.brand || []);
+  const monthly = new Set(map.monthly || []);
 
   for (const slug of Object.keys(gift)) {
     if (!tools.includes(slug)) errors.push(`${slug}: gift 매핑은 있지만 도구 페이지가 없음`);
+  }
+  for (const slug of monthly) {
+    if (!tools.includes(slug)) errors.push(slug + ': 월별 도구 페이지가 없음');
   }
   for (const slug of brand) {
     if (!tools.includes(slug)) errors.push(`${slug}: brand 목록에 있지만 도구 페이지가 없음`);
   }
   for (const slug of tools) {
-    if (!(slug in gift) && !brand.has(slug)) {
-      errors.push(`${slug}: gift 나 brand 어느 쪽에도 없음 — tool-product-links.json 에 넣을 것`);
+    if (!(slug in gift) && !brand.has(slug) && !monthly.has(slug)) {
+      errors.push(`${slug}: gift · monthly · brand 분류에 없음 — tool-product-links.json 에 넣을 것`);
     }
   }
 
   for (const slug of tools) {
+    if (monthly.has(slug)) {
+      if (!['birth-flower', 'birth-stone'].includes(slug)) { errors.push(slug + ': unknown monthly guide'); continue; }
+      const expected = require('./lib/birth-guide').productBlock(slug.replace('birth-', ''));
+      productTotal += 2;
+      const page = fs.readFileSync(path.join(TOOL_DIR, slug, 'index.html'), 'utf8');
+      if (!page.includes(expected)) errors.push(slug + ': 월별 상품 블록이 오래되었습니다. node scripts/build-birth-guides.js 를 돌릴 것');
+      continue;
+    }
     let block;
     if (slug in gift) {
       const lines = gift[slug];
@@ -160,8 +172,8 @@ function main() {
     process.exit(1);
   }
   console.log(changed.length
-    ? `✅ 도구 ${changed.length}개 갱신 — 선물 ${Object.keys(gift).length}개에 상품 ${productTotal}개, 브랜드 한 줄 ${brand.size}개`
-    : `✅ 최신 상태 — 도구 ${tools.length}개 (선물 ${Object.keys(gift).length} · 브랜드 ${brand.size}), 상품 링크 ${productTotal}개`);
+    ? `✅ 도구 ${changed.length}개 갱신 — 선물 ${Object.keys(gift).length}개 · 월별 ${monthly.size}개에 상품 ${productTotal}개, 브랜드 한 줄 ${brand.size}개`
+    : `✅ 최신 상태 — 도구 ${tools.length}개 (선물 ${Object.keys(gift).length} · 월별 ${monthly.size} · 브랜드 ${brand.size}), 상품 링크 ${productTotal}개`);
 }
 
 main();
