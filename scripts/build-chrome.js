@@ -65,7 +65,7 @@ const BUSINESS = {
   knowsAbout: ['프리저브드 플라워', '비누꽃', '꽃 무드등', '글라스돔 꽃', '단체 꽃다발 납품', '플라워 클래스'],
   sameAs: [
     'https://www.instagram.com/techa_flower/',
-    'https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C',
+    'https://www.youtube.com/@techa_flower',
     'https://www.facebook.com/techagongbang/',
     'https://m.place.naver.com/place/1694681698/home'
   ]
@@ -160,7 +160,7 @@ function footerMarkup(isTool, shopUrl) {
     '      <nav class="sf-sns" aria-label="테차 채널">' +
       '<a href="https://www.instagram.com/techa_flower/" target="_blank" rel="noopener">인스타그램</a>' +
       '<a href="https://talk.naver.com/W4GQDO" target="_blank" rel="noopener">네이버 톡톡 상담</a>' +
-      '<a href="https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C" target="_blank" rel="noopener">유튜브</a>' +
+      '<a href="https://www.youtube.com/@techa_flower" target="_blank" rel="noopener">유튜브</a>' +
       '<a href="https://www.facebook.com/techagongbang/" target="_blank" rel="noopener">페이스북</a>' +
       '<a href="' + esc(shopUrl) + '" target="_blank" rel="noopener">스마트스토어 <span aria-hidden="true">↗</span></a></nav>',
     '    </div>',

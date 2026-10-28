@@ -402,7 +402,7 @@
       '<nav class="sf-sns" aria-label="테차 채널">' +
       '<a href="https://www.instagram.com/techa_flower/"' + ext + '>인스타그램</a>' +
       '<a href="' + talk + '"' + ext + '>네이버 톡톡 상담</a>' +
-      '<a href="https://www.youtube.com/@%ED%94%84%EB%A6%AC%EC%A0%80%EB%B8%8C%EB%93%9C%EA%BD%83%EB%8B%A4%EB%B0%9C"' + ext + '>유튜브</a>' +
+      '<a href="https://www.youtube.com/@techa_flower"' + ext + '>유튜브</a>' +
       '<a href="https://www.facebook.com/techagongbang/"' + ext + '>페이스북</a>' +
       '<a href="' + SITE.shopUrl + '"' + ext + '>스마트스토어 <span aria-hidden="true">↗</span></a></nav></div>' +
       '<div class="sf-cols">' +
