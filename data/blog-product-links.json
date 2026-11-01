@@ -366,5 +366,11 @@
     "kinderjoy-doll-bouquet",
     "rebony-trophy-doll-bouquet",
     "flower-postcard"
+  ],
+  "floriography-origin": [
+    "flower-postcard"
+  ],
+  "cat-lily-flower-gift": [
+    "glassdome-moodlamp"
   ]
 }
