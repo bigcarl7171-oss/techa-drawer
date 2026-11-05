@@ -382,5 +382,15 @@
     "single-stem-soap-box",
     "flower-postcard",
     "cup-moodlamp-single"
+  ],
+  "betrayal-flower-meanings": [
+    "carnation-rose-bouquet",
+    "rose-hydrangea-bouquet",
+    "flower-postcard"
+  ],
+  "ipdong-meaning-greetings": [
+    "glassdome-moodlamp",
+    "topiary-moodlamp",
+    "flower-postcard"
   ]
 }
