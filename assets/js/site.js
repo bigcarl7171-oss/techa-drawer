@@ -90,6 +90,8 @@
   var POSTS = [
     { title: "수험생에게 부담 없는 응원 문구와 파란 장미 꽃말의 기적", emoji: "💙",
       desc: "수험생에게 부담 없는 응원 문구 4가지와 불가능을 기적으로 바꾼 파란 장미 이야기", path: "/blog/blue-rose-cheering-message/", date: "2026-11-08" },
+    { title: "장미꽃에 안개꽃을 곁들이는 이유와 두 꽃말이 완성하는 문장", emoji: "🌹",
+      desc: "붉은 장미와 안개꽃이 만났을 때 완성되는 절절한 꽃말 암호와 색상별 추천 조합", path: "/blog/rose-gypsophila-meaning/", date: "2026-11-07" },
     { title: "예뻐서 무심코 건넸다가 오해받는 꽃 3가지, 꽃말의 반전과 다정한 카드 한 줄", emoji: "🔍",
       desc: "아네모네·메리골드·노란 카네이션의 숨은 반전 꽃말과 마음을 전하는 카드 팁", path: "/blog/betrayal-flower-meanings/", date: "2026-11-06" },
     { title: "갑자기 뚝 떨어진 기온, 보일러 켜기 전 챙겨야 할 초겨울 점검 5가지", emoji: "🧣",
