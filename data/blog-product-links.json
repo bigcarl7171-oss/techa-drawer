@@ -1,19 +1,61 @@
 {
   "_note": "매거진 글별 관련 상품 매핑. 값은 data/store-links.json의 products.*.line만 사용한다. 새 글 발행 시 1~3개를 반드시 지정한다.",
+  "autumn-bouquet-colors": [
+    "superior-rose",
+    "carnation-rose-bouquet",
+    "sunflower-bouquet"
+  ],
   "autumn-flower-gift-offseason": [
     "sunflower-bouquet",
     "sunflower-frame",
     "rose-hydrangea-bouquet"
+  ],
+  "betrayal-flower-meanings": [
+    "carnation-rose-bouquet",
+    "rose-hydrangea-bouquet",
+    "flower-postcard"
+  ],
+  "birthday-flower-gift-choice": [
+    "topiary-moodlamp",
+    "hydrangea-moodlamp",
+    "rose-hydrangea-bouquet"
+  ],
+  "black-rose-meaning": [
+    "blackwhite-rose-moodlamp",
+    "superior-rose",
+    "flower-postcard"
   ],
   "black-white-rose-mood-lamp": [
     "glassdome-moodlamp",
     "hydrangea-moodlamp",
     "topiary-moodlamp"
   ],
+  "blue-rose-cheering-message": [
+    "rose-hydrangea-bouquet",
+    "superior-rose",
+    "flower-postcard"
+  ],
+  "bouquet-card-message-phrases": [
+    "flower-postcard",
+    "rose-money-bouquet",
+    "rose-hydrangea-bouquet"
+  ],
+  "bouquet-drying-upside-down": [
+    "superior-rose",
+    "rose-hydrangea-bouquet"
+  ],
   "camellia-hospital-visit-taboo": [
     "hydrangea-bouquet",
     "rose-hydrangea-bouquet",
     "single-stem-soap-box"
+  ],
+  "cat-lily-flower-gift": [
+    "glassdome-moodlamp"
+  ],
+  "chrysanthemum-meaning": [
+    "rose-hydrangea-bouquet",
+    "hydrangea-bouquet",
+    "glassdome-moodlamp"
   ],
   "chuseok-money-gift": [
     "money-cake",
@@ -60,6 +102,24 @@
     "rebony-trophy-doll-bouquet",
     "kinderjoy-doll-bouquet"
   ],
+  "farewell-coworker-bouquet": [
+    "single-stem-soap-box",
+    "glassdome-moodlamp",
+    "flower-postcard"
+  ],
+  "farewell-greeting-message": [
+    "single-stem-soap-box",
+    "flower-postcard",
+    "glassdome-moodlamp"
+  ],
+  "floriography-origin": [
+    "flower-postcard"
+  ],
+  "flower-atelier-daily": [
+    "rose-hydrangea-bouquet",
+    "glassdome-moodlamp",
+    "topiary-moodlamp"
+  ],
   "flower-gift-avoid-flowers": [
     "rose-hydrangea-bouquet",
     "hydrangea-bouquet",
@@ -70,15 +130,30 @@
     "superior-rose",
     "hydrangea-bouquet"
   ],
+  "flower-gift-parcel-packing": [
+    "superior-rose",
+    "hydrangea-moodlamp",
+    "glassdome-moodlamp"
+  ],
   "flower-gift-review-analysis": [
     "rose-hydrangea-bouquet",
     "sunflower-bouquet",
     "glassdome-moodlamp"
   ],
+  "flower-material-difference": [
+    "rose-hydrangea-bouquet",
+    "single-stem-soap-box",
+    "hydrangea-bouquet"
+  ],
   "flower-parcel-delivery": [
     "rose-hydrangea-bouquet",
     "sunflower-bouquet",
     "hydrangea-bouquet"
+  ],
+  "friend-wedding-gift": [
+    "rose-hydrangea-bouquet",
+    "glassdome-moodlamp",
+    "hydrangea-moodlamp"
   ],
   "glass-dome-mood-lamp-review": [
     "glassdome-moodlamp",
@@ -95,30 +170,111 @@
     "rebony-trophy-doll-bouquet",
     "kinderjoy-doll-bouquet"
   ],
+  "grandma-birthday-gift": [
+    "money-cake",
+    "carnation-rose-bouquet",
+    "single-stem-soap-box"
+  ],
   "hospital-discharge-gift": [
     "hydrangea-bouquet",
     "glassdome-moodlamp",
     "single-stem-soap-box"
+  ],
+  "hospital-visit-flower-check": [
+    "single-stem-soap-box",
+    "hydrangea-bouquet",
+    "cup-moodlamp-single"
+  ],
+  "hwangap-chilsun-age": [
+    "money-cake",
+    "rose-money-bouquet",
+    "carnation-rose-bouquet"
+  ],
+  "hydrangea-petals-sepal": [
+    "hydrangea-bouquet",
+    "glassdome-moodlamp",
+    "rose-hydrangea-bouquet"
+  ],
+  "ipdong-meaning-greetings": [
+    "glassdome-moodlamp",
+    "topiary-moodlamp",
+    "flower-postcard"
+  ],
+  "job-offer-celebration": [
+    "hydrangea-bouquet",
+    "cup-moodlamp-single",
+    "flower-postcard"
   ],
   "kids-recital-bouquet-size-guide": [
     "sunflower-bouquet",
     "rebony-trophy-doll-bouquet",
     "kinderjoy-doll-bouquet"
   ],
+  "mom-70th-birthday-gift": [
+    "rose-money-bouquet",
+    "carnation-rose-bouquet",
+    "money-cake"
+  ],
+  "money-bouquet-cake-how-to": [
+    "rose-money-bouquet",
+    "money-cake"
+  ],
   "money-bouquet-customer-stories": [
     "rose-money-bouquet",
     "money-cake",
     "classic-money-box"
+  ],
+  "mother-in-law-70th-gift": [
+    "rose-money-bouquet",
+    "money-cake",
+    "carnation-rose-bouquet"
+  ],
+  "november-anniversaries": [
+    "rose-hydrangea-bouquet",
+    "hydrangea-moodlamp",
+    "flower-postcard"
+  ],
+  "october-birth-flower": [
+    "sunflower-bouquet",
+    "sunflower-frame"
   ],
   "one-room-mood-lighting-placement": [
     "glassdome-moodlamp",
     "hydrangea-moodlamp",
     "cup-moodlamp-single"
   ],
+  "one-stem-flower-wrapping": [
+    "single-stem-soap-box",
+    "cup-moodlamp-single"
+  ],
+  "opening-gift-sunflower-frame": [
+    "sunflower-frame",
+    "sunflower-bouquet"
+  ],
   "parents-birthday-money-cake": [
     "money-cake",
     "rose-money-bouquet",
     "classic-money-box"
+  ],
+  "pepero-day-flower-gift": [
+    "cup-moodlamp-single",
+    "single-stem-soap-box",
+    "flower-postcard"
+  ],
+  "pepero-day-wrapping": [
+    "superior-rose",
+    "glassdome-moodlamp",
+    "cup-moodlamp-single"
+  ],
+  "pepero-flower-combo": [
+    "single-stem-soap-box",
+    "flower-postcard",
+    "cup-moodlamp-single"
+  ],
+  "pollen-allergy-flower-gift": [
+    "sunflower-bouquet",
+    "sunflower-frame",
+    "glassdome-moodlamp"
   ],
   "preserved-flower-pros-cons": [
     "rose-hydrangea-bouquet",
@@ -145,6 +301,36 @@
     "superior-rose",
     "centerpiece"
   ],
+  "proposal-bouquet": [
+    "rose-hydrangea-bouquet",
+    "glassdome-moodlamp",
+    "superior-rose"
+  ],
+  "recital-bouquet-guide": [
+    "kinderjoy-doll-bouquet",
+    "rebony-trophy-doll-bouquet",
+    "flower-postcard"
+  ],
+  "recital-doll-bouquet-guide": [
+    "rebony-trophy-doll-bouquet",
+    "kinderjoy-doll-bouquet",
+    "flower-postcard"
+  ],
+  "rose-color-meaning": [
+    "glassdome-moodlamp",
+    "superior-rose",
+    "blackwhite-rose-moodlamp"
+  ],
+  "rose-gypsophila-meaning": [
+    "superior-rose",
+    "rose-hydrangea-bouquet",
+    "flower-postcard"
+  ],
+  "rose-thorn-prickle": [
+    "rose-hydrangea-bouquet",
+    "superior-rose",
+    "single-stem-soap-box"
+  ],
   "sad-flower-meanings": [
     "superior-rose",
     "rose-hydrangea-bouquet"
@@ -163,6 +349,11 @@
     "single-stem-soap-box",
     "flower-postcard"
   ],
+  "soap-preserved-mixed-bouquet": [
+    "rose-hydrangea-bouquet",
+    "superior-rose",
+    "sunflower-bouquet"
+  ],
   "summer-flower-gift-check": [
     "hydrangea-bouquet",
     "glassdome-moodlamp",
@@ -173,239 +364,53 @@
     "hydrangea-bouquet",
     "superior-rose"
   ],
-  "sunflower-frame-housewarming-gift": [
-    "sunflower-frame",
-    "sunflower-bouquet",
-    "centerpiece"
-  ],
-  "wife-birthday-gift": [
-    "hydrangea-moodlamp",
-    "cup-moodlamp-single",
-    "glassdome-moodlamp"
-  ],
-  "yellow-rose-meaning": [
-    "sunflower-bouquet",
-    "superior-rose",
-    "rose-hydrangea-bouquet"
-  ],
-  "opening-gift-sunflower-frame": [
-    "sunflower-frame",
-    "sunflower-bouquet"
-  ],
-  "pollen-allergy-flower-gift": [
-    "sunflower-bouquet",
-    "sunflower-frame",
-    "glassdome-moodlamp"
-  ],
-  "wedding-anniversary-gift": [
-    "rose-hydrangea-bouquet",
-    "glassdome-moodlamp",
-    "hydrangea-moodlamp"
-  ],
-  "october-birth-flower": [
-    "sunflower-bouquet",
-    "sunflower-frame"
-  ],
-  "wedding-song-thank-you-gift": [
-    "classic-money-box",
-    "single-stem-soap-box",
-    "glassdome-moodlamp"
-  ],
-  "flower-material-difference": [
-    "rose-hydrangea-bouquet",
-    "single-stem-soap-box",
-    "hydrangea-bouquet"
-  ],
-  "grandma-birthday-gift": [
-    "money-cake",
-    "carnation-rose-bouquet",
-    "single-stem-soap-box"
-  ],
-  "proposal-bouquet": [
-    "rose-hydrangea-bouquet",
-    "glassdome-moodlamp",
-    "superior-rose"
-  ],
-  "mother-in-law-70th-gift": [
-    "rose-money-bouquet",
-    "money-cake",
-    "carnation-rose-bouquet"
-  ],
-  "mom-70th-birthday-gift": [
-    "rose-money-bouquet",
-    "carnation-rose-bouquet",
-    "money-cake"
-  ],
-  "hwangap-chilsun-age": [
-    "money-cake",
-    "rose-money-bouquet",
-    "carnation-rose-bouquet"
-  ],
-  "job-offer-celebration": [
-    "hydrangea-bouquet",
-    "cup-moodlamp-single",
-    "flower-postcard"
-  ],
-  "rose-thorn-prickle": [
-    "rose-hydrangea-bouquet",
-    "superior-rose",
-    "single-stem-soap-box"
-  ],
-  "rose-color-meaning": [
-    "glassdome-moodlamp",
-    "superior-rose",
-    "blackwhite-rose-moodlamp"
-  ],
-  "farewell-coworker-bouquet": [
-    "single-stem-soap-box",
-    "glassdome-moodlamp",
-    "flower-postcard"
-  ],
   "suneung-cheer-gift": [
     "rose-hydrangea-bouquet",
     "cup-moodlamp-single",
     "single-stem-soap-box"
   ],
-  "chrysanthemum-meaning": [
-    "rose-hydrangea-bouquet",
-    "hydrangea-bouquet",
-    "glassdome-moodlamp"
+  "sunflower-frame-housewarming-gift": [
+    "sunflower-frame",
+    "sunflower-bouquet",
+    "centerpiece"
   ],
-  "friend-wedding-gift": [
-    "rose-hydrangea-bouquet",
-    "glassdome-moodlamp",
-    "hydrangea-moodlamp"
-  ],
-  "pepero-day-wrapping": [
-    "superior-rose",
-    "glassdome-moodlamp",
-    "cup-moodlamp-single"
-  ],
-  "pepero-day-flower-gift": [
-    "cup-moodlamp-single",
-    "single-stem-soap-box",
-    "flower-postcard"
-  ],
-  "hospital-visit-flower-check": [
-    "single-stem-soap-box",
-    "hydrangea-bouquet",
-    "cup-moodlamp-single"
-  ],
-  "yellow-rose-gift-worry": [
-    "superior-rose",
-    "kinderjoy-doll-bouquet",
-    "flower-postcard"
-  ],
-  "money-bouquet-cake-how-to": [
-    "rose-money-bouquet",
-    "money-cake"
-  ],
-  "flower-gift-parcel-packing": [
-    "superior-rose",
-    "hydrangea-moodlamp",
-    "glassdome-moodlamp"
-  ],
-  "one-stem-flower-wrapping": [
-    "single-stem-soap-box",
-    "cup-moodlamp-single"
+  "sunflower-painting-meaning": [
+    "sunflower-frame",
+    "sunflower-bouquet"
   ],
   "techa-why-no-fresh-flowers": [
     "rose-hydrangea-bouquet",
     "hydrangea-moodlamp",
     "sunflower-frame"
   ],
-  "hydrangea-petals-sepal": [
-    "hydrangea-bouquet",
-    "glassdome-moodlamp",
-    "rose-hydrangea-bouquet"
-  ],
-  "bouquet-card-message-phrases": [
-    "flower-postcard",
-    "rose-money-bouquet",
-    "rose-hydrangea-bouquet"
-  ],
-  "soap-preserved-mixed-bouquet": [
-    "rose-hydrangea-bouquet",
-    "superior-rose",
-    "sunflower-bouquet"
-  ],
-  "bouquet-drying-upside-down": [
-    "superior-rose",
-    "rose-hydrangea-bouquet"
-  ],
-  "birthday-flower-gift-choice": [
-    "topiary-moodlamp",
-    "hydrangea-moodlamp",
-    "rose-hydrangea-bouquet"
-  ],
-  "autumn-bouquet-colors": [
-    "superior-rose",
-    "carnation-rose-bouquet",
-    "sunflower-bouquet"
-  ],
-  "sunflower-painting-meaning": [
-    "sunflower-frame",
-    "sunflower-bouquet"
-  ],
-  "farewell-greeting-message": [
-    "single-stem-soap-box",
-    "flower-postcard",
-    "glassdome-moodlamp"
-  ],
-  "black-rose-meaning": [
-    "blackwhite-rose-moodlamp",
-    "superior-rose",
-    "flower-postcard"
-  ],
-  "november-anniversaries": [
-    "rose-hydrangea-bouquet",
-    "hydrangea-moodlamp",
-    "flower-postcard"
-  ],
-  "recital-bouquet-guide": [
-    "kinderjoy-doll-bouquet",
-    "rebony-trophy-doll-bouquet",
-    "flower-postcard"
-  ],
-  "floriography-origin": [
-    "flower-postcard"
-  ],
-  "cat-lily-flower-gift": [
-    "glassdome-moodlamp"
-  ],
   "unfair-flower-names": [
     "rose-hydrangea-bouquet",
     "hydrangea-moodlamp",
     "flower-postcard"
   ],
-  "pepero-flower-combo": [
-    "single-stem-soap-box",
-    "flower-postcard",
-    "cup-moodlamp-single"
-  ],
-  "betrayal-flower-meanings": [
-    "carnation-rose-bouquet",
+  "wedding-anniversary-gift": [
     "rose-hydrangea-bouquet",
-    "flower-postcard"
-  ],
-  "ipdong-meaning-greetings": [
     "glassdome-moodlamp",
-    "topiary-moodlamp",
-    "flower-postcard"
+    "hydrangea-moodlamp"
   ],
-  "blue-rose-cheering-message": [
-    "rose-hydrangea-bouquet",
+  "wedding-song-thank-you-gift": [
+    "classic-money-box",
+    "single-stem-soap-box",
+    "glassdome-moodlamp"
+  ],
+  "wife-birthday-gift": [
+    "hydrangea-moodlamp",
+    "cup-moodlamp-single",
+    "glassdome-moodlamp"
+  ],
+  "yellow-rose-gift-worry": [
     "superior-rose",
-    "flower-postcard"
-  ],
-  "rose-gypsophila-meaning": [
-    "superior-rose",
-    "rose-hydrangea-bouquet",
-    "flower-postcard"
-  ],
-  "recital-doll-bouquet-guide": [
-    "rebony-trophy-doll-bouquet",
     "kinderjoy-doll-bouquet",
     "flower-postcard"
+  ],
+  "yellow-rose-meaning": [
+    "sunflower-bouquet",
+    "superior-rose",
+    "rose-hydrangea-bouquet"
   ]
 }
