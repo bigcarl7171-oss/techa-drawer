@@ -15,7 +15,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 CACHE = os.path.join(HERE, '.unused-photos-cache.json')
 EXT = ('.jpg', '.jpeg', '.png', '.webp')
-SCRATCH = r'C:/연습/원고작업'
+def find_scratch():
+    for d in "CDEFGHIJKLMNOPQRSTUVWXYZ":
+        cand = f"{d}:/테차콘텐츠/원고작업"
+        if os.path.isdir(cand):
+            return cand
+    return r'C:/연습/원고작업'
+
+SCRATCH = find_scratch()
 
 
 def dh(im):
