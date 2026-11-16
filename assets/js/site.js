@@ -92,6 +92,8 @@
       desc: "포인세티아 빨간 잎의 정체와 다시 물들이는 순서, 독성 소문의 실제", path: "/blog/poinsettia-christmas-flower/", date: "2026-11-16" },
     { title: "강아지가 조심해야 할 꽃과 안전한 꽃, 반려견 있는 집 꽃다발 선택 가이드", emoji: "🐶",
       desc: "강아지가 조심해야 할 꽃과 안전한 꽃, 반려견 있는 집 꽃다발 선택 가이드", path: "/blog/dog-toxic-safe-flowers/", date: "2026-11-15" },
+    { title: "겨울철 난방 시작할 때 꽃 오래 보는 법: 화병 자리와 작은 배려 세 가지", emoji: "❄️",
+      desc: "보일러와 히터를 켤 때 꽃이 편안해하는 서늘한 자리 세 가지", path: "/blog/winter-flower-heater-care/", date: "2026-11-14" },
     { title: "연주회 꽃다발 반입과 건네는 때, 카드에 적을 한 줄까지", emoji: "🎻",
       desc: "연주회 꽃다발 반입 확인부터 건네는 때, 카드 문구 일곱 가지", path: "/blog/recital-bouquet-timing-card/", date: "2026-11-13" },
     { title: "꽃이 빨리 시드는 이유, 꽃병 옆 과일과 에틸렌 가스 이야기", emoji: "🍎",
