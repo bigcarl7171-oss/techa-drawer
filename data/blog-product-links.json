@@ -427,5 +427,9 @@
     "sunflower-bouquet",
     "superior-rose",
     "rose-hydrangea-bouquet"
+  ],
+  "dog-toxic-safe-flowers": [
+    "glassdome-moodlamp",
+    "hydrangea-moodlamp"
   ]
 }
