@@ -461,5 +461,10 @@
     "rose-money-bouquet",
     "rose-hydrangea-bouquet",
     "sunflower-bouquet"
+  ],
+  "revive-wilted-roses-boiling-water-treatment": [
+    "superior-rose",
+    "rose-hydrangea-bouquet",
+    "carnation-rose-bouquet"
   ]
 }

@@ -90,6 +90,8 @@
   var POSTS = [
     { title: "꽃다발 주문제작과 꽃바구니, 실패 없이 고르는 3가지 기준과 체크리스트", emoji: "🧺",
       desc: "꽃바구니와 꽃다발 맞춤 제작 기준과 체크리스트", path: "/blog/custom-flower-gift-basket-bouquet-guide/", date: "2026-11-21" },
+    { title: "시든 장미 생화 되살리는 물올림법, 뜨거운 물 30초 열탕 처리와 물속 자르기", emoji: "🌹",
+      desc: "시든 장미 생화 되살리는 3단계 응급처치와 30초 열탕 처리", path: "/blog/revive-wilted-roses-boiling-water-treatment/", date: "2026-11-20" },
     { title: "생화 꽃다발 보관, 하루 전날 사서 싱싱하게 두는 법 (냉장고 안 돼요)", emoji: "💐",
       desc: "하루 전 미리 산 생화 꽃다발을 냉장고에 넣으면 안 되는 이유와 포장째 싱싱하게 두는 3원칙을 정리했습니다.", path: "/blog/fresh-flower-bouquet-overnight-storage/", date: "2026-11-19" },
     { title: "겨울에 피는 꽃 종류 5가지와 꽃말 모음, 눈 속에서 피는 비밀", emoji: "❄️",
